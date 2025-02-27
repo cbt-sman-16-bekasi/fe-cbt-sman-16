@@ -42,7 +42,8 @@ export default function SideMenu() {
           p: 1.5,
         }}
       >
-        <SelectContent />
+        <img src="" alt="" />
+        {/* <SelectContent /> */}
       </Box>
       <Divider />
       <Box

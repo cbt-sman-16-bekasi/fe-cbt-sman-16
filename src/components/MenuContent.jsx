@@ -12,7 +12,7 @@ import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 // const mainListItems = [
 //   { text: 'Dashboard', icon: <HomeRoundedIcon /> },
@@ -52,27 +52,59 @@ const secondaryListItems = [
 
 
 export default function MenuContent() {
+  const location = useLocation()
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
-        {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton component={Link} to={item.path} className='hover:text-white' selected={index === 0}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {mainListItems.map((item, index) => {
+          const isActive = location.pathname === item.path; // Cek apakah path saat ini cocok dengan item.path
+          return (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                component={Link}
+                to={item.path}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                selected={isActive}
+                sx={{
+                  bgcolor: isActive ? 'primary.light' : 'inherit', // Warna background jika aktif
+                  color: isActive ? 'primary.dark' : 'inherit', // Warna teks jika aktif
+                  borderRadius: 2, // Membuat sudut lebih rounded
+                }}
+              >
+                <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
       <List dense>
-        {secondaryListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton component={Link} to={item.path} className='hover:text-white'>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {secondaryListItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                component={Link}
+                to={item.path}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                selected={isActive}
+                sx={{
+                  bgcolor: isActive ? 'primary.light' : 'inherit',
+                  color: isActive ? 'primary.dark' : 'inherit',
+                  borderRadius: 2,
+                }}
+              >
+                <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Stack>
   );

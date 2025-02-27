@@ -42,13 +42,13 @@ export default function Dashboard(props) {
                 ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
                 : alpha(theme.palette.background.default, 1),
             overflow: 'auto',
-            minHeight: '100vh', // Pastikan Box memenuhi seluruh viewport
+            minHeight: '100vh',
           }}
         >
           <Stack
             spacing={2}
             sx={{
-              alignItems: 'start', // Menjaga Header tetap di atas
+              alignItems: 'start',
               mx: 3,
               pb: 5,
               mt: { xs: 8, md: 0 },
