@@ -35,7 +35,7 @@ import { Link, useLocation } from 'react-router';
 
 const mainListItems = [
   { text: 'Dashboard', icon: <HomeRoundedIcon />, path: '/' },
-  { text: 'Akses System', icon: <AnalyticsRoundedIcon />, path: '/akses-system' },
+  { text: 'Akses Sistem', icon: <AnalyticsRoundedIcon />, path: '/akses-system' },
   { text: 'Kelas', icon: <PeopleRoundedIcon />, path: '/kelas' },
   { text: 'Mata Pelajaran', icon: <AssignmentRoundedIcon />, path: '/mata-pelajaran' },
   { text: 'Kode Jenis Ujian', icon: <AssignmentRoundedIcon />, path: '/kode-jenis-ujian' },

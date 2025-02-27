@@ -40,7 +40,7 @@ export default function NavbarBreadcrumbs() {
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
       <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Typography variant="body1">Dashboard</Typography>
+        <Typography variant="body1">CBT</Typography>
       </Link>
 
       {pathnames.map((value, index) => {

@@ -56,6 +56,9 @@ const data = [
 export default function MainGrid() {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+      <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
+        Dashboard
+      </Typography>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid item size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
@@ -74,7 +77,7 @@ export default function MainGrid() {
                 pl: 2,
                 mt: 1,
                 mb: 0,
-                listStyleType: 'disc'  // Menampilkan bullet points
+                listStyleType: 'disc'
               }}
             >
               <Box component="li"><Typography variant="body2">Mengelola seluruh aktivitas dalam sistem CBT.</Typography></Box>
@@ -101,21 +104,6 @@ export default function MainGrid() {
             <StatCard {...card} />
           </Grid>
         ))}
-      </Grid>
-      <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center">
-        <Grid item xs={12} md={6}>
-          <Typography component="h1" variant="h4" sx={{ mb: 2, mt: 6 }}>
-            Daftar Token Terbaru
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained">Download</Button>
-        </Grid>
-      </Grid>
-      <Grid container spacing={1} columns={12}>
-        <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid />
-        </Grid>
       </Grid>
       <Copyright sx={{ my: 4 }} />
     </Box>
