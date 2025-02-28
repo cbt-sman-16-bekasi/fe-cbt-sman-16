@@ -14,25 +14,6 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import { Link, useLocation } from 'react-router';
 
-// const mainListItems = [
-//   { text: 'Dashboard', icon: <HomeRoundedIcon /> },
-//   { text: 'Akses System', icon: <AnalyticsRoundedIcon /> },
-//   { text: 'Kelas', icon: <PeopleRoundedIcon /> },
-//   { text: 'Mata Pelajaran', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Kode Jenis Ujian', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Data Siswa', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Ujian', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Sesi Ujian', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Generate Token Ujian', icon: <AssignmentRoundedIcon /> },
-//   { text: 'Laporan Nilai', icon: <AssignmentRoundedIcon /> },
-// ];
-
-// const secondaryListItems = [
-//   { text: 'Settings', icon: <SettingsRoundedIcon /> },
-//   { text: 'About', icon: <InfoRoundedIcon /> },
-//   { text: 'Feedback', icon: <HelpRoundedIcon /> },
-// ];
-
 const mainListItems = [
   { text: 'Dashboard', icon: <HomeRoundedIcon />, path: '/' },
   { text: 'Akses Sistem', icon: <AnalyticsRoundedIcon />, path: '/akses-system' },
@@ -58,7 +39,7 @@ export default function MenuContent() {
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {mainListItems.map((item, index) => {
-          const isActive = location.pathname === item.path; // Cek apakah path saat ini cocok dengan item.path
+          const isActive = location.pathname === item.path;
           return (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -67,9 +48,12 @@ export default function MenuContent() {
                 style={{ textDecoration: 'none', color: 'inherit' }}
                 selected={isActive}
                 sx={{
-                  bgcolor: isActive ? 'primary.light' : 'inherit', // Warna background jika aktif
-                  color: isActive ? 'primary.dark' : 'inherit', // Warna teks jika aktif
-                  borderRadius: 2, // Membuat sudut lebih rounded
+                  bgcolor: isActive ? 'primary.light' : 'inherit',
+                  color: isActive ? 'primary.dark' : 'inherit',
+                  borderRadius: 2,
+                  px: 3,
+                  py: 2,
+                  minHeight: 48,
                 }}
               >
                 <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
@@ -95,6 +79,9 @@ export default function MenuContent() {
                   bgcolor: isActive ? 'primary.light' : 'inherit',
                   color: isActive ? 'primary.dark' : 'inherit',
                   borderRadius: 2,
+                  px: 3,
+                  py: 2,
+                  minHeight: 48,
                 }}
               >
                 <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>

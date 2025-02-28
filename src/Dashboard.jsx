@@ -18,6 +18,7 @@ import Akses from './components/Akses';
 import Kelas from './components/Kelas';
 import MataPelajaran from './components/MataPelajaran';
 import KodeJenisUjian from './components/KodeJenisUjian';
+import DataSiswa from './components/DataSiswa';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -64,7 +65,7 @@ export default function Dashboard(props) {
               <Route path="/kelas" element={<Kelas />} />
               <Route path="/mata-pelajaran" element={<MataPelajaran />} />
               <Route path="/kode-jenis-ujian" element={<KodeJenisUjian />} />
-              <Route path="/data-siswa" element={<Akses />} />
+              <Route path="/data-siswa" element={<DataSiswa />} />
               <Route path="/ujian" element={<Akses />} />
               <Route path="/sesi-ujian" element={<Akses />} />
               <Route path="/generate-token" element={<Akses />} />
