@@ -1,7 +1,7 @@
+import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
-import { columns, rows } from "../internals/data/gridData";
 
-export default function CustomizedDataGrid() {
+export default function CustomizedDataGrid({ columns, rows }) {
   return (
     <DataGrid
       checkboxSelection
@@ -10,6 +10,7 @@ export default function CustomizedDataGrid() {
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
       }
+      rowHeight={80}
       initialState={{
         pagination: { paginationModel: { pageSize: 20 } },
       }}
@@ -45,3 +46,14 @@ export default function CustomizedDataGrid() {
     />
   );
 }
+
+
+CustomizedDataGrid.propTypes = {
+  columns: PropTypes.array.isRequired,
+  rows: PropTypes.array.isRequired,
+};
+
+CustomizedDataGrid.defaultProps = {
+  columns: [],
+  rows: [],
+};

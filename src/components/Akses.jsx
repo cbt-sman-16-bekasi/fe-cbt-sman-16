@@ -1,59 +1,14 @@
-import * as React from 'react';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
-import ChartUserByCountry from './ChartUserByCountry';
-import CustomizedTreeView from './CustomizedTreeView';
 import CustomizedDataGrid from './CustomizedDataGrid';
-import PageViewsBarChart from './PageViewsBarChart';
-import SessionsChart from './SessionsChart';
-import StatCard from './StatCard';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-
-const data = [
-  {
-    title: 'Kelas',
-    value: '10',
-    interval: 'Last 30 days',
-    trend: 'up',
-  },
-  {
-    title: 'Mata Pelajaran',
-    value: '5',
-    interval: 'Last 30 days',
-    trend: 'down',
-  },
-  {
-    title: 'Data Siswa',
-    value: '945',
-    interval: 'Last 30 days',
-    trend: 'neutral',
-  },
-  {
-    title: 'Ujian',
-    value: '13',
-    interval: 'Last 30 days',
-    trend: 'up',
-  },
-  {
-    title: 'Sesi Ujian',
-    value: '11',
-    interval: 'Last 30 days',
-    trend: 'down',
-  },
-  {
-    title: 'Laporan Ujian',
-    value: '3',
-    interval: 'Last 30 days',
-    trend: 'neutral',
-  },
-];
+import { columns, rows } from "../internals/data/aksesData";
 
 export default function Akses() {
   return (
@@ -61,6 +16,7 @@ export default function Akses() {
       <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
         Hak Akses CBT
       </Typography>
+
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid item size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
@@ -127,7 +83,7 @@ export default function Akses() {
       </Grid>
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid />
+          <CustomizedDataGrid columns={columns} rows={rows} />
         </Grid>
       </Grid>
       <Copyright sx={{ my: 4 }} />

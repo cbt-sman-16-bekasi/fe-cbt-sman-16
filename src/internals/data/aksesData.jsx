@@ -65,13 +65,13 @@ function getHakAksesColor(status) {
 
   return (
     <Chip
+      variant='outlined'
       label={status}
       color={colors[status] || "default"}
       size="small"
     />
   );
 }
-
 
 export function renderAvatar(params) {
   if (params.value == null) {
