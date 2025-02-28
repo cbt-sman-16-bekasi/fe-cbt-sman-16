@@ -14,6 +14,7 @@ import { Button, InputAdornment, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from "@mui/icons-material/Search";
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 const data = [
   {
@@ -64,13 +65,13 @@ export default function Akses() {
         <Grid item size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight="bold">
-              Selamat, Anda Berhasil Login!
+              Akses Sistem
             </Typography>
             <Typography variant="body1" sx={{ mt: 1 }}>
-              Halo, <b>Nama Admin</b>! Selamat datang di sistem CBT. Saat ini, Anda memiliki status sebagai <b>Super Admin</b>.
+              Dalam sistem ini <b>Nama Admin</b>! terdapat dua jenis hak akses utama yang diberikan kepada pengguna, yaitu:
             </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              Sebagai <b>SUPER ADMIN</b>, Anda memiliki hak akses penuh untuk:
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              <b>1. Super Admin</b>
             </Typography>
             <Box
               component="ul"
@@ -81,34 +82,48 @@ export default function Akses() {
                 listStyleType: 'disc'
               }}
             >
-              <Box component="li"><Typography variant="body2">Mengelola seluruh aktivitas dalam sistem CBT.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Menambahkan, mengedit, atau menghapus ujian, data kelas, data peserta, dan token ujian.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengakses laporan ujian.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengatur laporan ujian.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengatur pengaturan sistem sesuai kebutuhan.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Super Admin memiliki hak tertinggi dalam sistem.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Mengakses dan mengelola seluruh menu dan fitur yang ada dalam sistem.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Menambahkan, mengedit, dan menghapus data pengguna termasuk admin dan guru.</Typography></Box>
+            </Box>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              <b>2. Guru</b>
+            </Typography>
+            <Box
+              component="ul"
+              sx={{
+                pl: 2,
+                mt: 1,
+                mb: 0,
+                listStyleType: 'disc'
+              }}
+            >
+              <Box component="li"><Typography variant="body2">Guru memiliki hak akases yang lebih terbatas, fokus pada pengelolaan ujian dan penilaian.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Mengatur setting ujian, termasuk jadwal, durasu, dan aturan ujian, mengakses dan mengunduh laporan nilai siswa untuk ujian yang mereka kelola.</Typography></Box>
             </Box>
           </Alert>
         </Grid>
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained">+ Tambah</Button>
+        <Grid item size={{ lg: 1 }} sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item lg={4}>
           <TextField
             variant="outlined"
             placeholder="Cari..."
             fullWidth
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              endAdornment: (
+                <InputAdornment position="end">
                   <SearchIcon />
                 </InputAdornment>
               ),
             }}
           />
         </Grid>
+
       </Grid>
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>

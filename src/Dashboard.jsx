@@ -15,6 +15,7 @@ import {
 } from './theme/customizations';
 import { Route, Routes } from 'react-router';
 import Akses from './components/Akses';
+import Kelas from './components/Kelas';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -58,7 +59,7 @@ export default function Dashboard(props) {
             <Routes>
               <Route path="/" element={<MainGrid />} />
               <Route path="/akses-system" element={<Akses />} />
-              <Route path="/kelas" element={<Akses />} />
+              <Route path="/kelas" element={<Kelas />} />
               <Route path="/mata-pelajaran" element={<Akses />} />
               <Route path="/kode-jenis-ujian" element={<Akses />} />
               <Route path="/data-siswa" element={<Akses />} />
