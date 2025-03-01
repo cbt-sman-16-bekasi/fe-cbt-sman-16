@@ -10,13 +10,21 @@ export default function CustomizedDataGrid({ columns, rows }) {
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
       }
-      rowHeight={80}
+      getRowHeight={() => 'auto'}
       initialState={{
         pagination: { paginationModel: { pageSize: 20 } },
       }}
       pageSizeOptions={[10, 20, 50]}
       disableColumnResize
-      density="compact"
+      density="comfortable"
+      sx={{
+        "& .MuiDataGrid-cell": {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'start',
+          py: "12px",
+        },
+      }}
       slotProps={{
         filterPanel: {
           filterFormProps: {

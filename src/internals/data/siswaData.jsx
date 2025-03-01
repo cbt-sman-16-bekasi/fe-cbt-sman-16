@@ -4,9 +4,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export const columns = [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-  { field: "kodeKelas", headerName: "KODE KELAS", flex: 1, minWidth: 120 },
-  { field: "namaKelas", headerName: "NAMA KELAS", flex: 1.5, minWidth: 150 },
-  { field: "jumlahSiswa", headerName: "JUMLAH SISWA", flex: 1, minWidth: 120 },
+  { field: "nisn", headerName: "NISN", flex: 0.5, minWidth: 120 },
+  { field: "namaSiswa", headerName: "NAMA SISWA", flex: 1.5, minWidth: 150 },
+  { field: "jenisKelamin", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120 },
+  { field: "kelas", headerName: "KELAS", flex: 1, minWidth: 120 },
   {
     field: "aksi",
     headerName: "AKSI",
@@ -43,22 +44,25 @@ export const rows = [
   {
     id: 1,
     no: 1,
-    kodeKelas: "00002335459",
-    namaKelas: "Khalih Warna, S.Pd",
-    jumlahSiswa: "khaliwarna",
+    nisn: "00002335459",
+    namaSiswa: "Khalih Warna, S.Pd",
+    jenisKelamin: 'laki - laki',
+    kelas: "khaliwarna",
   },
   {
     id: 2,
     no: 2,
-    kodeKelas: "00012345678",
-    namaKelas: "Budi Santoso, M.Pd",
-    jumlahSiswa: "budisantoso",
+    nisn: "00012345678",
+    namaSiswa: "Budi Santoso, M.Pd",
+    jenisKelamin: 'laki - laki',
+    kelas: "budisantoso",
   },
   {
     id: 3,
     no: 3,
-    kodeKelas: "00087654321",
-    namaKelas: "Siti Aminah, S.Pd",
-    jumlahSiswa: "sitiaminah",
+    nisn: "00087654321",
+    namaSiswa: "Siti Aminah, S.Pd",
+    jenisKelamin: 'laki - laki',
+    kelas: "sitiaminah",
   },
 ];
