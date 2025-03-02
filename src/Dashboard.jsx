@@ -24,6 +24,7 @@ import {
   datePickersCustomizations,
   treeViewCustomizations,
 } from './theme/customizations';
+import LayoutTambah from './components/LayoutTambah';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -67,7 +68,11 @@ export default function Dashboard(props) {
             <Routes>
               <Route path="/" element={<MainGrid />} />
               <Route path="/akses-system" element={<Akses />} />
+              <Route path="/akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
+
               <Route path="/kelas" element={<Kelas />} />
+              <Route path="/kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
+
               <Route path="/mata-pelajaran" element={<MataPelajaran />} />
               <Route path="/kode-jenis-ujian" element={<KodeJenisUjian />} />
               <Route path="/data-siswa" element={<DataSiswa />} />
@@ -82,6 +87,5 @@ export default function Dashboard(props) {
         </Box>
       </Box>
     </AppTheme>
-
   );
 }
