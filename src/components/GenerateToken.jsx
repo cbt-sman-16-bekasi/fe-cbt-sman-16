@@ -116,7 +116,7 @@ export default function GenerateToken() {
               color: "white",
               fontWeight: "bold",
               px: 6,
-              py: 3.5,
+              // py: 3.5,
               fontSize: "16px",
               "&:hover": { backgroundColor: "darkviolet" },
             }}

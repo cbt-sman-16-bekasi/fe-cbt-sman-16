@@ -17,12 +17,12 @@ export default function DataSiswa() {
       </Typography>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid item size={{ lg: 1 }}>
-          <Button variant="contained" fullWidth className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
+        <Grid item size={{ lg: 1.5 }}>
+          <Button fullWidth variant="contained" fullWidth className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1 }}>
-          <Button variant="contained" color='success' fullWidth><UploadFileOutlinedIcon /> Import</Button>
+        <Grid item size={{ lg: 1.5 }}>
+          <Button fullWidth variant="contained" color='success' fullWidth><UploadFileOutlinedIcon /> Import</Button>
         </Grid>
 
         <Grid item size={{ lg: 3 }}>

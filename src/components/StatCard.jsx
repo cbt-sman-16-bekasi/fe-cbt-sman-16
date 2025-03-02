@@ -1,29 +1,14 @@
 import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+// import { useTheme } from '@mui/material/styles';
+// import Card from '@mui/material/Card';
+// import CardContent from '@mui/material/CardContent';
+// import Stack from '@mui/material/Stack';
+// import Typography from '@mui/material/Typography';
+import { Link } from 'react-router';
 
-function StatCard({ title, value, interval, trend, data }) {
+function StatCard({ title, value, link }) {
 
   return (
-    // <Card variant="outlined" sx={{ height: '100%', flexGrow: 1, pb: '0' }} >
-    //   <CardContent className='flex flex-col gap-5 w-full h-full relative'>
-    //     <div className="summary-content">
-    //       <Typography gutterBottom variant='p' sx={{ color: 'text.secondary', fontSize: '4rem', fontWeight: 'bold', display: 'block', p: 0, m: 0 }}>
-    //         {value}
-    //       </Typography>
-    //       <Typography variant="p" sx={{ p: 0, mb: 10 }}>
-    //         {title}
-    //       </Typography>
-    //     </div>
-    //     <div className="summary-cta p-5 bg-slate-900 mb-2">
-    //       <Typography sx={{ color: 'text.secondary' }}>lihat detail</Typography>
-    //     </div>
-    //   </CardContent>
-    // </Card >
-
     <div className="h-full rounded-2xl overflow-hidden shadow-lg">
       {/* Bagian Atas */}
       <div className="bg-purple-600 p-7 flex flex-col gap-2 relative">
@@ -46,19 +31,36 @@ function StatCard({ title, value, interval, trend, data }) {
       </div>
 
       {/* Bagian Bawah */}
-      <div className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-        <span>Lihat Detail</span>
-        <span>→</span>
-      </div>
+      <Link to={link} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+        <span className='text-white'>Lihat Detail</span>
+        <span className='text-white'>→</span>
+      </Link>
     </div>
   );
 }
 
 StatCard.propTypes = {
-  interval: PropTypes.string.isRequired,
+  // interval: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
+  link: PropTypes.string.isRequired,
+  // trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
   value: PropTypes.string.isRequired,
 };
 
 export default StatCard;
+
+// <Card variant="outlined" sx={{ height: '100%', flexGrow: 1, pb: '0' }} >
+//   <CardContent className='flex flex-col gap-5 w-full h-full relative'>
+//     <div className="summary-content">
+//       <Typography gutterBottom variant='p' sx={{ color: 'text.secondary', fontSize: '4rem', fontWeight: 'bold', display: 'block', p: 0, m: 0 }}>
+//         {value}
+//       </Typography>
+//       <Typography variant="p" sx={{ p: 0, mb: 10 }}>
+//         {title}
+//       </Typography>
+//     </div>
+//     <div className="summary-cta p-5 bg-slate-900 mb-2">
+//       <Typography sx={{ color: 'text.secondary' }}>lihat detail</Typography>
+//     </div>
+//   </CardContent>
+// </Card >

@@ -16,8 +16,8 @@ export default function KodeJenisUjian() {
       </Typography>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid item size={{ lg: 1 }} sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
+        <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
+          <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
         </Grid>
         <Grid item lg={4}>
           <TextField

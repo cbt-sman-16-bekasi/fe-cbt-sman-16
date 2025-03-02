@@ -152,10 +152,10 @@ export const getDesignTokens = (mode) => {
       },
       action: {
         hover: alpha(gray[200], 0.2),
-        selected: `${alpha(gray[200], 0.3)}`,
+        selected: "#9366FE",
         ...(mode === 'dark' && {
           hover: alpha(gray[600], 0.2),
-          selected: alpha(gray[600], 0.3),
+          selected: "#9366FE",
         }),
       },
     },
@@ -260,7 +260,7 @@ export const colorSchemes = {
       },
       action: {
         hover: alpha(gray[200], 0.2),
-        selected: `${alpha(gray[200], 0.3)}`,
+        selected: "#9366FE",
       },
       baseShadow:
         'hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px',
@@ -309,7 +309,7 @@ export const colorSchemes = {
       },
       action: {
         hover: alpha(gray[600], 0.2),
-        selected: alpha(gray[600], 0.3),
+        selected: "#9366FE",
       },
       baseShadow:
         'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',

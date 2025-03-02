@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
-import { Alert, Button, Card, CardContent, MenuItem, Paper, TextField } from '@mui/material';
+import { Alert, Card, CardContent, MenuItem, Paper, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { columns, rows } from "../internals/data/laporanNilaiData";
 import { useState } from 'react';

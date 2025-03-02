@@ -7,12 +7,6 @@ import Header from './components/Header';
 import MainGrid from './components/MainGrid';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import {
-  chartsCustomizations,
-  dataGridCustomizations,
-  datePickersCustomizations,
-  treeViewCustomizations,
-} from './theme/customizations';
 import { Route, Routes } from 'react-router';
 import Akses from './components/Akses';
 import Kelas from './components/Kelas';
@@ -23,6 +17,13 @@ import Ujian from './components/Ujian';
 import SesiUjian from './components/SesiUjian';
 import GenerateToken from './components/GenerateToken';
 import LaporanNilai from './components/LaporanNilai';
+
+import {
+  chartsCustomizations,
+  dataGridCustomizations,
+  datePickersCustomizations,
+  treeViewCustomizations,
+} from './theme/customizations';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -81,5 +82,6 @@ export default function Dashboard(props) {
         </Box>
       </Box>
     </AppTheme>
+
   );
 }
