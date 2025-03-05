@@ -1,11 +1,11 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import { Button, MenuItem, TextField } from '@mui/material';
+import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function TambahKelas({ setError }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+export default function TambahMapel({ setError }) {
+  const [namaMapel, setNamaMapel] = useState('')
+  const [kodeKelas, setKodeKelas] = useState('')
 
   return (
     <>
@@ -14,12 +14,12 @@ export default function TambahKelas({ setError }) {
 
         <Grid item size={{ sm: 12, lg: 6 }} >
           <Typography variant="subtitle1" fontWeight="bold">
-            Username
+            Nama Mata Pelajaran
           </Typography>
           <TextField
             fullWidth
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={namaMapel}
+            onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
           </TextField>
@@ -27,15 +27,21 @@ export default function TambahKelas({ setError }) {
 
         <Grid item size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Password
+            Kode Kelas
           </Typography>
+
           <TextField
             fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            select
+            value={kodeKelas}
+            onChange={(e) => setKodeKelas(e.target.value)}
             variant="outlined"
           >
+            <MenuItem value="10">10</MenuItem>
+            <MenuItem value="11">11</MenuItem>
+            <MenuItem value="12">12</MenuItem>
           </TextField>
+
         </Grid>
       </Grid>
 

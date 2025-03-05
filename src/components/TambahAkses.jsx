@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function TambahAkses() {
+export default function TambahAkses({ setError }) {
   const [nuptk, setNuptk] = useState('')
   const [namaGuru, setNamaGuru] = useState('')
   const [username, setUsername] = useState('')
@@ -15,7 +15,7 @@ export default function TambahAkses() {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ lg: 6 }}>
+        <Grid item size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             NUPTK
           </Typography>
@@ -28,7 +28,7 @@ export default function TambahAkses() {
           </TextField>
         </Grid>
 
-        <Grid item size={{ lg: 6 }}>
+        <Grid item size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Guru
           </Typography>
@@ -41,9 +41,10 @@ export default function TambahAkses() {
           </TextField>
         </Grid>
       </Grid>
+
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ lg: 6 }}>
+        <Grid item size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Username
           </Typography>
@@ -56,7 +57,7 @@ export default function TambahAkses() {
           </TextField>
         </Grid>
 
-        <Grid item size={{ lg: 6 }}>
+        <Grid item size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Password
           </Typography>
@@ -69,6 +70,7 @@ export default function TambahAkses() {
           </TextField>
         </Grid>
       </Grid>
+
       <Grid container spacing={3} alignItems="center" columns={12}>
         <Grid item size={{ lg: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold">
@@ -131,9 +133,9 @@ export default function TambahAkses() {
 
       </Grid>
 
-      <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={4}>
+      <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
         <Grid item size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
         <Grid item size={{ lg: 1.5 }}>

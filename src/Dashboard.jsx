@@ -74,6 +74,8 @@ export default function Dashboard(props) {
               <Route path="/kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
 
               <Route path="/mata-pelajaran" element={<MataPelajaran />} />
+              <Route path="/mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
+
               <Route path="/kode-jenis-ujian" element={<KodeJenisUjian />} />
               <Route path="/data-siswa" element={<DataSiswa />} />
               <Route path="/ujian" element={<Ujian />} />

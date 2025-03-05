@@ -30,6 +30,10 @@ const breadcrumbNameMap = {
   '/settings': 'Settings',
 };
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 export default function NavbarBreadcrumbs() {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
@@ -46,6 +50,7 @@ export default function NavbarBreadcrumbs() {
       {pathnames.map((value, index) => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
         const isLast = index === pathnames.length - 1;
+        const breadcrumbLabel = breadcrumbNameMap[to] || capitalizeFirstLetter(value);
 
         return isLast ? (
           <Typography
@@ -53,11 +58,11 @@ export default function NavbarBreadcrumbs() {
             variant="body1"
             sx={{ color: 'text.primary', fontWeight: 600 }}
           >
-            {breadcrumbNameMap[to] || value}
+            {breadcrumbLabel}
           </Typography>
         ) : (
           <Link key={to} to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Typography variant="body1">{breadcrumbNameMap[to] || value}</Typography>
+            <Typography variant="body1">{breadcrumbLabel}</Typography>
           </Link>
         );
       })}
