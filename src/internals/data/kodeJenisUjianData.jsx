@@ -26,14 +26,14 @@ export const columns = [
   {
     field: "kodeUjian",
     headerName: "KODE UJIAN",
-    flex: 0.5,
+    flex: 1,
     minWidth: 120,
     renderCell: (params) => getChipColor(params.value),
   },
   {
     field: "hakAkses",
     headerName: "HAK AKSES",
-    flex: 0.5,
+    flex: 1,
     minWidth: 120,
     renderCell: (params) => getChipColor(params.value),
   },

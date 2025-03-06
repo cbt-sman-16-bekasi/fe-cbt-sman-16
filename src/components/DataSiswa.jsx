@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import { columns, rows } from '../internals/data/siswaData';
+import { Link } from 'react-router';
 
 export default function DataSiswa() {
   return (
@@ -18,7 +19,9 @@ export default function DataSiswa() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid item size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
+          <Link to='/data-siswa/tambah'>
+            <Button fullWidth variant="contained" className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
+          </Link>
         </Grid>
 
         <Grid item size={{ lg: 1.5 }}>

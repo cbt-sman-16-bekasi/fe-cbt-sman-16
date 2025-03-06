@@ -11,6 +11,8 @@ import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import { useState } from 'react';
 import TambahMapel from './TambahMapel';
+import TambahKodeUjian from './TambahKodeUjian';
+import TambahDataSiswa from './TambahDataSiswa';
 
 export default function LayoutTambah({ desc }) {
   const location = useLocation();
@@ -25,6 +27,10 @@ export default function LayoutTambah({ desc }) {
         return <TambahKelas setError={handleDisplayError} />
       case "/mata-pelajaran/tambah":
         return <TambahMapel setError={handleDisplayError} />
+      case "/kode-jenis-ujian/tambah":
+        return <TambahKodeUjian setError={handleDisplayError} />
+      case "/data-siswa/tambah":
+        return <TambahDataSiswa setError={handleDisplayError} />
       default:
         return <Typography>Konten tidak tersedia</Typography>
     }

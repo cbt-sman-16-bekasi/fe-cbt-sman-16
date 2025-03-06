@@ -7,6 +7,7 @@ import { Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, rows } from "../internals/data/kodeJenisUjianData";
+import { Link } from 'react-router';
 
 export default function KodeJenisUjian() {
   return (
@@ -17,7 +18,9 @@ export default function KodeJenisUjian() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
+          <Link to='/kode-jenis-ujian/tambah'>
+            <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
+          </Link>
         </Grid>
         <Grid item lg={4}>
           <TextField

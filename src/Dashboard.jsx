@@ -25,6 +25,7 @@ import {
   treeViewCustomizations,
 } from './theme/customizations';
 import LayoutTambah from './components/LayoutTambah';
+import BankSoal from './components/BankSoal';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -77,7 +78,12 @@ export default function Dashboard(props) {
               <Route path="/mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
 
               <Route path="/kode-jenis-ujian" element={<KodeJenisUjian />} />
+              <Route path="/kode-jenis-ujian/tambah" element={<LayoutTambah desc="Kode Jenis Ujian" />} />
+
               <Route path="/data-siswa" element={<DataSiswa />} />
+              <Route path="/data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
+
+              <Route path="/bank-soal" element={<BankSoal />} />
               <Route path="/ujian" element={<Ujian />} />
               <Route path="/sesi-ujian" element={<SesiUjian />} />
               <Route path="/generate-token" element={<GenerateToken />} />

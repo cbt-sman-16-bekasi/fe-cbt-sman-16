@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function TambahMapel({ setError }) {
+export default function TambahKodeUjian({ setError }) {
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
 
@@ -32,6 +32,24 @@ export default function TambahMapel({ setError }) {
 
           <TextField
             fullWidth
+            value={kodeKelas}
+            onChange={(e) => setKodeKelas(e.target.value)}
+            variant="outlined"
+          >
+          </TextField>
+
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={3} alignItems="center" columns={12} sx={{ padding: '0px' }}>
+
+        <Grid item size={{ sm: 12, lg: 12 }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            Kode Kelas
+          </Typography>
+
+          <TextField
+            fullWidth
             select
             value={kodeKelas}
             onChange={(e) => setKodeKelas(e.target.value)}
@@ -45,7 +63,7 @@ export default function TambahMapel({ setError }) {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={2}>
+      <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
         <Grid item size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>

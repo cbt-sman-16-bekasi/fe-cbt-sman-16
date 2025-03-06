@@ -23,8 +23,8 @@ function getChipColor(status) {
 
 export const columns = [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-  { field: "namaUjian", headerName: "NAMA UJIAN", flex: 0.5, minWidth: 120 },
-  { field: "namaMapel", headerName: "NAMA MATA PELAJARAN", flex: 1.5, minWidth: 150 },
+  { field: "namaUjian", headerName: "NAMA UJIAN", flex: 1, minWidth: 120 },
+  { field: "namaMapel", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 150 },
   { field: "kelas", headerName: "KELAS", flex: 1, minWidth: 120 },
   {
     field: "jenisUjian",
@@ -37,7 +37,7 @@ export const columns = [
   {
     field: "aksi",
     headerName: "AKSI",
-    flex: 0.8,
+    flex: 1,
     minWidth: 120,
     renderCell: () => (
       <div style={{ display: "flex", gap: "8px", alignItems: "center", height: '100%' }}>
