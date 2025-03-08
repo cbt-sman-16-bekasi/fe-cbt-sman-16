@@ -5,35 +5,20 @@ import Copyright from '../internals/components/Copyright';
 import { Button, Card, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
-import TambahAkses from './TambahAkses';
-import TambahKelas from './TambahKelas';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import { useState } from 'react';
-import TambahMapel from './TambahMapel';
-import TambahKodeUjian from './TambahKodeUjian';
-import TambahDataSiswa from './TambahDataSiswa';
-import TambahUjian from './TambahUjian';
+import ImportDataSiswa from './ImportDataSiswa';
 
-export default function LayoutTambah({ desc }) {
+export default function LayoutImport({ desc }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [displayError, setDisplayError] = useState(true);
 
   const renderContent = () => {
     switch (location.pathname) {
-      case "/akses-system/tambah":
-        return <TambahAkses setError={handleDisplayError} />
-      case "/kelas/tambah":
-        return <TambahKelas setError={handleDisplayError} />
-      case "/mata-pelajaran/tambah":
-        return <TambahMapel setError={handleDisplayError} />
-      case "/kode-jenis-ujian/tambah":
-        return <TambahKodeUjian setError={handleDisplayError} />
-      case "/data-siswa/tambah":
-        return <TambahDataSiswa setError={handleDisplayError} />
-      case "/ujian/tambah":
-        return <TambahUjian setError={handleDisplayError} />
+      case "/data-siswa/import":
+        return <ImportDataSiswa setError={handleDisplayError} />
       default:
         return <Typography>Konten tidak tersedia</Typography>
     }
@@ -69,10 +54,6 @@ export default function LayoutTambah({ desc }) {
         </Grid>
       </Grid>
 
-      <Typography component="h4" variant="h4" sx={{ mb: 2 }}>
-        {desc}
-      </Typography>
-
       {displayError && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
           <Grid item size={{ lg: 12 }}>
@@ -89,7 +70,7 @@ export default function LayoutTambah({ desc }) {
       )}
 
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
-        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
+        <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '1.3rem' }}>
           {renderContent()}
         </CardContent>
       </Card>
@@ -100,6 +81,6 @@ export default function LayoutTambah({ desc }) {
 }
 
 
-LayoutTambah.propTypes = {
+LayoutImport.propTypes = {
   desc: PropTypes.string.isRequired,
 }

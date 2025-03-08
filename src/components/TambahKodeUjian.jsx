@@ -14,7 +14,7 @@ export default function TambahKodeUjian({ setError }) {
 
         <Grid item size={{ sm: 12, lg: 6 }} >
           <Typography variant="subtitle1" fontWeight="bold">
-            Nama Mata Pelajaran
+            Jenis Ujian
           </Typography>
           <TextField
             fullWidth
@@ -27,7 +27,7 @@ export default function TambahKodeUjian({ setError }) {
 
         <Grid item size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Kode Kelas
+            Buat Kode Ujian
           </Typography>
 
           <TextField
@@ -45,7 +45,7 @@ export default function TambahKodeUjian({ setError }) {
 
         <Grid item size={{ sm: 12, lg: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Kode Kelas
+            Pilih Akses
           </Typography>
 
           <TextField
@@ -55,9 +55,9 @@ export default function TambahKodeUjian({ setError }) {
             onChange={(e) => setKodeKelas(e.target.value)}
             variant="outlined"
           >
-            <MenuItem value="10">10</MenuItem>
-            <MenuItem value="11">11</MenuItem>
-            <MenuItem value="12">12</MenuItem>
+            <MenuItem value="10">Admin</MenuItem>
+            <MenuItem value="11">Admin</MenuItem>
+            <MenuItem value="12">Admin</MenuItem>
           </TextField>
 
         </Grid>

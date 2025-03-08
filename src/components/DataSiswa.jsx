@@ -25,7 +25,9 @@ export default function DataSiswa() {
         </Grid>
 
         <Grid item size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'><UploadFileOutlinedIcon /> Import</Button>
+          <Link to='/data-siswa/import'>
+            <Button fullWidth variant="contained" color='success'><UploadFileOutlinedIcon /> Import</Button>
+          </Link>
         </Grid>
 
         <Grid item size={{ lg: 3 }}>

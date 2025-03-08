@@ -26,6 +26,7 @@ import {
 } from './theme/customizations';
 import LayoutTambah from './components/LayoutTambah';
 import BankSoal from './components/BankSoal';
+import LayoutImport from './components/LayoutImport';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -82,9 +83,13 @@ export default function Dashboard(props) {
 
               <Route path="/data-siswa" element={<DataSiswa />} />
               <Route path="/data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
+              <Route path="/data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
 
               <Route path="/bank-soal" element={<BankSoal />} />
+
               <Route path="/ujian" element={<Ujian />} />
+              <Route path="/ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />
+
               <Route path="/sesi-ujian" element={<SesiUjian />} />
               <Route path="/generate-token" element={<GenerateToken />} />
               <Route path="/laporan-nilai" element={<LaporanNilai />} />

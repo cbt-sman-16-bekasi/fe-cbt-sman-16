@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import 'tailwindcss';
 
 :root {
@@ -71,4 +72,55 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ckEditor styles */
+
+.main-container {
+  font-family: 'Lato';
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ck-content {
+  font-family: 'Lato';
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+  min-width: 795px;
+  /* max-width: 795px; */
+  width: 100%;
+}
+
+.editor_container__word-count .ck-word-count {
+  /* color: var(--ck-color-text); */
+  display: flex;
+  height: 20px;
+  gap: var(--ck-spacing-small);
+  align-items: center;
+  justify-content: flex-end;
+  font-size: var(--ck-font-size-base);
+  line-height: var(--ck-line-height-base);
+  font-family: var(--ck-font-face);
+  padding: var(--ck-spacing-small) var(--ck-spacing-standard);
+}
+
+.editor-container_include-word-count.editor-container_classic-editor
+  .editor_container__word-count {
+  border: 1px solid var(--ck-color-base-border);
+  border-radius: var(--ck-border-radius);
+  border-radius: 0 0 8px 8px;
+  border-top: none;
+}
+
+.editor-container_include-word-count.editor-container_classic-editor
+  .editor-container__editor
+  .ck-editor
+  .ck-editor__editable {
+  border-radius: 0;
 }
