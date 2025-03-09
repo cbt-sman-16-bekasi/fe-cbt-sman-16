@@ -14,6 +14,8 @@ import TambahMapel from './TambahMapel';
 import TambahKodeUjian from './TambahKodeUjian';
 import TambahDataSiswa from './TambahDataSiswa';
 import TambahUjian from './TambahUjian';
+import TambahSesiUjian from './TambahSesiUjian';
+import TambahBankSoal from './TambahBankSoal';
 
 export default function LayoutTambah({ desc }) {
   const location = useLocation();
@@ -34,6 +36,10 @@ export default function LayoutTambah({ desc }) {
         return <TambahDataSiswa setError={handleDisplayError} />
       case "/ujian/tambah":
         return <TambahUjian setError={handleDisplayError} />
+      case "/sesi-ujian/tambah":
+        return <TambahSesiUjian setError={handleDisplayError} />
+      case "/bank-soal/tambah":
+        return <TambahBankSoal setError={handleDisplayError} />
       default:
         return <Typography>Konten tidak tersedia</Typography>
     }

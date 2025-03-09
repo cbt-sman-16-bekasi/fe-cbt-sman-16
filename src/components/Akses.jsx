@@ -12,6 +12,7 @@ import { columns, rows } from "../internals/data/aksesData";
 import { Link } from 'react-router';
 
 export default function Akses() {
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
@@ -68,7 +69,7 @@ export default function Akses() {
             <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>
-        <Grid item lg={4}>
+        <Grid item size={{ lg: 4 }}>
           <TextField
             variant="outlined"
             placeholder="Cari..."
@@ -84,6 +85,7 @@ export default function Akses() {
         </Grid>
 
       </Grid>
+
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
           <CustomizedDataGrid columns={columns} rows={rows} />

@@ -1,3 +1,4 @@
+import { PanoramaWideAngleSelect } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 export const columns = [
@@ -19,13 +20,13 @@ export const columns = [
       </div>
     ),
   },
-  { field: "totalSiswa", headerName: "TOTAL SISWA", flex: 0.5, minWidth: 100 },
+  { field: "totalSiswa", headerName: "TOTAL SISWA", flex: 1, minWidth: 100 },
   {
     field: "aksi",
     headerName: "AKSI",
-    flex: 0.3,
+    flex: 1,
     minWidth: 120,
-    renderCell: () => (
+    renderCell: (params) => (
       <Button
         variant="contained"
         sx={{
@@ -34,12 +35,27 @@ export const columns = [
           textTransform: "none",
           "&:hover": { backgroundColor: "darkviolet" },
         }}
+        onClick={() => handleDownload(params.row.fileUrl, params.row.namaUjian)}
       >
         Unduh
       </Button>
     ),
   },
 ];
+
+const handleDownload = (fileUrl, namaUjian) => {
+  if (!fileUrl) {
+    alert('File tidak tersedia')
+    return;
+  }
+
+  const link = document.createElement('a');
+  link.href = fileUrl;
+  link.download = `${namaUjian}.xlsx`
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 
 export const rows = [

@@ -33,7 +33,7 @@ export default function LaporanNilai() {
             icon={<CheckIcon fontSize="inherit" />}
             variant="outlined"
             severity="info"
-            sx={{ p: 2, backgroundColor: "#E3EAFD", borderColor: "#C1C7F0" }}
+            sx={{ p: 2 }}
           >
             <Typography variant="h6" fontWeight="bold">
               Perhatian!

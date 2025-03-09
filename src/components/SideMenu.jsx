@@ -8,7 +8,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
-import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
 
 const drawerWidth = 240;
@@ -38,11 +37,26 @@ export default function SideMenu() {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
           mt: 'calc(var(--template-frame-height, 0px) + 4px)',
-          p: 1.5,
+          p: 1,
         }}
       >
-        <img src="" alt="" />
+        <img
+          src="/logo-sman16.png"
+          alt="logo sekolah"
+          style={{
+            width: "100px",
+            height: "auto",
+            maxWidth: "150px",
+          }}
+        />
+        <Typography variant='subtitle1' fontWeight='bold'>
+          CBT SYSTEM SMAN 16 BEKASI
+        </Typography>
         {/* <SelectContent /> */}
       </Box>
       <Divider />

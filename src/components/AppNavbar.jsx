@@ -63,7 +63,8 @@ export default function AppNavbar() {
             spacing={1}
             sx={{ justifyContent: 'center', mr: 'auto' }}
           >
-            <CustomIcon />
+            {/* <CustomIcon /> */}
+            <img src="/logo-sman16.png" alt="logo sekolah" className='h-[35px]' />
             <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
               Dashboard
             </Typography>

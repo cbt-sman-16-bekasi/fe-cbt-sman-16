@@ -84,7 +84,7 @@ export default function TambahUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
         <Grid item size={{ lg: 12 }}>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>
             Deskripsi Ujian
           </Typography>
 

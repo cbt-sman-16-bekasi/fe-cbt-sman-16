@@ -21,15 +21,17 @@ const mainListItems = [
   { text: 'Mata Pelajaran', icon: <AssignmentRoundedIcon />, path: '/mata-pelajaran' },
   { text: 'Kode Jenis Ujian', icon: <AssignmentRoundedIcon />, path: '/kode-jenis-ujian' },
   { text: 'Data Siswa', icon: <AssignmentRoundedIcon />, path: '/data-siswa' },
+  { text: 'Bank Soal', icon: <AssignmentRoundedIcon />, path: '/bank-soal' },
   { text: 'Ujian', icon: <AssignmentRoundedIcon />, path: '/ujian' },
   { text: 'Sesi Ujian', icon: <AssignmentRoundedIcon />, path: '/sesi-ujian' },
   { text: 'Generate Token Ujian', icon: <AssignmentRoundedIcon />, path: '/generate-token' },
   { text: 'Laporan Nilai', icon: <AssignmentRoundedIcon />, path: '/laporan-nilai' },
+  { text: 'Informasi Sekolah', icon: <AssignmentRoundedIcon />, path: '/informasi-sekolah' },
 ];
 
-const secondaryListItems = [
-  { text: 'Settings', icon: <SettingsRoundedIcon />, path: '/settings' },
-];
+// const secondaryListItems = [
+//   { text: 'Settings', icon: <SettingsRoundedIcon />, path: '/settings' },
+// ];
 
 
 export default function MenuContent() {
@@ -65,7 +67,7 @@ export default function MenuContent() {
           );
         })}
       </List>
-      <List dense>
+      {/* <List dense>
         {secondaryListItems.map((item, index) => {
           const isActive = location.pathname === item.path;
           return (
@@ -92,7 +94,7 @@ export default function MenuContent() {
             </ListItem>
           );
         })}
-      </List>
+      </List> */}
     </Stack>
   );
 }

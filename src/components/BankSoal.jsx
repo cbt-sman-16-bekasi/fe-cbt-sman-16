@@ -6,7 +6,7 @@ import CustomizedDataGrid from './CustomizedDataGrid';
 import { Alert, Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns, rows } from "../internals/data/ujianData";
+import { columns, rows } from "../internals/data/bankSoalData";
 import { Link } from 'react-router';
 import CheckIcon from '@mui/icons-material/Check';
 
