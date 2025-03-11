@@ -10,7 +10,6 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
-import CardAlert from './CardAlert';
 
 function SideMenuMobile({ open, toggleDrawer }) {
   return (
