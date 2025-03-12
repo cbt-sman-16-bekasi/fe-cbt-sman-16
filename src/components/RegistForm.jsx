@@ -2,7 +2,6 @@ import { useState } from "react";
 import Grid from '@mui/material/Grid2';
 import {
   Card,
-  Alert,
   CardContent,
   TextField,
   InputAdornment,
@@ -15,9 +14,8 @@ import {
   Container,
 } from "@mui/material";
 import { Visibility, VisibilityOff, Person, Lock } from "@mui/icons-material";
-import CheckIcon from '@mui/icons-material/Check';
 
-const LoginForm = () => {
+const RegistForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -45,18 +43,6 @@ const LoginForm = () => {
         {/* Form Login */}
         <CardContent>
           <Grid container spacing={2} columns={12} sx={{ p: 1 }}>
-            {/* <Grid item size={{ lg: 12 }}>
-              <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined"
-                severity="info"
-                sx={{ p: 2 }}>
-                <Typography variant="h6" fontWeight="bold">
-                  Perhatian!
-                </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                  Silahkan klik Generate Token untuk dapat mendapatkan token yang akan diberikan ke siswa. Masa aktif token berlaku selama satu hari.
-                </Typography>
-              </Alert>
-            </Grid> */}
 
             <Grid item size={{ lg: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
               <Typography variant="subtitle2" fontWeight="bold" >
@@ -128,4 +114,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegistForm;

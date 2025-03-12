@@ -13,6 +13,7 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import { Link, useLocation } from 'react-router';
+import { icons, menuConfig } from '../config/menuConfig';
 
 const mainListItems = [
   { text: 'Dashboard', icon: <HomeRoundedIcon />, path: '/' },
@@ -34,19 +35,23 @@ const mainListItems = [
 // ];
 
 
-export default function MenuContent() {
+export default function MenuContent({ role }) {
+  const menuItems = menuConfig[role] || [];
   const location = useLocation()
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
-        {mainListItems.map((item, index) => {
+        {/* {mainListItems.map((item, index) => { */}
+        {menuItems.map((item, index) => {
+          const IconComponent = icons[item.icon];
           const isActive = location.pathname === item.path;
+          const path = `/${role}${item.path}`;
           return (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 component={Link}
-                to={item.path}
+                to={path}
                 style={{ textDecoration: 'none', color: 'inherit' }}
                 selected={isActive}
                 sx={{
@@ -59,7 +64,8 @@ export default function MenuContent() {
                 }}
               >
                 <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
-                  {item.icon}
+                  {/* {item.icon} */}
+                  {<IconComponent />}
                 </ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -95,6 +101,6 @@ export default function MenuContent() {
           );
         })}
       </List> */}
-    </Stack>
+    </Stack >
   );
 }

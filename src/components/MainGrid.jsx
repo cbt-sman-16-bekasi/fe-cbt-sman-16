@@ -47,7 +47,6 @@ const data = [
   ))}
 </Grid>
 
-
 export default function MainGrid() {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
