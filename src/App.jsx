@@ -87,7 +87,7 @@ const xThemeComponents = {
 function App(props) {
   // const authUser = useSelector((state) => state.authUser);
   // const isPreload = useSelector((state) => state.isPreload);
-  const authUser = { akses: 'teacher' };
+  const authUser = { akses: 'superadmin' };
   const isPreload = null;
 
   const renderRoutes = () => {
