@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMG_NAME: ${{ secrets.DOCKER_USERNAME }}/cbt-admin
-      TAGS: development
+      TAGS: main
       CONTAINER_NAME: cbt-admin-dev-v1
     steps:
       - name: Executing deployment
