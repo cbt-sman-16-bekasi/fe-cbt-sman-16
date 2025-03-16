@@ -15,14 +15,14 @@ import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
 
 
-function SuperAdminPage() {
+function SuperAdminPage({ role }) {
   return (
     <Routes>
       <Route path="/" element={<MainGrid />} />
       <Route path="/akses-system" element={<Akses />} />
       <Route path="/akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
 
-      <Route path="/kelas" element={<Kelas />} />
+      <Route path="/kelas" element={<Kelas role={role} />} />
       <Route path="/kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
 
       <Route path="/mata-pelajaran" element={<MataPelajaran />} />

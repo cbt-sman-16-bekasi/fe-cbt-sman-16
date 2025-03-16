@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,7 +10,7 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
 
-function SideMenuMobile({ open, toggleDrawer }) {
+function SideMenuMobile({ open, toggleDrawer, role }) {
   return (
     <Drawer
       anchor="right"
@@ -21,7 +20,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
         zIndex: (theme) => theme.zIndex.drawer + 1,
         [`& .${drawerClasses.paper}`]: {
           backgroundImage: 'none',
-          backgroundColor: 'background.paper',
+          backgroundColor: 'cbtPrimary.violet',
         },
       }}
     >
@@ -52,7 +51,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent />
+          <MenuContent role={role} />
           <Divider />
         </Stack>
         <Stack sx={{ p: 2 }}>

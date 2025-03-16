@@ -119,7 +119,7 @@ export const navigationCustomizations = {
     },
     styleOverrides: {
       root: ({ theme }) => ({
-        color: (theme.vars || theme).palette.text.primary,
+        // color: (theme.vars || theme).palette.text.primary,
         fontWeight: 500,
         position: 'relative',
         textDecoration: 'none',

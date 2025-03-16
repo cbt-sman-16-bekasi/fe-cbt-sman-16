@@ -29,7 +29,7 @@ export default function SideMenu({ role }) {
       sx={{
         display: { xs: 'none', md: 'block' },
         [`& .${drawerClasses.paper}`]: {
-          backgroundColor: 'background.paper',
+          backgroundColor: 'cbtPrimary.violet',
         },
       }}
     >
@@ -53,7 +53,7 @@ export default function SideMenu({ role }) {
             maxWidth: "150px",
           }}
         />
-        <Typography variant='subtitle1' fontWeight='bold'>
+        <Typography variant='subtitle1' fontWeight='bold' sx={{ color: 'cbtAccents.white' }}>
           CBT SYSTEM SMAN 16 BEKASI
         </Typography>
         {/* <SelectContent /> */}
@@ -85,7 +85,7 @@ export default function SideMenu({ role }) {
           src="/static/images/avatar/7.jpg"
           sx={{ width: 36, height: 36 }}
         />
-        <Box sx={{ mr: 'auto' }}>
+        <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             Riley Carter
           </Typography>

@@ -15,6 +15,51 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import { Link, useLocation } from 'react-router';
 import { icons, menuConfig } from '../config/menuConfig';
 
+export default function MenuContent({ role }) {
+  const menuItems = menuConfig[role] || [];
+  const location = useLocation();
+
+  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+
+  return (
+    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
+      <List dense>
+        {/* {mainListItems.map((item, index) => { */}
+        {menuItems.map((item, index) => {
+          const IconComponent = icons[item.icon];
+          const isActive = `/${currentPath}` === item.path;
+          const path = `/${role}${item.path}`;
+
+          return (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                component={Link}
+                to={path}
+                style={{ textDecoration: 'none', color: '#FFFFFF' }}
+                selected={isActive}
+                sx={{
+                  // bgcolor: isActive ? 'primary.light' : 'inherit',
+                  // color: isActive ? 'primary.dark' : 'inherit',
+                  borderRadius: 2,
+                  px: 3,
+                  py: 2,
+                  minHeight: 48,
+                }}
+              >
+                <ListItemIcon >
+                  {/* {item.icon} */}
+                  {<IconComponent />}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+    </Stack >
+  );
+}
+
 const mainListItems = [
   { text: 'Dashboard', icon: <HomeRoundedIcon />, path: '/' },
   { text: 'Akses Sistem', icon: <AnalyticsRoundedIcon />, path: '/akses-system' },
@@ -35,72 +80,31 @@ const mainListItems = [
 // ];
 
 
-export default function MenuContent({ role }) {
-  const menuItems = menuConfig[role] || [];
-  const location = useLocation()
-
-  return (
-    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      <List dense>
-        {/* {mainListItems.map((item, index) => { */}
-        {menuItems.map((item, index) => {
-          const IconComponent = icons[item.icon];
-          const isActive = location.pathname === item.path;
-          const path = `/${role}${item.path}`;
-          return (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                component={Link}
-                to={path}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-                selected={isActive}
-                sx={{
-                  bgcolor: isActive ? 'primary.light' : 'inherit',
-                  color: isActive ? 'primary.dark' : 'inherit',
-                  borderRadius: 2,
-                  px: 3,
-                  py: 2,
-                  minHeight: 48,
-                }}
-              >
-                <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
-                  {/* {item.icon} */}
-                  {<IconComponent />}
-                </ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List>
-      {/* <List dense>
-        {secondaryListItems.map((item, index) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                component={Link}
-                to={item.path}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-                selected={isActive}
-                sx={{
-                  bgcolor: isActive ? 'primary.light' : 'inherit',
-                  color: isActive ? 'primary.dark' : 'inherit',
-                  borderRadius: 2,
-                  px: 3,
-                  py: 2,
-                  minHeight: 48,
-                }}
-              >
-                <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List> */}
-    </Stack >
-  );
-}
+{/* <List dense>
+  {secondaryListItems.map((item, index) => {
+    const isActive = location.pathname === item.path;
+    return (
+      <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+        <ListItemButton
+          component={Link}
+          to={item.path}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+          selected={isActive}
+          sx={{
+            bgcolor: isActive ? 'primary.light' : 'inherit',
+            color: isActive ? 'primary.dark' : 'inherit',
+            borderRadius: 2,
+            px: 3,
+            py: 2,
+            minHeight: 48,
+          }}
+        >
+          <ListItemIcon sx={{ color: isActive ? 'primary.dark' : 'inherit' }}>
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText primary={item.text} />
+        </ListItemButton>
+      </ListItem>
+    );
+  })}
+</List> */}

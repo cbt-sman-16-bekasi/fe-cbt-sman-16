@@ -31,7 +31,7 @@ export default function OptionsMenu() {
         onClick={handleClick}
         sx={{ borderColor: 'transparent' }}
       >
-        <MoreVertRoundedIcon />
+        <MoreVertRoundedIcon sx={{ color: 'cbtAccents.white' }} />
       </MenuButton>
       <Menu
         anchorEl={anchorEl}

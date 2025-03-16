@@ -69,6 +69,24 @@ export const red = {
   900: 'hsl(0, 93%, 6%)',
 };
 
+const cbtColor = {
+  primary: {
+    violet: "#130A36",
+    darkPurple: "#4605B5",
+    mediumPurple: "#8B1EFC",
+    purple: "#9366FE",
+    lightPurple: "#EEE3FF",
+  },
+  accents: {
+    red: "#CB393B",
+    blue: "#3665EE",
+    green: "#2FD574",
+    yellow: "#FEDC00",
+    white: "#FFFFFF",
+    black: "#000000",
+  }
+}
+
 export const getDesignTokens = (mode) => {
   customShadows[1] =
     mode === 'dark'
@@ -218,6 +236,21 @@ export const getDesignTokens = (mode) => {
 export const colorSchemes = {
   light: {
     palette: {
+      cbtPrimary: {
+        violet: cbtColor.primary.violet,
+        darkPurple: cbtColor.primary.darkPurple,
+        mediumPurple: cbtColor.primary.mediumPurple,
+        purple: cbtColor.primary.purple,
+        lightPurple: cbtColor.primary.lightPurple,
+      },
+      cbtAccents: {
+        red: cbtColor.accents.red,
+        blue: cbtColor.accents.blue,
+        green: cbtColor.accents.green,
+        yellow: cbtColor.accents.yellow,
+        white: cbtColor.accents.white,
+        black: cbtColor.accents.black
+      },
       primary: {
         light: brand[200],
         main: brand[400],
@@ -260,7 +293,7 @@ export const colorSchemes = {
       },
       action: {
         hover: alpha(gray[200], 0.2),
-        selected: "#9366FE",
+        selected: "#8B1EFC",
       },
       baseShadow:
         'hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px',
@@ -268,6 +301,21 @@ export const colorSchemes = {
   },
   dark: {
     palette: {
+      cbtPrimary: {
+        violet: cbtColor.primary.violet,
+        darkPurple: cbtColor.primary.darkPurple,
+        mediumPurple: cbtColor.primary.mediumPurple,
+        purple: cbtColor.primary.purple,
+        lightPurple: cbtColor.primary.lightPurple,
+      },
+      cbtAccents: {
+        red: cbtColor.accents.red,
+        blue: cbtColor.accents.blue,
+        green: cbtColor.accents.green,
+        yellow: cbtColor.accents.yellow,
+        white: cbtColor.accents.white,
+        black: cbtColor.accents.black
+      },
       primary: {
         contrastText: brand[50],
         light: brand[300],
@@ -309,7 +357,7 @@ export const colorSchemes = {
       },
       action: {
         hover: alpha(gray[600], 0.2),
-        selected: "#9366FE",
+        selected: "#8B1EFC",
       },
       baseShadow:
         'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',

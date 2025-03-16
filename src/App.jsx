@@ -87,7 +87,7 @@ const xThemeComponents = {
 function App(props) {
   // const authUser = useSelector((state) => state.authUser);
   // const isPreload = useSelector((state) => state.isPreload);
-  const authUser = { akses: 'teacher' };
+  const authUser = { akses: 'superadmin' };
   const isPreload = null;
 
   const renderRoutes = () => {
@@ -95,19 +95,19 @@ function App(props) {
       case "superadmin":
         return <Route path="/superadmin/*" element={
           <ProtectedRoute allowedRoles={["superadmin"]} userRole={authUser?.akses}>
-            <SuperAdminPage />
+            <SuperAdminPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       case "admin":
         return <Route path="/admin/*" element={
           <ProtectedRoute allowedRoles={["admin"]} userRole={authUser?.akses}>
-            <AdminPage />
+            <AdminPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       case "teacher":
         return <Route path="/teacher/*" element={
           <ProtectedRoute allowedRoles={["teacher"]} userRole={authUser?.akses}>
-            <TeacherPage />
+            <TeacherPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       default:
@@ -144,7 +144,7 @@ function App(props) {
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
           <SideMenu role={authUser?.akses} />
-          <AppNavbar />
+          <AppNavbar role={authUser?.akses} />
 
           <Box
             component="main"
@@ -169,7 +169,7 @@ function App(props) {
                 mt: { xs: 8, md: 0 },
               }}
             >
-              <Header />
+              <Header role={authUser?.akses} />
 
               <Routes>
                 {renderRoutes()}

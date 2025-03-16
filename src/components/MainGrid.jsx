@@ -55,7 +55,7 @@ export default function MainGrid() {
       </Typography>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid item size={{ lg: 12 }}>
-          <Alert icon={<CheckIcon fontSize="inherit" />} severity="info" sx={{ p: 2 }}>
+          <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight="bold">
               Selamat, Anda Berhasil Login!
             </Typography>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs, { breadcrumbsClasses } from '@mui/material/Breadcrumbs';
@@ -16,27 +15,36 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   },
 }));
 
-const breadcrumbNameMap = {
-  '/': 'Dashboard',
-  '/akses-system': 'Akses System',
-  '/kelas': 'Kelas',
-  '/mata-pelajaran': 'Mata Pelajaran',
-  '/kode-jenis-ujian': 'Kode Jenis Ujian',
-  '/data-siswa': 'Data Siswa',
-  '/ujian': 'Ujian',
-  '/sesi-ujian': 'Sesi Ujian',
-  '/generate-token': 'Generate Token Ujian',
-  '/laporan-nilai': 'Laporan Nilai',
-  '/settings': 'Settings',
+const breadcrumbNameMapByRole = {
+  superadmin: {
+    "/": "Dashboard",
+    "/akses-system": "Akses System",
+    "/settings": "Settings",
+  },
+  admin: {
+    "/": "Dashboard",
+    "/kelas": "Kelas",
+    "/mata-pelajaran": "Mata Pelajaran",
+    "/data-siswa": "Data Siswa",
+    "/settings": "Settings",
+  },
+  teacher: {
+    "/": "Dashboard",
+    "/ujian": "Ujian",
+    "/sesi-ujian": "Sesi Ujian",
+    "/generate-token": "Generate Token Ujian",
+    "/laporan-nilai": "Laporan Nilai",
+  },
 };
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export default function NavbarBreadcrumbs() {
+export default function NavbarBreadcrumbs({ role }) {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
+  const breadcrumbNameMap = breadcrumbNameMapByRole[role] || {};
 
   return (
     <StyledBreadcrumbs
@@ -69,3 +77,17 @@ export default function NavbarBreadcrumbs() {
     </StyledBreadcrumbs>
   );
 }
+
+const breadcrumbNameMap = {
+  '/': 'Dashboard',
+  '/akses-system': 'Akses System',
+  '/kelas': 'Kelas',
+  '/mata-pelajaran': 'Mata Pelajaran',
+  '/kode-jenis-ujian': 'Kode Jenis Ujian',
+  '/data-siswa': 'Data Siswa',
+  '/ujian': 'Ujian',
+  '/sesi-ujian': 'Sesi Ujian',
+  '/generate-token': 'Generate Token Ujian',
+  '/laporan-nilai': 'Laporan Nilai',
+  '/settings': 'Settings',
+};

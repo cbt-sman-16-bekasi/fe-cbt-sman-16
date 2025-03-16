@@ -19,11 +19,13 @@ import TambahBankSoal from './TambahBankSoal';
 
 export default function LayoutTambah({ desc }) {
   const location = useLocation();
+  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+
   const navigate = useNavigate();
   const [displayError, setDisplayError] = useState(true);
 
   const renderContent = () => {
-    switch (location.pathname) {
+    switch (`/${currentPath}`) {
       case "/akses-system/tambah":
         return <TambahAkses setError={handleDisplayError} />
       case "/kelas/tambah":
