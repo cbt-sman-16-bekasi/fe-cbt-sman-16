@@ -14,7 +14,7 @@ export default function TambahBankSoal({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid item size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Mata Pelajaran
           </Typography>
@@ -31,7 +31,7 @@ export default function TambahBankSoal({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid item size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Kode Kelas
           </Typography>
@@ -51,7 +51,7 @@ export default function TambahBankSoal({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ lg: 12 }}>
+        <Grid item size={{ sm: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Jumlah Soal
           </Typography>

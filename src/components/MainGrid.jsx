@@ -47,7 +47,7 @@ const data = [
   ))}
 </Grid>
 
-export default function MainGrid() {
+export default function MainGrid({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
@@ -95,7 +95,7 @@ export default function MainGrid() {
       >
         {data.map((card, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-            <StatCard {...card} />
+            <StatCard role={role} {...card} />
           </Grid>
         ))}
       </Grid>

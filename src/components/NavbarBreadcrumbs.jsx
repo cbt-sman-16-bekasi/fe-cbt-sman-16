@@ -43,7 +43,7 @@ const capitalizeFirstLetter = (string) => {
 
 export default function NavbarBreadcrumbs({ role }) {
   const location = useLocation();
-  const pathnames = location.pathname.split('/').filter((x) => x);
+  const pathnames = location.pathname.split('/').filter((x) => x).slice(1);
   const breadcrumbNameMap = breadcrumbNameMapByRole[role] || {};
 
   return (
@@ -51,9 +51,9 @@ export default function NavbarBreadcrumbs({ role }) {
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Typography style={{ color: 'inherit' }}>
         <Typography variant="body1">CBT</Typography>
-      </Link>
+      </Typography>
 
       {pathnames.map((value, index) => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;

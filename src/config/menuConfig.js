@@ -12,7 +12,7 @@ export const icons = {
 
 export const menuConfig = {
   superadmin: [
-    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/' },
+    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/dashboard' },
     {
       text: 'Akses Sistem',
       icon: 'AnalyticsRoundedIcon',
@@ -58,7 +58,7 @@ export const menuConfig = {
     },
   ],
   admin: [
-    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/' },
+    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/dashboard' },
     { text: 'Kelas', icon: 'PeopleRoundedIcon', path: '/kelas' },
     {
       text: 'Mata Pelajaran',
@@ -79,7 +79,7 @@ export const menuConfig = {
     },
   ],
   teacher: [
-    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/' },
+    { text: 'Dashboard', icon: 'HomeRoundedIcon', path: '/dashboard' },
     { text: 'Bank Soal', icon: 'AssignmentRoundedIcon', path: '/bank-soal' },
     { text: 'Ujian', icon: 'AssignmentRoundedIcon', path: '/ujian' },
     {

@@ -44,7 +44,7 @@ const RegistForm = () => {
         <CardContent>
           <Grid container spacing={2} columns={12} sx={{ p: 1 }}>
 
-            <Grid item size={{ lg: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
+            <Grid item size={{ sm: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
               <Typography variant="subtitle2" fontWeight="bold" >
                 Username
               </Typography>
@@ -61,7 +61,7 @@ const RegistForm = () => {
               />
             </Grid>
 
-            <Grid item size={{ lg: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
+            <Grid item size={{ sm: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
               <Typography variant="subtitle2" fontWeight="bold" >
                 Password
               </Typography>
@@ -79,7 +79,7 @@ const RegistForm = () => {
               />
             </Grid>
 
-            <Grid item size={{ lg: 12 }}>
+            <Grid item size={{ sm: 12 }}>
               <FormControlLabel
                 control={<Checkbox onChange={() => setShowPassword(!showPassword)} />}
                 label="Show Password"
@@ -87,7 +87,7 @@ const RegistForm = () => {
               />
             </Grid>
 
-            <Grid item size={{ lg: 12 }}>
+            <Grid item size={{ sm: 12 }}>
               {/* Tombol Login */}
               <Button
                 fullWidth

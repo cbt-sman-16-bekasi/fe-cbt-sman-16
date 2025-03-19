@@ -6,7 +6,7 @@ import AppNavbar from './components/AppNavbar';
 import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -87,37 +87,40 @@ const xThemeComponents = {
 function App(props) {
   // const authUser = useSelector((state) => state.authUser);
   // const isPreload = useSelector((state) => state.isPreload);
-  const authUser = { akses: 'superadmin' };
   const isPreload = null;
+  const authUser = { akses: 'teacher' };
 
   const renderRoutes = () => {
     switch (authUser?.akses) {
       case "superadmin":
+        Navigate('/superadmin/dashboard')
         return <Route path="/superadmin/*" element={
           <ProtectedRoute allowedRoles={["superadmin"]} userRole={authUser?.akses}>
             <SuperAdminPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       case "admin":
+        Navigate('/admin/dashboard')
         return <Route path="/admin/*" element={
           <ProtectedRoute allowedRoles={["admin"]} userRole={authUser?.akses}>
             <AdminPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       case "teacher":
+        Navigate('/teacher/dashboard')
         return <Route path="/teacher/*" element={
           <ProtectedRoute allowedRoles={["teacher"]} userRole={authUser?.akses}>
             <TeacherPage role={authUser?.akses} />
           </ProtectedRoute>
         } />;
       default:
-        return <Route path="*" element={<NotFoundPage />} />;
+        return <Route path="*" element={<NotFoundPage role={authUser?.akses} />} />;
     }
   };
 
   if (isPreload) null
 
-  if (!authUser) {
+  if (!authUser.akses) {
     return (
       <>
         <AppTheme {...props} themeComponents={xThemeComponents}>
@@ -173,6 +176,7 @@ function App(props) {
 
               <Routes>
                 {renderRoutes()}
+                <Route path="*" element={<NotFoundPage role={authUser.akses} />} />
               </Routes>
 
             </Stack>

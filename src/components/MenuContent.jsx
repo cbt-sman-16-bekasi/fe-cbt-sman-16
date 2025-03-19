@@ -24,7 +24,6 @@ export default function MenuContent({ role }) {
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
-        {/* {mainListItems.map((item, index) => { */}
         {menuItems.map((item, index) => {
           const IconComponent = icons[item.icon];
           const isActive = `/${currentPath}` === item.path;

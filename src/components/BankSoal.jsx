@@ -10,7 +10,7 @@ import { columns, rows } from "../internals/data/bankSoalData";
 import { Link } from 'react-router';
 import CheckIcon from '@mui/icons-material/Check';
 
-export default function BankSoal() {
+export default function BankSoal({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
@@ -45,7 +45,7 @@ export default function BankSoal() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to='/bank-soal/tambah'>
+          <Link to={`/${role}/bank-soal/tambah`}>
             <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>

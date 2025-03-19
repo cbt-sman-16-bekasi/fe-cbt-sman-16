@@ -6,26 +6,26 @@ import GenerateToken from '../components/GenerateToken';
 import LaporanNilai from '../components/LaporanNilai';
 import LayoutTambah from '../components/LayoutTambah';
 import BankSoal from '../components/BankSoal';
+import { Typography } from "@mui/material";
+import NotFoundPage from "./NotFoundPage";
 
-function TeacherPage() {
+function TeacherPage({ role }) {
   return (
     <Routes>
-      <Route path="*" element={<MainGrid />} />
+      <Route path="dashboard" element={<MainGrid role={role} />} />
 
-      <Route path="bank-soal" element={<BankSoal />} />
+      <Route path="bank-soal" element={<BankSoal role={role} />} />
       <Route path="bank-soal/tambah" element={<LayoutTambah desc="Bank Soal" />} />
 
-      <Route path="ujian" element={<Ujian />} />
+      <Route path="ujian" element={<Ujian role={role} />} />
       <Route path="ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />
 
-      <Route path="sesi-ujian" element={<SesiUjian />} />
+      <Route path="sesi-ujian" element={<SesiUjian role={role} />} />
       <Route path="sesi-ujian/tambah" element={<LayoutTambah desc="Tambah Sesi Ujian" />} />
-
-      <Route path="generate-token" element={<GenerateToken />} />
 
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 
-      <Route path="*" element={<MainGrid />} />
+      <Route path="*" element={<NotFoundPage role={role} />} />
     </Routes>
   )
 }

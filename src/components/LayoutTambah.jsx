@@ -83,7 +83,7 @@ export default function LayoutTambah({ desc }) {
 
       {displayError && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-          <Grid item size={{ lg: 12 }}>
+          <Grid item size={{ sm: 12 }}>
             <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="error" sx={{ py: 1, px: 2 }}>
               <Typography variant="h6" fontWeight="bold">
                 Error!

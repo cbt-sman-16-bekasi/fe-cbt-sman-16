@@ -10,7 +10,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, rows } from "../internals/data/sesiUjianData";
 import { Link } from 'react-router';
 
-export default function SesiUjian() {
+export default function SesiUjian({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
@@ -32,7 +32,7 @@ export default function SesiUjian() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to='/sesi-ujian/tambah'>
+          <Link to={`/${role}/sesi-ujian/tambah`}>
             <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>

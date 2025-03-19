@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // import Typography from '@mui/material/Typography';
 import { Link } from 'react-router';
 
-function StatCard({ title, value, link }) {
+function StatCard({ title, value, link, role }) {
 
   return (
     <div className="h-full rounded-2xl overflow-hidden shadow-lg">
@@ -31,7 +31,7 @@ function StatCard({ title, value, link }) {
       </div>
 
       {/* Bagian Bawah */}
-      <Link to={link} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+      <Link to={`/${role}${link}`} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
         <span className='text-white'>Lihat Detail</span>
         <span className='text-white'>→</span>
       </Link>
