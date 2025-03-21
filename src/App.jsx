@@ -183,7 +183,7 @@ function App(props) {
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
           <SideMenu role={authUser?.akses} setAuthUser={setAuthUser} />
-          <AppNavbar role={authUser?.akses} />
+          <AppNavbar role={authUser?.akses} setAuthUser={setAuthUser} />
 
           <Box
             component="main"

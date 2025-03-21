@@ -9,8 +9,19 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
+import { useNavigate } from 'react-router';
 
-function SideMenuMobile({ open, toggleDrawer, role }) {
+function SideMenuMobile({ open, toggleDrawer, role, setAuthUser }) {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("authUser");
+
+    setAuthUser({ akses: null });
+
+    navigate("/login");
+  };
+
   return (
     <Drawer
       anchor="right"
@@ -55,7 +66,7 @@ function SideMenuMobile({ open, toggleDrawer, role }) {
           <Divider />
         </Stack>
         <Stack sx={{ p: 2 }}>
-          <Button variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
+          <Button onClick={handleLogout} variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout
           </Button>
         </Stack>
