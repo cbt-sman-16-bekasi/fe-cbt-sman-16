@@ -34,7 +34,7 @@ export default function ProfilSekolah() {
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           <Grid container spacing={2} alignItems="center" columns={12}>
-            <Grid item size={{ lg: 2 }}>
+            <Grid size={{ lg: 2 }}>
 
               <Card variant="outlined" sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
                 <CardContent>
@@ -44,7 +44,7 @@ export default function ProfilSekolah() {
 
             </Grid>
 
-            <Grid item size={{ lg: 9 }}>
+            <Grid size={{ lg: 9 }}>
 
               <Stack spacing={1.3} direction="row" alignItems="center">
 
@@ -67,7 +67,7 @@ export default function ProfilSekolah() {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Nama Sekolah
               </Typography>
@@ -80,7 +80,7 @@ export default function ProfilSekolah() {
               </TextField>
             </Grid>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Jenjang
               </Typography>
@@ -96,7 +96,7 @@ export default function ProfilSekolah() {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 NSS
               </Typography>
@@ -109,7 +109,7 @@ export default function ProfilSekolah() {
               </TextField>
             </Grid>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 NPSN
               </Typography>
@@ -125,7 +125,7 @@ export default function ProfilSekolah() {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Nomor Telepon
               </Typography>
@@ -138,7 +138,7 @@ export default function ProfilSekolah() {
               </TextField>
             </Grid>
 
-            <Grid item size={{ md: 12, lg: 6 }}>
+            <Grid size={{ md: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Email
               </Typography>
@@ -154,7 +154,7 @@ export default function ProfilSekolah() {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid item size={{ lg: 12 }}>
+            <Grid size={{ lg: 12 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Alamat Sekolah
               </Typography>
@@ -171,7 +171,7 @@ export default function ProfilSekolah() {
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid item size={{ lg: 12 }}>
+            <Grid size={{ lg: 12 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Banner
               </Typography>
@@ -204,11 +204,11 @@ export default function ProfilSekolah() {
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-            <Grid item size={{ lg: 1.5 }}>
+            <Grid size={{ lg: 1.5 }}>
               <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
             </Grid>
 
-            <Grid item size={{ lg: 1.5 }}>
+            <Grid size={{ lg: 1.5 }}>
               <Button fullWidth variant="contained" color='success'>Simpan</Button>
             </Grid>
           </Grid>

@@ -72,7 +72,7 @@ export default function LayoutTambah({ desc }) {
       </Typography>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={6}>
-        <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
+        <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Button fullWidth variant="contained" onClick={handleBack}> Kembali</Button>
         </Grid>
       </Grid>
@@ -83,7 +83,7 @@ export default function LayoutTambah({ desc }) {
 
       {displayError && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-          <Grid item size={{ sm: 12 }}>
+          <Grid size={{ sm: 12 }}>
             <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="error" sx={{ py: 1, px: 2 }}>
               <Typography variant="h6" fontWeight="bold">
                 Error!

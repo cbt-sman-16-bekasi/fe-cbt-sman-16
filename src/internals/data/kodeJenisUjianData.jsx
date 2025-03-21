@@ -62,8 +62,8 @@ export const rows = [
     hakAkses: "Super Admin",
   },
   {
-    id: 3,
-    no: 3,
+    id: 4,
+    no: 4,
     jenisUjian: "00087654321",
     kodeUjian: 'TO',
     hakAkses: "Guru",

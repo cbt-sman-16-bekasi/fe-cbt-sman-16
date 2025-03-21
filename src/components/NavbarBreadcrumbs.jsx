@@ -51,9 +51,7 @@ export default function NavbarBreadcrumbs({ role }) {
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Typography style={{ color: 'inherit' }}>
-        <Typography variant="body1">CBT</Typography>
-      </Typography>
+      <Typography variant="body1" style={{ color: 'inherit' }}>CBT</Typography>
 
       {pathnames.map((value, index) => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;

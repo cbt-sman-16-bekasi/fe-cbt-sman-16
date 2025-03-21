@@ -18,19 +18,19 @@ export default function DataSiswa() {
       </Typography>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Link to='/data-siswa/tambah'>
             <Button fullWidth variant="contained" className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Link to='/data-siswa/import'>
             <Button fullWidth variant="contained" color='success'><UploadFileOutlinedIcon /> Import</Button>
           </Link>
         </Grid>
 
-        <Grid item size={{ lg: 3 }}>
+        <Grid size={{ lg: 3 }}>
           <TextField
             variant="outlined"
             placeholder="Cari Berdasarkan..."

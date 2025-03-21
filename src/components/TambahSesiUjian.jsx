@@ -19,7 +19,7 @@ export default function TambahSesiUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Sesi Ujian
           </Typography>
@@ -32,7 +32,7 @@ export default function TambahSesiUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Ujian
           </Typography>
@@ -48,7 +48,7 @@ export default function TambahSesiUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Waktu Mulai
           </Typography>
@@ -62,7 +62,7 @@ export default function TambahSesiUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Waktu Selesai
           </Typography>
@@ -78,11 +78,11 @@ export default function TambahSesiUjian({ setError }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" color='success'>Simpan</Button>
         </Grid>
       </Grid>

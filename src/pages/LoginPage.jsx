@@ -3,7 +3,7 @@ import {
 } from "@mui/material";
 import LoginForm from "../components/LoginForm";
 
-const LoginPage = () => {
+const LoginPage = ({ setAuthUser }) => {
 
   return (
 
@@ -33,7 +33,7 @@ const LoginPage = () => {
 
       {/* Card Login */}
       <Box sx={{ zIndex: 2 }}>
-        <LoginForm />
+        <LoginForm setAuthUser={setAuthUser} />
       </Box>
     </Box>
 

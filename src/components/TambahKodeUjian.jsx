@@ -12,7 +12,7 @@ export default function TambahKodeUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12} sx={{ padding: '0px' }}>
 
-        <Grid item size={{ sm: 12, lg: 6 }} >
+        <Grid size={{ sm: 12, lg: 6 }} >
           <Typography variant="subtitle1" fontWeight="bold">
             Jenis Ujian
           </Typography>
@@ -25,7 +25,7 @@ export default function TambahKodeUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ sm: 12, lg: 6 }}>
+        <Grid size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Buat Kode Ujian
           </Typography>
@@ -43,7 +43,7 @@ export default function TambahKodeUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12} sx={{ padding: '0px' }}>
 
-        <Grid item size={{ sm: 12, lg: 12 }}>
+        <Grid size={{ sm: 12, lg: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Pilih Akses
           </Typography>
@@ -64,11 +64,11 @@ export default function TambahKodeUjian({ setError }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" color='success'>Simpan</Button>
         </Grid>
       </Grid>

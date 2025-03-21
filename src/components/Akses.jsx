@@ -20,7 +20,7 @@ export default function Akses({ role }) {
       </Typography>
 
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid item size={{ lg: 12 }}>
+        <Grid size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight="bold">
               Akses Sistem
@@ -64,12 +64,12 @@ export default function Akses({ role }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid item size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
+        <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to={`/${role}/akses-system/tambah`}>
             <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>
-        <Grid item size={{ lg: 4 }}>
+        <Grid size={{ lg: 4 }}>
           <TextField
             variant="outlined"
             placeholder="Cari..."

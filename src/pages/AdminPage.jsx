@@ -14,33 +14,33 @@ import BankSoal from '../components/BankSoal';
 import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
 
-function AdminPage() {
+function AdminPage({ role }) {
   return (
     <Routes>
       <Route path="/" element={<MainGrid />} />
-      <Route path="/akses-system" element={<Akses />} />
+      <Route path="/akses-system" element={<Akses role={role} />} />
       <Route path="/akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
 
-      <Route path="/kelas" element={<Kelas />} />
+      <Route path="/kelas" element={<Kelas role={role} />} />
       <Route path="/kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
 
-      <Route path="/mata-pelajaran" element={<MataPelajaran />} />
+      <Route path="/mata-pelajaran" element={<MataPelajaran role={role} />} />
       <Route path="/mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
 
-      <Route path="/kode-jenis-ujian" element={<KodeJenisUjian />} />
+      <Route path="/kode-jenis-ujian" element={<KodeJenisUjian role={role} />} />
       <Route path="/kode-jenis-ujian/tambah" element={<LayoutTambah desc="Kode Jenis Ujian" />} />
 
-      <Route path="/data-siswa" element={<DataSiswa />} />
+      <Route path="/data-siswa" element={<DataSiswa role={role} />} />
       <Route path="/data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
       <Route path="/data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
 
-      <Route path="/bank-soal" element={<BankSoal />} />
+      <Route path="/bank-soal" element={<BankSoal role={role} />} />
       <Route path="/bank-soal/tambah" element={<LayoutTambah desc="Bank Soal" />} />
 
-      <Route path="/ujian" element={<Ujian />} />
+      <Route path="/ujian" element={<Ujian role={role} />} />
       <Route path="/ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />
 
-      <Route path="/sesi-ujian" element={<SesiUjian />} />
+      <Route path="/sesi-ujian" element={<SesiUjian role={role} />} />
       <Route path="/sesi-ujian/tambah" element={<LayoutTambah desc="Tambah Sesi Ujian" />} />
 
       <Route path="/generate-token" element={<GenerateToken />} />

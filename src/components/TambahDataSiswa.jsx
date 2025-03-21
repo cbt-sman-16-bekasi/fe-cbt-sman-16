@@ -14,7 +14,7 @@ export default function TambahDataSiswa({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             NISN
           </Typography>
@@ -27,7 +27,7 @@ export default function TambahDataSiswa({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Siswa
           </Typography>
@@ -43,7 +43,7 @@ export default function TambahDataSiswa({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Jenis Kelamin
           </Typography>
@@ -59,7 +59,7 @@ export default function TambahDataSiswa({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Kelas
           </Typography>
@@ -79,14 +79,14 @@ export default function TambahDataSiswa({ setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="start" mb={4} direction='column'>
 
-        <Grid item>
+        <Grid >
           <Typography variant="subtitle1" fontWeight="bold">
             Keterangan:
           </Typography>
         </Grid>
 
-        <Grid item container spacing={2} alignItems="center" size={{ lg: 12 }}>
-          <Grid item size={{ lg: 1.5 }}>
+        <Grid container spacing={2} alignItems="center" size={{ lg: 12 }}>
+          <Grid size={{ lg: 1.5 }}>
             <Chip
               label="Super Admin"
               sx={{
@@ -97,13 +97,13 @@ export default function TambahDataSiswa({ setError }) {
               }}
             />
           </Grid>
-          <Grid item size={{ lg: 6 }}>
+          <Grid size={{ lg: 6 }}>
             <Typography variant="body2">Dapat Mengakses Semua Fitur</Typography>
           </Grid>
         </Grid>
 
-        <Grid item container spacing={2} alignItems="center" size={{ lg: 12 }}>
-          <Grid item size={{ lg: 1.5 }}>
+        <Grid container spacing={2} alignItems="center" size={{ lg: 12 }}>
+          <Grid size={{ lg: 1.5 }}>
             <Chip
               label="Guru"
               sx={{
@@ -114,7 +114,7 @@ export default function TambahDataSiswa({ setError }) {
               }}
             />
           </Grid>
-          <Grid item size={{ lg: 6 }}>
+          <Grid size={{ lg: 6 }}>
             <Typography variant="body2">Dapat Mengakses Ujian</Typography>
           </Grid>
         </Grid>
@@ -122,11 +122,11 @@ export default function TambahDataSiswa({ setError }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" color='success'>Simpan</Button>
         </Grid>
       </Grid>

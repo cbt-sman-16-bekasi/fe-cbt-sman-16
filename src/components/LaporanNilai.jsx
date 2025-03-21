@@ -28,7 +28,7 @@ export default function LaporanNilai() {
       </Typography>
 
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid item size={{ lg: 12 }}>
+        <Grid size={{ lg: 12 }}>
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
             variant="outlined"
@@ -67,7 +67,7 @@ export default function LaporanNilai() {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid item size={{ lg: 6 }}>
+            <Grid size={{ lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Nama Ujian
               </Typography>
@@ -84,7 +84,7 @@ export default function LaporanNilai() {
               </TextField>
             </Grid>
 
-            <Grid item size={{ lg: 6 }}>
+            <Grid size={{ lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Sesi Ujian
               </Typography>

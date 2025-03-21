@@ -19,7 +19,7 @@ export default function TambahUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Ujian
           </Typography>
@@ -32,7 +32,7 @@ export default function TambahUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Mata Pelajaran
           </Typography>
@@ -48,7 +48,7 @@ export default function TambahUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Kelas
           </Typography>
@@ -64,7 +64,7 @@ export default function TambahUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Jenis Ujian
           </Typography>
@@ -83,7 +83,7 @@ export default function TambahUjian({ setError }) {
       </Grid>
 
       <Grid container spacing={3} alignItems="center" columns={12}>
-        <Grid item size={{ lg: 12 }}>
+        <Grid size={{ lg: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>
             Deskripsi Ujian
           </Typography>
@@ -95,7 +95,7 @@ export default function TambahUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Acak Soal
           </Typography>
@@ -111,7 +111,7 @@ export default function TambahUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Acak Jawaban
           </Typography>
@@ -130,7 +130,7 @@ export default function TambahUjian({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Tampilkan Hasil Akhir
           </Typography>
@@ -146,7 +146,7 @@ export default function TambahUjian({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Durasi
           </Typography>
@@ -161,11 +161,11 @@ export default function TambahUjian({ setError }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" color='success'>Simpan</Button>
         </Grid>
       </Grid>

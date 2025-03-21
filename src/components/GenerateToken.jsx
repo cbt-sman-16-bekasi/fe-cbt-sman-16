@@ -28,7 +28,7 @@ export default function GenerateToken() {
       </Typography>
 
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid item size={{ lg: 12 }}>
+        <Grid size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined"
             severity="info"
             sx={{ p: 2 }}>
@@ -72,7 +72,7 @@ export default function GenerateToken() {
           {/* Form Section */}
           <Grid container spacing={3} alignItems="center" columns={12}>
             {/* Masa Aktif */}
-            <Grid item size={{ lg: 6 }}>
+            <Grid size={{ lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Masa Aktif
               </Typography>
@@ -90,7 +90,7 @@ export default function GenerateToken() {
             </Grid>
 
             {/* Daftar Tes */}
-            <Grid item size={{ lg: 6 }}>
+            <Grid size={{ lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Daftar Tes
               </Typography>

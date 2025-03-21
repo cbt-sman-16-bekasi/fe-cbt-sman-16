@@ -15,7 +15,7 @@ export default function TambahAkses({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             NUPTK
           </Typography>
@@ -28,7 +28,7 @@ export default function TambahAkses({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Nama Guru
           </Typography>
@@ -44,7 +44,7 @@ export default function TambahAkses({ setError }) {
 
       <Grid container spacing={3} alignItems="center" columns={12}>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Username
           </Typography>
@@ -57,7 +57,7 @@ export default function TambahAkses({ setError }) {
           </TextField>
         </Grid>
 
-        <Grid item size={{ md: 12, lg: 6 }}>
+        <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Password
           </Typography>
@@ -72,7 +72,7 @@ export default function TambahAkses({ setError }) {
       </Grid>
 
       <Grid container spacing={3} alignItems="center" columns={12}>
-        <Grid item size={{ lg: 12 }}>
+        <Grid size={{ lg: 12 }}>
           <Typography variant="subtitle1" fontWeight="bold">
             Pilih Akses
           </Typography>
@@ -91,14 +91,14 @@ export default function TambahAkses({ setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="start" mb={4} direction='column'>
 
-        <Grid item>
+        <Grid >
           <Typography variant="subtitle1" fontWeight="bold">
             Keterangan:
           </Typography>
         </Grid>
 
-        <Grid item container spacing={2} alignItems="center" size={{ lg: 12 }}>
-          <Grid item size={{ lg: 1.5 }}>
+        <Grid container spacing={2} alignItems="center" size={{ lg: 12 }}>
+          <Grid size={{ lg: 1.5 }}>
             <Chip
               label="Super Admin"
               sx={{
@@ -109,13 +109,13 @@ export default function TambahAkses({ setError }) {
               }}
             />
           </Grid>
-          <Grid item size={{ lg: 6 }}>
+          <Grid size={{ lg: 6 }}>
             <Typography variant="body2">Dapat Mengakses Semua Fitur</Typography>
           </Grid>
         </Grid>
 
-        <Grid item container spacing={2} alignItems="center" size={{ lg: 12 }}>
-          <Grid item size={{ lg: 1.5 }}>
+        <Grid container spacing={2} alignItems="center" size={{ lg: 12 }}>
+          <Grid size={{ lg: 1.5 }}>
             <Chip
               label="Guru"
               sx={{
@@ -126,7 +126,7 @@ export default function TambahAkses({ setError }) {
               }}
             />
           </Grid>
-          <Grid item size={{ lg: 6 }}>
+          <Grid size={{ lg: 6 }}>
             <Typography variant="body2">Dapat Mengakses Ujian</Typography>
           </Grid>
         </Grid>
@@ -134,11 +134,11 @@ export default function TambahAkses({ setError }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
         </Grid>
 
-        <Grid item size={{ lg: 1.5 }}>
+        <Grid size={{ lg: 1.5 }}>
           <Button fullWidth variant="contained" color='success'>Simpan</Button>
         </Grid>
       </Grid>

@@ -22,7 +22,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu({ role }) {
+export default function SideMenu({ role, setAuthUser }) {
   return (
     <Drawer
       variant="permanent"
@@ -93,7 +93,7 @@ export default function SideMenu({ role }) {
             riley@email.com
           </Typography>
         </Box>
-        <OptionsMenu />
+        <OptionsMenu setAuthUser={setAuthUser} />
       </Stack>
     </Drawer>
   );

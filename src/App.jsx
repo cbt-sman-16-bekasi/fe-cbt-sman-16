@@ -6,8 +6,8 @@ import AppNavbar from './components/AppNavbar';
 import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import { Navigate, Route, Routes } from 'react-router';
-import { useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -15,6 +15,7 @@ import AdminPage from "./pages/AdminPage";
 import TeacherPage from "./pages/TeacherPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { menuConfig } from './config/menuConfig';
 
 import {
   chartsCustomizations,
@@ -84,39 +85,74 @@ const xThemeComponents = {
                   <Route key={index} path={route.path} element={route.element} />
                 ))} */}
 
+// const authUser = useSelector((state) => state.authUser);
+// const isPreload = useSelector((state) => state.isPreload);
 function App(props) {
-  // const authUser = useSelector((state) => state.authUser);
-  // const isPreload = useSelector((state) => state.isPreload);
+  const [authUser, setAuthUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("authUser")) || { akses: null };
+  });
+  const location = useLocation();
+  const navigate = useNavigate();
   const isPreload = null;
-  const authUser = { akses: 'teacher' };
 
-  const renderRoutes = () => {
-    switch (authUser?.akses) {
-      case "superadmin":
-        Navigate('/superadmin/dashboard')
-        return <Route path="/superadmin/*" element={
-          <ProtectedRoute allowedRoles={["superadmin"]} userRole={authUser?.akses}>
-            <SuperAdminPage role={authUser?.akses} />
-          </ProtectedRoute>
-        } />;
-      case "admin":
-        Navigate('/admin/dashboard')
-        return <Route path="/admin/*" element={
-          <ProtectedRoute allowedRoles={["admin"]} userRole={authUser?.akses}>
-            <AdminPage role={authUser?.akses} />
-          </ProtectedRoute>
-        } />;
-      case "teacher":
-        Navigate('/teacher/dashboard')
-        return <Route path="/teacher/*" element={
-          <ProtectedRoute allowedRoles={["teacher"]} userRole={authUser?.akses}>
-            <TeacherPage role={authUser?.akses} />
-          </ProtectedRoute>
-        } />;
-      default:
-        return <Route path="*" element={<NotFoundPage role={authUser?.akses} />} />;
-    }
+  // const renderRoutes = () => {
+  //   switch (authUser?.akses) {
+  //     case "superadmin":
+  //       return <Route path="/superadmin/*" element={
+  //         <ProtectedRoute allowedRoles={["superadmin"]} userRole={authUser?.akses}>
+  //           <SuperAdminPage role={authUser?.akses} />
+  //         </ProtectedRoute>
+  //       } />;
+  //     case "admin":
+  //       return <Route path="/admin/*" element={
+  //         <ProtectedRoute allowedRoles={["admin"]} userRole={authUser?.akses}>
+  //           <AdminPage role={authUser?.akses} />
+  //         </ProtectedRoute>
+  //       } />;
+  //     case "teacher":
+  //       return <Route path="/teacher/*" element={
+  //         <ProtectedRoute allowedRoles={["teacher"]} userRole={authUser?.akses}>
+  //           <TeacherPage role={authUser?.akses} />
+  //         </ProtectedRoute>
+  //       } />;
+  //     default:
+  //       return <Route path="*" element={<NotFoundPage role={authUser?.akses} />} />;
+  //   }
+  // };
+
+  const routeMap = {
+    superadmin: <SuperAdminPage role={authUser?.akses} />,
+    admin: <AdminPage role={authUser?.akses} />,
+    teacher: <TeacherPage role={authUser?.akses} />,
   };
+
+  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+
+  useEffect(() => {
+    if (!localStorage.getItem("users")) {
+      localStorage.setItem(
+        "users",
+        JSON.stringify([
+          { username: "superadmin", password: "123456", akses: "superadmin" },
+          { username: "admin", password: "admin123", akses: "admin" },
+          { username: "teacher", password: "teacher123", akses: "teacher" },
+        ])
+      );
+    }
+
+    if (!authUser.akses) {
+      if (!location.pathname.startsWith("/login")) {
+        navigate("/login");
+      }
+    } else if (!location.pathname.startsWith(`/${authUser.akses}`)) {
+      navigate(`/${authUser.akses}/dashboard`);
+    }
+
+    const userMenu = menuConfig[authUser.akses] || [];
+    const currentMenu = userMenu.find((item) => item.path === `/${currentPath}`);
+    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
+
+  }, [authUser.akses, currentPath, location.pathname, navigate]);
 
   if (isPreload) null
 
@@ -132,7 +168,7 @@ function App(props) {
               width: "100vw",
             }} >
             <Routes>
-              <Route path='/*' element={<LoginPage />} />
+              <Route path='/login' element={<LoginPage setAuthUser={setAuthUser} />} />
               <Route path='/register' element={<RegisterPage />} />
             </Routes>
           </Box >
@@ -146,7 +182,7 @@ function App(props) {
       <AppTheme {...props} themeComponents={xThemeComponents}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
-          <SideMenu role={authUser?.akses} />
+          <SideMenu role={authUser?.akses} setAuthUser={setAuthUser} />
           <AppNavbar role={authUser?.akses} />
 
           <Box
@@ -175,7 +211,15 @@ function App(props) {
               <Header role={authUser?.akses} />
 
               <Routes>
-                {renderRoutes()}
+                {/* {renderRoutes()} */}
+
+                <Route
+                  path={`/${authUser.akses}/*`}
+                  element={
+                    <ProtectedRoute allowedRoles={[authUser.akses]} userRole={authUser?.akses}>
+                      {routeMap[authUser.akses]}
+                    </ProtectedRoute>
+                  } />
                 <Route path="*" element={<NotFoundPage role={authUser.akses} />} />
               </Routes>
 
