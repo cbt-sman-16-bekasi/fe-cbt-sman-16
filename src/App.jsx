@@ -35,35 +35,6 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-// const [authUser, setAuthUser] = useState(() => {
-//   return JSON.parse(localStorage.getItem("authUser")) || { akses: null };
-// });
-// const isPreload = null;
-
-// useEffect(() => {
-//     if (!localStorage.getItem("users")) {
-//       localStorage.setItem(
-//         "users",
-//         JSON.stringify([
-//           { username: "superadmin", password: "123456", akses: "superadmin" },
-//           { username: "admin", password: "admin123", akses: "admin" },
-//           { username: "teacher", password: "teacher123", akses: "teacher" },
-//         ])
-//       );
-//     }
-
-//     if (!userRole) {
-//       if (!location.pathname.startsWith("/login")) {
-//         navigate("/login");
-//       }
-//     } else if (!location.pathname.startsWith(`/${userRole}`)) {
-//       navigate(`/${userRole}/dashboard`);
-//     }
-
-//   }, [userRole, currentPath, location.pathname, navigate]);
-
-
-
 function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
@@ -80,6 +51,14 @@ function App(props) {
     admin: <AdminPage role={userRole} />,
     teacher: <TeacherPage role={userRole} />,
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!authUser || !token) {
+      navigate("/login");
+    }
+  }, [authUser, navigate]);
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());
