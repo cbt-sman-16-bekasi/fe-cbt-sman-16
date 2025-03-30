@@ -1,65 +1,84 @@
-import Avatar from '@mui/material/Avatar';
-// import Chip from '@mui/material/Chip';
 import { Chip, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+// import Avatar from '@mui/material/Avatar';
+// import Chip from '@mui/material/Chip';
+// import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 
-function getDaysInMonth(month, year) {
-  const date = new Date(year, month, 0);
-  const monthName = date.toLocaleDateString('en-US', {
-    month: 'short',
-  });
-  const daysInMonth = date.getDate();
-  const days = [];
-  let i = 1;
-  while (days.length < daysInMonth) {
-    days.push(`${monthName} ${i}`);
-    i += 1;
-  }
-  return days;
-}
+// function getDaysInMonth(month, year) {
+//   const date = new Date(year, month, 0);
+//   const monthName = date.toLocaleDateString('en-US', {
+//     month: 'short',
+//   });
+//   const daysInMonth = date.getDate();
+//   const days = [];
+//   let i = 1;
+//   while (days.length < daysInMonth) {
+//     days.push(`${monthName} ${i}`);
+//     i += 1;
+//   }
+//   return days;
+// }
 
-function renderSparklineCell(params) {
-  const data = getDaysInMonth(4, 2024);
-  const { value, colDef } = params;
+// function renderSparklineCell(params) {
+//   const data = getDaysInMonth(4, 2024);
+//   const { value, colDef } = params;
 
-  if (!value || value.length === 0) {
-    return null;
-  }
+//   if (!value || value.length === 0) {
+//     return null;
+//   }
 
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-      <SparkLineChart
-        data={value}
-        width={colDef.computedWidth || 100}
-        height={32}
-        plotType="bar"
-        showHighlight
-        showTooltip
-        colors={['hsl(210, 98%, 42%)']}
-        xAxis={{
-          scaleType: 'band',
-          data,
-        }}
-      />
-    </div>
-  );
-}
+//   return (
+//     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+//       <SparkLineChart
+//         data={value}
+//         width={colDef.computedWidth || 100}
+//         height={32}
+//         plotType="bar"
+//         showHighlight
+//         showTooltip
+//         colors={['hsl(210, 98%, 42%)']}
+//         xAxis={{
+//           scaleType: 'band',
+//           data,
+//         }}
+//       />
+//     </div>
+//   );
+// }
 
-function renderStatus(status) {
-  const colors = {
-    Online: 'success',
-    Offline: 'default',
-  };
+// function renderStatus(status) {
+//   const colors = {
+//     Online: 'success',
+//     Offline: 'default',
+//   };
 
-  return <Chip label={status} color={colors[status]} size="small" />;
-}
+//   return <Chip label={status} color={colors[status]} size="small" />;
+// }
+
+// export function renderAvatar(params) {
+//   if (params.value == null) {
+//     return '';
+//   }
+
+//   return (
+//     <Avatar
+//       sx={{
+//         backgroundColor: params.value.color,
+//         width: '24px',
+//         height: '24px',
+//         fontSize: '0.85rem',
+//       }}
+//     >
+//       {params.value.name.toUpperCase().substring(0, 1)}
+//     </Avatar>
+//   );
+// }
 
 function getHakAksesColor(status) {
   const colors = {
-    "Super Admin": "primary",
+    "Admin": "primary",
     "Guru": "success",
   };
 
@@ -73,32 +92,12 @@ function getHakAksesColor(status) {
   );
 }
 
-export function renderAvatar(params) {
-  if (params.value == null) {
-    return '';
-  }
-
-  return (
-    <Avatar
-      sx={{
-        backgroundColor: params.value.color,
-        width: '24px',
-        height: '24px',
-        fontSize: '0.85rem',
-      }}
-    >
-      {params.value.name.toUpperCase().substring(0, 1)}
-    </Avatar>
-  );
-}
-
 export const columns = [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
   { field: "namaGuru", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
   { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120 },
   { field: "password", headerName: "PASSWORD", flex: 1, minWidth: 120 },
-
   {
     field: "hakAkses",
     headerName: "HAK AKSES",
@@ -106,7 +105,6 @@ export const columns = [
     minWidth: 120,
     renderCell: (params) => getHakAksesColor(params.value),
   },
-
   {
     field: "aksi",
     headerName: "AKSI",
@@ -121,6 +119,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
+          onClick={() => handleEdit(params.row.id)}
         >
           <EditIcon />
         </IconButton>
@@ -131,6 +130,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkred" },
           }}
+          onClick={() => handleDelete(params.row.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -149,25 +149,28 @@ export const rows = [
     password: "12345^",
     hakAkses: "Super Admin",
   },
-  {
-    id: 2,
-    no: 2,
-    nuptk: "00012345678",
-    namaGuru: "Budi Santoso, M.Pd",
-    username: "budisantoso",
-    password: "67890@",
-    hakAkses: "Super Admin",
-  },
-  {
-    id: 3,
-    no: 3,
-    nuptk: "00087654321",
-    namaGuru: "Siti Aminah, S.Pd",
-    username: "sitiaminah",
-    password: "abcd1234",
-    hakAkses: "Guru",
-  },
 ];
+
+const handleEdit = (id) => {
+  console.log("Edit kelas dengan ID:", id);
+};
+
+const handleDelete = (id) => {
+  console.log("Delete kelas dengan ID:", id);
+};
+
+export const formatRows = (teachers = []) =>
+  Array.isArray(teachers)
+    ? teachers.map((teacher, index) => ({
+      id: index + 1,
+      no: index + 1,
+      nuptk: teacher.nuptk,
+      namaGuru: teacher.name,
+      username: teacher.detail_user.username,
+      password: index + 1,
+      hakAkses: teacher.detail_user.role.code.charAt(0).toUpperCase() + teacher.detail_user.role.code.slice(1).toLowerCase(),
+    }))
+    : [];
 
 // export const rows = [
 //   {

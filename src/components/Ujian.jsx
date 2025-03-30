@@ -8,14 +8,27 @@ import CheckIcon from '@mui/icons-material/Check';
 import SettingsIcon from "@mui/icons-material/Settings";
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns, rows } from "../internals/data/ujianData";
+import { columns, formatRows } from "../internals/data/ujianData";
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncReceiveTypeExams } from '../states/exams/action';
 
 export default function Ujian({ role }) {
+  const exams = useSelector((state) => state.exams.typeExams)
+  const dispatch = useDispatch();
+
+  const rows = formatRows(exams);
+
+  useEffect(() => {
+    dispatch(asyncReceiveTypeExams())
+  }, [dispatch])
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ lg: 12 }}>
+        <Grid size={{ sm: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight="bold">
               Perhatian!
@@ -61,4 +74,8 @@ export default function Ujian({ role }) {
       <Copyright sx={{ my: 4 }} />
     </Box>
   );
+}
+
+Ujian.propTypes = {
+  role: PropTypes.string.isRequired
 }

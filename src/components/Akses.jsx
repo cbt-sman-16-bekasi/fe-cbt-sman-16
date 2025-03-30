@@ -8,10 +8,22 @@ import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns, rows } from "../internals/data/aksesData";
+import { columns, formatRows } from "../internals/data/aksesData";
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncReceiveTeachers } from '../states/teachers/action';
 
 export default function Akses({ role }) {
+  const teachers = useSelector((state) => state.teachers.teachers)
+  const dispatch = useDispatch();
+
+  const rows = formatRows(teachers.records);
+
+  useEffect(() => {
+    dispatch(asyncReceiveTeachers())
+  }, [dispatch])
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -94,4 +106,8 @@ export default function Akses({ role }) {
       <Copyright sx={{ my: 4 }} />
     </Box >
   );
+}
+
+Akses.propTypes = {
+  role: PropTypes.string.isRequired
 }

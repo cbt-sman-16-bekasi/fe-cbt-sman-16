@@ -7,6 +7,10 @@ import authUserReducer from './authUser/reducer';
 import isPreloadReducer from './isPreload/reducer';
 import classesReducer from './classes/reducer';
 import studentsReducer from './students/reducer';
+import subjectsReducer from './subjects/reducer';
+import commonReducer from './common/reducer';
+import teachersReducer from './teachers/reducer';
+import examsReducer from './exams/reducer';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +18,10 @@ const store = configureStore({
     isPreload: isPreloadReducer,
     classes: classesReducer,
     students: studentsReducer,
+    subjects: subjectsReducer,
+    common: commonReducer,
+    teachers: teachersReducer,
+    exams: examsReducer,
     loadingBar: loadingBarReducer,
   },
   middleware: (getDefaultMiddleware) =>

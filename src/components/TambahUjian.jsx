@@ -3,8 +3,9 @@ import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import CkEditor from './CkEditor';
+import PropTypes from 'prop-types';
 
-export default function TambahUjian({ setError }) {
+export default function TambahUjian({ createExams, setError }) {
   const [ujian, setUjian] = useState('')
   const [mapel, setMapel] = useState('')
   const [kelas, setKelas] = useState('')
@@ -13,6 +14,14 @@ export default function TambahUjian({ setError }) {
   const [acakJawaban, setAcakJawaban] = useState('')
   const [hasilAkhir, setHasilAkhir] = useState('')
   const [durasi, setDurasi] = useState('')
+
+  const handleSubmit = () => {
+    if (!ujian || !mapel || !kelas || !jenisUjian || !acakSoal || !acakJawaban || !hasilAkhir || !durasi) {
+      alert("Semua Input Wajin Diisi!")
+      return
+    }
+    createExams({ code_type_exam: ujian, color: mapel, role: acakSoal, type_exam: jenisUjian, })
+  }
 
   return (
     <>
@@ -166,10 +175,15 @@ export default function TambahUjian({ setError }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>Simpan</Button>
         </Grid>
       </Grid>
 
     </>
   );
+}
+
+TambahUjian.propTypes = {
+  createExams: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 }

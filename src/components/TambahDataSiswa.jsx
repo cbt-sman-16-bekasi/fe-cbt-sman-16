@@ -13,6 +13,7 @@ export default function TambahDataSiswa({ addStudent, setError }) {
   const handleSubmit = () => {
     if (!nisn || !namaSiswa || !jenisKelamin || !namaKelas) {
       alert('Semua Input Wajib di Isi!')
+      return
     }
     addStudent({ class_id: namaKelas, gender: jenisKelamin, name: namaSiswa, nisn: nisn })
   }

@@ -11,7 +11,7 @@ export const columns = [
     headerName: "AKSI",
     flex: 0.2,
     minWidth: 120,
-    renderCell: () => (
+    renderCell: (params) => (
       <div style={{ display: "flex", gap: "8px" }}>
         <IconButton
           size="small"
@@ -20,6 +20,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
+          onClick={() => handleEdit(params.row.id)}
         >
           <EditIcon />
         </IconButton>
@@ -30,6 +31,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkred" },
           }}
+          onClick={() => handleDelete(params.row.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -38,23 +40,20 @@ export const columns = [
   },
 ];
 
-export const rows = [
-  {
-    id: 1,
-    no: 1,
-    namaMapel: "00002335459",
-    kodeKelas: "Khalih Warna, S.Pd",
-  },
-  {
-    id: 2,
-    no: 2,
-    namaMapel: "00012345678",
-    kodeKelas: "Budi Santoso, M.Pd",
-  },
-  {
-    id: 3,
-    no: 3,
-    namaMapel: "00087654321",
-    kodeKelas: "Siti Aminah, S.Pd",
-  },
-];
+const handleEdit = (id) => {
+  console.log("Edit kelas dengan ID:", id);
+};
+
+const handleDelete = (id) => {
+  console.log("Delete kelas dengan ID:", id);
+};
+
+export const formatRows = (subjects = []) =>
+  Array.isArray(subjects)
+    ? subjects.map((kelas, index) => ({
+      id: index + 1,
+      no: index + 1,
+      namaMapel: kelas.subjectCode,
+      kodeKelas: kelas.classCode,
+    }))
+    : [];

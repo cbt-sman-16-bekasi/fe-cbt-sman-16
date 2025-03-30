@@ -3,7 +3,6 @@ import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { useNavigate } from "react-router";
 
 function getChipColor(status) {
   const colors = {
@@ -43,7 +42,6 @@ export const columns = [
     flex: 1,
     minWidth: 150,
     renderCell: (params) => {
-      const navigate = useNavigate();
       const theme = useTheme();
       const isDarkMode = theme.palette.mode === "dark";
 
@@ -57,7 +55,7 @@ export const columns = [
               color: isDarkMode ? "white" : "black",
               "&:hover": { bgcolor: "gold" },
             }}
-            onClick={() => navigate(`/superadmin/ujian/settings/${params.row.id}`)}
+            onClick={() => handleSettings(params.row.id)}
           >
             <SettingsOutlinedIcon />
           </IconButton>
@@ -70,7 +68,7 @@ export const columns = [
               color: "white",
               "&:hover": { bgcolor: "darkviolet" },
             }}
-            onClick={() => navigate(`/superadmin/ujian/edit/${params.row.id}`)}
+            onClick={() => handleEdit(params.row.id)}
           >
             <EditIcon />
           </IconButton>
@@ -83,7 +81,7 @@ export const columns = [
               color: "white",
               "&:hover": { bgcolor: "darkred" },
             }}
-            onClick={() => navigate(`/superadmin/ujian/delete/${params.row.id}`)}
+            onClick={() => handleDelete(params.row.id)}
           >
             <DeleteIcon />
           </IconButton>
@@ -105,37 +103,32 @@ export const rows = [
     jumlahSoal: '7',
     totalNilai: '100'
   },
-  {
-    id: 2,
-    no: 2,
-    namaUjian: "00012345678",
-    mataPelajaran: "Budi Santoso, M.Pd",
-    kelas: 'laki - laki',
-    durasi: '90',
-    jenisUjian: 'UH',
-    jumlahSoal: '7',
-    totalNilai: '100'
-  },
-  {
-    id: 3,
-    no: 3,
-    namaUjian: "00087654321",
-    mataPelajaran: "Siti Aminah, S.Pd",
-    kelas: 'laki - laki',
-    durasi: '90',
-    jenisUjian: 'UAS',
-    jumlahSoal: '7',
-    totalNilai: '100'
-  },
-  {
-    id: 4,
-    no: 4,
-    namaUjian: "00087654321",
-    mataPelajaran: "Siti Aminah, S.Pd",
-    kelas: 'laki - laki',
-    durasi: '90',
-    jenisUjian: 'TO',
-    jumlahSoal: '7',
-    totalNilai: '100'
-  },
 ];
+
+const handleEdit = (id) => {
+  console.log("Edit kelas dengan ID:", id);
+};
+
+const handleDelete = (id) => {
+  console.log("Delete kelas dengan ID:", id);
+};
+
+const handleSettings = (id) => {
+  console.log("Delete kelas dengan ID:", id);
+};
+
+export const formatRows = (exams = []) =>
+  Array.isArray(exams)
+    ? exams.map((exam, index) => ({
+      id: index + 1,
+      no: index + 1,
+      namaUjian: exam.code,
+      mataPelajaran: exam.code,
+      kelas: exam.code,
+      durasi: exam.code,
+      jenisUjian: exam.code,
+      jumlahSoal: exam.code,
+      totalNilai: exam.code,
+    }))
+    : [];
+

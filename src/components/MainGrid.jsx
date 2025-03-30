@@ -6,50 +6,23 @@ import StatCard from './StatCard';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import { menuConfig } from '../config/menuConfig';
-
-// const data = [
-//   {
-//     title: 'Kelas',
-//     value: '10',
-//     link: '/kelas',
-//   },
-//   {
-//     title: 'Mata Pelajaran',
-//     value: '5',
-//     link: '/mata-pelajaran',
-//   },
-//   {
-//     title: 'Data Siswa',
-//     value: '945',
-//     link: '/data-siswa',
-//   },
-//   {
-//     title: 'Ujian',
-//     value: '13',
-//     link: '/ujian',
-//   },
-//   {
-//     title: 'Sesi Ujian',
-//     value: '11',
-//     link: '/sesi-ujian',
-//   },
-//   {
-//     title: 'Laporan Ujian',
-//     value: '3',
-//     link: '/laporan-ujian',
-//   },
-// ];
-
-// <Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
-//   {data.map((card, index) => (
-//     <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-//       <StatCard {...card} />
-//     </Grid>
-//   ))}
-// </Grid>
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncGetDashboardData } from '../states/common/action';
 
 export default function MainGrid({ role }) {
+  const dashboard = useSelector((state) => state.common.dashboardData);
+  const dispatch = useDispatch();
+
+  // ini udah jadi tapi penggunaan nya ap a1 data dashboard ini buat semua user kah?
+  console.log(dashboard)
+
   const menuItems = menuConfig[role]?.slice(1) || [];
+
+  useEffect(() => {
+    dispatch(asyncGetDashboardData())
+  }, [dispatch])
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -105,4 +78,8 @@ export default function MainGrid({ role }) {
       <Copyright sx={{ my: 4 }} />
     </Box>
   );
+}
+
+MainGrid.propTypes = {
+  role: PropTypes.string.isRequired
 }

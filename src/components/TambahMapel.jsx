@@ -2,10 +2,19 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function TambahMapel({ setError }) {
+export default function TambahMapel({ addSubject, setError }) {
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
+
+  const handleSubmit = () => {
+    if (!namaMapel || !kodeKelas) {
+      alert("Semua Input Wajib Diisi!")
+      return
+    }
+    addSubject({ class_code: kodeKelas, subject_code: namaMapel })
+  }
 
   return (
     <>
@@ -51,10 +60,15 @@ export default function TambahMapel({ setError }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>Simpan</Button>
         </Grid>
       </Grid>
 
     </>
   );
+}
+
+TambahMapel.propTypes = {
+  addSubject: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 }

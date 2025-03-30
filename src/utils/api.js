@@ -68,6 +68,58 @@ const api = (() => {
   }
 
   // school
+  async function getSchoolInfo(schoolCode) {
+    const response = await _fetchWithAuth(
+      `/academic/school?schoolCode=${schoolCode}`
+    );
+    const responseJson = await response.json();
+    const { status, message, data } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  async function updateSchool({
+    address,
+    banner,
+    email,
+    level_of_education,
+    logo,
+    npsn,
+    nss,
+    phone,
+    school_name,
+  }) {
+    const response = await _fetchWithAuth('/academic/school/update', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        address,
+        banner,
+        email,
+        level_of_education,
+        logo,
+        npsn,
+        nss,
+        phone,
+        school_name,
+      }),
+    });
+
+    const responseJson = await response.json();
+    const { status, message, data } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  // common
   async function getClassCode() {
     const response = await _fetchWithAuth(`/academic/class-code`);
     const responseJson = await response.json();
@@ -92,20 +144,6 @@ const api = (() => {
     return data;
   }
 
-  async function getSchoolInfo(schoolCode) {
-    const response = await _fetchWithAuth(
-      `/academic/school?schoolCode=${schoolCode}`
-    );
-    const responseJson = await response.json();
-    const { status, message, data } = responseJson;
-
-    if (status !== 'success') {
-      throw new Error(message);
-    }
-
-    return data;
-  }
-
   async function getSubjects() {
     const response = await _fetchWithAuth(`/academic/subjects`);
     const responseJson = await response.json();
@@ -118,7 +156,6 @@ const api = (() => {
     return data;
   }
 
-  // user
   async function getUserRoles() {
     const response = await _fetchWithAuth(`/academic/user/roles`);
     const responseJson = await response.json();
@@ -258,6 +295,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {
@@ -443,6 +481,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {
@@ -496,6 +535,147 @@ const api = (() => {
     return data;
   }
 
+  // exams
+  async function getTypeExams(
+    { page = 1, size = 10, searchKey, searchValue, filter } = {},
+    dispatch
+  ) {
+    const params = new URLSearchParams({ page, size });
+
+    if (searchKey && searchValue) {
+      params.append('search.key', searchKey);
+      params.append('search.value', searchValue);
+    }
+
+    if (filter) {
+      Object.keys(filter).forEach((key) =>
+        params.append(`filter[${key}]`, filter[key])
+      );
+    }
+
+    const response = await _fetchWithAuth(
+      `/academic/exam/type-exam/all?${params.toString()}`,
+      {},
+      dispatch
+    );
+    const responseJson = await response.json();
+
+    const { status, message, data } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  async function createTypeExam({ code_type_exam, color, role, type_exam }) {
+    try {
+      const response = await _fetchWithAuth('/academic/exam/type-exam/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code_type_exam, color, role, type_exam }),
+      });
+
+      const responseJson = await response.json();
+
+      const { status, message, data } = responseJson;
+
+      if (status !== 'success') {
+        throw new Error(message);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Create Type Exam Error:', error.message);
+      throw error;
+    }
+  }
+
+  async function deleteTypeExam({
+    id,
+    code_type_exam,
+    color,
+    role,
+    type_exam,
+  }) {
+    try {
+      const response = await _fetchWithAuth(
+        `/academic/exam/type-exam/delete/${id}`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code_type_exam, color, role, type_exam }),
+        }
+      );
+
+      const responseJson = await response.json();
+
+      const { status, message, data } = responseJson;
+
+      if (status !== 'success') {
+        throw new Error(message);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Delete Type Exam Error:', error.message);
+      throw error;
+    }
+  }
+
+  async function getTypeExamDetail(id) {
+    try {
+      const response = await _fetchWithAuth(
+        `/academic/exam/type-exam/detail/${id}`
+      );
+
+      const responseJson = await response.json();
+
+      const { status, message, data } = responseJson;
+
+      if (status !== 'success') {
+        throw new Error(message);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Get Type Exam Detail Error:', error.message);
+      throw error;
+    }
+  }
+
+  async function updateTypeExam({
+    id,
+    code_type_exam,
+    color,
+    role,
+    type_exam,
+  }) {
+    try {
+      const response = await _fetchWithAuth(
+        `/academic/exam/type-exam/update/${id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code_type_exam, color, role, type_exam }),
+        }
+      );
+
+      const responseJson = await response.json();
+
+      const { status, message, data } = responseJson;
+
+      if (status !== 'success') {
+        throw new Error(message);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Update Type Exam Error:', error.message);
+      throw error;
+    }
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -503,9 +683,11 @@ const api = (() => {
     login,
     logout,
 
+    getSchoolInfo,
+    updateSchool,
+
     getClassCode,
     getDashboardData,
-    getSchoolInfo,
     getSubjects,
     getUserRoles,
 
@@ -532,6 +714,12 @@ const api = (() => {
     deleteTeacher,
     getTeacherDetail,
     updateTeacher,
+
+    getTypeExams,
+    createTypeExam,
+    deleteTypeExam,
+    getTypeExamDetail,
+    updateTypeExam,
   };
 })();
 

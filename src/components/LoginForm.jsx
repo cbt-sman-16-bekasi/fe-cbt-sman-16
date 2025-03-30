@@ -2,11 +2,9 @@ import { useState } from "react";
 import Grid from '@mui/material/Grid2';
 import {
   Card,
-  Alert,
   CardContent,
   TextField,
   InputAdornment,
-  IconButton,
   Button,
   Typography,
   FormControlLabel,
@@ -14,24 +12,8 @@ import {
   Box,
   Container,
 } from "@mui/material";
-import { Visibility, VisibilityOff, Person, Lock } from "@mui/icons-material";
-import CheckIcon from '@mui/icons-material/Check';
-import { useNavigate } from "react-router";
+import { Person, Lock } from "@mui/icons-material";
 import PropTypes from "prop-types";
-
-// const users = JSON.parse(localStorage.getItem("users")) || [];
-// const user = users.find(
-//   (u) => u.username === username && u.password === password
-// );
-
-// const navigate = useNavigate();
-
-// if (user) {
-//   localStorage.setItem("authUser", JSON.stringify(user));
-//   navigate(`/${user.akses}/dashboard`);
-// } else {
-//   alert("Username atau password salah!");
-// }
 
 const LoginForm = ({ login }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,19 +48,6 @@ const LoginForm = ({ login }) => {
         {/* Form Login */}
         <CardContent>
           <Grid container spacing={2} alignItems="center" columns={12} sx={{ padding: 2 }}>
-
-            {/* <Grid size={{ sm: 12 }}>
-              <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined"
-                severity="info"
-                sx={{ p: 2 }}>
-                <Typography variant="h6" fontWeight="bold">
-                  Perhatian!
-                </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                  Silahkan klik Generate Token untuk dapat mendapatkan token yang akan diberikan ke siswa. Masa aktif token berlaku selama satu hari.
-                </Typography>
-              </Alert>
-            </Grid> */}
 
             <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
               <Typography variant="subtitle2" fontWeight="bold" pb={1} >

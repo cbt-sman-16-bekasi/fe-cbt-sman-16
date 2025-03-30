@@ -18,7 +18,6 @@ export default function Kelas({ role }) {
   const dispatch = useDispatch()
 
   const rows = formatRows(classes.records);
-  console.log(rows)
 
   useEffect(() => {
     dispatch(asyncReceiveClasses())

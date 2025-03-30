@@ -40,7 +40,6 @@ export const columns = [
   },
 ];
 
-// Fungsi event handler (bisa dipindah ke Redux action nantinya)
 const handleEdit = (id) => {
   console.log("Edit kelas dengan ID:", id);
 };
@@ -49,7 +48,6 @@ const handleDelete = (id) => {
   console.log("Delete kelas dengan ID:", id);
 };
 
-// Fungsi untuk mengonversi data Redux menjadi rows
 export const formatRows = (classes = []) =>
   Array.isArray(classes)
     ? classes.map((kelas, index) => ({

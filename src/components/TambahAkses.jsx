@@ -9,7 +9,15 @@ export default function TambahAkses({ addAccess, setError }) {
   const [namaGuru, setNamaGuru] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [pilihAkses, setPilihAkses] = useState('')
+  const [akses, setAkses] = useState('')
+
+  const handleSubmit = () => {
+    if (!nuptk || !namaGuru || !username || !password || !akses) {
+      alert('Semua Input Wajib Diisi!')
+      return
+    }
+    addAccess({ name: namaGuru, nuptk: nuptk, role: akses.toUpperCase(), username: username })
+  }
 
   return (
     <>
@@ -80,11 +88,11 @@ export default function TambahAkses({ addAccess, setError }) {
           <TextField
             fullWidth
             select
-            value={pilihAkses}
-            onChange={(e) => setPilihAkses(e.target.value)}
+            value={akses}
+            onChange={(e) => setAkses(e.target.value)}
             variant="outlined"
           >
-            <MenuItem value="Super Admin">Super Admin</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
             <MenuItem value="Guru">Guru</MenuItem>
           </TextField>
         </Grid>
@@ -140,7 +148,7 @@ export default function TambahAkses({ addAccess, setError }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>Simpan</Button>
         </Grid>
       </Grid>
 

@@ -19,6 +19,9 @@ import TambahBankSoal from './TambahBankSoal';
 import { asyncCreateClass } from '../states/classes/action';
 import { useDispatch } from 'react-redux';
 import { asyncCreateStudent } from '../states/students/action';
+import { asyncCreateSubject } from '../states/subjects/action';
+import { asyncCreateTeacher } from '../states/teachers/action';
+import { asyncCreateTypeExam } from '../states/exams/action';
 
 export default function LayoutTambah({ desc }) {
   const dispatch = useDispatch();
@@ -37,8 +40,16 @@ export default function LayoutTambah({ desc }) {
     dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
   }
 
-  const onAddExams = ({ class_id, gender, name, nisn }) => {
-    dispatch(async({ class_id, gender, name, nisn }));
+  const onAddSubjects = ({ class_code, subject_code }) => {
+    dispatch(asyncCreateSubject({ class_code, subject_code }))
+  }
+
+  const onAddAccess = ({ name, nuptk, role, username }) => {
+    dispatch(asyncCreateTeacher({ name, nuptk, role, username }))
+  }
+
+  const onCreateExams = ({ code_type_exam, color, role, type_exam }) => {
+    dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }))
   }
 
   const renderContent = () => {
@@ -46,15 +57,15 @@ export default function LayoutTambah({ desc }) {
       case "/kelas/tambah":
         return <TambahKelas createClass={onCreateClass} setError={handleDisplayError} />
       case "/akses-system/tambah":
-        return <TambahAkses setError={handleDisplayError} />
+        return <TambahAkses addAccess={onAddAccess} setError={handleDisplayError} />
       case "/mata-pelajaran/tambah":
-        return <TambahMapel setError={handleDisplayError} />
+        return <TambahMapel addSubject={onAddSubjects} setError={handleDisplayError} />
       case "/kode-jenis-ujian/tambah":
         return <TambahKodeUjian setError={handleDisplayError} />
       case "/data-siswa/tambah":
         return <TambahDataSiswa addStudent={onAddStudent} setError={handleDisplayError} />
       case "/ujian/tambah":
-        return <TambahUjian setError={handleDisplayError} />
+        return <TambahUjian createExams={onCreateExams} setError={handleDisplayError} />
       case "/sesi-ujian/tambah":
         return <TambahSesiUjian setError={handleDisplayError} />
       case "/bank-soal/tambah":
