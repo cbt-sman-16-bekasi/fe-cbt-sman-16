@@ -13,7 +13,7 @@ export const columns = [
     headerName: "AKSI",
     flex: 0.5,
     minWidth: 120,
-    renderCell: () => (
+    renderCell: (params) => (
       <div style={{ display: "flex", gap: "8px" }}>
         <IconButton
           size="small"
@@ -22,6 +22,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
+          onClick={() => handleEdit(params.row.id)}
         >
           <EditIcon />
         </IconButton>
@@ -32,6 +33,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkred" },
           }}
+          onClick={() => handleDelete(params.row.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -40,29 +42,24 @@ export const columns = [
   },
 ];
 
-export const rows = [
-  {
-    id: 1,
-    no: 1,
-    nisn: "00002335459",
-    namaSiswa: "Khalih Warna, S.Pd",
-    jenisKelamin: 'laki - laki',
-    kelas: "khaliwarna",
-  },
-  {
-    id: 2,
-    no: 2,
-    nisn: "00012345678",
-    namaSiswa: "Budi Santoso, M.Pd",
-    jenisKelamin: 'laki - laki',
-    kelas: "budisantoso",
-  },
-  {
-    id: 3,
-    no: 3,
-    nisn: "00087654321",
-    namaSiswa: "Siti Aminah, S.Pd",
-    jenisKelamin: 'laki - laki',
-    kelas: "sitiaminah",
-  },
-];
+// Fungsi event handler (bisa dipindah ke Redux action nantinya)
+const handleEdit = (id) => {
+  console.log("Edit kelas dengan ID:", id);
+};
+
+const handleDelete = (id) => {
+  console.log("Delete kelas dengan ID:", id);
+};
+
+// Fungsi untuk mengonversi data Redux menjadi rows
+export const formatRows = (students = []) =>
+  Array.isArray(students)
+    ? students.map((kelas, index) => ({
+      id: index + 1,
+      no: index + 1,
+      nisn: kelas.classCode,
+      namaSiswa: kelas.className,
+      jenisKelamin: kelas.className,
+      kelas: kelas.className,
+    }))
+    : [];

@@ -26,11 +26,9 @@ function asyncSetAuthUser({ password, username }) {
     dispatch(showLoading());
 
     try {
-      const { accessToken, user } = await api.login({ password, username });
-      console.log(accessToken);
-      console.log(user);
+      const { token, user } = await api.login({ password, username });
 
-      api.putAccessToken(accessToken);
+      api.putAccessToken(token);
       localStorage.setItem('authUser', JSON.stringify(user));
 
       dispatch(setAuthUserActionCreator(user));

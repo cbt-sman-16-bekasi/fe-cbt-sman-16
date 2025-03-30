@@ -7,10 +7,24 @@ import { Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import { columns, rows } from '../internals/data/siswaData';
+import { columns, formatRows } from '../internals/data/siswaData';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveStudents } from '../states/students/action';
+import { useEffect } from 'react';
 
 export default function DataSiswa({ role }) {
+  const students = useSelector((state) => state.students.students);
+  const dispatch = useDispatch();
+  console.log(students)
+
+  const rows = formatRows(students.records);
+
+  useEffect(() => {
+    dispatch(asyncReceiveStudents())
+  }, [dispatch])
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
@@ -55,4 +69,8 @@ export default function DataSiswa({ role }) {
       <Copyright sx={{ my: 4 }} />
     </Box >
   );
+}
+
+DataSiswa.propTypes = {
+  role: PropTypes.string.isRequired
 }

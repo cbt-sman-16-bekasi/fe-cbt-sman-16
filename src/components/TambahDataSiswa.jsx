@@ -2,12 +2,20 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function TambahDataSiswa({ setError }) {
+export default function TambahDataSiswa({ addStudent, setError }) {
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
   const [jenisKelamin, setJenisKelamin] = useState('')
-  const [namakelas, setNamakelas] = useState('')
+  const [namaKelas, setNamaKelas] = useState('')
+
+  const handleSubmit = () => {
+    if (!nisn || !namaSiswa || !jenisKelamin || !namaKelas) {
+      alert('Semua Input Wajib di Isi!')
+    }
+    addStudent({ class_id: namaKelas, gender: jenisKelamin, name: namaSiswa, nisn: nisn })
+  }
 
   return (
     <>
@@ -66,8 +74,8 @@ export default function TambahDataSiswa({ setError }) {
           <TextField
             fullWidth
             select
-            value={namakelas}
-            onChange={(e) => setNamakelas(e.target.value)}
+            value={namaKelas}
+            onChange={(e) => setNamaKelas(e.target.value)}
             variant="outlined"
           >
             <MenuItem value='10'>10</MenuItem>
@@ -127,10 +135,15 @@ export default function TambahDataSiswa({ setError }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>Simpan</Button>
         </Grid>
       </Grid>
 
     </>
   );
+}
+
+TambahDataSiswa.propTypes = {
+  addStudent: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 }

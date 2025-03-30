@@ -2,8 +2,9 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function TambahAkses({ setError }) {
+export default function TambahAkses({ addAccess, setError }) {
   const [nuptk, setNuptk] = useState('')
   const [namaGuru, setNamaGuru] = useState('')
   const [username, setUsername] = useState('')
@@ -145,4 +146,9 @@ export default function TambahAkses({ setError }) {
 
     </>
   );
+}
+
+TambahAkses.propTypes = {
+  addAccess: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 }

@@ -16,26 +16,43 @@ import TambahDataSiswa from './TambahDataSiswa';
 import TambahUjian from './TambahUjian';
 import TambahSesiUjian from './TambahSesiUjian';
 import TambahBankSoal from './TambahBankSoal';
+import { asyncCreateClass } from '../states/classes/action';
+import { useDispatch } from 'react-redux';
+import { asyncCreateStudent } from '../states/students/action';
 
 export default function LayoutTambah({ desc }) {
+  const dispatch = useDispatch();
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
 
   const navigate = useNavigate();
   const [displayError, setDisplayError] = useState(true);
 
+
+  const onCreateClass = ({ class_code, class_name }) => {
+    dispatch(asyncCreateClass({ class_code, class_name }));
+  }
+
+  const onAddStudent = ({ class_id, gender, name, nisn }) => {
+    dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
+  }
+
+  const onAddExams = ({ class_id, gender, name, nisn }) => {
+    dispatch(async({ class_id, gender, name, nisn }));
+  }
+
   const renderContent = () => {
     switch (`/${currentPath}`) {
+      case "/kelas/tambah":
+        return <TambahKelas createClass={onCreateClass} setError={handleDisplayError} />
       case "/akses-system/tambah":
         return <TambahAkses setError={handleDisplayError} />
-      case "/kelas/tambah":
-        return <TambahKelas setError={handleDisplayError} />
       case "/mata-pelajaran/tambah":
         return <TambahMapel setError={handleDisplayError} />
       case "/kode-jenis-ujian/tambah":
         return <TambahKodeUjian setError={handleDisplayError} />
       case "/data-siswa/tambah":
-        return <TambahDataSiswa setError={handleDisplayError} />
+        return <TambahDataSiswa addStudent={onAddStudent} setError={handleDisplayError} />
       case "/ujian/tambah":
         return <TambahUjian setError={handleDisplayError} />
       case "/sesi-ujian/tambah":

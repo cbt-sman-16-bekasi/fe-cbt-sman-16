@@ -6,12 +6,14 @@ import {
 import authUserReducer from './authUser/reducer';
 import isPreloadReducer from './isPreload/reducer';
 import classesReducer from './classes/reducer';
+import studentsReducer from './students/reducer';
 
 const store = configureStore({
   reducer: {
     authUser: authUserReducer,
     isPreload: isPreloadReducer,
     classes: classesReducer,
+    students: studentsReducer,
     loadingBar: loadingBarReducer,
   },
   middleware: (getDefaultMiddleware) =>

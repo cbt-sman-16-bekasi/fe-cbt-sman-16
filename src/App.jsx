@@ -7,7 +7,7 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -38,7 +38,6 @@ const xThemeComponents = {
 function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
-  const classes = useSelector((state) => state.classes);
   const accessToken = localStorage.getItem("accessToken");
 
   const dispatch = useDispatch();
@@ -82,7 +81,6 @@ function App(props) {
 
     document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
   }, [location, userRole]);
-
 
   if (isPreload) null
 

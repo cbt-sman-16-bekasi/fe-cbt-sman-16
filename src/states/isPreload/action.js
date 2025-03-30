@@ -1,4 +1,3 @@
-import api from '../../utils/api';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { receiveClassesActionCreator } from '../classes/action';
 import { setAuthUserActionCreator } from '../authUser/action';

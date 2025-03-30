@@ -1,11 +1,20 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import { Button, MenuItem, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function TambahKelas({ setError }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+export default function TambahKelas({ createClass, setError }) {
+  const [classCode, setClassCode] = useState('');
+  const [className, setClassName] = useState('');
+
+  const handleSubmit = () => {
+    if (!classCode || !className) {
+      alert("Kode kelas dan nama kelas harus diisi!");
+      return;
+    }
+    createClass({ class_code: classCode, class_name: className });
+  };
 
   return (
     <>
@@ -14,28 +23,26 @@ export default function TambahKelas({ setError }) {
 
         <Grid size={{ sm: 12, lg: 6 }} >
           <Typography variant="subtitle1" fontWeight="bold">
-            Username
+            Kode Kelas
           </Typography>
           <TextField
             fullWidth
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={classCode}
+            onChange={(e) => setClassCode(e.target.value)}
             variant="outlined"
-          >
-          </TextField>
+          />
         </Grid>
 
         <Grid size={{ sm: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Password
+            Nama Kelas
           </Typography>
           <TextField
             fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
             variant="outlined"
-          >
-          </TextField>
+          />
         </Grid>
       </Grid>
 
@@ -45,10 +52,17 @@ export default function TambahKelas({ setError }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success'>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>
+            Simpan
+          </Button>
         </Grid>
       </Grid>
 
     </>
   );
+}
+
+TambahKelas.propTypes = {
+  createClass: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 }

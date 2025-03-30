@@ -7,46 +7,46 @@ import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import { menuConfig } from '../config/menuConfig';
 
-const data = [
-  {
-    title: 'Kelas',
-    value: '10',
-    link: '/kelas',
-  },
-  {
-    title: 'Mata Pelajaran',
-    value: '5',
-    link: '/mata-pelajaran',
-  },
-  {
-    title: 'Data Siswa',
-    value: '945',
-    link: '/data-siswa',
-  },
-  {
-    title: 'Ujian',
-    value: '13',
-    link: '/ujian',
-  },
-  {
-    title: 'Sesi Ujian',
-    value: '11',
-    link: '/sesi-ujian',
-  },
-  {
-    title: 'Laporan Ujian',
-    value: '3',
-    link: '/laporan-ujian',
-  },
-];
+// const data = [
+//   {
+//     title: 'Kelas',
+//     value: '10',
+//     link: '/kelas',
+//   },
+//   {
+//     title: 'Mata Pelajaran',
+//     value: '5',
+//     link: '/mata-pelajaran',
+//   },
+//   {
+//     title: 'Data Siswa',
+//     value: '945',
+//     link: '/data-siswa',
+//   },
+//   {
+//     title: 'Ujian',
+//     value: '13',
+//     link: '/ujian',
+//   },
+//   {
+//     title: 'Sesi Ujian',
+//     value: '11',
+//     link: '/sesi-ujian',
+//   },
+//   {
+//     title: 'Laporan Ujian',
+//     value: '3',
+//     link: '/laporan-ujian',
+//   },
+// ];
 
-<Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
-  {data.map((card, index) => (
-    <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-      <StatCard {...card} />
-    </Grid>
-  ))}
-</Grid>
+// <Grid container spacing={2} columns={12} sx={{ mb: (theme) => theme.spacing(2) }}>
+//   {data.map((card, index) => (
+//     <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
+//       <StatCard {...card} />
+//     </Grid>
+//   ))}
+// </Grid>
 
 export default function MainGrid({ role }) {
   const menuItems = menuConfig[role]?.slice(1) || [];
