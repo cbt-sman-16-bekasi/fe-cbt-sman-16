@@ -17,27 +17,29 @@ import {
 import { Visibility, VisibilityOff, Person, Lock } from "@mui/icons-material";
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from "react-router";
+import PropTypes from "prop-types";
 
-const LoginForm = ({ setAuthUser }) => {
+// const users = JSON.parse(localStorage.getItem("users")) || [];
+// const user = users.find(
+//   (u) => u.username === username && u.password === password
+// );
+
+// const navigate = useNavigate();
+
+// if (user) {
+//   localStorage.setItem("authUser", JSON.stringify(user));
+//   navigate(`/${user.akses}/dashboard`);
+// } else {
+//   alert("Username atau password salah!");
+// }
+
+const LoginForm = ({ login }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleLogin = () => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (user) {
-      localStorage.setItem("authUser", JSON.stringify(user));
-      setAuthUser(user);
-
-      navigate(`/${user.akses}/dashboard`);
-    } else {
-      alert("Username atau password salah!");
-    }
+    login({ password, username });
   };
 
   return (
@@ -47,7 +49,6 @@ const LoginForm = ({ setAuthUser }) => {
         sx={{
           p: 2,
           width: 400,
-          textAlign: "center",
           boxShadow: 3,
           borderRadius: 2,
         }}
@@ -58,14 +59,15 @@ const LoginForm = ({ setAuthUser }) => {
         </Box>
 
         {/* Judul */}
-        <Typography variant="h6" fontWeight="bold" gutterBottom>
+        <Typography variant="h6" fontWeight="bold" gutterBottom align={'center'}>
           COMPUTER BASED TEST <br /> SMAN 16 BEKASI
         </Typography>
 
         {/* Form Login */}
         <CardContent>
-          <Grid container spacing={2} columns={12} sx={{ p: 1 }}>
-            {/* <Grid  size={{ sm: 12 }}>
+          <Grid container spacing={2} alignItems="center" columns={12} sx={{ padding: 2 }}>
+
+            {/* <Grid size={{ sm: 12 }}>
               <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined"
                 severity="info"
                 sx={{ p: 2 }}>
@@ -78,8 +80,8 @@ const LoginForm = ({ setAuthUser }) => {
               </Alert>
             </Grid> */}
 
-            <Grid size={{ sm: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
-              <Typography variant="subtitle2" fontWeight="bold" >
+            <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
+              <Typography variant="subtitle2" fontWeight="bold" pb={1} >
                 Username
               </Typography>
               <TextField
@@ -97,8 +99,8 @@ const LoginForm = ({ setAuthUser }) => {
               />
             </Grid>
 
-            <Grid size={{ sm: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '.4rem' }}>
-              <Typography variant="subtitle2" fontWeight="bold" >
+            <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
+              <Typography variant="subtitle2" fontWeight="bold" pb={1} >
                 Password
               </Typography>
               <TextField
@@ -125,7 +127,6 @@ const LoginForm = ({ setAuthUser }) => {
               />
             </Grid>
 
-            {/* Tombol Login */}
             <Grid size={{ sm: 12 }}>
               <Button
                 onClick={handleLogin}
@@ -154,3 +155,7 @@ const LoginForm = ({ setAuthUser }) => {
 };
 
 export default LoginForm;
+
+LoginForm.propTypes = {
+  login: PropTypes.func.isRequired,
+};

@@ -15,12 +15,13 @@ import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
 import { Typography } from "@mui/material";
 import NotFoundPage from "./NotFoundPage";
-
+import LayoutSettings from "../components/LayoutSettings";
+import AddQuestions from "../components/AddQuestions";
 
 function SuperAdminPage({ role }) {
   return (
     <Routes>
-      <Route path="dashboard" element={<MainGrid />} />
+      <Route path="dashboard" element={<MainGrid role={role} />} />
       <Route path="akses-system" element={<Akses role={role} />} />
       <Route path="akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
 
@@ -42,6 +43,8 @@ function SuperAdminPage({ role }) {
 
       <Route path="ujian" element={<Ujian role={role} />} />
       <Route path="ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />
+      <Route path="ujian/settings/:id" element={<LayoutSettings desc="Setting Ujian" role={role} />} />
+      <Route path="ujian/settings/:id/tambah-soal" element={<AddQuestions />} />
 
       <Route path="sesi-ujian" element={<SesiUjian role={role} />} />
       <Route path="sesi-ujian/tambah" element={<LayoutTambah desc="Tambah Sesi Ujian" />} />

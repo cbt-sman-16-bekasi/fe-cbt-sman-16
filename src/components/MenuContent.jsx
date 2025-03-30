@@ -46,7 +46,6 @@ export default function MenuContent({ role }) {
                 }}
               >
                 <ListItemIcon >
-                  {/* {item.icon} */}
                   {<IconComponent />}
                 </ListItemIcon>
                 <ListItemText primary={item.text} />

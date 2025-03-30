@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 // import Typography from '@mui/material/Typography';
 import { Link } from 'react-router';
 
-function StatCard({ title, value, link, role }) {
+function StatCard({ text, value, path, role }) {
 
   return (
     <div className="h-full rounded-2xl overflow-hidden shadow-lg">
       {/* Bagian Atas */}
       <div className="bg-purple-600 p-7 flex flex-col gap-2 relative">
         <p className="text-white text-5xl font-extrabold">{value}</p>
-        <p className="text-white text-lg">{title}</p>
+        <p className="text-white text-lg">{text}</p>
         <div className="absolute top-1 right-1 text-white/40 text-5xl">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ function StatCard({ title, value, link, role }) {
       </div>
 
       {/* Bagian Bawah */}
-      <Link to={`/${role}${link}`} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+      <Link to={`/${role}${path}`} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
         <span className='text-white'>Lihat Detail</span>
         <span className='text-white'>→</span>
       </Link>
@@ -41,8 +41,9 @@ function StatCard({ title, value, link, role }) {
 
 StatCard.propTypes = {
   // interval: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
   // trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
   value: PropTypes.string.isRequired,
 };
@@ -56,7 +57,7 @@ export default StatCard;
 //         {value}
 //       </Typography>
 //       <Typography variant="p" sx={{ p: 0, mb: 10 }}>
-//         {title}
+//         {text}
 //       </Typography>
 //     </div>
 //     <div className="summary-cta p-5 bg-slate-900 mb-2">

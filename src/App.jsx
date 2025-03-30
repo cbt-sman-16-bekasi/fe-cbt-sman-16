@@ -8,13 +8,14 @@ import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
 import AdminPage from "./pages/AdminPage";
 import TeacherPage from "./pages/TeacherPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import Loading from './components/Loading.jsx';
 import { menuConfig } from './config/menuConfig';
 
 import {
@@ -25,21 +26,7 @@ import {
 } from './theme/customizations';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
-
-// import MainGrid from './components/MainGrid';
-// import Akses from './components/Akses';
-// import LayoutTambah from './components/LayoutTambah';
-// import Kelas from './components/Kelas';
-// import MataPelajaran from './components/MataPelajaran';
-// import KodeJenisUjian from './components/KodeJenisUjian';
-// import DataSiswa from './components/DataSiswa';
-// import LayoutImport from './components/LayoutImport';
-// import BankSoal from './components/BankSoal';
-// import Ujian from './components/Ujian';
-// import SesiUjian from './components/SesiUjian';
-// import GenerateToken from './components/GenerateToken';
-// import LaporanNilai from './components/LaporanNilai';
-// import ProfilSekolah from './components/ProfilSekolah';
+import { asyncPreloadProcess } from './states/isPreload/action.js';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -48,115 +35,79 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-// const routes = [
-//   { path: "/", element: <MainGrid /> },
-//   { path: "/akses-system", element: <Akses /> },
-//   { path: "/akses-system/tambah", element: <LayoutTambah desc="Tambah Akses" /> },
+// const [authUser, setAuthUser] = useState(() => {
+//   return JSON.parse(localStorage.getItem("authUser")) || { akses: null };
+// });
+// const isPreload = null;
 
-//   { path: "/kelas", element: <Kelas /> },
-//   { path: "/kelas/tambah", element: <LayoutTambah desc="Tambah Kelas" /> },
+// useEffect(() => {
+//     if (!localStorage.getItem("users")) {
+//       localStorage.setItem(
+//         "users",
+//         JSON.stringify([
+//           { username: "superadmin", password: "123456", akses: "superadmin" },
+//           { username: "admin", password: "admin123", akses: "admin" },
+//           { username: "teacher", password: "teacher123", akses: "teacher" },
+//         ])
+//       );
+//     }
 
-//   { path: "/mata-pelajaran", element: <MataPelajaran /> },
-//   { path: "/mata-pelajaran/tambah", element: <LayoutTambah desc="Tambah Mata Pelajaran" /> },
+//     if (!userRole) {
+//       if (!location.pathname.startsWith("/login")) {
+//         navigate("/login");
+//       }
+//     } else if (!location.pathname.startsWith(`/${userRole}`)) {
+//       navigate(`/${userRole}/dashboard`);
+//     }
 
-//   { path: "/kode-jenis-ujian", element: <KodeJenisUjian /> },
-//   { path: "/kode-jenis-ujian/tambah", element: <LayoutTambah desc="Kode Jenis Ujian" /> },
+//   }, [userRole, currentPath, location.pathname, navigate]);
 
-//   { path: "/data-siswa", element: <DataSiswa /> },
-//   { path: "/data-siswa/tambah", element: <LayoutTambah desc="Data Siswa" /> },
-//   { path: "/data-siswa/import", element: <LayoutImport desc="Data Siswa" /> },
 
-//   { path: "/bank-soal", element: <BankSoal /> },
-//   { path: "/bank-soal/tambah", element: <LayoutTambah desc="Bank Soal" /> },
 
-//   { path: "/ujian", element: <Ujian /> },
-//   { path: "/ujian/tambah", element: <LayoutTambah desc="Tambah Ujian" /> },
-
-//   { path: "/sesi-ujian", element: <SesiUjian /> },
-//   { path: "/sesi-ujian/tambah", element: <LayoutTambah desc="Tambah Sesi Ujian" /> },
-
-//   { path: "/generate-token", element: <GenerateToken /> },
-//   { path: "/laporan-nilai", element: <LaporanNilai /> },
-//   { path: "/informasi-sekolah", element: <ProfilSekolah /> },
-
-//   { path: "*", element: <Akses /> }, // Default fallback route
-// ];
-{/* {routes.map((route, index) => (
-                  <Route key={index} path={route.path} element={route.element} />
-                ))} */}
-
-// const authUser = useSelector((state) => state.authUser);
-// const isPreload = useSelector((state) => state.isPreload);
 function App(props) {
-  const [authUser, setAuthUser] = useState(() => {
-    return JSON.parse(localStorage.getItem("authUser")) || { akses: null };
-  });
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isPreload = null;
+  const authUser = useSelector((state) => state.authUser);
+  const isPreload = useSelector((state) => state.isPreload);
+  const classes = useSelector((state) => state.classes);
 
-  // const renderRoutes = () => {
-  //   switch (authUser?.akses) {
-  //     case "superadmin":
-  //       return <Route path="/superadmin/*" element={
-  //         <ProtectedRoute allowedRoles={["superadmin"]} userRole={authUser?.akses}>
-  //           <SuperAdminPage role={authUser?.akses} />
-  //         </ProtectedRoute>
-  //       } />;
-  //     case "admin":
-  //       return <Route path="/admin/*" element={
-  //         <ProtectedRoute allowedRoles={["admin"]} userRole={authUser?.akses}>
-  //           <AdminPage role={authUser?.akses} />
-  //         </ProtectedRoute>
-  //       } />;
-  //     case "teacher":
-  //       return <Route path="/teacher/*" element={
-  //         <ProtectedRoute allowedRoles={["teacher"]} userRole={authUser?.akses}>
-  //           <TeacherPage role={authUser?.akses} />
-  //         </ProtectedRoute>
-  //       } />;
-  //     default:
-  //       return <Route path="*" element={<NotFoundPage role={authUser?.akses} />} />;
-  //   }
-  // };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const userRole = authUser?.role?.code.toLowerCase();
 
   const routeMap = {
-    superadmin: <SuperAdminPage role={authUser?.akses} />,
-    admin: <AdminPage role={authUser?.akses} />,
-    teacher: <TeacherPage role={authUser?.akses} />,
+    superadmin: <SuperAdminPage role={userRole} />,
+    admin: <AdminPage role={userRole} />,
+    teacher: <TeacherPage role={userRole} />,
   };
 
-  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!localStorage.getItem("users")) {
-      localStorage.setItem(
-        "users",
-        JSON.stringify([
-          { username: "superadmin", password: "123456", akses: "superadmin" },
-          { username: "admin", password: "admin123", akses: "admin" },
-          { username: "teacher", password: "teacher123", akses: "teacher" },
-        ])
-      );
-    }
+    if (userRole) {
+      const role = userRole;
+      const path = window.location.pathname;
 
-    if (!authUser.akses) {
-      if (!location.pathname.startsWith("/login")) {
-        navigate("/login");
+      if (path === "/" || path === "/login" || path === "/register") {
+        navigate(`/${role}/dashboard`);
       }
-    } else if (!location.pathname.startsWith(`/${authUser.akses}`)) {
-      navigate(`/${authUser.akses}/dashboard`);
     }
+  }, [userRole, navigate]);
 
-    const userMenu = menuConfig[authUser.akses] || [];
+  useEffect(() => {
+    const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+    const userMenu = menuConfig[userRole] || [];
     const currentMenu = userMenu.find((item) => item.path === `/${currentPath}`);
-    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
 
-  }, [authUser.akses, currentPath, location.pathname, navigate]);
+    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
+  }, [location, userRole]);
+
 
   if (isPreload) null
 
-  if (!authUser.akses) {
+  if (!authUser) {
     return (
       <>
         <AppTheme {...props} themeComponents={xThemeComponents}>
@@ -168,7 +119,7 @@ function App(props) {
               width: "100vw",
             }} >
             <Routes>
-              <Route path='/login' element={<LoginPage setAuthUser={setAuthUser} />} />
+              <Route path='/login' element={<LoginPage />} />
               <Route path='/register' element={<RegisterPage />} />
             </Routes>
           </Box >
@@ -182,8 +133,8 @@ function App(props) {
       <AppTheme {...props} themeComponents={xThemeComponents}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
-          <SideMenu role={authUser?.akses} setAuthUser={setAuthUser} />
-          <AppNavbar role={authUser?.akses} setAuthUser={setAuthUser} />
+          <SideMenu role={userRole} />
+          <AppNavbar role={userRole} />
 
           <Box
             component="main"
@@ -208,19 +159,18 @@ function App(props) {
                 mt: { xs: 8, md: 0 },
               }}
             >
-              <Header role={authUser?.akses} />
+              <Header role={userRole} />
+              <Loading />
 
               <Routes>
-                {/* {renderRoutes()} */}
-
                 <Route
-                  path={`/${authUser.akses}/*`}
+                  path={`/${userRole}/*`}
                   element={
-                    <ProtectedRoute allowedRoles={[authUser.akses]} userRole={authUser?.akses}>
-                      {routeMap[authUser.akses]}
+                    <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
+                      {routeMap[userRole]}
                     </ProtectedRoute>
                   } />
-                <Route path="*" element={<NotFoundPage role={authUser.akses} />} />
+                <Route path="*" element={<NotFoundPage role={userRole} />} />
               </Routes>
 
             </Stack>

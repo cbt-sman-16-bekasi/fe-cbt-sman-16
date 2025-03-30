@@ -69,7 +69,7 @@ export const red = {
   900: 'hsl(0, 93%, 6%)',
 };
 
-const cbtColor = {
+export const cbtColor = {
   primary: {
     violet: "#130A36",
     darkPurple: "#4605B5",
@@ -290,6 +290,7 @@ export const colorSchemes = {
         primary: gray[800],
         secondary: gray[600],
         warning: orange[400],
+        alert: gray[800]
       },
       action: {
         hover: alpha(gray[200], 0.2),
@@ -354,6 +355,7 @@ export const colorSchemes = {
       text: {
         primary: 'hsl(0, 0%, 100%)',
         secondary: gray[400],
+        alert: gray[800]
       },
       action: {
         hover: alpha(gray[600], 0.2),

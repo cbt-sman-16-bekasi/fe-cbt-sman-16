@@ -2,8 +2,15 @@ import {
   Box,
 } from "@mui/material";
 import LoginForm from "../components/LoginForm";
+import { useDispatch } from "react-redux";
+import { asyncSetAuthUser } from "../states/authUser/action";
 
-const LoginPage = ({ setAuthUser }) => {
+const LoginPage = () => {
+  const dispatch = useDispatch()
+
+  const onLogin = ({ password, username }) => {
+    dispatch(asyncSetAuthUser({ password, username }));
+  };
 
   return (
 
@@ -20,7 +27,6 @@ const LoginPage = ({ setAuthUser }) => {
         position: "relative",
       }}
     >
-      {/* Overlay untuk efek gelap */}
       <Box
         sx={{
           position: "absolute",
@@ -31,9 +37,8 @@ const LoginPage = ({ setAuthUser }) => {
         }}
       />
 
-      {/* Card Login */}
       <Box sx={{ zIndex: 2 }}>
-        <LoginForm setAuthUser={setAuthUser} />
+        <LoginForm login={onLogin} />
       </Box>
     </Box>
 

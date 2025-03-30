@@ -9,7 +9,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, rows } from "../internals/data/mapelData";
 import { Link } from 'react-router';
 
-export default function MataPelajaran() {
+export default function MataPelajaran({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
@@ -18,7 +18,7 @@ export default function MataPelajaran() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to='/mata-pelajaran/tambah'>
+          <Link to={`/${role}/mata-pelajaran/tambah`}>
             <Button fullWidth variant="contained"><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>

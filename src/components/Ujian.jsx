@@ -3,7 +3,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
-import { Button, InputAdornment, TextField } from '@mui/material';
+import { Alert, Button, InputAdornment, TextField } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import SettingsIcon from "@mui/icons-material/Settings";
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, rows } from "../internals/data/ujianData";
@@ -12,6 +14,19 @@ import { Link } from 'react-router';
 export default function Ujian({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
+        <Grid size={{ lg: 12 }}>
+          <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
+            <Typography variant="h6" fontWeight="bold">
+              Perhatian!
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              Untuk menambahkan soal di setaip ujian, silahkan klik tombol <b>setting</b> <SettingsIcon sx={{ verticalAlign: "middle", fontSize: 18, color: "black", backgroundColor: 'yellow' }} />
+            </Typography>
+          </Alert>
+        </Grid>
+      </Grid>
+
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
         Setting Ujian
       </Typography>

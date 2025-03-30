@@ -5,6 +5,7 @@ import Copyright from '../internals/components/Copyright';
 import StatCard from './StatCard';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import { menuConfig } from '../config/menuConfig';
 
 const data = [
   {
@@ -48,6 +49,8 @@ const data = [
 </Grid>
 
 export default function MainGrid({ role }) {
+  const menuItems = menuConfig[role]?.slice(1) || [];
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
@@ -93,7 +96,7 @@ export default function MainGrid({ role }) {
         columns={12}
         sx={{ mb: (theme) => theme.spacing(2) }}
       >
-        {data.map((card, index) => (
+        {menuItems.map((card, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
             <StatCard role={role} {...card} />
           </Grid>

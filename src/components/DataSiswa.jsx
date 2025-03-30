@@ -10,7 +10,7 @@ import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import { columns, rows } from '../internals/data/siswaData';
 import { Link } from 'react-router';
 
-export default function DataSiswa() {
+export default function DataSiswa({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
@@ -19,7 +19,7 @@ export default function DataSiswa() {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid size={{ lg: 1.5 }}>
-          <Link to='/data-siswa/tambah'>
+          <Link to={`/${role}/data-siswa/tambah`}>
             <Button fullWidth variant="contained" className='bg-slate-800 text-white'><AddBoxOutlinedIcon /> Tambah</Button>
           </Link>
         </Grid>

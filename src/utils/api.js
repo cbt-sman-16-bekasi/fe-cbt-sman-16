@@ -1,5 +1,7 @@
+import { unsetAuthUserActionCreator } from '../states/authUser/action';
+
 const api = (() => {
-  const BASE_URL = 'andksddsnflksd';
+  const BASE_URL = import.meta.env.VITE_BASE_API;
 
   function putAccessToken(token) {
     localStorage.setItem('accessToken', token);
@@ -9,75 +11,103 @@ const api = (() => {
     return localStorage.getItem('accessToken');
   }
 
-  async function _fetchWithAuth(url, options = {}) {
-    return fetch(url, {
+  function removeAccessToken() {
+    localStorage.removeItem('accessToken');
+  }
+
+  async function _fetchWithAuth(url, options = {}, dispatch) {
+    const response = await fetch(url, {
       ...options,
       headers: {
         ...options.headers,
         Authorization: `Bearer ${getAccessToken()}`,
       },
     });
-  }
 
-  async function register({ name, email, password }) {
-    const response = await fetch(`${BASE_URL}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
-
-    const responseJson = await response.json();
-    const { status, message } = responseJson;
-
-    if (status !== 'success') {
-      throw new Error(message);
+    if (response.status === 401) {
+      if (dispatch) {
+        dispatch(unsetAuthUserActionCreator());
+      }
+      removeAccessToken();
+      window.location.href = '/login';
     }
 
-    const {
-      data: { user },
-    } = responseJson;
-
-    return user;
+    return response;
   }
 
-  async function login({ email, password }) {
-    const response = await fetch(`${BASE_URL}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+  async function login({ password, username }) {
+    try {
+      const response = await fetch(`${BASE_URL}/academic/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password, username }),
+      });
 
-    const responseJson = await response.json();
+      const responseJson = await response.json();
 
-    const { status, message } = responseJson;
+      if (!response.ok) {
+        throw new Error(responseJson.message || 'Login gagal!');
+      }
 
-    if (status !== 'success') {
-      throw new Error(message);
+      const { data } = responseJson;
+
+      return data;
+    } catch (error) {
+      console.error('Login Error:', error.message);
+      throw error;
+    }
+  }
+
+  async function logout() {
+    removeAccessToken();
+    window.location.href = '/login';
+  }
+
+  async function getClassCode() {
+    return _fetchWithAuth('/academic/class-code');
+  }
+
+  async function coba() {
+    return _fetchWithAuth('/academic/user/roles');
+  }
+
+  async function getAllClasses(
+    { page = 1, size = 10, searchKey, searchValue, filter } = {},
+    dispatch
+  ) {
+    const params = new URLSearchParams({ page, size });
+
+    if (searchKey && searchValue) {
+      params.append('search.key', searchKey);
+      params.append('search.value', searchValue);
     }
 
-    const {
-      data: { token },
-    } = responseJson;
+    if (filter) {
+      Object.keys(filter).forEach((key) =>
+        params.append(`filter[${key}]`, filter[key])
+      );
+    }
 
-    return token;
+    const response = await _fetchWithAuth(
+      `/academic/class/all?${params.toString()}`,
+      {},
+      dispatch
+    );
+    const responseJson = await response.json();
+    return responseJson.data;
   }
 
   return {
     putAccessToken,
     getAccessToken,
-    register,
+    removeAccessToken,
     login,
+    logout,
+    getClassCode,
+    getAllClasses,
+    coba,
   };
 })();
 
