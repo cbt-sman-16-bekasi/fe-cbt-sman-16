@@ -39,6 +39,7 @@ function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const classes = useSelector((state) => state.classes);
+  const accessToken = localStorage.getItem("accessToken");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,12 +54,11 @@ function App(props) {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
 
-    if (!authUser || !token) {
+    if (!authUser && !accessToken) {
       navigate("/login");
     }
-  }, [authUser, navigate]);
+  }, [authUser, accessToken, navigate]);
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());

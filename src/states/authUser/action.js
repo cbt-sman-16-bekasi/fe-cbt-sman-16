@@ -27,6 +27,8 @@ function asyncSetAuthUser({ password, username }) {
 
     try {
       const { accessToken, user } = await api.login({ password, username });
+      console.log(accessToken);
+      console.log(user);
 
       api.putAccessToken(accessToken);
       localStorage.setItem('authUser', JSON.stringify(user));

@@ -26,9 +26,6 @@ function asyncPreloadProcess() {
         const authUser = JSON.parse(storedUser);
         dispatch(setAuthUserActionCreator(authUser));
       }
-
-      const classes = await api.getAllClasses();
-      dispatch(receiveClassesActionCreator(classes));
     } catch (error) {
       dispatch(receiveClassesActionCreator([]));
     } finally {
