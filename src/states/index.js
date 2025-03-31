@@ -11,6 +11,7 @@ import subjectsReducer from './subjects/reducer';
 import commonReducer from './common/reducer';
 import teachersReducer from './teachers/reducer';
 import examsReducer from './exams/reducer';
+import schoolReducer from './school/reducer';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     common: commonReducer,
     teachers: teachersReducer,
     exams: examsReducer,
+    school: schoolReducer,
     loadingBar: loadingBarReducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -4,6 +4,7 @@ import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import CkEditor from './CkEditor';
 import PropTypes from 'prop-types';
+import CustomCkEditor from './CustomCkEditor';
 
 export default function TambahUjian({ createExams, setError }) {
   const [ujian, setUjian] = useState('')
@@ -97,7 +98,7 @@ export default function TambahUjian({ createExams, setError }) {
             Deskripsi Ujian
           </Typography>
 
-          <CkEditor />
+          <CustomCkEditor type="classic" />
 
         </Grid>
       </Grid>

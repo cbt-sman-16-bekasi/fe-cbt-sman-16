@@ -6,12 +6,11 @@ const ActionType = {
   UNSET_AUTH_USER: 'UNSET_AUTH_USER',
 };
 
+// 🔹 Action Creators
 function setAuthUserActionCreator(authUser) {
   return {
     type: ActionType.SET_AUTH_USER,
-    payload: {
-      authUser,
-    },
+    payload: { authUser },
   };
 }
 
@@ -21,10 +20,10 @@ function unsetAuthUserActionCreator() {
   };
 }
 
+// 🔹 Async Functions
 function asyncSetAuthUser({ password, username }) {
   return async (dispatch) => {
     dispatch(showLoading());
-
     try {
       const { token, user } = await api.login({ password, username });
 
@@ -33,6 +32,7 @@ function asyncSetAuthUser({ password, username }) {
 
       dispatch(setAuthUserActionCreator(user));
     } catch (error) {
+      dispatch(unsetAuthUserActionCreator());
       alert(error.message);
     } finally {
       dispatch(hideLoading());
@@ -43,8 +43,9 @@ function asyncSetAuthUser({ password, username }) {
 function asyncUnsetAuthUser() {
   return (dispatch) => {
     dispatch(unsetAuthUserActionCreator());
-    api.putAccessToken('');
+    api.removeAccessToken();
     localStorage.removeItem('authUser');
+    window.location.href = '/login';
   };
 }
 

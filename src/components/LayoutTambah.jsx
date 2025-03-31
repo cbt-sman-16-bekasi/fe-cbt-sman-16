@@ -9,7 +9,7 @@ import TambahAkses from './TambahAkses';
 import TambahKelas from './TambahKelas';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TambahMapel from './TambahMapel';
 import TambahKodeUjian from './TambahKodeUjian';
 import TambahDataSiswa from './TambahDataSiswa';
@@ -17,20 +17,27 @@ import TambahUjian from './TambahUjian';
 import TambahSesiUjian from './TambahSesiUjian';
 import TambahBankSoal from './TambahBankSoal';
 import { asyncCreateClass } from '../states/classes/action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { asyncCreateStudent } from '../states/students/action';
 import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
 import { asyncCreateTypeExam } from '../states/exams/action';
+import { asyncGetUserRoles } from '../states/common/action';
 
 export default function LayoutTambah({ desc }) {
+  const roles = useSelector((state) => state.common.userRoles)
   const dispatch = useDispatch();
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
 
+  console.log(roles)
+
   const navigate = useNavigate();
   const [displayError, setDisplayError] = useState(true);
 
+  useEffect(() => {
+    dispatch(asyncGetUserRoles())
+  }, [dispatch])
 
   const onCreateClass = ({ class_code, class_name }) => {
     dispatch(asyncCreateClass({ class_code, class_name }));

@@ -20,6 +20,7 @@ export default function Ujian({ role }) {
   const dispatch = useDispatch();
 
   const rows = formatRows(exams);
+  console.log(exams)
 
   useEffect(() => {
     dispatch(asyncReceiveTypeExams())
