@@ -7,6 +7,7 @@ const ActionType = {
   DELETE_TYPE_EXAM: 'DELETE_TYPE_EXAM',
   UPDATE_TYPE_EXAM: 'UPDATE_TYPE_EXAM',
   RECEIVE_TYPE_EXAM_DETAIL: 'RECEIVE_TYPE_EXAM_DETAIL',
+  RECEIVE_EXAM_QUESTIONS: 'RECEIVE_EXAM_QUESTIONS',
   SET_ERROR: 'SET_ERROR',
 };
 
@@ -50,6 +51,13 @@ function setErrorActionCreator(error) {
   return {
     type: ActionType.SET_ERROR,
     payload: { error },
+  };
+}
+
+function receiveExamQuestionsActionCreator(examQuestions) {
+  return {
+    type: ActionType.RECEIVE_EXAM_QUESTIONS,
+    payload: { examQuestions },
   };
 }
 
@@ -142,6 +150,20 @@ function asyncGetTypeExamDetail(id) {
   };
 }
 
+function asyncGetExamQuestions(examId) {
+  return async (dispatch) => {
+    dispatch(showLoading());
+    try {
+      const examQuestions = await api.getExamQuestions(examId);
+      dispatch(receiveExamQuestionsActionCreator(examQuestions));
+    } catch (error) {
+      dispatch(setErrorActionCreator(error.message));
+    } finally {
+      dispatch(hideLoading());
+    }
+  };
+}
+
 // 🔹 Export semua actions & async functions
 export {
   ActionType,
@@ -150,10 +172,12 @@ export {
   deleteTypeExamActionCreator,
   updateTypeExamActionCreator,
   receiveTypeExamDetailActionCreator,
+  receiveExamQuestionsActionCreator,
   setErrorActionCreator,
   asyncReceiveTypeExams,
   asyncCreateTypeExam,
   asyncDeleteTypeExam,
   asyncUpdateTypeExam,
   asyncGetTypeExamDetail,
+  asyncGetExamQuestions,
 };

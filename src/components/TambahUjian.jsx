@@ -2,7 +2,6 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
-import CkEditor from './CkEditor';
 import PropTypes from 'prop-types';
 import CustomCkEditor from './CustomCkEditor';
 

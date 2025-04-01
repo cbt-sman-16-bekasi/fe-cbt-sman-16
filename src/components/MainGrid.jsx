@@ -5,20 +5,32 @@ import Copyright from '../internals/components/Copyright';
 import StatCard from './StatCard';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
-import { menuConfig } from '../config/menuConfig';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { asyncGetDashboardData } from '../states/common/action';
+import { icons, MenuConfig } from '../config/MenuConfig3';
 
 export default function MainGrid({ role }) {
-  const dashboard = useSelector((state) => state.common.dashboardData);
+  const dashboardData = useSelector((state) => state.common.dashboardData);
   const dispatch = useDispatch();
 
-  // ini udah jadi tapi penggunaan nya ap a1 data dashboard ini buat semua user kah?
-  console.log(dashboard)
+  const updatedMenuItems = MenuConfig.map((item) => {
+    const keyMap = {
+      '/kelas': 'total_class',
+      '/mata-pelajaran': 'total_subject',
+      '/data-siswa': 'total_student',
+      '/ujian': 'total_exam',
+      '/sesi-ujian': 'total_session_exam',
+      '/laporan-nilai': 'total_report_exam',
+    };
 
-  const menuItems = menuConfig[role]?.slice(1) || [];
+    return {
+      ...item,
+      value: dashboardData[keyMap[item.path]] ?? '0',
+      icon: icons[item.icon],
+    };
+  });
 
   useEffect(() => {
     dispatch(asyncGetDashboardData())
@@ -69,7 +81,7 @@ export default function MainGrid({ role }) {
         columns={12}
         sx={{ mb: (theme) => theme.spacing(2) }}
       >
-        {menuItems.map((card, index) => (
+        {updatedMenuItems.map((card, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
             <StatCard role={role} {...card} />
           </Grid>

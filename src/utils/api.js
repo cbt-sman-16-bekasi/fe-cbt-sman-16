@@ -295,8 +295,8 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    console.log(responseJson);
     const { status, message, data } = responseJson;
+    console.log(data);
 
     if (status !== 'success') {
       throw new Error(message);
@@ -676,6 +676,11 @@ const api = (() => {
     }
   }
 
+  async function getExamQuestions(examId) {
+    const response = await _fetchWithAuth(`/academic/exam/${examId}/question`);
+    return await response.json();
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -720,6 +725,7 @@ const api = (() => {
     deleteTypeExam,
     getTypeExamDetail,
     updateTypeExam,
+    getExamQuestions,
   };
 })();
 

@@ -2,7 +2,7 @@ import { ActionType } from './action';
 
 const initialState = {
   classCodes: [],
-  dashboardData: null,
+  dashboardData: [],
   subjects: [],
   userRoles: [],
   error: null,

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,6 +13,7 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import { Link, useLocation } from 'react-router';
 import { icons, menuConfig } from '../config/menuConfig';
+import PropTypes from 'prop-types';
 
 export default function MenuContent({ role }) {
   const menuItems = menuConfig[role] || [];
@@ -106,3 +106,7 @@ const mainListItems = [
     );
   })}
 </List> */}
+
+MenuContent.propTypes = {
+  role: PropTypes.string.isRequired,
+}

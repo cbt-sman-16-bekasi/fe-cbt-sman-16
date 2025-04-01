@@ -30,8 +30,6 @@ export default function LayoutTambah({ desc }) {
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
 
-  console.log(roles)
-
   const navigate = useNavigate();
   const [displayError, setDisplayError] = useState(true);
 

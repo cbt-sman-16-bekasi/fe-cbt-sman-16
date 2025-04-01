@@ -51,6 +51,13 @@ function examsReducer(state = initialState, action) {
         loading: false,
       };
 
+    case ActionType.RECEIVE_EXAM_QUESTIONS:
+      return {
+        ...state,
+        examQuestions: action.payload.examQuestions,
+        loading: false,
+      };
+
     case ActionType.SET_ERROR:
       return {
         ...state,

@@ -54,7 +54,7 @@ function App(props) {
 
   useEffect(() => {
 
-    if (!authUser && !accessToken) {
+    if (!authUser || !accessToken) {
       navigate("/login");
     }
   }, [authUser, accessToken, navigate]);
@@ -84,7 +84,7 @@ function App(props) {
 
   if (isPreload) null
 
-  if (!authUser) {
+  if (!authUser || !accessToken) {
     return (
       <>
         <AppTheme {...props} themeComponents={xThemeComponents}>
