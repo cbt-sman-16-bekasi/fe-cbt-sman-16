@@ -120,6 +120,7 @@ function asyncUpdateClass({ id, class_code, class_name }) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveClasses());
       dispatch(hideLoading());
     }
   };

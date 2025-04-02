@@ -100,7 +100,6 @@ function asyncUpdateTeacher(teacherData) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      console.log(teacherData);
       const updatedTeacher = await api.updateTeacher(teacherData);
       dispatch(updateTeacherActionCreator(updatedTeacher));
     } catch (error) {

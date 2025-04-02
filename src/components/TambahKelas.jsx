@@ -8,12 +8,29 @@ export default function TambahKelas({ createClass }) {
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
 
-  const handleSubmit = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function resetInputs() {
+    setClassCode('');
+    setClassName('');
+  }
+
+  const handleSubmit = async () => {
     if (!classCode || !className) {
       alert("Kode kelas dan nama kelas harus diisi!");
       return;
     }
-    createClass({ class_code: classCode, class_name: className });
+
+    setIsSubmitting(true);
+    try {
+      await createClass({ class_code: classCode, class_name: className });
+      resetInputs()
+    } catch (error) {
+      console.error('Error saat menambahkan akses:', error);
+      alert('Gagal menambahkan akses, coba lagi.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,8 +69,8 @@ export default function TambahKelas({ createClass }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>
-            Simpan
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? 'Menyimpan...' : 'Simpan'}
           </Button>
         </Grid>
       </Grid>

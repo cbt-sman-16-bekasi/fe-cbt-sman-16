@@ -15,7 +15,7 @@ import { asyncDeleteTeacher, asyncReceiveTeachers } from '../states/teachers/act
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { columns, formatRows } from "../internals/data/aksesData";
 export default function Akses({ role }) {
-  const teachers = useSelector((state) => state.teachers.teachers || [])
+  const teachers = useSelector((state) => state.teachers.teachers)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -1,20 +1,51 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
-export default function EditKelas({ classes, updateClass }) {
+export default function EditKelas({ updateClass }) {
+  const { id } = useParams()
+  const classes = useSelector((state) => state.classes.classes)
+
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
-  console.log(classes)
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    if (id) {
+      const selectedClass = classes.records.find((cls) => cls.ID === parseInt(id));
+
+      if (selectedClass) {
+        setClassCode(selectedClass.classCode);
+        setClassName(selectedClass.className);
+      }
+    }
+  }, [id, classes]);
+
+  function resetInputs() {
+    setClassCode('');
+    setClassName('');
+  }
+
+  const handleSubmit = async () => {
     if (!classCode || !className) {
       alert("Kode kelas dan nama kelas harus diisi!");
       return;
     }
-    updateClass({ class_code: classCode, class_name: className });
+
+    setIsSubmitting(true);
+    try {
+      await updateClass({ class_code: classCode, class_name: className });
+      resetInputs()
+    } catch (error) {
+      console.error('Error saat menambahkan akses:', error);
+      alert('Gagal menambahkan akses, coba lagi.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,8 +84,8 @@ export default function EditKelas({ classes, updateClass }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>
-            Simpan
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? 'Menyimpan...' : 'Simpan'}
           </Button>
         </Grid>
       </Grid>
@@ -64,6 +95,6 @@ export default function EditKelas({ classes, updateClass }) {
 }
 
 EditKelas.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classesData: PropTypes.object.isRequired,
   updateClass: PropTypes.func.isRequired,
 }

@@ -22,7 +22,7 @@ export default function EditAkses({ roles, updateAccess }) {
 
   useEffect(() => {
     if (id) {
-      const selectedUser = teachers.records.find((teacher) => teacher.user_id === parseInt(id));
+      const selectedUser = teachers.records.find((teacher) => teacher.ID === parseInt(id));
 
       if (selectedUser) {
         setNuptk(selectedUser.nuptk);

@@ -79,16 +79,9 @@ export default function LayoutEditData({ desc }) {
   };
 
   const handleBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
+    if (window.history.length > 2) {
       navigate(-1);
-    } else {
-      if (location.pathname.includes("/akses-system")) {
-        navigate("/akses-system");
-      } else if (location.pathname.includes("/kelas")) {
-        navigate("/kelas");
-      } else {
-        navigate("/");
-      }
+      return;
     }
   };
 
