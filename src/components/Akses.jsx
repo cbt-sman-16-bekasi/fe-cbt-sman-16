@@ -2,24 +2,29 @@ import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Copyright from '../internals/components/Copyright';
-import CustomizedDataGrid from './CustomizedDataGrid';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns, formatRows } from "../internals/data/aksesData";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { asyncReceiveTeachers } from '../states/teachers/action';
+import { asyncDeleteTeacher, asyncReceiveTeachers } from '../states/teachers/action';
 
+import CustomizedDataGrid from './CustomizedDataGrid';
+import { columns, formatRows } from "../internals/data/aksesData";
 export default function Akses({ role }) {
   const teachers = useSelector((state) => state.teachers.teachers)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const rows = formatRows(teachers.records);
+
+  const deleteAccess = (id) => {
+    dispatch(asyncDeleteTeacher(id))
+  }
 
   useEffect(() => {
     dispatch(asyncReceiveTeachers())
@@ -100,7 +105,7 @@ export default function Akses({ role }) {
 
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns} rows={rows} />
+          <CustomizedDataGrid columns={columns({ deleteAccess, navigate, role })} rows={rows} />
         </Grid>
       </Grid>
       <Copyright sx={{ my: 4 }} />

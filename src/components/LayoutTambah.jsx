@@ -9,6 +9,7 @@ import TambahAkses from './TambahAkses';
 import TambahKelas from './TambahKelas';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import ErrorIcon from '@mui/icons-material/Error';
 import { useEffect, useState } from 'react';
 import TambahMapel from './TambahMapel';
 import TambahKodeUjian from './TambahKodeUjian';
@@ -25,60 +26,102 @@ import { asyncCreateTypeExam } from '../states/exams/action';
 import { asyncGetUserRoles } from '../states/common/action';
 
 export default function LayoutTambah({ desc }) {
-  const roles = useSelector((state) => state.common.userRoles)
+  const roles = useSelector((state) => state.common.userRoles);
   const dispatch = useDispatch();
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
-
   const navigate = useNavigate();
-  const [displayError, setDisplayError] = useState(true);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('error');
 
   useEffect(() => {
-    dispatch(asyncGetUserRoles())
-  }, [dispatch])
+    dispatch(asyncGetUserRoles());
+  }, [dispatch]);
 
-  const onCreateClass = ({ class_code, class_name }) => {
-    dispatch(asyncCreateClass({ class_code, class_name }));
-  }
+  const handleShowAlert = (status, message) => {
+    setAlertSeverity(status);
+    setAlertMessage(message);
+    setShowAlert(true);
 
-  const onAddStudent = ({ class_id, gender, name, nisn }) => {
-    dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
-  }
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
+  };
 
-  const onAddSubjects = ({ class_code, subject_code }) => {
-    dispatch(asyncCreateSubject({ class_code, subject_code }))
-  }
+  const onCreateClass = async ({ class_code, class_name }) => {
+    try {
+      await dispatch(asyncCreateClass({ class_code, class_name }));
+      handleShowAlert('success', 'Kelas berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan kelas.');
+    }
+  };
 
-  const onAddAccess = ({ name, nuptk, role, username }) => {
-    dispatch(asyncCreateTeacher({ name, nuptk, role, username }))
-  }
+  const onAddStudent = async ({ class_id, gender, name, nisn }) => {
+    try {
+      await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan siswa.');
+    }
+  };
 
-  const onCreateExams = ({ code_type_exam, color, role, type_exam }) => {
-    dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }))
-  }
+  const onAddSubjects = async ({ class_code, subject_code }) => {
+    try {
+      await dispatch(asyncCreateSubject({ class_code, subject_code }));
+      handleShowAlert('success', 'Mata pelajaran berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan mata pelajaran.');
+    }
+  };
+
+  const onAddAccess = async ({ name, nuptk, role, username }) => {
+    try {
+      await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
+      handleShowAlert('success', 'Akses berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan akses.');
+    }
+  };
+
+  const onCreateExams = async ({ code_type_exam, color, role, type_exam }) => {
+    try {
+      await dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }));
+      handleShowAlert('success', 'Kode ujian berhasil dibuat!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal membuat kode ujian.');
+    }
+  };
 
   const renderContent = () => {
     switch (`/${currentPath}`) {
-      case "/kelas/tambah":
-        return <TambahKelas createClass={onCreateClass} setError={handleDisplayError} />
       case "/akses-system/tambah":
-        return <TambahAkses addAccess={onAddAccess} setError={handleDisplayError} />
+        return <TambahAkses roles={roles} addAccess={onAddAccess} />;
+      case "/kelas/tambah":
+        return <TambahKelas createClass={onCreateClass} />;
       case "/mata-pelajaran/tambah":
-        return <TambahMapel addSubject={onAddSubjects} setError={handleDisplayError} />
+        return <TambahMapel addSubject={onAddSubjects} />;
       case "/kode-jenis-ujian/tambah":
-        return <TambahKodeUjian setError={handleDisplayError} />
+        return <TambahKodeUjian />;
       case "/data-siswa/tambah":
-        return <TambahDataSiswa addStudent={onAddStudent} setError={handleDisplayError} />
+        return <TambahDataSiswa addStudent={onAddStudent} />;
       case "/ujian/tambah":
-        return <TambahUjian createExams={onCreateExams} setError={handleDisplayError} />
+        return <TambahUjian createExams={onCreateExams} />;
       case "/sesi-ujian/tambah":
-        return <TambahSesiUjian setError={handleDisplayError} />
+        return <TambahSesiUjian />;
       case "/bank-soal/tambah":
-        return <TambahBankSoal setError={handleDisplayError} />
+        return <TambahBankSoal />;
       default:
-        return <Typography>Konten tidak tersedia</Typography>
+        return <Typography>Konten tidak tersedia</Typography>;
     }
-  }
+  };
 
   const handleBack = () => {
     if (window.history.state && window.history.state.idx > 0) {
@@ -93,10 +136,6 @@ export default function LayoutTambah({ desc }) {
       }
     }
   };
-
-  const handleDisplayError = () => {
-    setDisplayError((prev) => !prev)
-  }
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -114,15 +153,20 @@ export default function LayoutTambah({ desc }) {
         {desc}
       </Typography>
 
-      {displayError && (
+      {showAlert && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
           <Grid size={{ sm: 12 }}>
-            <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="error" sx={{ py: 1, px: 2 }}>
+            <Alert
+              icon={alertSeverity === 'success' ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
+              variant="outlined"
+              severity={alertSeverity}
+              sx={{ py: 1, px: 2 }}
+            >
               <Typography variant="h6" fontWeight="bold">
-                Error!
+                {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
               </Typography>
               <Typography variant="body1" sx={{ mt: 1 }}>
-                Silahkan masukkan data dengan lengkap
+                {alertMessage}
               </Typography>
             </Alert>
           </Grid>
@@ -140,7 +184,6 @@ export default function LayoutTambah({ desc }) {
   );
 }
 
-
 LayoutTambah.propTypes = {
   desc: PropTypes.string.isRequired,
-}
+};

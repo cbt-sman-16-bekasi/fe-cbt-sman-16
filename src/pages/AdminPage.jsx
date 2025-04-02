@@ -17,6 +17,7 @@ import LayoutSettings from "../components/LayoutSettings";
 import AddQuestions from "../components/AddQuestions";
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
+import LayoutEditData from "../components/LayoutEditData";
 
 function AdminPage({ role }) {
   return (
@@ -24,6 +25,7 @@ function AdminPage({ role }) {
       <Route path="dashboard" element={<MainGrid role={role} />} />
       <Route path="akses-system" element={<Akses role={role} />} />
       <Route path="akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
+      <Route path="akses-system/edit/:id" element={<LayoutEditData desc="Edit Akses" />} />
 
       <Route path="kelas" element={<Kelas role={role} />} />
       <Route path="kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />

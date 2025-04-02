@@ -481,7 +481,6 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {
@@ -497,6 +496,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -526,6 +526,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import CustomCkEditor from './CustomCkEditor';
 
-export default function TambahUjian({ createExams, setError }) {
+export default function TambahUjian({ createExams }) {
   const [ujian, setUjian] = useState('')
   const [mapel, setMapel] = useState('')
   const [kelas, setKelas] = useState('')
@@ -171,7 +171,7 @@ export default function TambahUjian({ createExams, setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
@@ -185,5 +185,4 @@ export default function TambahUjian({ createExams, setError }) {
 
 TambahUjian.propTypes = {
   createExams: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
 }

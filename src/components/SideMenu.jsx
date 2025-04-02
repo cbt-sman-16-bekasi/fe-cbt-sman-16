@@ -5,9 +5,11 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import SelectContent from './SelectContent';
 import MenuContent from './MenuContent';
-import OptionsMenu from './OptionsMenu';
+import Grid from '@mui/material/Grid2';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Button } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -22,7 +24,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu({ role, setAuthUser }) {
+export default function SideMenu({ user, role, logout }) {
   return (
     <Drawer
       variant="permanent"
@@ -72,29 +74,55 @@ export default function SideMenu({ role, setAuthUser }) {
       <Stack
         direction="row"
         sx={{
-          p: 2,
+          p: 1,
           gap: 1,
           alignItems: 'center',
           borderTop: '1px solid',
           borderColor: 'divider',
         }}
       >
-        <Avatar
-          sizes="small"
-          alt="Riley Carter"
-          src="/static/images/avatar/7.jpg"
-          sx={{ width: 36, height: 36 }}
-        />
-        <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-            Riley Carter
-          </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            riley@email.com
-          </Typography>
-        </Box>
-        <OptionsMenu setAuthUser={setAuthUser} />
+        <Grid
+          container
+          alignItems="center"
+          sx={{ border: '1px solid white', display: 'flex', justifyContent: "start", gap: 1, borderRadius: 1, p: 1, width: '100%' }}
+        >
+
+          <Avatar
+            sizes="small"
+            alt="Riley Carter"
+            src="/static/images/avatar/7.jpg"
+            sx={{ width: 36, height: 36 }}
+          />
+          <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
+              {user.username}
+            </Typography>
+          </Box>
+          <Button
+            variant="text"
+            sx={{
+              color: 'white',
+              borderRadius: '50%',
+              minWidth: 40,
+              width: 40,
+              height: 40,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onClick={logout}
+          >
+            <LogoutIcon />
+          </Button>
+
+        </Grid>
       </Stack>
     </Drawer>
   );
+}
+
+SideMenu.propTypes = {
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
 }

@@ -2,80 +2,6 @@ import { Chip, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// import Avatar from '@mui/material/Avatar';
-// import Chip from '@mui/material/Chip';
-// import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
-
-// function getDaysInMonth(month, year) {
-//   const date = new Date(year, month, 0);
-//   const monthName = date.toLocaleDateString('en-US', {
-//     month: 'short',
-//   });
-//   const daysInMonth = date.getDate();
-//   const days = [];
-//   let i = 1;
-//   while (days.length < daysInMonth) {
-//     days.push(`${monthName} ${i}`);
-//     i += 1;
-//   }
-//   return days;
-// }
-
-// function renderSparklineCell(params) {
-//   const data = getDaysInMonth(4, 2024);
-//   const { value, colDef } = params;
-
-//   if (!value || value.length === 0) {
-//     return null;
-//   }
-
-//   return (
-//     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-//       <SparkLineChart
-//         data={value}
-//         width={colDef.computedWidth || 100}
-//         height={32}
-//         plotType="bar"
-//         showHighlight
-//         showTooltip
-//         colors={['hsl(210, 98%, 42%)']}
-//         xAxis={{
-//           scaleType: 'band',
-//           data,
-//         }}
-//       />
-//     </div>
-//   );
-// }
-
-// function renderStatus(status) {
-//   const colors = {
-//     Online: 'success',
-//     Offline: 'default',
-//   };
-
-//   return <Chip label={status} color={colors[status]} size="small" />;
-// }
-
-// export function renderAvatar(params) {
-//   if (params.value == null) {
-//     return '';
-//   }
-
-//   return (
-//     <Avatar
-//       sx={{
-//         backgroundColor: params.value.color,
-//         width: '24px',
-//         height: '24px',
-//         fontSize: '0.85rem',
-//       }}
-//     >
-//       {params.value.name.toUpperCase().substring(0, 1)}
-//     </Avatar>
-//   );
-// }
-
 function getHakAksesColor(status) {
   const colors = {
     "Admin": "primary",
@@ -92,7 +18,7 @@ function getHakAksesColor(status) {
   );
 }
 
-export const columns = [
+export const columns = ({ deleteAccess, navigate, role }) => [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
   { field: "namaGuru", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
@@ -119,7 +45,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
-          onClick={() => handleEdit(params.row.id)}
+          onClick={() => navigate(`/${role}/akses-system/edit/${params.row.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -130,7 +56,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkred" },
           }}
-          onClick={() => handleDelete(params.row.id)}
+          onClick={() => deleteAccess(params.row.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -139,35 +65,15 @@ export const columns = [
   },
 ];
 
-export const rows = [
-  {
-    id: 1,
-    no: 1,
-    nuptk: "00002335459",
-    namaGuru: "Khalih Warna, S.Pd",
-    username: "khaliwarna",
-    password: "12345^",
-    hakAkses: "Super Admin",
-  },
-];
-
-const handleEdit = (id) => {
-  console.log("Edit kelas dengan ID:", id);
-};
-
-const handleDelete = (id) => {
-  console.log("Delete kelas dengan ID:", id);
-};
-
 export const formatRows = (teachers = []) =>
   Array.isArray(teachers)
     ? teachers.map((teacher, index) => ({
-      id: index + 1,
+      id: teacher.user_id,
       no: index + 1,
       nuptk: teacher.nuptk,
       namaGuru: teacher.name,
       username: teacher.detail_user.username,
-      password: index + 1,
+      password: "",
       hakAkses: teacher.detail_user.role.code.charAt(0).toUpperCase() + teacher.detail_user.role.code.slice(1).toLowerCase(),
     }))
     : [];
@@ -678,3 +584,77 @@ export const formatRows = (teachers = []) =>
 //     ],
 //   },
 // ];
+
+// import Avatar from '@mui/material/Avatar';
+// import Chip from '@mui/material/Chip';
+// import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+
+// function getDaysInMonth(month, year) {
+//   const date = new Date(year, month, 0);
+//   const monthName = date.toLocaleDateString('en-US', {
+//     month: 'short',
+//   });
+//   const daysInMonth = date.getDate();
+//   const days = [];
+//   let i = 1;
+//   while (days.length < daysInMonth) {
+//     days.push(`${monthName} ${i}`);
+//     i += 1;
+//   }
+//   return days;
+// }
+
+// function renderSparklineCell(params) {
+//   const data = getDaysInMonth(4, 2024);
+//   const { value, colDef } = params;
+
+//   if (!value || value.length === 0) {
+//     return null;
+//   }
+
+//   return (
+//     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+//       <SparkLineChart
+//         data={value}
+//         width={colDef.computedWidth || 100}
+//         height={32}
+//         plotType="bar"
+//         showHighlight
+//         showTooltip
+//         colors={['hsl(210, 98%, 42%)']}
+//         xAxis={{
+//           scaleType: 'band',
+//           data,
+//         }}
+//       />
+//     </div>
+//   );
+// }
+
+// function renderStatus(status) {
+//   const colors = {
+//     Online: 'success',
+//     Offline: 'default',
+//   };
+
+//   return <Chip label={status} color={colors[status]} size="small" />;
+// }
+
+// export function renderAvatar(params) {
+//   if (params.value == null) {
+//     return '';
+//   }
+
+//   return (
+//     <Avatar
+//       sx={{
+//         backgroundColor: params.value.color,
+//         width: '24px',
+//         height: '24px',
+//         fontSize: '0.85rem',
+//       }}
+//     >
+//       {params.value.name.toUpperCase().substring(0, 1)}
+//     </Avatar>
+//   );
+// }

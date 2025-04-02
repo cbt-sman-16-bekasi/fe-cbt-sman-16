@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function TambahKodeUjian({ setError }) {
+export default function TambahKodeUjian() {
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
 

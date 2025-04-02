@@ -1,11 +1,16 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, IconButton, InputAdornment, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
-export default function TambahAkses({ roles, addAccess }) {
+export default function EditAkses({ roles, updateAccess }) {
+  const { id } = useParams()
+  const teachers = useSelector((state) => state.teachers.teachers)
+
   const [nuptk, setNuptk] = useState('')
   const [namaGuru, setNamaGuru] = useState('')
   const [username, setUsername] = useState('')
@@ -14,6 +19,20 @@ export default function TambahAkses({ roles, addAccess }) {
   const [akses, setAkses] = useState('')
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      const selectedUser = teachers.records.find((teacher) => teacher.user_id === parseInt(id));
+
+      if (selectedUser) {
+        setNuptk(selectedUser.nuptk);
+        setNamaGuru(selectedUser.name);
+        setUsername(selectedUser.detail_user.username);
+        setAkses(selectedUser.detail_user.role.code.toUpperCase());
+      }
+    }
+  }, [id, teachers]);
+
 
   function resetInputs() {
     setNuptk('');
@@ -24,14 +43,14 @@ export default function TambahAkses({ roles, addAccess }) {
   }
 
   const handleSubmit = async () => {
-    if (!nuptk || !namaGuru || !username || !password || !akses) {
+    if (!nuptk || !namaGuru || !username || !akses) {
       alert('Semua Input Wajib Diisi!');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await addAccess({ name: namaGuru, nuptk, role: akses.toUpperCase(), username });
+      await updateAccess({ id, name: namaGuru, nuptk, role: akses.toUpperCase(), username });
       resetInputs()
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
@@ -190,7 +209,7 @@ export default function TambahAkses({ roles, addAccess }) {
   );
 }
 
-TambahAkses.propTypes = {
+EditAkses.propTypes = {
   roles: PropTypes.object.isRequired,
-  addAccess: PropTypes.func.isRequired,
+  updateAccess: PropTypes.func.isRequired,
 }

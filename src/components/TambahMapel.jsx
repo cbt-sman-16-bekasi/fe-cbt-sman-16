@@ -3,8 +3,11 @@ import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export default function TambahMapel({ addSubject, setError }) {
+export default function TambahMapel({ addSubject }) {
+  const subjectsCode = useSelector((state) => state.common.subjects)
+  console.log(subjectsCode)
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
 
@@ -56,7 +59,7 @@ export default function TambahMapel({ addSubject, setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={2}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
@@ -70,5 +73,4 @@ export default function TambahMapel({ addSubject, setError }) {
 
 TambahMapel.propTypes = {
   addSubject: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
 }

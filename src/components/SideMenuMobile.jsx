@@ -9,19 +9,8 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
-import { useNavigate } from 'react-router';
 
-function SideMenuMobile({ open, toggleDrawer, role, setAuthUser }) {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    localStorage.removeItem("authUser");
-
-    setAuthUser({ akses: null });
-
-    navigate("/login");
-  };
-
+function SideMenuMobile({ open, toggleDrawer, user, role, logout }) {
   return (
     <Drawer
       anchor="right"
@@ -53,7 +42,7 @@ function SideMenuMobile({ open, toggleDrawer, role, setAuthUser }) {
               sx={{ width: 24, height: 24 }}
             />
             <Typography component="p" variant="h6">
-              Riley Carter
+              {user.username}
             </Typography>
           </Stack>
           <MenuButton showBadge>
@@ -66,7 +55,7 @@ function SideMenuMobile({ open, toggleDrawer, role, setAuthUser }) {
           <Divider />
         </Stack>
         <Stack sx={{ p: 2 }}>
-          <Button onClick={handleLogout} variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
+          <Button onClick={logout} variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout
           </Button>
         </Stack>
@@ -78,6 +67,9 @@ function SideMenuMobile({ open, toggleDrawer, role, setAuthUser }) {
 SideMenuMobile.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 export default SideMenuMobile;

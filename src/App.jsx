@@ -27,6 +27,7 @@ import {
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import { asyncPreloadProcess } from './states/isPreload/action.js';
+import { asyncUnsetAuthUser } from './states/authUser/action.js';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -45,6 +46,10 @@ function App(props) {
   const location = useLocation();
 
   const userRole = authUser?.role?.code.toLowerCase();
+
+  const onUserLogout = () => {
+    dispatch(asyncUnsetAuthUser())
+  }
 
   const routeMap = {
     superadmin: <SuperAdminPage role={userRole} />,
@@ -110,8 +115,8 @@ function App(props) {
       <AppTheme {...props} themeComponents={xThemeComponents}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
-          <SideMenu role={userRole} />
-          <AppNavbar role={userRole} />
+          <SideMenu user={authUser} role={userRole} logout={onUserLogout} />
+          <AppNavbar user={authUser} role={userRole} logout={onUserLogout} />
 
           <Box
             component="main"

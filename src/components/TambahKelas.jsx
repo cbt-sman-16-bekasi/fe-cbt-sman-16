@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function TambahKelas({ createClass, setError }) {
+export default function TambahKelas({ createClass }) {
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
 
@@ -48,7 +48,7 @@ export default function TambahKelas({ createClass, setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={2}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
@@ -64,5 +64,4 @@ export default function TambahKelas({ createClass, setError }) {
 
 TambahKelas.propTypes = {
   createClass: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
 }

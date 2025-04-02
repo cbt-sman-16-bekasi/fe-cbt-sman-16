@@ -4,7 +4,7 @@ import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import CkEditor from './CkEditor';
 
-export default function TambahSesiUjian({ setError }) {
+export default function TambahSesiUjian() {
   const [ujian, setUjian] = useState('')
   const [mapel, setMapel] = useState('')
   const [kelas, setKelas] = useState('')
@@ -79,7 +79,7 @@ export default function TambahSesiUjian({ setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>

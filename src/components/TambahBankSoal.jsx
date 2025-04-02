@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function TambahBankSoal({ setError }) {
+export default function TambahBankSoal() {
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
   const [jenisKelamin, setJenisKelamin] = useState('')
@@ -68,7 +68,7 @@ export default function TambahBankSoal({ setError }) {
 
       <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={() => setError()}>Reset</Button>
+          <Button fullWidth variant="contained" className='bg-slate-800 text-white'>Reset</Button>
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
