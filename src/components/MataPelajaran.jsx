@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
@@ -56,7 +55,6 @@ export default function MataPelajaran({ role }) {
           <CustomizedDataGrid columns={columns} rows={rows} />
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

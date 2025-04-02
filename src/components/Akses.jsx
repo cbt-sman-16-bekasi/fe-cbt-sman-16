@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
@@ -16,15 +15,17 @@ import { asyncDeleteTeacher, asyncReceiveTeachers } from '../states/teachers/act
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { columns, formatRows } from "../internals/data/aksesData";
 export default function Akses({ role }) {
-  const teachers = useSelector((state) => state.teachers.teachers)
+  const teachers = useSelector((state) => state.teachers.teachers || [])
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const rows = formatRows(teachers.records);
 
-  const deleteAccess = (id) => {
-    dispatch(asyncDeleteTeacher(id))
-  }
+  const handleDelete = (id) => {
+    if (window.confirm("Apakah yakin ingin menghapus kelas ini?")) {
+      dispatch(asyncDeleteTeacher(id));
+    }
+  };
 
   useEffect(() => {
     dispatch(asyncReceiveTeachers())
@@ -39,7 +40,7 @@ export default function Akses({ role }) {
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid size={{ lg: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
-            <Typography variant="h6" fontWeight="bold">
+            <Typography variant="h9869766" fontWeight="bold">
               Akses Sistem
             </Typography>
             <Typography variant="body1" sx={{ mt: 1 }}>
@@ -105,10 +106,9 @@ export default function Akses({ role }) {
 
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns({ deleteAccess, navigate, role })} rows={rows} />
+          <CustomizedDataGrid columns={columns({ handleDelete, navigate, role })} rows={rows} />
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box >
   );
 }

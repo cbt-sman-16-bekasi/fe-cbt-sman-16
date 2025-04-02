@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const columns = [
+export const columns = ({ handleDelete, navigate, role }) => [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "kodeKelas", headerName: "KODE KELAS", flex: 1, minWidth: 120 },
   { field: "namaKelas", headerName: "NAMA KELAS", flex: 1.5, minWidth: 150 },
@@ -20,7 +20,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
-          onClick={() => handleEdit(params.row.id)}
+          onClick={() => navigate(`/${role}/kelas/edit/${params.row.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -40,18 +40,10 @@ export const columns = [
   },
 ];
 
-const handleEdit = (id) => {
-  console.log("Edit kelas dengan ID:", id);
-};
-
-const handleDelete = (id) => {
-  console.log("Delete kelas dengan ID:", id);
-};
-
 export const formatRows = (classes = []) =>
   Array.isArray(classes)
     ? classes.map((kelas, index) => ({
-      id: index + 1,
+      id: kelas.ID,
       no: index + 1,
       kodeKelas: kelas.classCode,
       namaKelas: kelas.className,

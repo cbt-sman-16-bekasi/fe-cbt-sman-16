@@ -29,6 +29,7 @@ function AdminPage({ role }) {
 
       <Route path="kelas" element={<Kelas role={role} />} />
       <Route path="kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
+      <Route path="kelas/edit/:id" element={<LayoutEditData desc="Edit Kelas" />} />
 
       <Route path="mata-pelajaran" element={<MataPelajaran role={role} />} />
       <Route path="mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />

@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import StatCard from './StatCard';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
@@ -42,7 +41,7 @@ export default function MainGrid({ role }) {
         Dashboard
       </Typography>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ lg: 12 }}>
+        <Grid size={{ sm: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
             <Typography variant="h6" fontWeight="bold">
               Selamat, Anda Berhasil Login!
@@ -87,7 +86,6 @@ export default function MainGrid({ role }) {
           </Grid>
         ))}
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

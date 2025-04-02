@@ -1,7 +1,10 @@
 import { ActionType } from './action';
 
 const initialState = {
-  teachers: [],
+  teachers: {
+    records: [],
+    pagination: {},
+  },
   teacherDetail: null,
   error: null,
   loading: false,
@@ -12,23 +15,29 @@ function teachersReducer(state = initialState, action) {
     case ActionType.RECEIVE_TEACHERS:
       return {
         ...state,
-        teachers: action.payload.teachers,
+        teachers: action.payload.teachers || [],
         error: null,
       };
 
     case ActionType.CREATE_TEACHER:
       return {
         ...state,
-        teachers: [...state.teachers, action.payload.newTeacher],
+        teachers: {
+          ...state.teachers,
+          records: [...state.teachers.records, action.payload.newTeacher],
+        },
         error: null,
       };
 
     case ActionType.DELETE_TEACHER:
       return {
         ...state,
-        teachers: state.teachers.filter(
-          (teacher) => teacher.id !== action.payload.id
-        ),
+        teachers: {
+          ...state.teachers,
+          records: state.teachers.records.filter(
+            (teacher) => teacher.ID !== action.payload.id
+          ),
+        },
         error: null,
       };
 

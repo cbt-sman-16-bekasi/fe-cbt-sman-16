@@ -101,6 +101,7 @@ function asyncDeleteClass(id) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveClasses());
       dispatch(hideLoading());
     }
   };

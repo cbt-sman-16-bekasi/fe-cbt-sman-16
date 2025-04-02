@@ -1,11 +1,10 @@
-import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 export default function Copyright(props) {
   return (
     <Typography
-      variant="body2"
+      variant="caption"
       align="center"
       {...props}
       sx={[
@@ -15,12 +14,12 @@ export default function Copyright(props) {
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
       ]}
     >
-      {'Copyright © '}
+      {`© ${new Date().getFullYear()} `}
       <Link color="inherit" href="https://mui.com/">
-        Sitemark
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+        SMAN 16 Kota Bekasi.
+      </Link>
+      <br />
+      All Right Reserved.
     </Typography>
   );
 }

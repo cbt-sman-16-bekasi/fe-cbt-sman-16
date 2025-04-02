@@ -75,6 +75,7 @@ function asyncCreateTeacher(teacherData) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveTeachers);
       dispatch(hideLoading());
     }
   };
@@ -89,6 +90,7 @@ function asyncDeleteTeacher(id) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveTeachers);
       dispatch(hideLoading());
     }
   };

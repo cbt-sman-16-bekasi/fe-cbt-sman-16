@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid2';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
+import Copyright from '../internals/components/Copyright';
 
 const drawerWidth = 240;
 
@@ -75,6 +76,8 @@ export default function SideMenu({ user, role, logout }) {
         direction="row"
         sx={{
           p: 1,
+          display: 'flex',
+          flexDirection: 'column',
           gap: 1,
           alignItems: 'center',
           borderTop: '1px solid',
@@ -116,6 +119,7 @@ export default function SideMenu({ user, role, logout }) {
           </Button>
 
         </Grid>
+        <Copyright />
       </Stack>
     </Drawer>
   );

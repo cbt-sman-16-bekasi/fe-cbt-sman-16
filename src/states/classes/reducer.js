@@ -44,7 +44,7 @@ function classesReducer(state = initialState, action) {
     case ActionType.DELETE_CLASS:
       return {
         ...state,
-        classes: state.classes.filter((cls) => cls.id !== action.payload.id),
+        classes: state.classes.filter((cls) => cls.ID !== action.payload.id),
         error: null,
       };
 

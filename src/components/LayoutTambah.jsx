@@ -50,6 +50,16 @@ export default function LayoutTambah({ desc }) {
     }, 3000);
   };
 
+  const onAddAccess = async ({ name, nuptk, role, username }) => {
+    try {
+      await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
+      handleShowAlert('success', 'Akses berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan akses.');
+    }
+  };
+
   const onCreateClass = async ({ class_code, class_name }) => {
     try {
       await dispatch(asyncCreateClass({ class_code, class_name }));
@@ -77,16 +87,6 @@ export default function LayoutTambah({ desc }) {
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
       handleShowAlert('error', 'Gagal menambahkan mata pelajaran.');
-    }
-  };
-
-  const onAddAccess = async ({ name, nuptk, role, username }) => {
-    try {
-      await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
-      handleShowAlert('success', 'Akses berhasil ditambahkan!');
-    } catch (error) {
-      console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan akses.');
     }
   };
 

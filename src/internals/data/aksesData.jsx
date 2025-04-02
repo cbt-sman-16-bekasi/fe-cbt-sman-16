@@ -18,7 +18,7 @@ function getHakAksesColor(status) {
   );
 }
 
-export const columns = ({ deleteAccess, navigate, role }) => [
+export const columns = ({ handleDelete, navigate, role }) => [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
   { field: "namaGuru", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
@@ -56,7 +56,7 @@ export const columns = ({ deleteAccess, navigate, role }) => [
             color: "white",
             "&:hover": { bgcolor: "darkred" },
           }}
-          onClick={() => deleteAccess(params.row.id)}
+          onClick={() => handleDelete(params.row.id)}
         >
           <DeleteIcon />
         </IconButton>
@@ -68,12 +68,12 @@ export const columns = ({ deleteAccess, navigate, role }) => [
 export const formatRows = (teachers = []) =>
   Array.isArray(teachers)
     ? teachers.map((teacher, index) => ({
-      id: teacher.user_id,
+      id: teacher.ID,
       no: index + 1,
       nuptk: teacher.nuptk,
       namaGuru: teacher.name,
-      username: teacher.detail_user.username,
-      password: "",
+      username: teacher.detail_user.username || "Unknown",
+      password: "********",
       hakAkses: teacher.detail_user.role.code.charAt(0).toUpperCase() + teacher.detail_user.role.code.slice(1).toLowerCase(),
     }))
     : [];

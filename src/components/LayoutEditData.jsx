@@ -10,9 +10,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncGetUserRoles } from '../states/common/action';
+import { asyncGetClassCode, asyncGetUserRoles } from '../states/common/action';
 import EditAkses from './EditAkses';
 import { asyncUpdateTeacher } from '../states/teachers/action';
+import EditKelas from './EditKelas';
+import { asyncUpdateClass } from '../states/classes/action';
 
 export default function LayoutEditData({ desc }) {
   const [alertSeverity, setAlertSeverity] = useState('error');
@@ -20,6 +22,8 @@ export default function LayoutEditData({ desc }) {
   const [showAlert, setShowAlert] = useState(false);
 
   const roles = useSelector((state) => state.common.userRoles);
+  const classes = useSelector((state) => state.common.classCodes)
+
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,6 +34,7 @@ export default function LayoutEditData({ desc }) {
 
   useEffect(() => {
     dispatch(asyncGetUserRoles());
+    dispatch(asyncGetClassCode());
   }, [dispatch]);
 
   const handleShowAlert = (status, message) => {
@@ -52,10 +57,22 @@ export default function LayoutEditData({ desc }) {
     }
   };
 
+  const onUpdateClass = async ({ id, class_code, class_name }) => {
+    try {
+      await dispatch(asyncUpdateClass({ id, class_code, class_name }));
+      handleShowAlert('success', 'Update berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal mengupdate.');
+    }
+  };
+
   const renderContent = () => {
     switch (currentPath) {
       case "akses-system/edit":
         return <EditAkses roles={roles} updateAccess={onUpdateAccess} id={id} />;
+      case "kelas/edit":
+        return <EditKelas classes={classes} updateClass={onUpdateClass} id={id} />;
       default:
         return <Typography>Konten tidak tersedia</Typography>;
     }
