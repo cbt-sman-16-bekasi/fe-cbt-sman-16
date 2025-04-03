@@ -1,49 +1,50 @@
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
+import useExamApi from "../../utils/rest/exam.js";
 
 const ActionType = {
-  RECEIVE_TYPE_EXAMS: 'RECEIVE_TYPE_EXAMS',
-  CREATE_TYPE_EXAM: 'CREATE_TYPE_EXAM',
-  DELETE_TYPE_EXAM: 'DELETE_TYPE_EXAM',
-  UPDATE_TYPE_EXAM: 'UPDATE_TYPE_EXAM',
-  RECEIVE_TYPE_EXAM_DETAIL: 'RECEIVE_TYPE_EXAM_DETAIL',
+  RECEIVE_EXAMS: 'RECEIVE_EXAMS',
+  CREATE_EXAM: 'CREATE_EXAM',
+  DELETE_EXAM: 'DELETE_EXAM',
+  UPDATE_EXAM: 'UPDATE_EXAM',
+  RECEIVE_EXAM_DETAIL: 'RECEIVE_EXAM_DETAIL',
   RECEIVE_EXAM_QUESTIONS: 'RECEIVE_EXAM_QUESTIONS',
   SET_ERROR: 'SET_ERROR',
 };
 
 // 🔹 Action Creators
-function receiveTypeExamsActionCreator(typeExams) {
+function receiveExamsActionCreator(exams) {
   return {
-    type: ActionType.RECEIVE_TYPE_EXAMS,
-    payload: { typeExams },
+    type: ActionType.RECEIVE_EXAMS,
+    payload: { exams },
   };
 }
 
-function createTypeExamActionCreator(newTypeExam) {
+function createExamActionCreator(newExam) {
   return {
-    type: ActionType.CREATE_TYPE_EXAM,
-    payload: { newTypeExam },
+    type: ActionType.CREATE_EXAM,
+    payload: { newExam },
   };
 }
 
-function deleteTypeExamActionCreator(id) {
+function deleteExamActionCreator(id) {
   return {
-    type: ActionType.DELETE_TYPE_EXAM,
+    type: ActionType.DELETE_EXAM,
     payload: { id },
   };
 }
 
-function updateTypeExamActionCreator(updatedTypeExam) {
+function updateExamActionCreator(updatedExam) {
   return {
-    type: ActionType.UPDATE_TYPE_EXAM,
-    payload: { updatedTypeExam },
+    type: ActionType.UPDATE_EXAM,
+    payload: { updatedExam },
   };
 }
 
-function receiveTypeExamDetailActionCreator(typeExamDetail) {
+function receiveExamDetailActionCreator(ExamDetail) {
   return {
-    type: ActionType.RECEIVE_TYPE_EXAM_DETAIL,
-    payload: { typeExamDetail },
+    type: ActionType.RECEIVE_EXAM_DETAIL,
+    payload: { ExamDetail },
   };
 }
 
@@ -62,7 +63,7 @@ function receiveExamQuestionsActionCreator(examQuestions) {
 }
 
 // 🔹 Async Functions
-function asyncReceiveTypeExams({
+function asyncReceiveExams({
   page = 1,
   size = 10,
   searchKey,
@@ -72,14 +73,14 @@ function asyncReceiveTypeExams({
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const typeExams = await api.getTypeExams({
+      const exams = await useExamApi.allExam({
         page,
         size,
         searchKey,
         searchValue,
         filter,
       });
-      dispatch(receiveTypeExamsActionCreator(typeExams));
+      dispatch(receiveExamsActionCreator(exams));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -88,12 +89,12 @@ function asyncReceiveTypeExams({
   };
 }
 
-function asyncCreateTypeExam(typeExamData) {
+function asyncCreateExam(ExamData) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const newTypeExam = await api.createTypeExam(typeExamData);
-      dispatch(createTypeExamActionCreator(newTypeExam));
+      const newExam = await api.createExam(ExamData);
+      dispatch(createExamActionCreator(newExam));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -102,12 +103,12 @@ function asyncCreateTypeExam(typeExamData) {
   };
 }
 
-function asyncDeleteTypeExam(id) {
+function asyncDeleteExam(id) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
       await api.deleteTypeExam(id);
-      dispatch(deleteTypeExamActionCreator(id));
+      dispatch(deleteExamActionCreator(id));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -116,18 +117,18 @@ function asyncDeleteTypeExam(id) {
   };
 }
 
-function asyncUpdateTypeExam({ id, code_type_exam, color, role, type_exam }) {
+function asyncUpdateExam({ id, code_exam, color, role, type_exam }) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const updatedTypeExam = await api.updateTypeExam({
+      const updatedExam = await api.updateTypeExam({
         id,
-        code_type_exam,
+        code_exam,
         color,
         role,
         type_exam,
       });
-      dispatch(updateTypeExamActionCreator(updatedTypeExam));
+      dispatch(updateExamActionCreator(updatedExam));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -136,12 +137,12 @@ function asyncUpdateTypeExam({ id, code_type_exam, color, role, type_exam }) {
   };
 }
 
-function asyncGetTypeExamDetail(id) {
+function asyncGetExamDetail(id) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const typeExamDetail = await api.getTypeExamDetail(id);
-      dispatch(receiveTypeExamDetailActionCreator(typeExamDetail));
+      const ExamDetail = await api.getExamDetail(id);
+      dispatch(receiveExamDetailActionCreator(ExamDetail));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -167,17 +168,17 @@ function asyncGetExamQuestions(examId) {
 // 🔹 Export semua actions & async functions
 export {
   ActionType,
-  receiveTypeExamsActionCreator,
-  createTypeExamActionCreator,
-  deleteTypeExamActionCreator,
-  updateTypeExamActionCreator,
-  receiveTypeExamDetailActionCreator,
+  receiveExamsActionCreator,
+  createExamActionCreator,
+  deleteExamActionCreator,
+  updateExamActionCreator,
+  receiveExamDetailActionCreator,
   receiveExamQuestionsActionCreator,
   setErrorActionCreator,
-  asyncReceiveTypeExams,
-  asyncCreateTypeExam,
-  asyncDeleteTypeExam,
-  asyncUpdateTypeExam,
-  asyncGetTypeExamDetail,
+  asyncReceiveExams,
+  asyncCreateExam,
+  asyncDeleteExam,
+  asyncUpdateExam,
+  asyncGetExamDetail,
   asyncGetExamQuestions,
 };

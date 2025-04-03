@@ -4,19 +4,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
-function getChipColor(status) {
-  const colors = {
-    "UH": "success",
-    "UTS": "secondary",
-    "UAS": "warning",
-    "TO": "error",
-  };
-
+function getChipColor(row) {
   return (
     <Chip
       variant='outlined'
-      label={status}
-      color={colors[status] || "default"}
+      label={row.type_exam.code}
+      color={row.type_exam.color || "default"}
       sx={{ px: 2, py: 1.6, width: '8rem' }}
     />
   );
@@ -24,18 +17,29 @@ function getChipColor(status) {
 
 export const columns = [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-  { field: "namaUjian", headerName: "NAMA UJIAN", flex: 1, minWidth: 120 },
-  { field: "mataPelajaran", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 150 },
-  { field: "kelas", headerName: "KELAS", flex: 1, minWidth: 120 },
+  { field: "name", headerName: "NAMA UJIAN", flex: 1, minWidth: 120 },
+  {
+    field: "subject",
+    headerName: "NAMA MATA PELAJARAN",
+    flex: 1,
+    minWidth: 150 ,
+    renderCell: (row) => row.subject?.subject || '-'
+  },
+  {
+    field: "member",
+    headerName: "KELAS",
+    flex: 1,
+    minWidth: 120
+  },
   { field: "durasi", headerName: "DURASI (Menit)", flex: 1, minWidth: 120 },
   {
     field: "jenisUjian",
     headerName: "JENIS UJIAN",
     flex: 1,
     minWidth: 120,
-    renderCell: (params) => getChipColor(params.value),
+    renderCell: (row) => getChipColor(row),
   },
-  { field: "jumlahSoal", headerName: "JUMLAH SOAL", flex: 1, minWidth: 120 },
+  { field: "total_question", headerName: "JUMLAH SOAL", flex: 1, minWidth: 120 },
   {
     field: "aksi",
     headerName: "AKSI",
@@ -91,20 +95,6 @@ export const columns = [
   },
 ];
 
-export const rows = [
-  {
-    id: 1,
-    no: 1,
-    namaUjian: "00002335459",
-    mataPelajaran: "Khalih Warna, S.Pd",
-    kelas: 'laki - laki',
-    durasi: '90',
-    jenisUjian: 'UTS',
-    jumlahSoal: '7',
-    totalNilai: '100'
-  },
-];
-
 const handleEdit = (id) => {
   console.log("Edit kelas dengan ID:", id);
 };
@@ -120,15 +110,15 @@ const handleSettings = (id) => {
 export const formatRows = (exams = []) =>
   Array.isArray(exams)
     ? exams.map((exam, index) => ({
-      id: index + 1,
+      id: exam.id,
       no: index + 1,
-      namaUjian: exam.code,
-      mataPelajaran: exam.code,
-      kelas: exam.code,
+      namaUjian: exam.name,
+      mataPelajaran: exam.subject.subject,
+      kelas: exam.member ?? '-',
       durasi: exam.code,
-      jenisUjian: exam.code,
-      jumlahSoal: exam.code,
-      totalNilai: exam.code,
+      jenisUjian: exam.type_exam.code,
+      jumlahSoal: exam.total_question,
+      color: exam.type_exam.color
     }))
     : [];
 

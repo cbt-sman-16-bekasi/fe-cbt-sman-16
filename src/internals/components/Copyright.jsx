@@ -9,13 +9,13 @@ export default function Copyright(props) {
       {...props}
       sx={[
         {
-          color: 'text.secondary',
+          color: 'gray',
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
       ]}
     >
       {`© ${new Date().getFullYear()} `}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="gray" href="https://mui.com/">
         SMAN 16 Kota Bekasi.
       </Link>
       <br />

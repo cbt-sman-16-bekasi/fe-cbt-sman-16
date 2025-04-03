@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function CustomizedDataGrid({ columns, rows }) {
+export default function CustomizedDataGrid({ columns, rows, checkboxSelection = false, loading }) {
   return (
     <DataGrid
-      checkboxSelection
+      checkboxSelection={checkboxSelection}
       rows={rows}
       columns={columns}
       getRowClassName={(params) =>
@@ -14,6 +14,7 @@ export default function CustomizedDataGrid({ columns, rows }) {
       initialState={{
         pagination: { paginationModel: { pageSize: 20 } },
       }}
+      loading={loading}
       pageSizeOptions={[10, 20, 50]}
       disableColumnResize
       density="comfortable"
@@ -23,6 +24,9 @@ export default function CustomizedDataGrid({ columns, rows }) {
           alignItems: 'center',
           justifyContent: 'start',
           py: "12px",
+        },
+        '& .MuiDataGrid-columnHeaders': {
+          bgColor: 'rgba(255, 7, 0, 0.55)',
         },
       }}
       slotProps={{
@@ -59,9 +63,13 @@ export default function CustomizedDataGrid({ columns, rows }) {
 CustomizedDataGrid.propTypes = {
   columns: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
+  checkboxSelection: PropTypes.bool,
+  loading: PropTypes.bool.isRequired
 };
 
 CustomizedDataGrid.defaultProps = {
   columns: [],
   rows: [],
+  checkboxSelection: false,
+  loading: false,
 };

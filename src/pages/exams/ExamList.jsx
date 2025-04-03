@@ -1,20 +1,21 @@
-import Grid from '@mui/material/Grid2';
-import Box from '@mui/material/Box';
-import Copyright from '../internals/components/Copyright';
-import {Alert, AlertTitle, Button, InputAdornment, TextField} from '@mui/material';
-import SettingsIcon from "@mui/icons-material/Settings";
-import SearchIcon from "@mui/icons-material/Search";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns } from "../internals/data/ujianData";
-import { Link } from 'react-router';
-import PropTypes from 'prop-types';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid2";
+import {Alert, AlertTitle, Button, InputAdornment, TextField} from "@mui/material";
 import {RocketLaunch} from "@mui/icons-material";
-import ApiTable from "./ApiTable.jsx";
-import {useState} from "react";
+import SettingsIcon from "@mui/icons-material/Settings";
+import {UseExamHook} from "./hooks/useExamHook.jsx";
+import {Link} from "react-router";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import ApiTable from "../../components/ApiTable.jsx";
 
-export default function Ujian({ role }) {
-  const [search, setSearch] = useState('')
-
+const ExamList = () => {
+  const {
+    search,
+    setSearch,
+    userRole,
+    columns
+  } = UseExamHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
@@ -27,9 +28,9 @@ export default function Ujian({ role }) {
       </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
-        <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to={`/${role}/ujian/tambah`}>
-            <Button fullWidth variant="contained" color="info"><AddBoxOutlinedIcon /> Tambah</Button>
+        <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
+          <Link to={`/${userRole}/ujian/tambah`}>
+            <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon/>}> Tambah</Button>
           </Link>
         </Grid>
         <Grid lg={4}>
@@ -47,19 +48,25 @@ export default function Ujian({ role }) {
             }}
           />
         </Grid>
-
       </Grid>
-      <Grid container spacing={1} columns={12}>
+
+      <Grid container spacing={1} columns={12} sx={{
+        '--Grid-borderWidth': '1px',
+        borderTop: 'var(--Grid-borderWidth) solid',
+        borderLeft: 'var(--Grid-borderWidth) solid',
+        borderColor: 'divider',
+        '& > div': {
+          borderRight: 'var(--Grid-borderWidth) solid',
+          borderBottom: 'var(--Grid-borderWidth) solid',
+          borderColor: 'divider',
+        }
+      }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          {/*<CustomizedDataGrid columns={columns} rows={rows} />*/}
           <ApiTable url="/academic/exam/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} />
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
-  );
+  )
 }
 
-Ujian.propTypes = {
-  role: PropTypes.string.isRequired
-}
+export default ExamList;

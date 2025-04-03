@@ -24,11 +24,11 @@ export default function Header({ role }) {
     >
       <NavbarBreadcrumbs role={role} />
       <Stack direction="row" sx={{ gap: 1 }}>
-        <Search />
-        <CustomDatePicker />
-        <MenuButton showBadge aria-label="Open notifications">
-          <NotificationsRoundedIcon />
-        </MenuButton>
+        {/*<Search />*/}
+        {/*<CustomDatePicker disable={true} />*/}
+        {/*<MenuButton showBadge aria-label="Open notifications">*/}
+        {/*  <NotificationsRoundedIcon />*/}
+        {/*</MenuButton>*/}
         <ColorModeIconDropdown />
       </Stack>
     </Stack>

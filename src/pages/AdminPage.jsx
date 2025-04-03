@@ -18,6 +18,8 @@ import AddQuestions from "../components/AddQuestions";
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import LayoutEditData from "../components/LayoutEditData";
+import ExamList from "./exams/ExamList.jsx";
+import {ExamCreate} from "./exams/add/ExamCreate.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -44,8 +46,8 @@ function AdminPage({ role }) {
       <Route path="bank-soal" element={<BankSoal role={role} />} />
       <Route path="bank-soal/tambah" element={<LayoutTambah desc="Bank Soal" />} />
 
-      <Route path="ujian" element={<Ujian role={role} />} />
-      <Route path="ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />
+      <Route path="ujian" element={<ExamList />} />
+      <Route path="ujian/tambah" element={<ExamCreate />} />
       <Route path="ujian/settings/:id" element={<LayoutSettings desc="Setting Ujian" role={role} />} />
       <Route path="ujian/settings/:id/tambah-soal" element={<AddQuestions />} />
 
