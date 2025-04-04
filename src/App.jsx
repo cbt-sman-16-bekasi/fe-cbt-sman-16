@@ -58,34 +58,47 @@ function App(props) {
   };
 
   useEffect(() => {
-
-    if (!authUser || !accessToken) {
-      navigate("/login");
-    }
-  }, [authUser, accessToken, navigate]);
-
-  useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
   useEffect(() => {
-    if (userRole) {
-      const role = userRole;
-      const path = window.location.pathname;
+    if (isPreload) return;
 
-      if (path === "/" || path === "/login" || path === "/register") {
-        navigate(`/${role}/dashboard`);
+    if (!authUser || !accessToken) {
+      if (location.pathname !== '/login' && location.pathname !== '/register') {
+        navigate("/login");
+      }
+      return;
+    }
+
+    if (userRole) {
+      const currentPath = location.pathname;
+      const rolePath = `/${userRole}`;
+
+      if (!currentPath.startsWith(rolePath)) {
+        // Jika di root atau auth pages
+        if (currentPath === "/" || currentPath === "/login" || currentPath === "/register") {
+          navigate(`${rolePath}/dashboard`);
+        } else {
+          navigate('/not-found');
+        }
       }
     }
-  }, [userRole, navigate]);
+  }, [authUser, accessToken, userRole, navigate, location, isPreload]);
 
+  // title tab
   useEffect(() => {
-    const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
-    const userMenu = menuConfig[userRole] || [];
-    const currentMenu = userMenu.find((item) => item.path === `/${currentPath}`);
+    if (userRole && authUser) {
+      const pathParts = location.pathname.split('/');
+      const currentSubPath = pathParts.slice(2).join('/') || "/";
+      const userMenu = menuConfig[userRole] || [];
+      const currentMenu = userMenu.find((item) => item.path === `/${currentSubPath}`);
 
-    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
-  }, [location, userRole]);
+      document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
+    } else {
+      document.title = "Admin Panel";
+    }
+  }, [location, userRole, authUser]);
 
   if (isPreload) null
 

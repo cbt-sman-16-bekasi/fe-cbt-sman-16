@@ -2,17 +2,17 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 
 const ActionType = {
-  RECEIVE_CLASS_CODE: 'RECEIVE_CLASS_CODE',
+  RECEIVE_CLASS_CODES: 'RECEIVE_CLASS_CODES',
   RECEIVE_DASHBOARD_DATA: 'RECEIVE_DASHBOARD_DATA',
   RECEIVE_SUBJECTS: 'RECEIVE_SUBJECTS',
   RECEIVE_USER_ROLES: 'RECEIVE_USER_ROLES',
   SET_ERROR: 'SET_ERROR',
 };
 
-function receiveClassCodeActionCreator(classCode) {
+function receiveClassCodeActionCreator(classCodes) {
   return {
-    type: ActionType.RECEIVE_CLASS_CODE,
-    payload: { classCode },
+    type: ActionType.RECEIVE_CLASS_CODES,
+    payload: { classCodes },
   };
 }
 
@@ -48,8 +48,8 @@ function asyncGetClassCode() {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const classCode = await api.getClassCode();
-      dispatch(receiveClassCodeActionCreator(classCode));
+      const classCodes = await api.getClassCode();
+      dispatch(receiveClassCodeActionCreator(classCodes));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {

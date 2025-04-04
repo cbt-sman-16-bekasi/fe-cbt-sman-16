@@ -219,7 +219,6 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    console.log(responseJson);
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -248,6 +247,7 @@ const api = (() => {
       body: JSON.stringify({ class_code, class_name }),
     });
 
+    console.log({ id, class_code, class_name });
     const responseJson = await response.json();
     const { status, message, data } = responseJson;
 
@@ -386,21 +386,24 @@ const api = (() => {
   }
 
   async function createStudent({ class_id, gender, name, nisn }) {
-    const response = await _fetchWithAuth('/academic/student/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ class_id, gender, name, nisn }),
-    });
+    try {
+      const response = await _fetchWithAuth('/academic/student/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ class_id, gender, name, nisn }),
+      });
 
-    const responseJson = await response.json();
-    console.log(responseJson);
-    const { status, message, data } = responseJson;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Gagal membuat siswa');
+      }
 
-    if (status !== 'success') {
-      throw new Error(message);
+      const responseJson = await response.json();
+      return responseJson.data;
+    } catch (error) {
+      console.error('Create student error:', error);
+      throw error;
     }
-
-    return data;
   }
 
   async function deleteStudent(id) {
@@ -431,6 +434,7 @@ const api = (() => {
   }
 
   async function updateStudent({ id, class_id, gender, name, nisn }) {
+    console.log({ id, class_id, gender, name, nisn });
     const response = await _fetchWithAuth(`/academic/student/update/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -482,10 +486,10 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    const { status, message, data } = responseJson;
+    const { message, data } = responseJson;
 
-    if (status !== 'success') {
-      throw new Error(message);
+    if (!response.ok) {
+      throw new Error(message || 'Gagal membuat guru baru');
     }
 
     return data;
@@ -526,7 +530,6 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {

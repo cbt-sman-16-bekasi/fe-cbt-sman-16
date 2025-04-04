@@ -1,40 +1,60 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
-export default function TambahDataSiswa({ addStudent }) {
+export default function EditDataSiswa({ classCodes, updateStudent }) {
+  const { id } = useParams()
+  const students = useSelector((state) => state.students.students)
+
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
   const [jenisKelamin, setJenisKelamin] = useState('')
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (id) {
+      const selectedStudent = students.records.find((std) => std.ID === parseInt(id));
+      console.log(selectedStudent)
+
+      if (selectedStudent) {
+        setNisn(selectedStudent.detail_student.nisn)
+        setNamaSiswa(selectedStudent.detail_student.name)
+        setJenisKelamin(selectedStudent.detail_student.gender.toLowerCase())
+        setNamaKelas(selectedStudent.class_id)
+      }
+    }
+  }, [id, students])
+
   function resetInputs() {
-    setNisn('');
-    setNamaSiswa('');
-    setJenisKelamin('');
-    setNamaKelas('');
+    setNisn('')
+    setNamaSiswa('')
+    setJenisKelamin('')
+    setNamaKelas('')
   }
 
   const handleSubmit = async () => {
     if (!nisn || !namaSiswa || !jenisKelamin || !namaKelas) {
-      alert('Semua Input Wajib di Isi!');
-      return;
+      alert('Semua Input Wajib di Isi!')
+      return
     }
 
     setIsSubmitting(true);
     try {
-      await addStudent({ class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn });
-      resetInputs()
-    } catch (err) {
-      console.error(err)
-      alert(err.message || 'Terjadi kesalahan');
+      const result = await updateStudent({ id: String(id), class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn })
+      console.log('Response dari API:', result);
+      resetInputs();
+    } catch (error) {
+      console.error('Error saat update:', error.response?.data || error.message);
+      alert(`Gagal update: ${error.response?.data?.message || error.message}`);
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   return (
     <>
@@ -97,9 +117,14 @@ export default function TambahDataSiswa({ addStudent }) {
             onChange={(e) => setNamaKelas(e.target.value)}
             variant="outlined"
           >
-            <MenuItem value='10'>10</MenuItem>
-            <MenuItem value='11'>11</MenuItem>
-            <MenuItem value='12'>12</MenuItem>
+            {classCodes.map((item) => (
+              <MenuItem
+                key={item.code}
+                value={item.code}
+              >
+                {item.name}
+              </MenuItem>
+            ))}
           </TextField>
         </Grid>
       </Grid>
@@ -154,9 +179,7 @@ export default function TambahDataSiswa({ addStudent }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}
-            disabled={isSubmitting}
-          >
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Menyimpan...' : 'Simpan'}
           </Button>
         </Grid>
@@ -166,6 +189,7 @@ export default function TambahDataSiswa({ addStudent }) {
   );
 }
 
-TambahDataSiswa.propTypes = {
-  addStudent: PropTypes.func.isRequired,
+EditDataSiswa.propTypes = {
+  classCodes: PropTypes.func.isRequired,
+  updateStudent: PropTypes.func.isRequired,
 }

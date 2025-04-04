@@ -85,6 +85,7 @@ function asyncCreateStudent(studentData) {
     dispatch(showLoading());
     try {
       const newStudent = await api.createStudent(studentData);
+      console.log(newStudent);
       dispatch(createStudentActionCreator(newStudent));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
@@ -103,6 +104,7 @@ function asyncDeleteStudent(id) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveStudents());
       dispatch(hideLoading());
     }
   };
@@ -119,6 +121,7 @@ function asyncUpdateStudent({ id, class_id, gender, name, nisn }) {
         name,
         nisn,
       });
+      console.log(updatedStudent);
       dispatch(updateStudentActionCreator(updatedStudent));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));

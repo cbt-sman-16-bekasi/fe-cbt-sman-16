@@ -1,10 +1,10 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import { Button, TextField } from '@mui/material';
+import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function TambahKelas({ createClass }) {
+export default function TambahKelas({ classCodes, createClass }) {
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
 
@@ -44,10 +44,17 @@ export default function TambahKelas({ createClass }) {
           </Typography>
           <TextField
             fullWidth
+            select
             value={classCode}
             onChange={(e) => setClassCode(e.target.value)}
             variant="outlined"
-          />
+          >
+            {classCodes.map((classCode) => (
+              <MenuItem key={classCode.code} value={classCode.code}>
+                {classCode.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
         <Grid size={{ sm: 12, lg: 6 }}>
@@ -80,5 +87,6 @@ export default function TambahKelas({ createClass }) {
 }
 
 TambahKelas.propTypes = {
+  classCodes: PropTypes.object.isRequired,
   createClass: PropTypes.func.isRequired,
 }

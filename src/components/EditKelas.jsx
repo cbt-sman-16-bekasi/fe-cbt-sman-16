@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import { Button, TextField } from '@mui/material';
+import { Button, MenuItem, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
-export default function EditKelas({ updateClass }) {
+export default function EditKelas({ classCodes, updateClass }) {
   const { id } = useParams()
   const classes = useSelector((state) => state.classes.classes)
 
@@ -31,6 +31,12 @@ export default function EditKelas({ updateClass }) {
   }
 
   const handleSubmit = async () => {
+    console.log('Data yang akan dikirim:', {
+      id,
+      class_code: classCode,
+      class_name: className
+    });
+
     if (!classCode || !className) {
       alert("Kode kelas dan nama kelas harus diisi!");
       return;
@@ -38,11 +44,12 @@ export default function EditKelas({ updateClass }) {
 
     setIsSubmitting(true);
     try {
-      await updateClass({ class_code: classCode, class_name: className });
-      resetInputs()
+      const result = await updateClass({ id, class_code: classCode, class_name: className });
+      console.log('Response dari API:', result);
+      resetInputs();
     } catch (error) {
-      console.error('Error saat menambahkan akses:', error);
-      alert('Gagal menambahkan akses, coba lagi.');
+      console.error('Error saat update:', error.response?.data || error.message);
+      alert(`Gagal update: ${error.response?.data?.message || error.message}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -59,10 +66,20 @@ export default function EditKelas({ updateClass }) {
           </Typography>
           <TextField
             fullWidth
+            select
             value={classCode}
             onChange={(e) => setClassCode(e.target.value)}
             variant="outlined"
-          />
+          >
+            {classCodes.map((item) => (
+              <MenuItem
+                key={item.code}
+                value={item.code}
+              >
+                {item.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
         <Grid size={{ sm: 12, lg: 6 }}>
@@ -95,6 +112,6 @@ export default function EditKelas({ updateClass }) {
 }
 
 EditKelas.propTypes = {
-  classesData: PropTypes.object.isRequired,
+  classCodes: PropTypes.object.isRequired,
   updateClass: PropTypes.func.isRequired,
 }

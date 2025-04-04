@@ -72,7 +72,7 @@ export const formatRows = (teachers = []) =>
       no: index + 1,
       nuptk: teacher.nuptk,
       namaGuru: teacher.name,
-      username: teacher.detail_user.username || "Unknown",
+      username: teacher.detail_user.username,
       password: "********",
       hakAkses: teacher.detail_user.role.code.charAt(0).toUpperCase() + teacher.detail_user.role.code.slice(1).toLowerCase(),
     }))

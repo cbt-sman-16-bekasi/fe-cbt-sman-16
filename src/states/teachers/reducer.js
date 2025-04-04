@@ -44,11 +44,12 @@ function teachersReducer(state = initialState, action) {
     case ActionType.UPDATE_TEACHER:
       return {
         ...state,
-        teachers: state.teachers.map((teacher) =>
-          teacher.id === action.payload.updatedTeacher.id
-            ? action.payload.updatedTeacher
-            : teacher
-        ),
+        teachers: {
+          ...state.teachers,
+          records: state.teachers.records.map((teacher) =>
+            teacher.ID === action.payload.id ? action.payload : teacher
+          ),
+        },
         error: null,
       };
 

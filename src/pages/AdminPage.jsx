@@ -39,6 +39,7 @@ function AdminPage({ role }) {
 
       <Route path="data-siswa" element={<DataSiswa role={role} />} />
       <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
+      <Route path="data-siswa/edit/:id" element={<LayoutEditData desc="Edit Data Siswa" />} />
       <Route path="data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
 
       <Route path="bank-soal" element={<BankSoal role={role} />} />

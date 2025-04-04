@@ -31,8 +31,19 @@ export default function TambahAkses({ roles, addAccess }) {
 
     setIsSubmitting(true);
     try {
-      await addAccess({ name: namaGuru, nuptk, role: akses.toUpperCase(), username });
-      resetInputs()
+      const result = await addAccess({
+        name: namaGuru,
+        nuptk,
+        role: akses.toUpperCase(),
+        username
+      });
+
+      // Cek jika action mengembalikan status success
+      if (result?.success) {
+        resetInputs();
+      } else {
+        alert(result?.error || 'Gagal menambahkan akses.')
+      }
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
       alert('Gagal menambahkan akses, coba lagi.');

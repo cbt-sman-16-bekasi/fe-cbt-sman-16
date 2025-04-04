@@ -15,6 +15,8 @@ import EditAkses from './EditAkses';
 import { asyncUpdateTeacher } from '../states/teachers/action';
 import EditKelas from './EditKelas';
 import { asyncUpdateClass } from '../states/classes/action';
+import EditDataSiswa from './EditDataSiswa';
+import { asyncUpdateStudent } from '../states/students/action';
 
 export default function LayoutEditData({ desc }) {
   const [alertSeverity, setAlertSeverity] = useState('error');
@@ -22,7 +24,7 @@ export default function LayoutEditData({ desc }) {
   const [showAlert, setShowAlert] = useState(false);
 
   const roles = useSelector((state) => state.common.userRoles);
-  const classes = useSelector((state) => state.common.classCodes)
+  const classCodes = useSelector((state) => state.common.classCodes)
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -30,12 +32,19 @@ export default function LayoutEditData({ desc }) {
 
   const pathSegments = location.pathname.split("/").filter(Boolean);
   const currentPath = pathSegments.slice(1, 3).join("/");
-  const id = pathSegments[3] || null;
+  // const id = pathSegments[3] || null;
 
   useEffect(() => {
     dispatch(asyncGetUserRoles());
     dispatch(asyncGetClassCode());
   }, [dispatch]);
+
+  const handleBack = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+      return;
+    }
+  };
 
   const handleShowAlert = (status, message) => {
     setAlertSeverity(status);
@@ -49,11 +58,20 @@ export default function LayoutEditData({ desc }) {
 
   const onUpdateAccess = async ({ id, name, nuptk, role, username }) => {
     try {
-      await dispatch(asyncUpdateTeacher({ id, name, nuptk, role, username }));
-      handleShowAlert('success', 'Update berhasil ditambahkan!');
+      const result = await dispatch(asyncUpdateTeacher({
+        id, name, nuptk, role, username
+      }));
+
+      if (result.error) {
+        throw new Error(result.error.message || 'Gagal mengupdate');
+      }
+
+      handleShowAlert('success', 'Update berhasil!');
+      return result.payload;
     } catch (error) {
-      console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal mengupdate.');
+      console.error('Update error:', error);
+      handleShowAlert('error', error.message || 'Gagal mengupdate');
+      throw error;
     }
   };
 
@@ -67,21 +85,26 @@ export default function LayoutEditData({ desc }) {
     }
   };
 
-  const renderContent = () => {
-    switch (currentPath) {
-      case "akses-system/edit":
-        return <EditAkses roles={roles} updateAccess={onUpdateAccess} id={id} />;
-      case "kelas/edit":
-        return <EditKelas classes={classes} updateClass={onUpdateClass} id={id} />;
-      default:
-        return <Typography>Konten tidak tersedia</Typography>;
+  const onUpdateStudent = async ({ id, class_id, gender, name, nisn }) => {
+    try {
+      await dispatch(asyncUpdateStudent({ id, class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Update berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal mengupdate.');
     }
   };
 
-  const handleBack = () => {
-    if (window.history.length > 2) {
-      navigate(-1);
-      return;
+  const renderContent = () => {
+    switch (currentPath) {
+      case "akses-system/edit":
+        return <EditAkses roles={roles} updateAccess={onUpdateAccess} />;
+      case "kelas/edit":
+        return <EditKelas classCodes={classCodes} updateClass={onUpdateClass} />;
+      case "data-siswa/edit":
+        return <EditDataSiswa classCodes={classCodes} updateStudent={onUpdateStudent} />;
+      default:
+        return <Typography>Konten tidak tersedia</Typography>;
     }
   };
 

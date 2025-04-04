@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import { Button, Card, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
@@ -23,10 +22,12 @@ import { asyncCreateStudent } from '../states/students/action';
 import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
 import { asyncCreateTypeExam } from '../states/exams/action';
-import { asyncGetUserRoles } from '../states/common/action';
+import { asyncGetClassCode, asyncGetUserRoles } from '../states/common/action';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
+  const classCodes = useSelector((state) => state.common.classCodes)
+
   const dispatch = useDispatch();
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
@@ -38,6 +39,7 @@ export default function LayoutTambah({ desc }) {
 
   useEffect(() => {
     dispatch(asyncGetUserRoles());
+    dispatch(asyncGetClassCode());
   }, [dispatch]);
 
   const handleShowAlert = (status, message) => {
@@ -50,33 +52,45 @@ export default function LayoutTambah({ desc }) {
     }, 3000);
   };
 
-  const onAddAccess = async ({ name, nuptk, role, username }) => {
+  const onAddStudent = async ({ class_id, gender, name, nisn }) => {
     try {
-      await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
-      handleShowAlert('success', 'Akses berhasil ditambahkan!');
+      const result = await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
+      return result
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan akses.');
+      handleShowAlert('error', 'Gagal menambahkan siswa.');
+    }
+  };
+
+  const onAddAccess = async ({ name, nuptk, role, username }) => {
+    console.log('Data yang akan dikirim:', { name, nuptk, role, username });
+    try {
+      const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
+      console.log('Result dari action:', result);
+
+      if (result?.success) {
+        handleShowAlert('success', 'Akses berhasil ditambahkan!');
+        return result
+      } else {
+        handleShowAlert('error', result?.error || 'Gagal menambahkan akses.');
+        return result
+      }
+    } catch (error) {
+      console.error('Full error:', error);
+      handleShowAlert('error', error.message || 'Terjadi kesalahan tidak terduga');
+
     }
   };
 
   const onCreateClass = async ({ class_code, class_name }) => {
     try {
-      await dispatch(asyncCreateClass({ class_code, class_name }));
+      const result = await dispatch(asyncCreateClass({ class_code, class_name }));
       handleShowAlert('success', 'Kelas berhasil ditambahkan!');
+      return result
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
       handleShowAlert('error', 'Gagal menambahkan kelas.');
-    }
-  };
-
-  const onAddStudent = async ({ class_id, gender, name, nisn }) => {
-    try {
-      await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
-      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
-    } catch (error) {
-      console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan siswa.');
     }
   };
 
@@ -105,7 +119,7 @@ export default function LayoutTambah({ desc }) {
       case "/akses-system/tambah":
         return <TambahAkses roles={roles} addAccess={onAddAccess} />;
       case "/kelas/tambah":
-        return <TambahKelas createClass={onCreateClass} />;
+        return <TambahKelas classCodes={classCodes} createClass={onCreateClass} />;
       case "/mata-pelajaran/tambah":
         return <TambahMapel addSubject={onAddSubjects} />;
       case "/kode-jenis-ujian/tambah":
@@ -171,8 +185,6 @@ export default function LayoutTambah({ desc }) {
           {renderContent()}
         </CardContent>
       </Card>
-
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

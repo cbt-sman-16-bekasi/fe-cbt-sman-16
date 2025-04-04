@@ -34,7 +34,7 @@ function classesReducer(state = initialState, action) {
       return {
         ...state,
         classes: state.classes.map((cls) =>
-          cls.id === action.payload.updatedClass.id
+          cls.ID === action.payload.updatedClass.id
             ? action.payload.updatedClass
             : cls
         ),
