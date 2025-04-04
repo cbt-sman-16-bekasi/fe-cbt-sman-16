@@ -7,7 +7,7 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -15,7 +15,6 @@ import AdminPage from "./pages/AdminPage";
 import TeacherPage from "./pages/TeacherPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import Loading from './components/Loading.jsx';
 import { menuConfig } from './config/menuConfig';
 
 import {
@@ -28,6 +27,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import { asyncPreloadProcess } from './states/isPreload/action.js';
 import { asyncUnsetAuthUser } from './states/authUser/action.js';
+import Typography from "@mui/material/Typography";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -40,6 +40,7 @@ function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const accessToken = localStorage.getItem("accessToken");
+  const [title, setTitle] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +57,15 @@ function App(props) {
     admin: <AdminPage role={userRole} />,
     teacher: <TeacherPage role={userRole} />,
   };
+
+  // useEffect(() => {
+  //   const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
+  //   setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+
+  //   if (!authUser || !accessToken) {
+  //     navigate("/login");
+  //   }
+  // }, [authUser, accessToken, navigate]);
 
   // populate data
   useEffect(() => {
@@ -148,7 +158,6 @@ function App(props) {
             }}
           >
             <Stack
-              spacing={2}
               sx={{
                 alignItems: 'start',
                 mx: 3,
@@ -157,13 +166,15 @@ function App(props) {
               }}
             >
               <Header role={userRole} />
-              <Loading />
 
               <Routes>
                 <Route
                   path={`/${userRole}/*`}
                   element={
                     <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
+                      <Typography component="h1" variant="h4" fontWeight="bold">
+                        {title}
+                      </Typography>
                       {routeMap[userRole]}
                     </ProtectedRoute>
                   } />

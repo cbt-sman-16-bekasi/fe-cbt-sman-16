@@ -1,8 +1,8 @@
 import { ActionType } from './action';
 
 const initialState = {
-  typeExams: [],
-  typeExamDetail: null,
+  exams: [],
+  examDetail: null,
   error: null,
   loading: false,
 };
@@ -10,21 +10,21 @@ const initialState = {
 // 🔹 Reducer Function
 function examsReducer(state = initialState, action) {
   switch (action.type) {
-    case ActionType.RECEIVE_TYPE_EXAMS:
+    case ActionType.RECEIVE_EXAMS:
       return {
         ...state,
-        typeExams: action.payload.typeExams,
+        exams: action.payload.exams,
         loading: false,
       };
 
-    case ActionType.CREATE_TYPE_EXAM:
+    case ActionType.CREATE_EXAM:
       return {
         ...state,
-        typeExams: [...state.typeExams, action.payload.newTypeExam],
+        exams: [...state.typeExams, action.payload.newExam],
         loading: false,
       };
 
-    case ActionType.DELETE_TYPE_EXAM:
+    case ActionType.DELETE_EXAM:
       return {
         ...state,
         typeExams: state.typeExams.filter(
@@ -33,7 +33,7 @@ function examsReducer(state = initialState, action) {
         loading: false,
       };
 
-    case ActionType.UPDATE_TYPE_EXAM:
+    case ActionType.UPDATE_EXAM:
       return {
         ...state,
         typeExams: state.typeExams.map((exam) =>
@@ -44,7 +44,7 @@ function examsReducer(state = initialState, action) {
         loading: false,
       };
 
-    case ActionType.RECEIVE_TYPE_EXAM_DETAIL:
+    case ActionType.RECEIVE_EXAM_DETAIL:
       return {
         ...state,
         typeExamDetail: action.payload.typeExamDetail,

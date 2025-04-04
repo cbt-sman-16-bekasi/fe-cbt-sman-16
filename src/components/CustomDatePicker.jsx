@@ -53,14 +53,15 @@ ButtonField.propTypes = {
   setOpen: PropTypes.func,
 };
 
-export default function CustomDatePicker() {
-  const [value, setValue] = React.useState(dayjs('2023-04-17'));
+export default function CustomDatePicker({ disable = false}) {
+  const [value, setValue] = React.useState(dayjs(new Date()));
   const [open, setOpen] = React.useState(false);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         value={value}
+        disabled={disable}
         label={value == null ? null : value.format('MMM DD, YYYY')}
         onChange={(newValue) => setValue(newValue)}
         slots={{ field: ButtonField }}

@@ -6,7 +6,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import { rows } from '../internals/data/ujianData';
+// import { rows } from '../internals/data/ujianData';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -14,12 +14,12 @@ export default function SettingsUjian({ id, setError, role }) {
   const [ujian, setUjian] = useState('')
 
   useEffect(() => {
-    const dataUjian = rows.find((item) => item.id === Number(id));
-    if (dataUjian) {
-      setUjian(dataUjian);
-    } else {
-      setError(true);
-    }
+    // const dataUjian = rows.find((item) => item.id === Number(id));
+    // if (dataUjian) {
+    //   setUjian(dataUjian);
+    // } else {
+    //   setError(true);
+    // }
   }, [id, setError]);
 
   const getChipColor = (jenisUjian) => {

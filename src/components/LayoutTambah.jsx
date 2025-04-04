@@ -21,8 +21,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncCreateStudent } from '../states/students/action';
 import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
-import { asyncCreateTypeExam } from '../states/exams/action';
 import { asyncGetClassCode, asyncGetUserRoles } from '../states/common/action';
+import { asyncCreateExam } from '../states/exams/action';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
@@ -106,7 +106,7 @@ export default function LayoutTambah({ desc }) {
 
   const onCreateExams = async ({ code_type_exam, color, role, type_exam }) => {
     try {
-      await dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }));
+      await dispatch(asyncCreateExam({ code_type_exam, color, role, type_exam }));
       handleShowAlert('success', 'Kode ujian berhasil dibuat!');
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
