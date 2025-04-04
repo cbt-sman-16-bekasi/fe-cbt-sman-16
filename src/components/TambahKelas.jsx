@@ -3,8 +3,11 @@ import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export default function TambahKelas({ classCodes, createClass }) {
+export default function TambahKelas({ alert, classCodes, createClass }) {
+  const classes = useSelector((state) => state.classes.classes)
+
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
 
@@ -17,17 +20,33 @@ export default function TambahKelas({ classCodes, createClass }) {
 
   const handleSubmit = async () => {
     if (!classCode || !className) {
-      alert("Kode kelas dan nama kelas harus diisi!");
+      alert('error', "Kode kelas dan nama kelas harus diisi!");
+      return;
+    }
+
+    if (!classes || !classes.records) {
+      alert('error', "Data kelas belum dimuat, coba lagi.");
+      return;
+    }
+
+    const isDuplicate = classes.records.some(
+      (kelas) =>
+        kelas.classCode.toString() === classCode.toString() &&
+        kelas.className.trim().toLowerCase() === className.trim().toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert('error', "Nama kelas ini sudah ada dalam kode kelas yang sama! Gunakan nama lain.");
       return;
     }
 
     setIsSubmitting(true);
     try {
       await createClass({ class_code: classCode, class_name: className });
-      resetInputs()
+      resetInputs();
     } catch (error) {
-      console.error('Error saat menambahkan akses:', error);
-      alert('Gagal menambahkan akses, coba lagi.');
+      console.error("Error saat menambahkan kelas:", error);
+      alert("Gagal menambahkan kelas, coba lagi.");
     } finally {
       setIsSubmitting(false);
     }
@@ -87,6 +106,7 @@ export default function TambahKelas({ classCodes, createClass }) {
 }
 
 TambahKelas.propTypes = {
+  alert: PropTypes.func.isRequired,
   classCodes: PropTypes.object.isRequired,
   createClass: PropTypes.func.isRequired,
 }

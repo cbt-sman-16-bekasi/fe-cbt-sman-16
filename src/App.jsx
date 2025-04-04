@@ -7,7 +7,7 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -27,7 +27,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import { asyncPreloadProcess } from './states/isPreload/action.js';
 import { asyncUnsetAuthUser } from './states/authUser/action.js';
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -40,7 +40,7 @@ function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const accessToken = localStorage.getItem("accessToken");
-  const [title, setTitle] = useState('')
+  // const [title, setTitle] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -172,9 +172,9 @@ function App(props) {
                   path={`/${userRole}/*`}
                   element={
                     <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
-                      <Typography component="h1" variant="h4" fontWeight="bold">
+                      {/* <Typography component="h1" variant="h4" fontWeight="bold">
                         {title}
-                      </Typography>
+                      </Typography> */}
                       {routeMap[userRole]}
                     </ProtectedRoute>
                   } />

@@ -297,7 +297,6 @@ const api = (() => {
 
     const responseJson = await response.json();
     const { status, message, data } = responseJson;
-    console.log(data);
 
     if (status !== 'success') {
       throw new Error(message);
@@ -434,7 +433,6 @@ const api = (() => {
   }
 
   async function updateStudent({ id, class_id, gender, name, nisn }) {
-    console.log({ id, class_id, gender, name, nisn });
     const response = await _fetchWithAuth(`/academic/student/update/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -442,6 +440,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {
@@ -530,6 +529,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {

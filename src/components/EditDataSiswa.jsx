@@ -45,8 +45,7 @@ export default function EditDataSiswa({ classCodes, updateStudent }) {
 
     setIsSubmitting(true);
     try {
-      const result = await updateStudent({ id: String(id), class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn })
-      console.log('Response dari API:', result);
+      await updateStudent({ id: parseInt(id), class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn })
       resetInputs();
     } catch (error) {
       console.error('Error saat update:', error.response?.data || error.message);

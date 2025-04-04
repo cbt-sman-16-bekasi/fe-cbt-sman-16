@@ -21,12 +21,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncCreateStudent } from '../states/students/action';
 import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
-import { asyncGetClassCode, asyncGetUserRoles } from '../states/common/action';
+import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import { asyncCreateExam } from '../states/exams/action';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
   const classCodes = useSelector((state) => state.common.classCodes)
+  const subjectCodes = useSelector((state) => state.common.subjects)
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -40,6 +41,7 @@ export default function LayoutTambah({ desc }) {
   useEffect(() => {
     dispatch(asyncGetUserRoles());
     dispatch(asyncGetClassCode());
+    dispatch(asyncGetSubjects());
   }, [dispatch]);
 
   const handleShowAlert = (status, message) => {
@@ -49,7 +51,7 @@ export default function LayoutTambah({ desc }) {
 
     setTimeout(() => {
       setShowAlert(false);
-    }, 3000);
+    }, 6000);
   };
 
   const onAddStudent = async ({ class_id, gender, name, nisn }) => {
@@ -117,15 +119,15 @@ export default function LayoutTambah({ desc }) {
   const renderContent = () => {
     switch (`/${currentPath}`) {
       case "/akses-system/tambah":
-        return <TambahAkses roles={roles} addAccess={onAddAccess} />;
+        return <TambahAkses alert={handleShowAlert} roles={roles} addAccess={onAddAccess} />;
       case "/kelas/tambah":
-        return <TambahKelas classCodes={classCodes} createClass={onCreateClass} />;
+        return <TambahKelas alert={handleShowAlert} classCodes={classCodes} createClass={onCreateClass} />;
       case "/mata-pelajaran/tambah":
-        return <TambahMapel addSubject={onAddSubjects} />;
+        return <TambahMapel alert={handleShowAlert} classCodes={classCodes} subjectCodes={subjectCodes} addSubject={onAddSubjects} />;
       case "/kode-jenis-ujian/tambah":
-        return <TambahKodeUjian />;
+        return <TambahKodeUjian alert={handleShowAlert} />;
       case "/data-siswa/tambah":
-        return <TambahDataSiswa addStudent={onAddStudent} />;
+        return <TambahDataSiswa alert={handleShowAlert} addStudent={onAddStudent} />;
       case "/ujian/tambah":
         return <TambahUjian createExams={onCreateExams} />;
       case "/sesi-ujian/tambah":

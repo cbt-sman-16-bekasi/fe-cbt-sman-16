@@ -58,20 +58,11 @@ export default function LayoutEditData({ desc }) {
 
   const onUpdateAccess = async ({ id, name, nuptk, role, username }) => {
     try {
-      const result = await dispatch(asyncUpdateTeacher({
-        id, name, nuptk, role, username
-      }));
-
-      if (result.error) {
-        throw new Error(result.error.message || 'Gagal mengupdate');
-      }
-
+      await dispatch(asyncUpdateTeacher({ id, name, nuptk, role, username }));
       handleShowAlert('success', 'Update berhasil!');
-      return result.payload;
     } catch (error) {
       console.error('Update error:', error);
       handleShowAlert('error', error.message || 'Gagal mengupdate');
-      throw error;
     }
   };
 
@@ -85,7 +76,9 @@ export default function LayoutEditData({ desc }) {
     }
   };
 
+  // update data student udah bisa yang belum bisa ubah data kelasnya entah kenapa return nya null
   const onUpdateStudent = async ({ id, class_id, gender, name, nisn }) => {
+    console.log({ id, class_id, gender, name, nisn })
     try {
       await dispatch(asyncUpdateStudent({ id, class_id, gender, name, nisn }));
       handleShowAlert('success', 'Update berhasil ditambahkan!');

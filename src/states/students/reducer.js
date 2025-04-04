@@ -38,7 +38,7 @@ function studentsReducer(state = initialState, action) {
       return {
         ...state,
         students: state.students.map((student) =>
-          student.id === action.payload.updatedStudent.id
+          student.ID === action.payload.updatedStudent.id
             ? action.payload.updatedStudent
             : student
         ),

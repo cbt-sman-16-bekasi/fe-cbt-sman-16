@@ -70,13 +70,10 @@ function asyncCreateTeacher(teacherData) {
     dispatch(showLoading());
     try {
       const newTeacher = await api.createTeacher(teacherData);
+      console.log(newTeacher);
       dispatch(createTeacherActionCreator(newTeacher));
-      return { success: true };
     } catch (error) {
-      const errorMessage =
-        error.message || 'Terjadi kesalahan saat membuat guru';
-      dispatch(setErrorActionCreator(errorMessage));
-      return { success: false, error: errorMessage };
+      dispatch(setErrorActionCreator(error.message));
     } finally {
       dispatch(hideLoading());
     }
@@ -102,25 +99,11 @@ function asyncUpdateTeacher(teacherData) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const response = await api.updateTeacher(teacherData);
-      const { status, message, data } = response;
-
-      if (status !== 'success') {
-        throw new Error(message);
-      }
-
-      dispatch({
-        type: 'UPDATE_TEACHER',
-        payload: data,
-      });
-
-      return { payload: data }; // Return format yang konsisten
+      const updatedTeacher = await api.updateTeacher(teacherData);
+      console.log(updatedTeacher);
+      dispatch(updateTeacherActionCreator(updatedTeacher));
     } catch (error) {
-      dispatch({
-        type: 'SET_ERROR',
-        payload: { error: error.message },
-      });
-      return { error }; // Return error object
+      dispatch(setErrorActionCreator(error.message));
     } finally {
       dispatch(hideLoading());
     }
