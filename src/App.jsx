@@ -57,10 +57,12 @@ function App(props) {
     teacher: <TeacherPage role={userRole} />,
   };
 
+  // populate data
   useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
+  // navigate
   useEffect(() => {
     if (isPreload) return;
 
