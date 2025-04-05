@@ -1,32 +1,28 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveSubjects } from '../states/subjects/action';
 
 export default function TambahMapel({ alert, classCodes, subjectCodes, addSubject }) {
   const subjects = useSelector((state) => state.subjects.subjects)
 
-  console.log(subjectCodes)
-
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncReceiveSubjects())
+  }, [dispatch])
 
   function resetInputs() {
     setNamaMapel('')
     setKodeKelas('')
   }
-
-  // const handleSubmit = () => {
-  //   if (!namaMapel || !kodeKelas) {
-  //     alert("Semua Input Wajib Diisi!")
-  //     return
-  //   }
-  //   addSubject({ class_code: kodeKelas, subject_code: namaMapel })
-  // }
 
   const handleSubmit = async () => {
     if (!namaMapel || !kodeKelas) {
@@ -34,21 +30,21 @@ export default function TambahMapel({ alert, classCodes, subjectCodes, addSubjec
       return;
     }
 
-    if (!subjects || !subjects.records) {
+    if (!subjects) {
       alert('error', "Data mapel belum dimuat, coba lagi.");
       return;
     }
 
-    const isDuplicate = subjects.records.some(
-      (mapel) =>
-        mapel.classCode.toString() === kodeKelas.toString() &&
-        mapel.subjectCode.trim().toLowerCase() === namaMapel.trim().toLowerCase()
-    );
+    // const isDuplicate = subjects.records.some(
+    //   (mapel) =>
+    //     mapel.classCode.toString() === kodeKelas.toString() &&
+    //     mapel.subjectCode.trim().toLowerCase() === namaMapel.trim().toLowerCase()
+    // );
 
-    if (isDuplicate) {
-      alert('error', "Nama mapel ini sudah ada dalam kode kelas yang sama! Gunakan nama lain.");
-      return;
-    }
+    // if (isDuplicate) {
+    //   alert('error', "Nama mapel ini sudah ada dalam kode kelas yang sama! Gunakan nama lain.");
+    //   return;
+    // }
 
     setIsSubmitting(true);
     try {
@@ -78,11 +74,11 @@ export default function TambahMapel({ alert, classCodes, subjectCodes, addSubjec
             onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
-            {subjectCodes.map((sub) => (
-              <MenuItem key={sub.ID} value={sub.code} >
+            {Array.isArray(subjectCodes) ? subjectCodes.map((sub) => (
+              <MenuItem key={sub.ID} value={sub.code}>
                 {sub.subject}
               </MenuItem>
-            ))}
+            )) : <MenuItem disabled>Loading...</MenuItem>}
           </TextField>
         </Grid>
 

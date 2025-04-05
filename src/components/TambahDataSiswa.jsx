@@ -1,15 +1,25 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveStudents } from '../states/students/action';
 
-export default function TambahDataSiswa({ addStudent }) {
+export default function TambahDataSiswa({ classes, addStudent }) {
+  const students = useSelector((state) => state.students.students);
+
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
   const [jenisKelamin, setJenisKelamin] = useState('')
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncReceiveStudents())
+  }, [dispatch])
 
   function resetInputs() {
     setNisn('');
@@ -24,9 +34,28 @@ export default function TambahDataSiswa({ addStudent }) {
       return;
     }
 
+    let duplicateNisn = false;
+
+    if (Array.isArray(students.records)) {
+      students.records.forEach((student) => {
+        if (student.nsin === nisn) {
+          duplicateNisn = true;
+        }
+      });
+    }
+
+    if (duplicateNisn) {
+      let message = "Terdeteksi duplikasi:\n";
+      if (duplicateNisn) message += "- Nisn sudah digunakan.\n";
+      message += "Silakan gunakan data yang berbeda.";
+
+      alert('error', message);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      await addStudent({ class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn });
+      await addStudent({ class_id: parseInt(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn });
       resetInputs()
     } catch (err) {
       console.error(err)
@@ -97,9 +126,13 @@ export default function TambahDataSiswa({ addStudent }) {
             onChange={(e) => setNamaKelas(e.target.value)}
             variant="outlined"
           >
-            <MenuItem value='10'>10</MenuItem>
-            <MenuItem value='11'>11</MenuItem>
-            <MenuItem value='12'>12</MenuItem>
+            {
+              classes.map((cls) => (
+                <MenuItem key={cls.code} value={cls.code}>
+                  {cls.name}
+                </MenuItem>
+              ))
+            }
           </TextField>
         </Grid>
       </Grid>
@@ -167,5 +200,6 @@ export default function TambahDataSiswa({ addStudent }) {
 }
 
 TambahDataSiswa.propTypes = {
+  classes: PropTypes.object.isRequired,
   addStudent: PropTypes.func.isRequired,
 }

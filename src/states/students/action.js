@@ -19,6 +19,7 @@ function receiveStudentsActionCreator(students) {
 }
 
 function createStudentActionCreator(newStudent) {
+  console.log(newStudent);
   return {
     type: ActionType.CREATE_STUDENT,
     payload: { newStudent },

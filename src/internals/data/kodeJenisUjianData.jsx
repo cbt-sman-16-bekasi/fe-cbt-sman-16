@@ -2,7 +2,7 @@ import { Chip } from "@mui/material";
 
 function getChipColor(status) {
   const colors = {
-    "Super Admin": "primary",
+    "ADMIN": "primary",
     "Guru": "success",
     "UH": "success",
     "UTS": "secondary",
@@ -39,33 +39,13 @@ export const columns = [
   },
 ];
 
-export const rows = [
-  {
-    id: 1,
-    no: 1,
-    jenisUjian: "00002335459",
-    kodeUjian: 'UH',
-    hakAkses: "Super Admin",
-  },
-  {
-    id: 2,
-    no: 2,
-    jenisUjian: "00012345678",
-    kodeUjian: 'UAS',
-    hakAkses: "Super Admin",
-  },
-  {
-    id: 3,
-    no: 3,
-    jenisUjian: "00087654321",
-    kodeUjian: 'UTS',
-    hakAkses: "Super Admin",
-  },
-  {
-    id: 4,
-    no: 4,
-    jenisUjian: "00087654321",
-    kodeUjian: 'TO',
-    hakAkses: "Guru",
-  },
-];
+export const formatRows = (typeExam = []) =>
+  Array.isArray(typeExam)
+    ? typeExam.map((type, index) => ({
+      id: type.ID,
+      no: index + 1,
+      jenisUjian: type.name,
+      kodeUjian: type.code,
+      hakAkses: type.detail_role.code,
+    }))
+    : [];

@@ -15,6 +15,7 @@ import { asyncReceiveSubjects } from '../states/subjects/action';
 export default function MataPelajaran({ role }) {
   const subjects = useSelector((state) => state.subjects.subjects);
   const dispatch = useDispatch();
+  console.log(subjects)
 
   const rows = formatRows(subjects.records);
 

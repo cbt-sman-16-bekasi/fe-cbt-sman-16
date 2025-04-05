@@ -78,7 +78,6 @@ function asyncGetSubjects() {
     try {
       const subjects = await api.getSubjects();
       dispatch(receiveSubjectsActionCreator(subjects));
-      console.log(subjects);
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {

@@ -1,10 +1,11 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, IconButton, InputAdornment, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveTeachers } from '../states/teachers/action';
 
 export default function TambahAkses({ alert, roles, addAccess }) {
   const teachers = useSelector((state) => state.teachers.teachers)
@@ -15,8 +16,13 @@ export default function TambahAkses({ alert, roles, addAccess }) {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
   const [akses, setAkses] = useState('')
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(asyncReceiveTeachers())
+  }, [dispatch])
 
   function resetInputs() {
     setNuptk('');
@@ -72,7 +78,6 @@ export default function TambahAkses({ alert, roles, addAccess }) {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <>

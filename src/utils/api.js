@@ -296,6 +296,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {
@@ -380,11 +381,19 @@ const api = (() => {
       {},
       dispatch
     );
+
     const responseJson = await response.json();
-    return responseJson.data;
+
+    const { status, message, data } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
   }
 
   async function createStudent({ class_id, gender, name, nisn }) {
+    console.log({ class_id, gender, name, nisn });
     try {
       const response = await _fetchWithAuth('/academic/student/create', {
         method: 'POST',
@@ -392,13 +401,14 @@ const api = (() => {
         body: JSON.stringify({ class_id, gender, name, nisn }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Gagal membuat siswa');
+      const responseJson = await response.json();
+
+      const { status, message, data } = responseJson;
+      if (status !== 'success') {
+        throw new Error(message);
       }
 
-      const responseJson = await response.json();
-      return responseJson.data;
+      return data;
     } catch (error) {
       console.error('Create student error:', error);
       throw error;
@@ -539,7 +549,7 @@ const api = (() => {
     return data;
   }
 
-  // exams
+  // type-exams
   async function getTypeExams(
     { page = 1, size = 10, searchKey, searchValue, filter } = {},
     dispatch
@@ -680,6 +690,7 @@ const api = (() => {
     }
   }
 
+  // exams
   async function getExamQuestions(examId) {
     const response = await _fetchWithAuth(`/academic/exam/${examId}/question`);
     return await response.json();

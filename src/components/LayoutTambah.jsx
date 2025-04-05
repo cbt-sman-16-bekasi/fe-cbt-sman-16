@@ -23,6 +23,7 @@ import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
 import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import { asyncCreateExam } from '../states/exams/action';
+import { asyncCreateTypeExam } from '../states/typeExams/action';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
@@ -66,10 +67,8 @@ export default function LayoutTambah({ desc }) {
   };
 
   const onAddAccess = async ({ name, nuptk, role, username }) => {
-    console.log('Data yang akan dikirim:', { name, nuptk, role, username });
     try {
       const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
-      console.log('Result dari action:', result);
 
       if (result?.success) {
         handleShowAlert('success', 'Akses berhasil ditambahkan!');
@@ -116,6 +115,17 @@ export default function LayoutTambah({ desc }) {
     }
   };
 
+  const onAddTypeExams = async ({ code_type_exam, color, role, type_exam }) => {
+    try {
+      await dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }))
+      handleShowAlert('success', 'Tipe Ujian Berhasil dibuat!')
+    } catch (error) {
+      console.error('Error saat menambahkan data: ', error)
+      handleShowAlert('error', 'Gagal membuat tipe kode ujian.')
+    }
+
+  }
+
   const renderContent = () => {
     switch (`/${currentPath}`) {
       case "/akses-system/tambah":
@@ -125,9 +135,9 @@ export default function LayoutTambah({ desc }) {
       case "/mata-pelajaran/tambah":
         return <TambahMapel alert={handleShowAlert} classCodes={classCodes} subjectCodes={subjectCodes} addSubject={onAddSubjects} />;
       case "/kode-jenis-ujian/tambah":
-        return <TambahKodeUjian alert={handleShowAlert} />;
+        return <TambahKodeUjian alert={handleShowAlert} roles={roles} addTypeExams={onAddTypeExams} />;
       case "/data-siswa/tambah":
-        return <TambahDataSiswa alert={handleShowAlert} addStudent={onAddStudent} />;
+        return <TambahDataSiswa alert={handleShowAlert} classes={classCodes} addStudent={onAddStudent} />;
       case "/ujian/tambah":
         return <TambahUjian createExams={onCreateExams} />;
       case "/sesi-ujian/tambah":
@@ -174,7 +184,7 @@ export default function LayoutTambah({ desc }) {
               <Typography variant="h6" fontWeight="bold">
                 {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
               </Typography>
-              <Typography variant="body1" sx={{ mt: 1 }}>
+              <Typography variant="body1" sx={{ mt: 1, whiteSpace: 'pre-line' }}>
                 {alertMessage}
               </Typography>
             </Alert>

@@ -81,7 +81,6 @@ function asyncCreateSubject(subjectData) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      console.log(subjectData);
       const newSubject = await api.createClassSubject(subjectData);
       dispatch(createSubjectActionCreator(newSubject));
     } catch (error) {

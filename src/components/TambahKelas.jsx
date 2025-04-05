@@ -1,17 +1,23 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveClasses } from '../states/classes/action';
 
 export default function TambahKelas({ alert, classCodes, createClass }) {
   const classes = useSelector((state) => state.classes.classes)
 
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dispacth = useDispatch()
+
+  useEffect(() => {
+    dispacth(asyncReceiveClasses())
+  }, [dispacth])
 
   function resetInputs() {
     setClassCode('');
