@@ -44,7 +44,7 @@ export default function DataSiswa({ role }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Link to='/data-siswa/import'>
+          <Link to={`/${role}/data-siswa/import`}>
             <Button fullWidth variant="contained" color='success'><UploadFileOutlinedIcon /> Import</Button>
           </Link>
         </Grid>

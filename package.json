@@ -25,13 +25,15 @@
     "@tailwindcss/vite": "^4.0.8",
     "ckeditor5": "^44.3.0",
     "dayjs": "^1.11.13",
+    "papaparse": "^5.5.2",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
     "react-redux-loading-bar": "^5.0.8",
     "react-router": "^7.2.0",
-    "styled-components": "^6.1.15"
+    "styled-components": "^6.1.15",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

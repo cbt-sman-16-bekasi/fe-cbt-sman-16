@@ -6,7 +6,31 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveStudents } from '../states/students/action';
 
-export default function TambahDataSiswa({ classes, addStudent }) {
+// let duplicateCode = false;
+//     let duplicateName = false;
+
+//     if (Array.isArray(typeExams.records)) {
+//       typeExams.records.forEach((typeExam) => {
+//         if (typeExam.code.toLowerCase() === kodeKelas.toLowerCase()) {
+//           duplicateCode = true;
+//         }
+//         if (typeExam.name.trim().toLowerCase() === namaUjian.trim().toLowerCase()) {
+//           duplicateName = true;
+//         }
+//       });
+//     }
+
+//     if (duplicateCode || duplicateName) {
+//       let message = "Terdeteksi duplikasi:\n";
+//       if (duplicateCode) message += "- Kode ujian sudah digunakan.\n";
+//       if (duplicateName) message += "- Nama jenis ujian sudah digunakan.\n";
+//       message += "Silakan gunakan kode atau nama yang berbeda.";
+
+//       alert('error', message);
+//       return;
+//     }
+
+export default function TambahDataSiswa({ alert, classes, addStudent }) {
   const students = useSelector((state) => state.students.students);
 
   const [nisn, setNisn] = useState('')
@@ -30,7 +54,7 @@ export default function TambahDataSiswa({ classes, addStudent }) {
 
   const handleSubmit = async () => {
     if (!nisn || !namaSiswa || !jenisKelamin || !namaKelas) {
-      alert('Semua Input Wajib di Isi!');
+      alert('error', 'Semua Input Wajib di Isi!');
       return;
     }
 
@@ -59,7 +83,7 @@ export default function TambahDataSiswa({ classes, addStudent }) {
       resetInputs()
     } catch (err) {
       console.error(err)
-      alert(err.message || 'Terjadi kesalahan');
+      alert('error', err.message || `Terjadi kesalahan`);
     } finally {
       setIsSubmitting(false);
     }
@@ -200,6 +224,7 @@ export default function TambahDataSiswa({ classes, addStudent }) {
 }
 
 TambahDataSiswa.propTypes = {
+  alert: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   addStudent: PropTypes.func.isRequired,
 }
