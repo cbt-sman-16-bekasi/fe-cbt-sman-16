@@ -5,7 +5,6 @@ import Kelas from '../components/Kelas';
 import MataPelajaran from '../components/MataPelajaran';
 import KodeJenisUjian from '../components/KodeJenisUjian';
 import DataSiswa from '../components/DataSiswa';
-import Ujian from '../components/Ujian';
 import SesiUjian from '../components/SesiUjian';
 import GenerateToken from '../components/GenerateToken';
 import LaporanNilai from '../components/LaporanNilai';
@@ -13,13 +12,15 @@ import LayoutTambah from '../components/LayoutTambah';
 import BankSoal from '../components/BankSoal';
 import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
-import LayoutSettings from "../components/LayoutSettings";
 import AddQuestions from "../components/AddQuestions";
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import LayoutEditData from "../components/LayoutEditData";
 import ExamList from "./exams/ExamList.jsx";
 import {ExamCreate} from "./exams/add/ExamCreate.jsx";
+import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
+import {ExamSessionCreatePage} from "./examsession/add/ExamSessionCreatePage.jsx";
+import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -49,13 +50,14 @@ function AdminPage({ role }) {
 
       <Route path="ujian" element={<ExamList />} />
       <Route path="ujian/tambah" element={<ExamCreate />} />
-      <Route path="ujian/settings/:id" element={<LayoutSettings desc="Setting Ujian" role={role} />} />
+      <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true}/>} />
       <Route path="ujian/settings/:id/tambah-soal" element={<AddQuestions />} />
 
-      <Route path="sesi-ujian" element={<SesiUjian role={role} />} />
-      <Route path="sesi-ujian/tambah" element={<LayoutTambah desc="Tambah Sesi Ujian" />} />
+      <Route path="sesi-ujian" element={<ExamSessionListPage />} />
+      <Route path="sesi-ujian/tambah" element={<ExamSessionCreatePage />} />
+      <Route path="sesi-ujian/:id/update" element={<ExamSessionCreatePage isUpdatePage={true} />} />
 
-      <Route path="generate-token" element={<GenerateToken />} />
+      <Route path="generate-token" element={<GenerateTokenPage />} />
 
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 

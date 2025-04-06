@@ -67,6 +67,18 @@ function App(props) {
   //   }
   // }, [authUser, accessToken, navigate]);
 
+  // useEffect(() => {
+  //   const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
+  //   setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+  // }, [navigate]);
+
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     localStorage.clear()
+  //     navigate("/login");
+  //   }
+  // }, [accessToken]);
+
   // populate data
   useEffect(() => {
     dispatch(asyncPreloadProcess());
@@ -97,6 +109,7 @@ function App(props) {
       }
     }
   }, [authUser, accessToken, userRole, navigate, location, isPreload]);
+  // }, [userRole]);
 
   // title tab
   useEffect(() => {

@@ -24,6 +24,6 @@ export default function BackWithTitle({title, icon}) {
 }
 
 BackWithTitle.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   icon: PropTypes.element
 }
