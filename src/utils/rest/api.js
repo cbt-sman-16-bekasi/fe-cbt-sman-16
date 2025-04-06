@@ -110,12 +110,34 @@ const useApi = (() => {
     })
   }
 
+  const uploadFile = async ({ url, method = 'POST', file, fieldName = 'file', extraFields = {} }) => {
+    const formData = new FormData();
+    formData.append(fieldName, file);
+
+    Object.entries(extraFields).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const response = await useApi.fetch(url, {
+      method,
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Upload failed: ${errorText}`);
+    }
+
+    return await response.json(); // atau response.text() sesuai API kamu
+  };
+
   return {
     fetch: _fetchWithAuth,
     fetchPagination: _fetchPagination,
     createOrModify: _create,
     download: _download,
-    delete: _delete
+    delete: _delete,
+    uploadFile: uploadFile
   }
 })()
 

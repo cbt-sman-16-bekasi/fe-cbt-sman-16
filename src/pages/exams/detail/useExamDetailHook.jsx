@@ -12,7 +12,7 @@ import {useModal} from "../../../components/common/ModalContext.jsx";
 export function useExamDetailHook() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const {showConfirm} = useModal();
+  const {showConfirm, showModal} = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -31,6 +31,26 @@ export function useExamDetailHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [isRefreshList, setRefreshList] = useState(false)
+  const [openUpload, setOpenUpload] = useState(false);
+
+  const handleUpload = async (file) => {
+    try {
+      showLoading()
+      const {message, status} = await useApi.uploadFile({
+        url: `/academic/exam/${id}/question/template/upload`,
+        file: file,
+        fieldName: 'file'
+      });
+
+      setRefreshList(true)
+      hideLoading();
+      showModal(message, status)
+    } catch (err) {
+      hideLoading();
+      showModal("Failed upload file", "error")
+    }
+  };
+
 
   useEffect(() => {
     async function fetchData() {
@@ -113,6 +133,10 @@ export function useExamDetailHook() {
     });
   };
 
+  const handleDownloadTemplate = async () => {
+    await useApi.download({url: `/academic/exam/${id}/question/template/download`})
+  };
+
   return {
     showLoading,
     id, hideLoading,
@@ -131,6 +155,10 @@ export function useExamDetailHook() {
     isRefreshList,
     columns,
     navigate,
-    userRole
+    userRole,
+    handleDownloadTemplate,
+    handleUpload,
+    setOpenUpload,
+    openUpload
   }
 }

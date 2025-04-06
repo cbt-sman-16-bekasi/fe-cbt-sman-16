@@ -1,6 +1,12 @@
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
-import {DocumentScannerSharp, DownloadOutlined, InfoSharp, UploadFileOutlined} from "@mui/icons-material";
+import {
+  AddToDriveRounded,
+  DocumentScannerSharp,
+  DownloadOutlined,
+  InfoSharp, UploadFile,
+  UploadFileOutlined
+} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
@@ -9,6 +15,7 @@ import Grid from "@mui/material/Grid2";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import {useExamDetailHook} from "./useExamDetailHook.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
+import UploadFileDialog from "../../../components/common/UploadFileDialog.jsx";
 
 const ExamDetailPage = () => {
 
@@ -24,7 +31,11 @@ const ExamDetailPage = () => {
     userRole,
     examCode,
     typeQuestion,
-    isRefreshList
+    isRefreshList,
+    handleDownloadTemplate,
+    handleUpload,
+    setOpenUpload,
+    openUpload
   } = useExamDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -48,13 +59,14 @@ const ExamDetailPage = () => {
 
       <TitleWithIcon icon={<DocumentScannerSharp sx={{color: 'white'}} />} text="Soal Ujian" iconBackground="red" />
       <BasicCard>
-        <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={2} mt={3}>
-          <Grid size={{ lg: 1.5 }}>
+        <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
+          <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
             <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/create?examCode=${examCode}&typeQuestion=${typeQuestion}`)} startIcon={<AddBoxOutlinedIcon/>}>Tambah Soal</Button>
+            <Button fullWidth variant="contained" color='error' startIcon={<AddToDriveRounded />}>Bank Soal</Button>
           </Grid>
           <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined/>}>Import Soal</Button>
-            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined/>}>Download Sample</Button>
+            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined/>} onClick={() => setOpenUpload(true)}>Import Soal</Button>
+            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined/>} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>
         </Grid>
 
@@ -74,6 +86,15 @@ const ExamDetailPage = () => {
           </Grid>
         </Grid>
       </BasicCard>
+
+
+      <UploadFileDialog
+        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{color: 'white'}} />} iconBackground="red" />}
+        subTitle="Silahkan untuk mengimpor Soal. Pastikan data yang Anda masukkan sesuai dengan template yang telah disediakan!. Jika Anda belum memiliki template, harap unduh template yang tersedia"
+        open={openUpload}
+        onClose={() => setOpenUpload(false)}
+        onUpload={handleUpload}
+      />
     </Box>
   )
 
