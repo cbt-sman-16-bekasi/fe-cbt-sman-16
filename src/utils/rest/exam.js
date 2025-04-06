@@ -23,10 +23,26 @@ const useExamApi = (() => {
     })
   }
 
+  const getDetailQuestion = async ({ id } = {}) => {
+    return await useApi.fetch(`/academic/exam/question/detail/${id}`, {
+      method: 'GET'
+    })
+  }
+
+  const createQuestion = async ({body, id = null, isCreate = false}) => {
+    return await useApi.createOrModify({
+      url: isCreate ? '/academic/exam/question/create' : `/academic/exam/question/update/${id}`,
+      method: isCreate ? 'POST' : 'PUT',
+      body: body
+    })
+  }
+
   return {
     allExam: getAllExam,
     modifyExam: modifyExam,
-    detailExam: getDetail
+    detailExam: getDetail,
+    question: getDetailQuestion,
+    createQuestion: createQuestion
   }
 })()
 

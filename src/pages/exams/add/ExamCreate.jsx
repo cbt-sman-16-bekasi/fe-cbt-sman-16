@@ -73,7 +73,7 @@ export function ExamCreate({isUpdatePage = false}) {
           </Grid>
           <Grid container spacing={3} alignItems="center" columns={12}>
             <CustomInput label="Acak Soal" fullWidth={true} options={optionsTrueOrFalse} onChange={(c) => setRandomQuestion(c.target.value)}  value={randomQuestion}/>
-            <CustomInput label="Acak Jawaban" fullWidth={true} options={optionsTrueOrFalse} onChange={(c) => setRandomAnswer(c.target.value)}  value={randomAnswer}/>
+            {typeQuestion === 'PILIHAN_GANDA' && (<CustomInput label="Acak Jawaban" fullWidth={true} options={optionsTrueOrFalse} onChange={(c) => setRandomAnswer(c.target.value)}  value={randomAnswer}/>)}
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>

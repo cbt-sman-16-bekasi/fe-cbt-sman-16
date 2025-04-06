@@ -46,6 +46,7 @@ export function useExamCreateHook({ updatePage = false}) {
         setShowResult(detailExam.show_result)
         setDuration(detailExam.duration)
         setSubject(detailExam.subject_code.code)
+        setTypeQuestion(detailExam.type_question)
         setClassCode(detailExam.exam_member.map(a => a.class))
         setTypeExam(detailExam.detail_type_exam.code)
       }

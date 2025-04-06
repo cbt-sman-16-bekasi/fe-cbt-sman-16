@@ -27,7 +27,7 @@ export function UseExamSessionListHook() {
             <Typography variant="body1" fontWeight="bold">{detailExam.name}</Typography>
             <Typography fontSize={12}>Detail</Typography>
             <ul style={{ paddingLeft: "16px", fontSize: "12px"}}>
-              <li>Kelas: <strong>{detailExam.kelas ?? '-'}</strong></li>
+              <li>Kelas: <strong>{detailExam.exam_member.map(r => r.detail_class.className).join(', ') ?? '-'}</strong></li>
               <li>Pelajaran: <strong>{detailExam.subject_code.subject ?? '-'}</strong></li>
             </ul>
           </Box>
@@ -35,7 +35,7 @@ export function UseExamSessionListHook() {
       },
     },
     { field: "name", headerName: "NAMA SESI UJIAN", flex: 1, minWidth: 150 },
-    { field: "total_member", headerName: "JUMLAH SISWA", flex: 0.7, minWidth: 100 },
+    { field: "total_student", headerName: "JUMLAH SISWA", flex: 0.7, minWidth: 100 },
     { field: "start_date", headerName: "MULAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.start_date) },
     { field: "end_date", headerName: "SELESAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.end_date) },
     {
@@ -47,6 +47,7 @@ export function UseExamSessionListHook() {
         <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <IconButton
             size="small"
+            onClick={() => navigate(`/${userRole}/sesi-ujian/${row.ID}/detail?sessionId=${row.session_id}`)}
             sx={{
               bgcolor: "yellow",
               color: "black",

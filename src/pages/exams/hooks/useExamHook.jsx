@@ -68,7 +68,7 @@ export function UseExamHook() {
                 color: isDarkMode ? "white" : "black",
                 "&:hover": { bgcolor: "gold" },
               }}
-              onClick={() => handleSettings(row.id)}
+              onClick={() => handleSettings(row.id, row.code)}
             >
               <SettingsOutlinedIcon />
             </IconButton>
@@ -112,8 +112,8 @@ export function UseExamHook() {
     console.log("Delete kelas dengan ID:", id);
   };
 
-  const handleSettings = (id) => {
-    console.log("Delete kelas dengan ID:", id);
+  const handleSettings = (id, code) => {
+    navigate(`/${userRole}/ujian/${id}/detail?examCode=${code}`)
   };
 
   return {
