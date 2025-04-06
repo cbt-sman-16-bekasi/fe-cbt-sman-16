@@ -17,7 +17,7 @@ export default function DataSiswa({ role }) {
   const students = useSelector((state) => state.students.students);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  console.log(students.records)
   const rows = formatRows(students.records);
 
   useEffect(() => {
