@@ -82,7 +82,8 @@ export function useExamCreateHook({ updatePage = false}) {
       "random_question": randomQuestion,
       "show_result": showResult,
       "subject_code": subject,
-      "type_exam_id": typeExam
+      "type_exam_id": typeExam,
+      "type_question": typeQuestion,
     }
 
     showLoading();

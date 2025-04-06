@@ -33,7 +33,8 @@ export function ExamCreateQuestionPage({isUpdatePage = false}) {
       <BasicCard>
         <Grid container spacing={3} alignItems="center" columns={12}>
           <CustomInput label="Bobot Soal" placeholder="0" type="number" value={score} onChange={(c) => setScore(parseInt(c.target.value))}  fullWidth={true} />
-          <CustomInput label="Jawaban" fullWidth={true} options={optionAnswer} value={answer} onChange={(c) => setAnswer(c.target.value)}/>
+          {typeQuestion === 'PILIHAN_GANDA' && (
+            <CustomInput label="Jawaban" fullWidth={true} options={optionAnswer} value={answer} onChange={(c) => setAnswer(c.target.value)}/>) }
         </Grid>
         <Grid container spacing={3} alignItems="center" columns={12}>
           <Grid size={{ lg: 12 }}>
@@ -47,7 +48,7 @@ export function ExamCreateQuestionPage({isUpdatePage = false}) {
               <Typography variant="body1" fontWeight="bold" sx={{ mb: 1 }}>
                 Jawaban General
               </Typography>
-              <TiptapEditor label="Pertanyaan" value={optionA} onChange={(html) => setOptionA(html)} />
+              <TiptapEditor label="Pertanyaan" value={answer} onChange={(html) => setAnswer(html)} />
             </Grid>
           </>) : (<>
             <Grid size={{ lg: 12 }}>
