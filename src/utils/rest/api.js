@@ -103,11 +103,18 @@ const useApi = (() => {
     window.URL.revokeObjectURL(url);
   }
 
+  const _delete = async ({url}) => {
+    return await useApi.fetch(url, {
+      method: 'DELETE',
+    })
+  }
+
   return {
     fetch: _fetchWithAuth,
     fetchPagination: _fetchPagination,
     createOrModify: _create,
-    download: _download
+    download: _download,
+    delete: _delete
   }
 })()
 

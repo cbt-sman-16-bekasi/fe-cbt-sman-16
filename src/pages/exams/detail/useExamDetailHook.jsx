@@ -6,10 +6,13 @@ import {useSelector} from "react-redux";
 import {IconButton} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useApi from "../../../utils/rest/api.js";
+import {useModal} from "../../../components/common/ModalContext.jsx";
 
 export function useExamDetailHook() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
+  const {showConfirm} = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -27,6 +30,7 @@ export function useExamDetailHook() {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
+  const [isRefreshList, setRefreshList] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -41,13 +45,15 @@ export function useExamDetailHook() {
       setDuration(detailExam.duration)
       setSubject(detailExam.subject_code.subject)
       setTypeQuestion(detailExam.type_question)
+      setTotalQuestion(detailExam.total_score)
+      setTotalScore(detailExam.total_question)
       setClassCode(detailExam.exam_member.map(a => a.detail_class.className).join(", "))
       setTypeExam(detailExam.detail_type_exam.code)
       hideLoading()
     }
 
     fetchData()
-  }, []);
+  }, [isRefreshList]);
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "question", headerName: "SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.question }} />) },
@@ -81,7 +87,7 @@ export function useExamDetailHook() {
                 color: "white",
                 "&:hover": { bgcolor: "darkred" },
               }}
-              onClick={() => handleDelete(row.id)}
+              onClick={() => handleDelete(row.ID)}
             >
               <DeleteIcon />
             </IconButton>
@@ -96,7 +102,15 @@ export function useExamDetailHook() {
   };
 
   const handleDelete = (id) => {
-    console.log("Delete kelas dengan ID:", id);
+    showConfirm((<>
+    <strong>Apakah anda yakin ingin menghapus soal ini ?</strong>
+      <p>Soal akan terhapus di Ujian ini, tapi tidak di Bank Soal</p>
+    </>), async () => {
+      showLoading()
+      await useApi.delete({url: `/academic/exam/question/delete/${id}`})
+      setRefreshList(!isRefreshList)
+      hideLoading()
+    });
   };
 
   return {
@@ -114,6 +128,7 @@ export function useExamDetailHook() {
     duration, setDuration,
     totalQuestion, totalScore,
     examCode,
+    isRefreshList,
     columns,
     navigate,
     userRole

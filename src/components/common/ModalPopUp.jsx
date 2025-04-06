@@ -4,7 +4,7 @@ import {CheckCircleIcon, MessageCircleWarningIcon} from "lucide-react";
 import ErrorIcon from "@mui/icons-material/Error";
 
 export default function ModalPopUp() {
-  const { open, message, type, hideModal } = useModal();
+  const { open, message, type, hideModal, onConfirm } = useModal();
 
   const getIcon = () => {
     switch (type) {
@@ -14,9 +14,16 @@ export default function ModalPopUp() {
         return <ErrorIcon style={{ color: "red" }} />;
       case "warning":
         return <MessageCircleWarningIcon style={{ color: "orange" }} />;
+      case "confirm":
+        return <MessageCircleWarningIcon style={{ color: "#facc15", fontSize: 40 }} />;
       default:
         return <CheckCircleIcon style={{ color: "green", fontSize: 40 }} />;
     }
+  };
+
+  const handleConfirm = () => {
+    if (onConfirm) onConfirm();
+    hideModal();
   };
 
   return (
@@ -27,11 +34,12 @@ export default function ModalPopUp() {
       <DialogContent sx={{textAlign: 'center'}}>
         <p>{message}</p>
       </DialogContent>
-      {/*<DialogActions>*/}
-      {/*  <Button onClick={hideModal} color="primary">*/}
-      {/*    Close*/}
-      {/*  </Button>*/}
-      {/*</DialogActions>*/}
+      {type === "confirm" && (
+        <DialogActions sx={{ justifyContent: 'end', mb: 2 }}>
+          <Button onClick={hideModal} color="inherit">Batal</Button>
+          <Button onClick={handleConfirm} color="error" variant="contained">Ya, Hapus</Button>
+        </DialogActions>
+      )}
     </Dialog>
   );
 }

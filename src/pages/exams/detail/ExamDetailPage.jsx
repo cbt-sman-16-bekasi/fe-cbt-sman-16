@@ -24,6 +24,7 @@ const ExamDetailPage = () => {
     userRole,
     examCode,
     typeQuestion,
+    isRefreshList
   } = useExamDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -69,7 +70,7 @@ const ExamDetailPage = () => {
           }
         }}>
           <Grid size={{ xs: 12, lg: 12 }}>
-            <ApiTable url={`/academic/exam/${id}/question`} pageSize={10} columns={columns} isPagination={false} />
+            <ApiTable url={`/academic/exam/${id}/question`} pageSize={10} columns={columns} isPagination={false} isRefresh={isRefreshList} />
           </Grid>
         </Grid>
       </BasicCard>
