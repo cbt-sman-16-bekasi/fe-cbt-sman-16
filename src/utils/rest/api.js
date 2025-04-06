@@ -67,9 +67,10 @@ const useApi = (() => {
     }
 
     if (filter) {
-      Object.keys(filter).forEach((key) =>
-        params.append(`filter[${key}]`, filter[key])
-      );
+      let dataFilter = {}
+
+      Object.keys(filter).forEach((key) => dataFilter[`${key}`] = filter[key]);
+      params.append(`filter`, JSON.stringify(dataFilter))
     }
 
     return await _fetchWithAuth(

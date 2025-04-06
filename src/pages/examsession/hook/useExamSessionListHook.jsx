@@ -34,7 +34,7 @@ export function UseExamSessionListHook() {
             <Typography variant="body1" fontWeight="bold">{detailExam.name}</Typography>
             <Typography fontSize={12}>Detail</Typography>
             <ul style={{ paddingLeft: "16px", fontSize: "12px"}}>
-              <li>Kelas: <strong>{detailExam.exam_member.map(r => r.detail_class.className).join(', ') ?? '-'}</strong></li>
+              <li>Kelas: <strong>{detailExam.exam_member !== null ? detailExam.exam_member.map(r => r.detail_class.className).join(', ') : '-'} </strong></li>
               <li>Pelajaran: <strong>{detailExam.subject_code.subject ?? '-'}</strong></li>
             </ul>
           </Box>
