@@ -61,11 +61,14 @@ function App(props) {
   useEffect(() => {
     const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
     setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+  }, [navigate]);
 
-    if (!authUser || !accessToken) {
+  useEffect(() => {
+    if (!accessToken) {
+      localStorage.clear()
       navigate("/login");
     }
-  }, [authUser, accessToken, navigate]);
+  }, [accessToken]);
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());
@@ -80,7 +83,7 @@ function App(props) {
         navigate(`/${role}/dashboard`);
       }
     }
-  }, [userRole, navigate]);
+  }, [userRole]);
 
   useEffect(() => {
     const currentPath = location.pathname.split('/').slice(2).join('/') || "/";

@@ -12,7 +12,9 @@ export default function ApiTable({
                                    columns,
                                    searchKey,
                                    searchValue,
-                                   pageSize = 10
+                                   pageSize = 10,
+                                   isPagination = true,
+                                   isRefresh = false
                                  }) {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
@@ -26,15 +28,22 @@ export default function ApiTable({
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data } = await useApi.fetchPagination(url, {
-        page,
-        rowsPerPage,
-        searchKey,
-        searchValue
-      });
-      const { records, totalRecord } = data;
-      setData(records);
-      setTotalRows(totalRecord);
+      if (isPagination) {
+        const { data } = await useApi.fetchPagination(url, {
+          page,
+          size: rowsPerPage,
+          searchKey,
+          searchValue
+        });
+        const { records, totalRecord } = data;
+        setData(records);
+        setTotalRows(totalRecord);
+      }
+
+      if (!isPagination) {
+        const { data } = await useApi.fetch(url)
+        setData(data)
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -44,7 +53,11 @@ export default function ApiTable({
 
   useEffect(() => {
     fetchData();
-  }, [page, rowsPerPage, debouncedSearch]);
+  }, [page, rowsPerPage, debouncedSearch, isRefresh]);
+
+  const numberSort = (index) => {
+    return (index + 1) + (page * rowsPerPage);
+  }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
@@ -71,7 +84,7 @@ export default function ApiTable({
                 <TableRow key={row.id || index}>
                   {columns.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
-                      {(index * page) + 1}
+                      {numberSort(index)}
                     </TableCell>) : (
                     <TableCell key={`${row.id || index}-${col.field}`}>
                       {col.renderCell ? col.renderCell(row) : row[col.field]}
@@ -85,7 +98,7 @@ export default function ApiTable({
       </TableContainer>
 
       {/* Pagination */}
-      <TablePagination
+      {isPagination && (<TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={totalRows}
@@ -96,7 +109,7 @@ export default function ApiTable({
           setRowsPerPage(parseInt(e.target.value, 10));
           setPage(0);
         }}
-      />
+      />)}
     </Paper>
   );
 }
@@ -106,7 +119,9 @@ ApiTable.propTypes = {
   url: PropTypes.string.isRequired,
   pageSize: PropTypes.number,
   searchKey: PropTypes.string,
-  searchValue: PropTypes.string
+  searchValue: PropTypes.string,
+  isPagination: PropTypes.bool,
+  isRefresh: PropTypes.any,
 };
 
 ApiTable.defaultProps = {

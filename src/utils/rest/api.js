@@ -39,6 +39,7 @@ const useApi = (() => {
   }
 
   const _fetchPagination = async (url, { page = 1, size = 10, searchKey, searchValue, filter } = {}) => {
+    page = page + 1
     const params = new URLSearchParams({ page, size });
 
     if (searchKey && searchValue) {

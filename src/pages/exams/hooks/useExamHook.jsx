@@ -5,11 +5,13 @@ import {Chip, IconButton} from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {useNavigate} from "react-router";
 
 export function UseExamHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   const getChipColor = (row) => {
     return (
@@ -38,7 +40,7 @@ export function UseExamHook() {
       flex: 1,
       minWidth: 120
     },
-    { field: "durasi", headerName: "DURASI (Menit)", flex: 1, minWidth: 120 },
+    { field: "duration", headerName: "DURASI (Menit)", flex: 1, minWidth: 120, renderCell: (row) => row.duration || '0' },
     {
       field: "jenisUjian",
       headerName: "JENIS UJIAN",
@@ -52,7 +54,7 @@ export function UseExamHook() {
       headerName: "AKSI",
       flex: 1,
       minWidth: 150,
-      renderCell: (params) => {
+      renderCell: (row) => {
         const theme = useTheme();
         const isDarkMode = theme.palette.mode === "dark";
 
@@ -66,7 +68,7 @@ export function UseExamHook() {
                 color: isDarkMode ? "white" : "black",
                 "&:hover": { bgcolor: "gold" },
               }}
-              onClick={() => handleSettings(params.row.id)}
+              onClick={() => handleSettings(row.id)}
             >
               <SettingsOutlinedIcon />
             </IconButton>
@@ -79,7 +81,7 @@ export function UseExamHook() {
                 color: "white",
                 "&:hover": { bgcolor: "darkviolet" },
               }}
-              onClick={() => handleEdit(params.row.id)}
+              onClick={() => handleEdit(row.id)}
             >
               <EditIcon />
             </IconButton>
@@ -92,7 +94,7 @@ export function UseExamHook() {
                 color: "white",
                 "&:hover": { bgcolor: "darkred" },
               }}
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(row.id)}
             >
               <DeleteIcon />
             </IconButton>
@@ -103,7 +105,7 @@ export function UseExamHook() {
   ];
 
   const handleEdit = (id) => {
-    console.log("Edit kelas dengan ID:", id);
+    navigate(`/${userRole}/ujian/${id}/update`)
   };
 
   const handleDelete = (id) => {
