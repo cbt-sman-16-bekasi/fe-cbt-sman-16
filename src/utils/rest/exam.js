@@ -37,12 +37,45 @@ const useExamApi = (() => {
     })
   }
 
+  // Bank question
+  const getDetailMasterBank = async ({ id } = {}) => {
+    return await useApi.fetch(`/academic/bank/detail/${id}`, {
+      method: 'GET'
+    })
+  }
+
+  const createMasterBank = async ({body, id = null, isCreate = false}) => {
+    return await useApi.createOrModify({
+      url: isCreate ? '/academic/bank/create' : `/academic/bank/update/${id}`,
+      method: isCreate ? 'POST' : 'PUT',
+      body: body
+    })
+  }
+
+  const createBankQuestion = async ({body, id = null, isCreate = false}) => {
+    return await useApi.createOrModify({
+      url: isCreate ? '/academic/bank/question/create' : `/academic/bank/question/update/${id}`,
+      method: isCreate ? 'POST' : 'PUT',
+      body: body
+    })
+  }
+
+  const getDetailBankQuestion = async ({ id } = {}) => {
+    return await useApi.fetch(`/academic/bank/question/detail/${id}`, {
+      method: 'GET'
+    })
+  }
+
   return {
     allExam: getAllExam,
     modifyExam: modifyExam,
     detailExam: getDetail,
     question: getDetailQuestion,
-    createQuestion: createQuestion
+    createQuestion: createQuestion,
+    detailMasterBank: getDetailMasterBank,
+    createMasterBank: createMasterBank,
+    createBankQuestion: createBankQuestion,
+    detailBankQuestion: getDetailBankQuestion
   }
 })()
 

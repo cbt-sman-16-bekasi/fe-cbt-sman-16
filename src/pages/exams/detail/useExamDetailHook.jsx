@@ -134,7 +134,7 @@ export function useExamDetailHook() {
   };
 
   const handleDownloadTemplate = async () => {
-    await useApi.download({url: `/academic/exam/${id}/question/template/download`})
+    await useApi.download({url: `/academic/exam/${id}/question/template/download?typeQuestion=${typeQuestion}`})
   };
 
   return {

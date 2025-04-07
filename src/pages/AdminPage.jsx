@@ -24,6 +24,10 @@ import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import ExamDetailPage from "./exams/detail/ExamDetailPage.jsx";
 import {ExamCreateQuestionPage} from "./exams/add/ExamCreateQuestionPage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
+import BankQuestionListPage from "./bank/BankQuestionListPage.jsx";
+import BankQuestionCreatePage from "./bank/add/BankQuestionCreatePage.jsx";
+import DetailBankQuestionPage from "./bank/detail/DetailBankQuestionPage.jsx";
+import {BankCreateQuestionPage} from "./bank/add/BankCreateQuestionPage.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -47,8 +51,12 @@ function AdminPage({ role }) {
       <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
       <Route path="data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
 
-      <Route path="bank-soal" element={<BankSoal role={role} />} />
-      <Route path="bank-soal/tambah" element={<LayoutTambah desc="Bank Soal" />} />
+      <Route path="bank-soal" element={<BankQuestionListPage />} />
+      <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
+      <Route path="bank-soal/:id/update" element={<BankQuestionCreatePage isUpdatePage={true} />} />
+      <Route path="bank-soal/:id/detail" element={<DetailBankQuestionPage />} />
+      <Route path="bank-soal/:bankMasterCode/detail/question/create" element={<BankCreateQuestionPage />} />
+      <Route path="bank-soal/:bankMasterCode/detail/question/:id/edit" element={<BankCreateQuestionPage isUpdatePage={true} />} />
 
       <Route path="ujian" element={<ExamList />} />
       <Route path="ujian/tambah" element={<ExamCreate />} />

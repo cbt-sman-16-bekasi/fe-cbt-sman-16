@@ -15,6 +15,12 @@ const useMasterController = (() => {
     })
   }
 
+  const getAllClassCode = async () => {
+    return await useApi.fetch(`/academic/class-code`, {
+      method: 'GET'
+    })
+  }
+
   const getAllClassSubject = async ({ page = 0, size = 10, searchKey, searchValue, filter } = {}) => {
     return await useApi.fetchPagination(`/academic/class/subject/all`, {
       page,
@@ -25,7 +31,8 @@ const useMasterController = (() => {
   return {
     allTypeExam: getAllTypeExam,
     allSubject: getAllSubject,
-    allClassSubject: getAllClassSubject
+    allClassSubject: getAllClassSubject,
+    allClassCode: getAllClassCode
   }
 })()
 
