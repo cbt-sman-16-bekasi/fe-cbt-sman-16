@@ -138,7 +138,6 @@ function asyncGetSubjectDetail(id) {
   };
 }
 
-// 🔹 Export semua actions & async functions
 export {
   ActionType,
   receiveSubjectsActionCreator,
