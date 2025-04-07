@@ -1,5 +1,5 @@
 # Gunakan image Node.js sebagai base
-FROM node:20 AS build
+FROM node:22 AS build
 
 # Set working directory di dalam container
 WORKDIR /app
