@@ -5,19 +5,28 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveSubjects } from '../states/subjects/action';
+import { useParams } from 'react-router';
 
-export default function TambahMapel({ alert, classCodes, subjectCodes, addSubject }) {
+export default function EditMapel({ alert, classCodes, subjectCodes, addSubject }) {
+  const { id } = useParams()
   const subjects = useSelector((state) => state.subjects.subjects)
+  console.log(subjects)
 
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(asyncReceiveSubjects())
-  }, [dispatch])
+
+    if (id) {
+      const selectedSubject = subjects.find((std) => std.ID === parseInt(id));
+
+      if (selectedSubject) {
+        setNamaMapel(selectedSubject.classCode)
+        setKodeKelas(selectedSubject.subjectCode)
+      }
+    }
+  }, [id, subjects])
 
   function resetInputs() {
     setNamaMapel('')
@@ -74,7 +83,7 @@ export default function TambahMapel({ alert, classCodes, subjectCodes, addSubjec
             onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
-            {subjectCodes.map((sub) => (
+            {Array.isArray(subjectCodes.records) && subjectCodes.records.map((sub) => (
               <MenuItem key={sub.ID} value={sub.code}>
                 {sub.subject}
               </MenuItem>
@@ -118,7 +127,7 @@ export default function TambahMapel({ alert, classCodes, subjectCodes, addSubjec
   );
 }
 
-TambahMapel.propTypes = {
+EditMapel.propTypes = {
   alert: PropTypes.func.isRequired,
   classCodes: PropTypes.object.isRequired,
   subjectCodes: PropTypes.object.isRequired,

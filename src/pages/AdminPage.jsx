@@ -17,9 +17,9 @@ import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import LayoutEditData from "../components/LayoutEditData";
 import ExamList from "./exams/ExamList.jsx";
-import {ExamCreate} from "./exams/add/ExamCreate.jsx";
+import { ExamCreate } from "./exams/add/ExamCreate.jsx";
 import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
-import {ExamSessionCreatePage} from "./examsession/add/ExamSessionCreatePage.jsx";
+import { ExamSessionCreatePage } from "./examsession/add/ExamSessionCreatePage.jsx";
 import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import ExamDetailPage from "./exams/detail/ExamDetailPage.jsx";
 import {ExamCreateQuestionPage} from "./exams/add/ExamCreateQuestionPage.jsx";
@@ -39,6 +39,7 @@ function AdminPage({ role }) {
 
       <Route path="mata-pelajaran" element={<MataPelajaran role={role} />} />
       <Route path="mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
+      <Route path="mata-pelajaran/edit/:id" element={<LayoutEditData desc="Edit Mata Pelajaran" />} />
 
       <Route path="kode-jenis-ujian" element={<KodeJenisUjian role={role} />} />
       <Route path="kode-jenis-ujian/tambah" element={<LayoutTambah desc="Kode Jenis Ujian" />} />
@@ -57,7 +58,6 @@ function AdminPage({ role }) {
       <Route path="ujian/:id/detail" element={<ExamDetailPage />} />
       <Route path="ujian/:id/detail/question/create" element={<ExamCreateQuestionPage />} />
       <Route path="ujian/:id/detail/question/:questionId/edit" element={<ExamCreateQuestionPage isUpdatePage={true} />} />
-
       <Route path="sesi-ujian" element={<ExamSessionListPage />} />
       <Route path="sesi-ujian/tambah" element={<ExamSessionCreatePage />} />
       <Route path="sesi-ujian/:id/update" element={<ExamSessionCreatePage isUpdatePage={true} />} />

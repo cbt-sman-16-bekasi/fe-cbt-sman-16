@@ -10,13 +10,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncGetClassCode, asyncGetUserRoles } from '../states/common/action';
+import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import EditAkses from './EditAkses';
 import { asyncUpdateTeacher } from '../states/teachers/action';
 import EditKelas from './EditKelas';
 import { asyncUpdateClass } from '../states/classes/action';
 import EditDataSiswa from './EditDataSiswa';
 import { asyncUpdateStudent } from '../states/students/action';
+import EditMapel from './EditMapel';
 
 export default function LayoutEditData({ desc }) {
   const [alertSeverity, setAlertSeverity] = useState('error');
@@ -25,6 +26,7 @@ export default function LayoutEditData({ desc }) {
 
   const roles = useSelector((state) => state.common.userRoles);
   const classCodes = useSelector((state) => state.common.classCodes)
+  const subjectCodes = useSelector((state) => state.common.subjects)
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,6 +39,7 @@ export default function LayoutEditData({ desc }) {
   useEffect(() => {
     dispatch(asyncGetUserRoles());
     dispatch(asyncGetClassCode());
+    dispatch(asyncGetSubjects());
   }, [dispatch]);
 
   const handleBack = () => {
@@ -96,6 +99,8 @@ export default function LayoutEditData({ desc }) {
         return <EditKelas classCodes={classCodes} updateClass={onUpdateClass} />;
       case "data-siswa/edit":
         return <EditDataSiswa classCodes={classCodes} updateStudent={onUpdateStudent} />;
+      case "mata-pelajaran/edit":
+        return <EditMapel classCodes={classCodes} subjectCodes={subjectCodes} updateStudent={onUpdateStudent} />;
       default:
         return <Typography>Konten tidak tersedia</Typography>;
     }

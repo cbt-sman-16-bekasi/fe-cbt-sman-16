@@ -54,8 +54,8 @@ export default function MataPelajaran({ role }) {
             }}
           />
         </Grid>
-
       </Grid>
+
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
           <CustomizedDataGrid columns={columns({ handleDelete, navigate, role })} rows={rows} />

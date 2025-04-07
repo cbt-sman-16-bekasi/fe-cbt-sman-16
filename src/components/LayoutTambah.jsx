@@ -24,7 +24,6 @@ import { asyncCreateTeacher } from '../states/teachers/action';
 import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import { asyncCreateExam } from '../states/exams/action';
 import { asyncCreateTypeExam } from '../states/typeExams/action';
-import BackWithTitle from './common/BackWithTitle';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
