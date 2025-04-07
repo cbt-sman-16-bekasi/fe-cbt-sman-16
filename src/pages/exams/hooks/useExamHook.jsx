@@ -6,12 +6,18 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useNavigate} from "react-router";
+import {useModal} from "../../../components/common/ModalContext.jsx";
+import {useLoading} from "../../../components/common/LoadingProvider.jsx";
+import useApi from "../../../utils/rest/api.js";
 
 export function UseExamHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { showConfirm } = useModal();
+  const { showLoading, hideLoading } = useLoading();
+  const [isRefreshList, setRefreshList] = useState(false)
 
   const getChipColor = (row) => {
     return (
@@ -68,7 +74,7 @@ export function UseExamHook() {
                 color: isDarkMode ? "white" : "black",
                 "&:hover": { bgcolor: "gold" },
               }}
-              onClick={() => handleSettings(row.id)}
+              onClick={() => handleSettings(row.id, row.code)}
             >
               <SettingsOutlinedIcon />
             </IconButton>
@@ -108,18 +114,45 @@ export function UseExamHook() {
     navigate(`/${userRole}/ujian/${id}/update`)
   };
 
+  const messageDelete = () => {
+    return (
+      <div>
+        <p style={{ marginTop: 8, textAlign: 'left' }}>
+          Ujian ini memiliki keterkaitan dengan <strong>beberapa data penting</strong>, seperti:
+        </p>
+        <ul style={{ paddingLeft: 18, marginTop: 4, textAlign: 'left' }}>
+          <li>📌 Daftar <strong>Session Ujian</strong></li>
+          <li>📌 Data <strong>Laporan Sesi</strong></li>
+          <li>📌 Relasi dengan peserta ujian</li>
+        </ul>
+        <p style={{ marginTop: 12, color: '#b91c1c', textAlign: 'left' }}>
+          Menghapus ujian ini akan <strong>menghilangkan semua data yang terkait</strong> secara permanen dan tidak dapat dikembalikan.
+        </p>
+        <p style={{ marginTop: 8, textAlign: 'left' }}>
+          Apakah kamu yakin ingin melanjutkan proses <strong>hapus ujian</strong> ini?
+        </p>
+      </div>
+    )
+  }
+
   const handleDelete = (id) => {
-    console.log("Delete kelas dengan ID:", id);
+    showConfirm(messageDelete(), async () => {
+      showLoading()
+      await useApi.delete({url: `/academic/exam/delete/${id}`})
+      setRefreshList(!isRefreshList)
+      hideLoading()
+    });
   };
 
-  const handleSettings = (id) => {
-    console.log("Delete kelas dengan ID:", id);
+  const handleSettings = (id, code) => {
+    navigate(`/${userRole}/ujian/${id}/detail?examCode=${code}`)
   };
 
   return {
     search,
     setSearch,
     userRole,
+    isRefreshList,
     columns
   }
 

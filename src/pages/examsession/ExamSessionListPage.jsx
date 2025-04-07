@@ -14,7 +14,8 @@ const ExamSessionListPage = () => {
     setSearch,
     search,
     userRole,
-    columns
+    columns,
+    isRefreshList
   } = UseExamSessionListHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -58,7 +59,7 @@ const ExamSessionListPage = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/exam/session/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} />
+          <ApiTable url="/academic/exam/session/all" isRefresh={isRefreshList} pageSize={10} columns={columns} searchKey="name" searchValue={search} />
         </Grid>
       </Grid>
     </Box>

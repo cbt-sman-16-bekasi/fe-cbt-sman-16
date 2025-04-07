@@ -42,7 +42,7 @@ export default function ApiTable({
 
       if (!isPagination) {
         const { data } = await useApi.fetch(url)
-        setData(data)
+        setData(data ?? [])
       }
     } catch (error) {
       console.error("Error fetching data:", error);

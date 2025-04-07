@@ -14,7 +14,8 @@ const ExamList = () => {
     search,
     setSearch,
     userRole,
-    columns
+    columns,
+    isRefreshList
   } = UseExamHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -62,7 +63,7 @@ const ExamList = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/exam/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} />
+          <ApiTable url="/academic/exam/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

@@ -113,6 +113,12 @@ const TiptapEditor = ({ value = "", onChange, sx = {}, editable = true }) => {
     },
   });
 
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value);
+    }
+  }, [value, editor]);
+
   const handleImageUpload = () => {
     fileInputRef.current?.click();
   };
