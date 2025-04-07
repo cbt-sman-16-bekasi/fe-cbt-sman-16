@@ -10,22 +10,16 @@ import { useParams } from 'react-router';
 export default function EditMapel({ alert, classCodes, subjectCodes, addSubject }) {
   const { id } = useParams()
   const subjects = useSelector((state) => state.subjects.subjects)
-  console.log(subjectCodes)
+  console.log(subjects)
 
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(asyncReceiveSubjects())
-  }, [dispatch])
-
   useEffect(() => {
 
     if (id) {
-      const selectedSubject = subjects.records.find((std) => std.ID === parseInt(id));
+      const selectedSubject = subjects.find((std) => std.ID === parseInt(id));
 
       if (selectedSubject) {
         setNamaMapel(selectedSubject.classCode)
@@ -89,7 +83,7 @@ export default function EditMapel({ alert, classCodes, subjectCodes, addSubject 
             onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
-            {subjectCodes.map((sub) => (
+            {Array.isArray(subjectCodes.records) && subjectCodes.records.map((sub) => (
               <MenuItem key={sub.ID} value={sub.code}>
                 {sub.subject}
               </MenuItem>

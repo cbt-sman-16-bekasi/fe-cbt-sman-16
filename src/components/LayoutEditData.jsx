@@ -26,8 +26,7 @@ export default function LayoutEditData({ desc }) {
 
   const roles = useSelector((state) => state.common.userRoles);
   const classCodes = useSelector((state) => state.common.classCodes)
-  const subjectCodes = useSelector((state) => state.common)
-  console.log(subjectCodes)
+  const subjectCodes = useSelector((state) => state.common.subjects)
 
   const dispatch = useDispatch();
   const location = useLocation();
