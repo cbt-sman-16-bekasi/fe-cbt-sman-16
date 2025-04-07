@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import { Button, Card, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
@@ -98,7 +97,6 @@ export default function LayoutImport({ desc }) {
         </CardContent>
       </Card>
 
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

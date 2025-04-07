@@ -53,12 +53,12 @@ function asyncUpdateSchool(schoolData) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncGetSchoolInfo(schoolData.schoolCode));
       dispatch(hideLoading());
     }
   };
 }
 
-// 🔹 Export semua actions & async functions
 export {
   ActionType,
   receiveSchoolInfoActionCreator,
