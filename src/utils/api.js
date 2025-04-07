@@ -282,7 +282,13 @@ const api = (() => {
       dispatch
     );
     const responseJson = await response.json();
-    return responseJson.data;
+    const { status, message, data } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
   }
 
   async function createClassSubject({ class_code, subject_code }) {
@@ -321,6 +327,7 @@ const api = (() => {
   }
 
   async function updateClassSubject({ id, class_code, subject_code }) {
+    console.log({ id, class_code, subject_code });
     const response = await _fetchWithAuth(
       `/academic/class/subject/update/${id}`,
       {
@@ -331,6 +338,7 @@ const api = (() => {
     );
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {

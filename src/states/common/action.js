@@ -4,7 +4,7 @@ import api from '../../utils/api';
 const ActionType = {
   RECEIVE_CLASS_CODES: 'RECEIVE_CLASS_CODES',
   RECEIVE_DASHBOARD_DATA: 'RECEIVE_DASHBOARD_DATA',
-  RECEIVE_SUBJECTS: 'RECEIVE_SUBJECTS',
+  RECEIVE_SUBJECT_CODES: 'RECEIVE_SUBJECT_CODES',
   RECEIVE_USER_ROLES: 'RECEIVE_USER_ROLES',
   SET_ERROR: 'SET_ERROR',
 };
@@ -23,10 +23,10 @@ function receiveDashboardDataActionCreator(dashboardData) {
   };
 }
 
-function receiveSubjectsActionCreator(subjects) {
+function receiveSubjectCodesActionCreator(subjectCodes) {
   return {
-    type: ActionType.RECEIVE_SUBJECTS,
-    payload: { subjects },
+    type: ActionType.RECEIVE_SUBJECT_CODES,
+    payload: { subjectCodes },
   };
 }
 
@@ -76,8 +76,8 @@ function asyncGetSubjects() {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const subjects = await api.getSubjects();
-      dispatch(receiveSubjectsActionCreator(subjects));
+      const subjectCodes = await api.getSubjects();
+      dispatch(receiveSubjectCodesActionCreator(subjectCodes));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
@@ -104,7 +104,7 @@ export {
   ActionType,
   receiveClassCodeActionCreator,
   receiveDashboardDataActionCreator,
-  receiveSubjectsActionCreator,
+  receiveSubjectCodesActionCreator,
   receiveUserRolesActionCreator,
   setErrorActionCreator,
   asyncGetClassCode,

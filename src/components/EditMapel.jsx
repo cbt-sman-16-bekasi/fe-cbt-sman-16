@@ -6,24 +6,33 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveSubjects } from '../states/subjects/action';
 import { useParams } from 'react-router';
+import { asyncGetSubjects } from '../states/common/action';
 
-export default function EditMapel({ alert, classCodes, subjectCodes, addSubject }) {
+export default function EditMapel({ alert, classCodes, updateSubject }) {
   const { id } = useParams()
   const subjects = useSelector((state) => state.subjects.subjects)
-  console.log(subjects)
 
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const subjectCodes = useSelector((state) => state.common.subjects)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(asyncGetSubjects());
+    dispatch(asyncReceiveSubjects());
+  }, [dispatch])
 
   useEffect(() => {
 
     if (id) {
-      const selectedSubject = subjects.find((std) => std.ID === parseInt(id));
+      const selectedSubject = subjects.records.find((std) => std.ID === parseInt(id));
+      console.log(selectedSubject)
 
       if (selectedSubject) {
-        setNamaMapel(selectedSubject.classCode)
-        setKodeKelas(selectedSubject.subjectCode)
+        setKodeKelas(selectedSubject.classCode)
+        setNamaMapel(selectedSubject.subjectCode)
       }
     }
   }, [id, subjects])
@@ -57,7 +66,7 @@ export default function EditMapel({ alert, classCodes, subjectCodes, addSubject 
 
     setIsSubmitting(true);
     try {
-      await addSubject({ class_code: kodeKelas, subject_code: namaMapel });
+      await updateSubject({ id: parseInt(id), class_code: kodeKelas, subject_code: namaMapel });
       resetInputs();
     } catch (error) {
       console.error("Error saat menambahkan kelas:", error);
@@ -83,7 +92,7 @@ export default function EditMapel({ alert, classCodes, subjectCodes, addSubject 
             onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
-            {Array.isArray(subjectCodes.records) && subjectCodes.records.map((sub) => (
+            {subjectCodes.map((sub) => (
               <MenuItem key={sub.ID} value={sub.code}>
                 {sub.subject}
               </MenuItem>
@@ -129,7 +138,7 @@ export default function EditMapel({ alert, classCodes, subjectCodes, addSubject 
 
 EditMapel.propTypes = {
   alert: PropTypes.func.isRequired,
-  classCodes: PropTypes.object.isRequired,
-  subjectCodes: PropTypes.object.isRequired,
-  addSubject: PropTypes.func.isRequired,
+  classCodes: PropTypes.array.isRequired,
+  subjectCodes: PropTypes.array.isRequired,
+  updateSubject: PropTypes.func.isRequired,
 }
