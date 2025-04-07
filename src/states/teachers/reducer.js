@@ -22,10 +22,7 @@ function teachersReducer(state = initialState, action) {
     case ActionType.CREATE_TEACHER:
       return {
         ...state,
-        teachers: {
-          ...state.teachers,
-          records: [...state.teachers.records, action.payload.newTeacher],
-        },
+        teachers: [...state.teachers, action.payload.newTeacher],
         error: null,
       };
 

@@ -75,7 +75,6 @@ function asyncCreateTeacher(teacherData) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
-      dispatch(asyncReceiveTeachers);
       dispatch(hideLoading());
     }
   };
@@ -101,6 +100,7 @@ function asyncUpdateTeacher(teacherData) {
     dispatch(showLoading());
     try {
       const updatedTeacher = await api.updateTeacher(teacherData);
+      console.log(updatedTeacher);
       dispatch(updateTeacherActionCreator(updatedTeacher));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));

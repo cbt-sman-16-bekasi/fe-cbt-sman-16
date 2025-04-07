@@ -1,15 +1,27 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { columns, rows } from "../internals/data/kodeJenisUjianData";
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncReceiveTypeExams } from '../states/typeExams/action';
 
+import { columns, formatRows } from "../internals/data/kodeJenisUjianData";
 export default function KodeJenisUjian({ role }) {
+  const typeExams = useSelector((state) => state.typeExams.typeExams)
+  const dispatch = useDispatch()
+
+  const rows = formatRows(typeExams.records)
+
+  useEffect(() => {
+    dispatch(asyncReceiveTypeExams())
+  }, [dispatch])
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
@@ -43,7 +55,10 @@ export default function KodeJenisUjian({ role }) {
           <CustomizedDataGrid columns={columns} rows={rows} />
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
+}
+
+KodeJenisUjian.propTypes = {
+  role: PropTypes.string.isRequired,
 }

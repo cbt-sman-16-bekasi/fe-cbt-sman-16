@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import { Button, Card, CardContent } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
@@ -22,11 +21,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncCreateStudent } from '../states/students/action';
 import { asyncCreateSubject } from '../states/subjects/action';
 import { asyncCreateTeacher } from '../states/teachers/action';
+import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import { asyncCreateExam } from '../states/exams/action';
-import { asyncGetUserRoles } from '../states/common/action';
+import { asyncCreateTypeExam } from '../states/typeExams/action';
+import BackWithTitle from './common/BackWithTitle';
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
+  const classCodes = useSelector((state) => state.common.classCodes)
+  const subjectCodes = useSelector((state) => state.common.subjects)
+
   const dispatch = useDispatch();
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
@@ -38,6 +42,8 @@ export default function LayoutTambah({ desc }) {
 
   useEffect(() => {
     dispatch(asyncGetUserRoles());
+    dispatch(asyncGetClassCode());
+    dispatch(asyncGetSubjects());
   }, [dispatch]);
 
   const handleShowAlert = (status, message) => {
@@ -47,36 +53,46 @@ export default function LayoutTambah({ desc }) {
 
     setTimeout(() => {
       setShowAlert(false);
-    }, 3000);
+    }, 6000);
+  };
+
+  const onAddStudent = async ({ class_id, gender, name, nisn }) => {
+    try {
+      const result = await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
+      return result
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan siswa.');
+    }
   };
 
   const onAddAccess = async ({ name, nuptk, role, username }) => {
     try {
-      await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
-      handleShowAlert('success', 'Akses berhasil ditambahkan!');
+      const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
+
+      if (result?.success) {
+        handleShowAlert('success', 'Akses berhasil ditambahkan!');
+        return result
+      } else {
+        handleShowAlert('error', result?.error || 'Gagal menambahkan akses.');
+        return result
+      }
     } catch (error) {
-      console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan akses.');
+      console.error('Full error:', error);
+      handleShowAlert('error', error.message || 'Terjadi kesalahan tidak terduga');
+
     }
   };
 
   const onCreateClass = async ({ class_code, class_name }) => {
     try {
-      await dispatch(asyncCreateClass({ class_code, class_name }));
+      const result = await dispatch(asyncCreateClass({ class_code, class_name }));
       handleShowAlert('success', 'Kelas berhasil ditambahkan!');
+      return result
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
       handleShowAlert('error', 'Gagal menambahkan kelas.');
-    }
-  };
-
-  const onAddStudent = async ({ class_id, gender, name, nisn }) => {
-    try {
-      await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
-      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
-    } catch (error) {
-      console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan siswa.');
     }
   };
 
@@ -100,18 +116,29 @@ export default function LayoutTambah({ desc }) {
     }
   };
 
+  const onAddTypeExams = async ({ code_type_exam, color, role, type_exam }) => {
+    try {
+      await dispatch(asyncCreateTypeExam({ code_type_exam, color, role, type_exam }))
+      handleShowAlert('success', 'Tipe Ujian Berhasil dibuat!')
+    } catch (error) {
+      console.error('Error saat menambahkan data: ', error)
+      handleShowAlert('error', 'Gagal membuat tipe kode ujian.')
+    }
+
+  }
+
   const renderContent = () => {
     switch (`/${currentPath}`) {
       case "/akses-system/tambah":
-        return <TambahAkses roles={roles} addAccess={onAddAccess} />;
+        return <TambahAkses alert={handleShowAlert} roles={roles} addAccess={onAddAccess} />;
       case "/kelas/tambah":
-        return <TambahKelas createClass={onCreateClass} />;
+        return <TambahKelas alert={handleShowAlert} classCodes={classCodes} createClass={onCreateClass} />;
       case "/mata-pelajaran/tambah":
-        return <TambahMapel addSubject={onAddSubjects} />;
+        return <TambahMapel alert={handleShowAlert} classCodes={classCodes} subjectCodes={subjectCodes} addSubject={onAddSubjects} />;
       case "/kode-jenis-ujian/tambah":
-        return <TambahKodeUjian />;
+        return <TambahKodeUjian alert={handleShowAlert} roles={roles} addTypeExams={onAddTypeExams} />;
       case "/data-siswa/tambah":
-        return <TambahDataSiswa addStudent={onAddStudent} />;
+        return <TambahDataSiswa alert={handleShowAlert} classes={classCodes} addStudent={onAddStudent} />;
       case "/ujian/tambah":
         return <TambahUjian createExams={onCreateExams} />;
       case "/sesi-ujian/tambah":
@@ -158,7 +185,7 @@ export default function LayoutTambah({ desc }) {
               <Typography variant="h6" fontWeight="bold">
                 {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
               </Typography>
-              <Typography variant="body1" sx={{ mt: 1 }}>
+              <Typography variant="body1" sx={{ mt: 1, whiteSpace: 'pre-line' }}>
                 {alertMessage}
               </Typography>
             </Alert>
@@ -171,8 +198,6 @@ export default function LayoutTambah({ desc }) {
           {renderContent()}
         </CardContent>
       </Card>
-
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }

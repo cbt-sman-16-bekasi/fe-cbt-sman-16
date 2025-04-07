@@ -7,7 +7,7 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
-import {useEffect, useState} from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -27,7 +27,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import { asyncPreloadProcess } from './states/isPreload/action.js';
 import { asyncUnsetAuthUser } from './states/authUser/action.js';
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -40,7 +40,7 @@ function App(props) {
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const accessToken = localStorage.getItem("accessToken");
-  const [title, setTitle] = useState('')
+  // const [title, setTitle] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,40 +58,72 @@ function App(props) {
     teacher: <TeacherPage role={userRole} />,
   };
 
-  useEffect(() => {
-    const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
-    setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
-  }, [navigate]);
+  // useEffect(() => {
+  //   const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
+  //   setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
 
-  useEffect(() => {
-    if (!accessToken) {
-      localStorage.clear()
-      navigate("/login");
-    }
-  }, [accessToken]);
+  //   if (!authUser || !accessToken) {
+  //     navigate("/login");
+  //   }
+  // }, [authUser, accessToken, navigate]);
 
+  // useEffect(() => {
+  //   const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
+  //   setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+  // }, [navigate]);
+
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     localStorage.clear()
+  //     navigate("/login");
+  //   }
+  // }, [accessToken]);
+
+  // populate data
   useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
 
+  // navigate
   useEffect(() => {
-    if (userRole) {
-      const role = userRole;
-      const path = window.location.pathname;
+    if (isPreload) return;
 
-      if (path === "/" || path === "/login" || path === "/register") {
-        navigate(`/${role}/dashboard`);
+    if (!authUser || !accessToken) {
+      if (location.pathname !== '/login' && location.pathname !== '/register') {
+        navigate("/login");
+      }
+      return;
+    }
+
+    if (userRole) {
+      const currentPath = location.pathname;
+      const rolePath = `/${userRole}`;
+
+      if (!currentPath.startsWith(rolePath)) {
+        // Jika di root atau auth pages
+        if (currentPath === "/" || currentPath === "/login" || currentPath === "/register") {
+          navigate(`${rolePath}/dashboard`);
+        } else {
+          navigate('/not-found');
+        }
       }
     }
-  }, [userRole]);
+  }, [authUser, accessToken, userRole, navigate, location, isPreload]);
+  // }, [userRole]);
 
+  // title tab
   useEffect(() => {
-    const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
-    const userMenu = menuConfig[userRole] || [];
-    const currentMenu = userMenu.find((item) => item.path === `/${currentPath}`);
+    if (userRole && authUser) {
+      const pathParts = location.pathname.split('/');
+      const currentSubPath = pathParts.slice(2).join('/') || "/";
+      const userMenu = menuConfig[userRole] || [];
+      const currentMenu = userMenu.find((item) => item.path === `/${currentSubPath}`);
 
-    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
-  }, [location, userRole]);
+      document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
+    } else {
+      document.title = "Admin Panel";
+    }
+  }, [location, userRole, authUser]);
 
   if (isPreload) null
 
@@ -153,9 +185,9 @@ function App(props) {
                   path={`/${userRole}/*`}
                   element={
                     <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
-                      <Typography component="h1" variant="h4" fontWeight="bold">
+                      {/* <Typography component="h1" variant="h4" fontWeight="bold">
                         {title}
-                      </Typography>
+                      </Typography> */}
                       {routeMap[userRole]}
                     </ProtectedRoute>
                   } />

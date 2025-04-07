@@ -3,35 +3,12 @@ import Typography from '@mui/material/Typography';
 import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { asyncReceiveStudents } from '../states/students/action';
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
-// let duplicateCode = false;
-//     let duplicateName = false;
-
-//     if (Array.isArray(typeExams.records)) {
-//       typeExams.records.forEach((typeExam) => {
-//         if (typeExam.code.toLowerCase() === kodeKelas.toLowerCase()) {
-//           duplicateCode = true;
-//         }
-//         if (typeExam.name.trim().toLowerCase() === namaUjian.trim().toLowerCase()) {
-//           duplicateName = true;
-//         }
-//       });
-//     }
-
-//     if (duplicateCode || duplicateName) {
-//       let message = "Terdeteksi duplikasi:\n";
-//       if (duplicateCode) message += "- Kode ujian sudah digunakan.\n";
-//       if (duplicateName) message += "- Nama jenis ujian sudah digunakan.\n";
-//       message += "Silakan gunakan kode atau nama yang berbeda.";
-
-//       alert('error', message);
-//       return;
-//     }
-
-export default function TambahDataSiswa({ alert, classes, addStudent }) {
-  const students = useSelector((state) => state.students.students);
+export default function EditDataSiswa({ classCodes, updateStudent }) {
+  const { id } = useParams()
+  const students = useSelector((state) => state.students.students)
 
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
@@ -39,55 +16,44 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(asyncReceiveStudents())
-  }, [dispatch])
+    if (id) {
+      const selectedStudent = students.records.find((std) => std.ID === parseInt(id));
+      console.log(selectedStudent)
+
+      if (selectedStudent) {
+        setNisn(selectedStudent.detail_student.nisn)
+        setNamaSiswa(selectedStudent.detail_student.name)
+        setJenisKelamin(selectedStudent.detail_student.gender.toLowerCase())
+        setNamaKelas(selectedStudent.class_id)
+      }
+    }
+  }, [id, students])
 
   function resetInputs() {
-    setNisn('');
-    setNamaSiswa('');
-    setJenisKelamin('');
-    setNamaKelas('');
+    setNisn('')
+    setNamaSiswa('')
+    setJenisKelamin('')
+    setNamaKelas('')
   }
 
   const handleSubmit = async () => {
     if (!nisn || !namaSiswa || !jenisKelamin || !namaKelas) {
-      alert('error', 'Semua Input Wajib di Isi!');
-      return;
-    }
-
-    let duplicateNisn = false;
-
-    if (Array.isArray(students.records)) {
-      students.records.forEach((student) => {
-        if (student.nsin === nisn) {
-          duplicateNisn = true;
-        }
-      });
-    }
-
-    if (duplicateNisn) {
-      let message = "Terdeteksi duplikasi:\n";
-      if (duplicateNisn) message += "- Nisn sudah digunakan.\n";
-      message += "Silakan gunakan data yang berbeda.";
-
-      alert('error', message);
-      return;
+      alert('Semua Input Wajib di Isi!')
+      return
     }
 
     setIsSubmitting(true);
     try {
-      await addStudent({ class_id: parseInt(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn });
-      resetInputs()
-    } catch (err) {
-      console.error(err)
-      alert('error', err.message || `Terjadi kesalahan`);
+      await updateStudent({ id: parseInt(id), class_id: Number(namaKelas), gender: jenisKelamin, name: namaSiswa, nisn })
+      resetInputs();
+    } catch (error) {
+      console.error('Error saat update:', error.response?.data || error.message);
+      alert(`Gagal update: ${error.response?.data?.message || error.message}`);
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   return (
     <>
@@ -150,13 +116,14 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
             onChange={(e) => setNamaKelas(e.target.value)}
             variant="outlined"
           >
-            {
-              classes.map((cls) => (
-                <MenuItem key={cls.code} value={cls.code}>
-                  {cls.name}
-                </MenuItem>
-              ))
-            }
+            {classCodes.map((item) => (
+              <MenuItem
+                key={item.code}
+                value={item.code}
+              >
+                {item.name}
+              </MenuItem>
+            ))}
           </TextField>
         </Grid>
       </Grid>
@@ -211,9 +178,7 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}
-            disabled={isSubmitting}
-          >
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Menyimpan...' : 'Simpan'}
           </Button>
         </Grid>
@@ -223,8 +188,7 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
   );
 }
 
-TambahDataSiswa.propTypes = {
-  alert: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
-  addStudent: PropTypes.func.isRequired,
+EditDataSiswa.propTypes = {
+  classCodes: PropTypes.func.isRequired,
+  updateStudent: PropTypes.func.isRequired,
 }

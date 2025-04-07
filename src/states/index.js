@@ -12,6 +12,7 @@ import commonReducer from './common/reducer';
 import teachersReducer from './teachers/reducer';
 import examsReducer from './exams/reducer';
 import schoolReducer from './school/reducer';
+import typeExamsReducer from './typeExams/reducer';
 
 const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
     common: commonReducer,
     teachers: teachersReducer,
     exams: examsReducer,
+    typeExams: typeExamsReducer,
     school: schoolReducer,
     loadingBar: loadingBarReducer,
   },

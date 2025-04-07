@@ -1,7 +1,9 @@
 import { ActionType } from './action';
 
 const initialState = {
-  students: [],
+  students: {
+    records: [],
+  },
   studentDetail: null,
   error: null,
   loading: false,
@@ -27,7 +29,7 @@ function studentsReducer(state = initialState, action) {
       return {
         ...state,
         students: state.students.filter(
-          (student) => student.id !== action.payload.id
+          (student) => student.ID !== action.payload.id
         ),
         error: null,
       };
@@ -36,7 +38,7 @@ function studentsReducer(state = initialState, action) {
       return {
         ...state,
         students: state.students.map((student) =>
-          student.id === action.payload.updatedStudent.id
+          student.ID === action.payload.updatedStudent.id
             ? action.payload.updatedStudent
             : student
         ),

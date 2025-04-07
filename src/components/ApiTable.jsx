@@ -5,17 +5,17 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import useApi from "../utils/rest/api.js";
-import {useDebounce} from "../hooks/useDebounce.js";
+import { useDebounce } from "../hooks/useDebounce.js";
 
 export default function ApiTable({
-                                   url,
-                                   columns,
-                                   searchKey,
-                                   searchValue,
-                                   pageSize = 10,
-                                   isPagination = true,
-                                   isRefresh = false
-                                 }) {
+  url,
+  columns,
+  searchKey,
+  searchValue,
+  pageSize = 10,
+  isPagination = true,
+  isRefresh = false
+}) {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pageSize);
@@ -86,9 +86,9 @@ export default function ApiTable({
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}
                     </TableCell>) : (
-                    <TableCell key={`${row.id || index}-${col.field}`}>
-                      {col.renderCell ? col.renderCell(row) : row[col.field]}
-                    </TableCell>)
+                      <TableCell key={`${row.id || index}-${col.field}`}>
+                        {col.renderCell ? col.renderCell(row) : row[col.field]}
+                      </TableCell>)
                   ))}
                 </TableRow>
               ))

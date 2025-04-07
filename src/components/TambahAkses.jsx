@@ -1,19 +1,28 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Chip, IconButton, InputAdornment, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveTeachers } from '../states/teachers/action';
 
-export default function TambahAkses({ roles, addAccess }) {
+export default function TambahAkses({ alert, roles, addAccess }) {
+  const teachers = useSelector((state) => state.teachers.teachers)
+
   const [nuptk, setNuptk] = useState('')
   const [namaGuru, setNamaGuru] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
   const [akses, setAkses] = useState('')
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(asyncReceiveTeachers())
+  }, [dispatch])
 
   function resetInputs() {
     setNuptk('');
@@ -25,14 +34,43 @@ export default function TambahAkses({ roles, addAccess }) {
 
   const handleSubmit = async () => {
     if (!nuptk || !namaGuru || !username || !password || !akses) {
-      alert('Semua Input Wajib Diisi!');
+      alert('error', 'Semua Input Wajib Diisi!');
+      return;
+    }
+
+    const isNuptkExists = teachers.records.some((teacher) => teacher.nuptk === nuptk);
+    if (isNuptkExists) {
+      alert('error', 'NUPTK sudah terdaftar! Silakan gunakan NUPTK lain.');
+      return;
+    }
+
+    const isUserIdExists = teachers.records.some((teacher) => teacher.user_id === parseInt(username));
+    if (isUserIdExists) {
+      alert('error', 'User ID sudah terdaftar! Silakan gunakan yang lain.');
+      return;
+    }
+
+    const isUsernameExists = teachers.records.some((teacher) => teacher.detail_user?.username === username);
+    if (isUsernameExists) {
+      alert('error', 'Username sudah dipakai! Silakan gunakan username lain.');
+      return;
+    }
+
+    const isnameExists = teachers.records.some((teacher) => teacher.name === namaGuru);
+    if (isnameExists) {
+      alert('error', 'Nama sudah dipakai! Silakan gunakan username lain.');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await addAccess({ name: namaGuru, nuptk, role: akses.toUpperCase(), username });
-      resetInputs()
+      await addAccess({
+        name: namaGuru,
+        nuptk,
+        role: akses.toUpperCase(),
+        username
+      });
+      resetInputs();
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
       alert('Gagal menambahkan akses, coba lagi.');
@@ -123,7 +161,7 @@ export default function TambahAkses({ roles, addAccess }) {
             onChange={(e) => setAkses(e.target.value)}
             variant="outlined"
           >
-            {roles.map((role) => (
+            {roles.filter((role) => role.code !== 'STUDENT').map((role) => (
               <MenuItem key={role.ID} value={role.code}>
                 {role.name}
               </MenuItem>
@@ -191,6 +229,7 @@ export default function TambahAkses({ roles, addAccess }) {
 }
 
 TambahAkses.propTypes = {
+  alert: PropTypes.func.isRequired,
   roles: PropTypes.object.isRequired,
   addAccess: PropTypes.func.isRequired,
 }

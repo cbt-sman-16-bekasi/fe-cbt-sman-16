@@ -110,6 +110,7 @@ function asyncDeleteClass(id) {
 function asyncUpdateClass({ id, class_code, class_name }) {
   return async (dispatch) => {
     dispatch(showLoading());
+    console.log({ id, class_code, class_name });
     try {
       const updatedClass = await api.updateClass({
         id,

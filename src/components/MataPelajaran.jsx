@@ -6,21 +6,27 @@ import { Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, formatRows } from "../internals/data/mapelData";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { asyncReceiveSubjects } from '../states/subjects/action';
+import { asyncDeleteSubject, asyncReceiveSubjects } from '../states/subjects/action';
 
 export default function MataPelajaran({ role }) {
   const subjects = useSelector((state) => state.subjects.subjects);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const rows = formatRows(subjects.records);
 
   useEffect(() => {
     dispatch(asyncReceiveSubjects())
   }, [dispatch])
+
+  const handleDelete = (id) => {
+    if (window.confirm("Apakah yakin ingin menghapus kelas ini?")) {
+      dispatch(asyncDeleteSubject(id));
+    }
+  };
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -52,7 +58,7 @@ export default function MataPelajaran({ role }) {
       </Grid>
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns} rows={rows} />
+          <CustomizedDataGrid columns={columns({ handleDelete, navigate, role })} rows={rows} />
         </Grid>
       </Grid>
     </Box>

@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const columns = [
+export const columns = ({ handleDelete, navigate, role }) => [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "nisn", headerName: "NISN", flex: 0.5, minWidth: 120 },
   { field: "namaSiswa", headerName: "NAMA SISWA", flex: 1.5, minWidth: 150 },
@@ -22,7 +22,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
-          onClick={() => handleEdit(params.row.id)}
+          onClick={() => navigate(`/${role}/data-siswa/edit/${params.row.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -42,24 +42,14 @@ export const columns = [
   },
 ];
 
-// Fungsi event handler (bisa dipindah ke Redux action nantinya)
-const handleEdit = (id) => {
-  console.log("Edit kelas dengan ID:", id);
-};
-
-const handleDelete = (id) => {
-  console.log("Delete kelas dengan ID:", id);
-};
-
-// Fungsi untuk mengonversi data Redux menjadi rows
 export const formatRows = (students = []) =>
   Array.isArray(students)
-    ? students.map((kelas, index) => ({
-      id: index + 1,
+    ? students.map((student, index) => ({
+      id: student.ID,
       no: index + 1,
-      nisn: kelas.classCode,
-      namaSiswa: kelas.className,
-      jenisKelamin: kelas.className,
-      kelas: kelas.className,
+      nisn: student.detail_student.nisn,
+      namaSiswa: student.detail_student.name,
+      jenisKelamin: student.detail_student.gender,
+      kelas: student.class_id,
     }))
     : [];

@@ -75,7 +75,7 @@ export default function Akses({ role }) {
               }}
             >
               <Box component="li"><Typography variant="body2">Guru memiliki hak akases yang lebih terbatas, fokus pada pengelolaan ujian dan penilaian.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengatur setting ujian, termasuk jadwal, durasu, dan aturan ujian, mengakses dan mengunduh laporan nilai siswa untuk ujian yang mereka kelola.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Mengatur setting ujian, termasuk jadwal, durasi, dan aturan ujian, mengakses dan mengunduh laporan nilai siswa untuk ujian yang mereka kelola.</Typography></Box>
             </Box>
           </Alert>
         </Grid>

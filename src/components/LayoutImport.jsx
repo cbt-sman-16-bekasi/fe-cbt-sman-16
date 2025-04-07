@@ -7,40 +7,58 @@ import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import ErrorIcon from '@mui/icons-material/Error';
 import { useState } from 'react';
 import ImportDataSiswa from './ImportDataSiswa';
+import { asyncCreateStudent } from '../states/students/action';
+import { useDispatch } from 'react-redux';
 
 export default function LayoutImport({ desc }) {
   const location = useLocation();
+  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
   const navigate = useNavigate();
-  const [displayError, setDisplayError] = useState(true);
+  const dispatch = useDispatch()
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('error');
+
+  const onAddStudents = async ({ class_id, gender, name, nisn }) => {
+    try {
+      const result = await dispatch(asyncCreateStudent({ class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Siswa berhasil ditambahkan!');
+      return result
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan siswa.');
+    }
+  };
 
   const renderContent = () => {
-    switch (location.pathname) {
+    switch (`/${currentPath}`) {
       case "/data-siswa/import":
-        return <ImportDataSiswa setError={handleDisplayError} />
+        return <ImportDataSiswa alert={handleShowAlert} addStudents={onAddStudents} />
       default:
         return <Typography>Konten tidak tersedia</Typography>
     }
   }
 
   const handleBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
+    if (window.history.length > 2) {
       navigate(-1);
-    } else {
-      if (location.pathname.includes("/akses-system")) {
-        navigate("/akses-system");
-      } else if (location.pathname.includes("/kelas")) {
-        navigate("/kelas");
-      } else {
-        navigate("/");
-      }
+      return;
     }
   };
 
-  const handleDisplayError = () => {
-    setDisplayError((prev) => !prev)
-  }
+  const handleShowAlert = (status, message) => {
+    setAlertSeverity(status);
+    setAlertMessage(message);
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 6000);
+  };
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -54,15 +72,20 @@ export default function LayoutImport({ desc }) {
         </Grid>
       </Grid>
 
-      {displayError && (
+      {showAlert && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-          <Grid size={{ lg: 12 }}>
-            <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="error" sx={{ py: 1, px: 2 }}>
+          <Grid size={{ sm: 12 }}>
+            <Alert
+              icon={alertSeverity === 'success' ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
+              variant="outlined"
+              severity={alertSeverity}
+              sx={{ py: 1, px: 2 }}
+            >
               <Typography variant="h6" fontWeight="bold">
-                Error!
+                {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
               </Typography>
-              <Typography variant="body1" sx={{ mt: 1 }}>
-                Silahkan masukkan data dengan lengkap
+              <Typography variant="body1" sx={{ mt: 1, whiteSpace: 'pre-line' }}>
+                {alertMessage}
               </Typography>
             </Alert>
           </Grid>

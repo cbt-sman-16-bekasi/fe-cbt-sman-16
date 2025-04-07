@@ -1,23 +1,62 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveSubjects } from '../states/subjects/action';
 
-export default function TambahMapel({ addSubject }) {
-  const subjectsCode = useSelector((state) => state.common.subjects)
-  console.log(subjectsCode)
+export default function TambahMapel({ alert, classCodes, subjectCodes, addSubject }) {
+  const subjects = useSelector((state) => state.subjects.subjects)
+
   const [namaMapel, setNamaMapel] = useState('')
   const [kodeKelas, setKodeKelas] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    if (!namaMapel || !kodeKelas) {
-      alert("Semua Input Wajib Diisi!")
-      return
-    }
-    addSubject({ class_code: kodeKelas, subject_code: namaMapel })
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncReceiveSubjects())
+  }, [dispatch])
+
+  function resetInputs() {
+    setNamaMapel('')
+    setKodeKelas('')
   }
+
+  const handleSubmit = async () => {
+    if (!namaMapel || !kodeKelas) {
+      alert('error', "Nama mata pelajaran dan kode kelas harus diisi!");
+      return;
+    }
+
+    if (!subjects) {
+      alert('error', "Data mapel belum dimuat, coba lagi.");
+      return;
+    }
+
+    // const isDuplicate = subjects.records.some(
+    //   (mapel) =>
+    //     mapel.classCode.toString() === kodeKelas.toString() &&
+    //     mapel.subjectCode.trim().toLowerCase() === namaMapel.trim().toLowerCase()
+    // );
+
+    // if (isDuplicate) {
+    //   alert('error', "Nama mapel ini sudah ada dalam kode kelas yang sama! Gunakan nama lain.");
+    //   return;
+    // }
+
+    setIsSubmitting(true);
+    try {
+      await addSubject({ class_code: kodeKelas, subject_code: namaMapel });
+      resetInputs();
+    } catch (error) {
+      console.error("Error saat menambahkan kelas:", error);
+      alert('error', "Gagal menambahkan kelas, coba lagi.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -30,10 +69,16 @@ export default function TambahMapel({ addSubject }) {
           </Typography>
           <TextField
             fullWidth
+            select
             value={namaMapel}
             onChange={(e) => setNamaMapel(e.target.value)}
             variant="outlined"
           >
+            {Array.isArray(subjectCodes) ? subjectCodes.map((sub) => (
+              <MenuItem key={sub.ID} value={sub.code}>
+                {sub.subject}
+              </MenuItem>
+            )) : <MenuItem disabled>Loading...</MenuItem>}
           </TextField>
         </Grid>
 
@@ -49,9 +94,9 @@ export default function TambahMapel({ addSubject }) {
             onChange={(e) => setKodeKelas(e.target.value)}
             variant="outlined"
           >
-            <MenuItem value="10">10</MenuItem>
-            <MenuItem value="11">11</MenuItem>
-            <MenuItem value="12">12</MenuItem>
+            {classCodes.map((item) => (
+              <MenuItem key={item.code} value={item.code}>{item.name}</MenuItem>
+            ))}
           </TextField>
 
         </Grid>
@@ -63,7 +108,9 @@ export default function TambahMapel({ addSubject }) {
         </Grid>
 
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='success' onClick={handleSubmit}>Simpan</Button>
+          <Button fullWidth variant="contained" color='success' onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? 'Menyimpan...' : 'Simpan'}
+          </Button>
         </Grid>
       </Grid>
 
@@ -72,5 +119,8 @@ export default function TambahMapel({ addSubject }) {
 }
 
 TambahMapel.propTypes = {
+  alert: PropTypes.func.isRequired,
+  classCodes: PropTypes.object.isRequired,
+  subjectCodes: PropTypes.object.isRequired,
   addSubject: PropTypes.func.isRequired,
 }
