@@ -45,7 +45,8 @@ export const formatRows = (subjects = []) =>
     ? subjects.map((kelas, index) => ({
       id: index + 1,
       no: index + 1,
-      namaMapel: kelas.subjectCode,
-      kodeKelas: kelas.classCode,
+      namaMapel: kelas.
+        DetailSubject.subject,
+      kodeKelas: kelas.DetailClassCode.name,
     }))
     : [];
