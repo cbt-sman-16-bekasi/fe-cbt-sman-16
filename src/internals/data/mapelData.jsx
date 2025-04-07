@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const columns = [
+export const columns = ({ handleDelete, navigate, role }) => [
   { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
   { field: "namaMapel", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120 },
   { field: "kodeKelas", headerName: "KODE KELAS", flex: 1.5, minWidth: 150 },
@@ -20,7 +20,7 @@ export const columns = [
             color: "white",
             "&:hover": { bgcolor: "darkpurple" },
           }}
-          onClick={() => handleEdit(params.row.id)}
+          onClick={() => navigate(`/${role}/mata-pelajaran/edit/${params.row.id}`)}
         >
           <EditIcon />
         </IconButton>
@@ -39,14 +39,6 @@ export const columns = [
     ),
   },
 ];
-
-const handleEdit = (id) => {
-  console.log("Edit kelas dengan ID:", id);
-};
-
-const handleDelete = (id) => {
-  console.log("Delete kelas dengan ID:", id);
-};
 
 export const formatRows = (subjects = []) =>
   Array.isArray(subjects)

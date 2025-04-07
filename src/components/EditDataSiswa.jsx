@@ -4,7 +4,8 @@ import { Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncReceiveStudents } from '../states/students/action';
 
 export default function EditDataSiswa({ classCodes, updateStudent }) {
   const { id } = useParams()
@@ -15,11 +16,13 @@ export default function EditDataSiswa({ classCodes, updateStudent }) {
   const [jenisKelamin, setJenisKelamin] = useState('')
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(asyncReceiveStudents())
+
     if (id) {
       const selectedStudent = students.records.find((std) => std.ID === parseInt(id));
-      console.log(selectedStudent)
 
       if (selectedStudent) {
         setNisn(selectedStudent.detail_student.nisn)
@@ -28,7 +31,7 @@ export default function EditDataSiswa({ classCodes, updateStudent }) {
         setNamaKelas(selectedStudent.class_id)
       }
     }
-  }, [id, students])
+  }, [id, students, dispatch])
 
   function resetInputs() {
     setNisn('')
