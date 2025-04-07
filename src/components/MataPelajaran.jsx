@@ -14,6 +14,7 @@ import { asyncDeleteSubject, asyncReceiveSubjects } from '../states/subjects/act
 
 export default function MataPelajaran({ role }) {
   const subjects = useSelector((state) => state.subjects.subjects);
+  console.log(subjects)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const rows = formatRows(subjects.records);

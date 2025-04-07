@@ -18,6 +18,7 @@ import { asyncUpdateClass } from '../states/classes/action';
 import EditDataSiswa from './EditDataSiswa';
 import { asyncUpdateStudent } from '../states/students/action';
 import EditMapel from './EditMapel';
+import { asyncUpdateSubject } from '../states/subjects/action';
 
 export default function LayoutEditData({ desc }) {
   const [alertSeverity, setAlertSeverity] = useState('error');
@@ -81,9 +82,19 @@ export default function LayoutEditData({ desc }) {
 
   // update data student udah bisa yang belum bisa ubah data kelasnya entah kenapa return nya null
   const onUpdateStudent = async ({ id, class_id, gender, name, nisn }) => {
-    console.log({ id, class_id, gender, name, nisn })
     try {
       await dispatch(asyncUpdateStudent({ id, class_id, gender, name, nisn }));
+      handleShowAlert('success', 'Update berhasil ditambahkan!');
+    } catch (error) {
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal mengupdate.');
+    }
+  };
+
+  const onUpdateSubject = async ({ id, class_code, subject_code }) => {
+    console.log({ id, class_code, subject_code })
+    try {
+      await dispatch(asyncUpdateSubject({ id, class_code, subject_code }));
       handleShowAlert('success', 'Update berhasil ditambahkan!');
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
@@ -100,7 +111,7 @@ export default function LayoutEditData({ desc }) {
       case "data-siswa/edit":
         return <EditDataSiswa classCodes={classCodes} updateStudent={onUpdateStudent} />;
       case "mata-pelajaran/edit":
-        return <EditMapel classCodes={classCodes} subjectCodes={subjectCodes} updateStudent={onUpdateStudent} />;
+        return <EditMapel alert={handleShowAlert} classCodes={classCodes} subjectCodes={subjectCodes} updateSubject={onUpdateSubject} />;
       default:
         return <Typography>Konten tidak tersedia</Typography>;
     }

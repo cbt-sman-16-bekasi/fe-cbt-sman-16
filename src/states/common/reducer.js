@@ -18,8 +18,8 @@ function commonReducer(state = initialState, action) {
         dashboardData: action.payload.dashboardData,
         error: null,
       };
-    case ActionType.RECEIVE_SUBJECTS:
-      return { ...state, subjects: action.payload.subjects, error: null };
+    case ActionType.RECEIVE_SUBJECT_CODES:
+      return { ...state, subjects: action.payload.subjectCodes, error: null };
     case ActionType.RECEIVE_USER_ROLES:
       return { ...state, userRoles: action.payload.userRoles, error: null };
     case ActionType.SET_ERROR:
