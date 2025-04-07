@@ -46,8 +46,10 @@ export function useExamCreateHook({ updatePage = false}) {
         setShowResult(detailExam.show_result)
         setDuration(detailExam.duration)
         setSubject(detailExam.subject_code.code)
+        setTypeQuestion(detailExam.type_question)
         setClassCode(detailExam.exam_member.map(a => a.class))
         setTypeExam(detailExam.detail_type_exam.code)
+        setScore(detailExam.total_score)
       }
       hideLoading()
     }
@@ -81,7 +83,9 @@ export function useExamCreateHook({ updatePage = false}) {
       "random_question": randomQuestion,
       "show_result": showResult,
       "subject_code": subject,
-      "type_exam_id": typeExam
+      "type_exam_id": typeExam,
+      "type_question": typeQuestion,
+      "score": score
     }
 
     showLoading();
