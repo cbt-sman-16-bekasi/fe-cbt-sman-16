@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { Upload } from '@mui/icons-material';
 import PropTypes from 'prop-types';
-import * as XLSX from 'xlsx';
 import Papa from 'papaparse';
 import { asyncReceiveStudents } from '../states/students/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -114,9 +113,9 @@ export default function ImportDataSiswa({ addStudents, alert }) {
             const result = Papa.parse(data, { header: true });
             parsedData = result.data;
           } else {
-            const workbook = XLSX.read(data, { type: 'binary' });
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            parsedData = XLSX.utils.sheet_to_json(worksheet);
+            // const workbook = XLSX.read(data, { type: 'binary' });
+            // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            // parsedData = XLSX.utils.sheet_to_json(worksheet);
           }
 
           resolve(parsedData);
@@ -134,13 +133,13 @@ export default function ImportDataSiswa({ addStudents, alert }) {
   };
 
   const handleDownloadTemplate = () => {
-    const templateData = [
-      { class_id: '', gender: '', name: '', nisn: '' }
-    ];
-    const worksheet = XLSX.utils.json_to_sheet(templateData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
-    XLSX.writeFile(workbook, 'template-import-siswa.xlsx');
+    // const templateData = [
+    //   { class_id: '', gender: '', name: '', nisn: '' }
+    // ];
+    // const worksheet = XLSX.utils.json_to_sheet(templateData);
+    // const workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+    // XLSX.writeFile(workbook, 'template-import-siswa.xlsx');
   };
 
   const handleFileChange = (event) => {
