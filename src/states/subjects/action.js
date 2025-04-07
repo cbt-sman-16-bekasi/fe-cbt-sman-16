@@ -100,6 +100,7 @@ function asyncDeleteSubject(id) {
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {
+      dispatch(asyncReceiveSubjects());
       dispatch(hideLoading());
     }
   };
