@@ -33,7 +33,7 @@ const api = (() => {
       removeAccessToken();
       window.location.href = '/login';
     }
-
+    console.log(response);
     return response;
   }
 
@@ -110,6 +110,7 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const { status, message, data } = responseJson;
 
     if (status !== 'success') {

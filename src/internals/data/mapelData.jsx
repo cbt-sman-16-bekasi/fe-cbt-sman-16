@@ -43,7 +43,7 @@ export const columns = ({ handleDelete, navigate, role }) => [
 export const formatRows = (subjects = []) =>
   Array.isArray(subjects)
     ? subjects.map((kelas, index) => ({
-      id: index + 1,
+      id: kelas.ID,
       no: index + 1,
       namaMapel: kelas.
         DetailSubject.subject,

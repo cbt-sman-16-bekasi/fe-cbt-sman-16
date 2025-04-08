@@ -8,7 +8,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { asyncReceiveTypeExams } from '../states/typeExams/action';
 
 import { columns, formatRows } from "../internals/data/kodeJenisUjianData";
@@ -18,9 +18,20 @@ export default function KodeJenisUjian({ role }) {
 
   const rows = formatRows(typeExams.records)
 
+  const [loading, setLoading] = useState(false);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+
   useEffect(() => {
-    dispatch(asyncReceiveTypeExams())
-  }, [dispatch])
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(asyncReceiveTypeExams({ size: 1000 }));
+      setLoading(false);
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -52,7 +63,13 @@ export default function KodeJenisUjian({ role }) {
       </Grid>
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns} rows={rows} />
+          <CustomizedDataGrid
+            columns={columns}
+            rows={rows}
+            loading={loading}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+          />
         </Grid>
       </Grid>
     </Box>

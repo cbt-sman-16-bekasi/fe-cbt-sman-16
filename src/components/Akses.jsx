@@ -9,7 +9,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { Link, useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { asyncDeleteTeacher, asyncReceiveTeachers } from '../states/teachers/action';
 
 import CustomizedDataGrid from './CustomizedDataGrid';
@@ -27,9 +27,20 @@ export default function Akses({ role }) {
     }
   };
 
+  const [loading, setLoading] = useState(false);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+
   useEffect(() => {
-    dispatch(asyncReceiveTeachers())
-  }, [dispatch])
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(asyncReceiveTeachers({ size: 1000 }));
+      setLoading(false);
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -106,7 +117,13 @@ export default function Akses({ role }) {
 
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns({ handleDelete, navigate, role })} rows={rows} />
+          <CustomizedDataGrid
+            columns={columns({ handleDelete, navigate, role })}
+            rows={rows}
+            loading={loading}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+          />
         </Grid>
       </Grid>
     </Box >
