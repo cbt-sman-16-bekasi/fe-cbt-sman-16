@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { asyncDeleteClass, asyncReceiveClasses } from '../states/classes/action';
 import PropTypes from 'prop-types';
 
@@ -20,9 +20,20 @@ export default function Kelas({ role }) {
 
   const rows = formatRows(classes.records);
 
+  const [loading, setLoading] = useState(false);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+
   useEffect(() => {
-    dispatch(asyncReceiveClasses())
-  }, [dispatch])
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(asyncReceiveClasses({ size: 1000 }));
+      setLoading(false);
+    };
+    fetchData();
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     if (window.confirm("Apakah yakin ingin menghapus kelas ini?")) {
@@ -62,7 +73,14 @@ export default function Kelas({ role }) {
 
       <Grid container spacing={1} columns={12}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <CustomizedDataGrid columns={columns({ handleDelete, navigate, role })} rows={rows} />
+          <CustomizedDataGrid
+            columns={columns({ handleDelete, navigate, role })}
+            rows={rows}
+            loading={loading}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+          />
+
         </Grid>
       </Grid>
     </Box>
