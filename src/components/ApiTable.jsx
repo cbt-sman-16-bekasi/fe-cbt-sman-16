@@ -36,7 +36,7 @@ export default function ApiTable({
           searchValue
         });
         const { records, totalRecord } = data;
-        setData(records);
+        setData(records ?? []);
         setTotalRows(totalRecord);
       }
 
