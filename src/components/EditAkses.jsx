@@ -33,7 +33,6 @@ export default function EditAkses({ roles, updateAccess }) {
     }
   }, [id, teachers]);
 
-
   function resetInputs() {
     setNuptk('');
     setNamaGuru('');
@@ -50,7 +49,7 @@ export default function EditAkses({ roles, updateAccess }) {
 
     setIsSubmitting(true);
     try {
-      await updateAccess({ id: parseInt(id), name: namaGuru, nuptk, role: akses.toUpperCase(), username });
+      await updateAccess({ id: parseInt(id), name: namaGuru, nuptk, password, role: akses.toUpperCase(), username });
       resetInputs()
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);

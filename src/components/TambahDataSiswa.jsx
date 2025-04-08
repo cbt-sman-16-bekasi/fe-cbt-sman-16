@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveStudents } from '../states/students/action';
+import { asyncReceiveClasses } from '../states/classes/action';
 
 // let duplicateCode = false;
 //     let duplicateName = false;
@@ -30,8 +31,10 @@ import { asyncReceiveStudents } from '../states/students/action';
 //       return;
 //     }
 
-export default function TambahDataSiswa({ alert, classes, addStudent }) {
+export default function TambahDataSiswa({ alert, addStudent }) {
+  const dispatch = useDispatch();
   const students = useSelector((state) => state.students.students);
+  const classes = useSelector((state) => state.classes.classes);
 
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
@@ -39,10 +42,10 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(asyncReceiveStudents())
+    dispatch(asyncReceiveClasses({ size: 1000 }));
   }, [dispatch])
 
   function resetInputs() {
@@ -141,7 +144,7 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
 
         <Grid size={{ md: 12, lg: 6 }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Nama Kelas
+            Kelas
           </Typography>
           <TextField
             fullWidth
@@ -151,9 +154,9 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
             variant="outlined"
           >
             {
-              classes.map((cls) => (
-                <MenuItem key={cls.code} value={cls.code}>
-                  {cls.name}
+              (classes.records || []).map((cls) => (
+                <MenuItem key={cls.ID} value={cls.ID}>
+                  {cls.className}
                 </MenuItem>
               ))
             }
@@ -225,6 +228,5 @@ export default function TambahDataSiswa({ alert, classes, addStudent }) {
 
 TambahDataSiswa.propTypes = {
   alert: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
   addStudent: PropTypes.func.isRequired,
 }
