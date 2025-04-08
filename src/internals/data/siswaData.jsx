@@ -50,6 +50,6 @@ export const formatRows = (students = []) =>
       nisn: student.detail_student.nisn,
       namaSiswa: student.detail_student.name,
       jenisKelamin: student.detail_student.gender,
-      kelas: student.class_id,
+      kelas: student.detail_class.className,
     }))
     : [];
