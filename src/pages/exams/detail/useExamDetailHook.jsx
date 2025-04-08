@@ -78,6 +78,7 @@ export function useExamDetailHook() {
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "question", headerName: "SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.question }} />) },
     { field: "score", headerName: "BOBOT SOAL", flex: 0.1, minWidth: 50 },
+    { field: "answer_single", headerName: "JAWABAN BENAR", flex: 0.1, minWidth: 50 },
     {
       field: "aksi",
       headerName: "AKSI",
