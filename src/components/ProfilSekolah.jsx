@@ -165,11 +165,8 @@ export default function ProfilSekolah() {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
-        Informasi Sekolah
-      </Typography>
 
-      <Typography component="h3" variant="h3" sx={{ mb: 3 }}>
+      <Typography component="h3" variant="h3" sx={{ mb: 3, mt: 5 }}>
         Profil Sekolah
       </Typography>
 

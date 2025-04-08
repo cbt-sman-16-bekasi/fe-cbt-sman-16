@@ -36,10 +36,8 @@ export default function MainGrid({ role }) {
   }, [dispatch])
 
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
-        Dashboard
-      </Typography>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, pb: 3 }}>
+
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid size={{ sm: 12 }}>
           <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="info" sx={{ p: 2 }}>
