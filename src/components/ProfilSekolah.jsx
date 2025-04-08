@@ -57,6 +57,7 @@ export default function ProfilSekolah() {
         file: null
       });
 
+
       setBanner({
         preview: `data:${getImageMimeType(schoolData.banner)};base64,${schoolData.banner || ''}`,
         file: null
@@ -90,7 +91,6 @@ export default function ProfilSekolah() {
         logo: base64Logo || '',
         banner: base64Banner || '',
       };
-
       const result = await dispatch(asyncUpdateSchool(payload));
 
       if (result) {
