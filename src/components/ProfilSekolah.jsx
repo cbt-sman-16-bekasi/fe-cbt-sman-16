@@ -53,36 +53,44 @@ export default function ProfilSekolah() {
       setAddress(schoolData.address || '');
 
       setLogo({
-        preview: schoolData.logo || '',
+        preview: `data:${getImageMimeType(schoolData.logo)};base64,${schoolData.logo || ''}`,
         file: null
       });
 
       setBanner({
-        preview: schoolData.banner || '',
+        preview: `data:${getImageMimeType(schoolData.banner)};base64,${schoolData.banner || ''}`,
         file: null
       });
+
     }
   }, [schoolData]);
 
+  const getImageMimeType = (base64) => {
+    if (base64.startsWith('/9j/')) return 'image/jpeg';
+    if (base64.startsWith('iVBORw0')) return 'image/png';
+    return 'image/*';
+  };
 
   const handleSubmit = async () => {
-    const payload = {
-      // school code buat async func ulang receive data school nya lagi
-      schoolCode,
-      school_name: schoolName,
-      level_of_education: jenjang,
-      nss,
-      npsn,
-      phone: telp,
-      email,
-      address,
-      logo: logo.file || schoolData.logo || '',
-      banner: banner.file || schoolData.banner || '',
-    };
-
     setIsSubmitting(true);
 
     try {
+      const base64Logo = logo.file ? await fileToBase64(logo.file) : schoolData.logo;
+      const base64Banner = banner.file ? await fileToBase64(banner.file) : schoolData.banner;
+      const payload = {
+        // school code buat async func ulang receive data school nya lagi
+        schoolCode,
+        school_name: schoolName,
+        level_of_education: jenjang,
+        nss,
+        npsn,
+        phone: telp,
+        email,
+        address,
+        logo: base64Logo || '',
+        banner: base64Banner || '',
+      };
+
       const result = await dispatch(asyncUpdateSchool(payload));
 
       if (result) {
@@ -139,6 +147,19 @@ export default function ProfilSekolah() {
         setBanner({ preview: fileURL, file: selectedFile });
       }
     }
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve(null);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64 = reader.result.split(',')[1]; // ambil bagian base64-nya aja
+        resolve(base64);
+      };
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
