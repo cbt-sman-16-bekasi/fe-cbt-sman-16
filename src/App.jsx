@@ -7,7 +7,7 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import SuperAdminPage from "./pages/SuperAdminPage";
@@ -97,76 +97,76 @@ function App(props) {
 
   if (!authUser || !accessToken) {
     return (
-        <>
-          <AppTheme {...props} themeComponents={xThemeComponents}>
-            <CssBaseline enableColorScheme />
-            <Box component="main"
-                 sx={{
-                   margin: 0,
-                   height: "100vh",
-                   width: "100vw",
-                 }} >
-              <Routes>
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/register' element={<RegisterPage />} />
-              </Routes>
-            </Box >
-          </AppTheme>
-        </>
+      <>
+        <AppTheme {...props} themeComponents={xThemeComponents}>
+          <CssBaseline enableColorScheme />
+          <Box component="main"
+            sx={{
+              margin: 0,
+              height: "100vh",
+              width: "100vw",
+            }} >
+            <Routes>
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/register' element={<RegisterPage />} />
+            </Routes>
+          </Box >
+        </AppTheme>
+      </>
     )
   }
 
   return (
-      <div className="app w-[98.5vw]">
-        <AppTheme {...props} themeComponents={xThemeComponents}>
-          <CssBaseline enableColorScheme />
-          <Box sx={{ display: 'flex', width: '100%' }}>
-            <SideMenu user={authUser} role={userRole} logout={onUserLogout} />
-            <AppNavbar user={authUser} role={userRole} logout={onUserLogout} />
+    <div className="app w-[98.5vw]">
+      <AppTheme {...props} themeComponents={xThemeComponents}>
+        <CssBaseline enableColorScheme />
+        <Box sx={{ display: 'flex', width: '100%' }}>
+          <SideMenu user={authUser} role={userRole} logout={onUserLogout} />
+          <AppNavbar user={authUser} role={userRole} logout={onUserLogout} />
 
-            <Box
-                component="main"
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flexGrow: 1,
-                  backgroundColor: (theme) =>
-                      theme.vars
-                          ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-                          : alpha(theme.palette.background.default, 1),
-                  overflow: 'auto',
-                  minHeight: '100vh',
-                }}
+          <Box
+            component="main"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              flexGrow: 1,
+              backgroundColor: (theme) =>
+                theme.vars
+                  ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+                  : alpha(theme.palette.background.default, 1),
+              overflow: 'auto',
+              minHeight: '100vh',
+            }}
+          >
+            <Stack
+              sx={{
+                alignItems: 'start',
+                mx: 3,
+                pb: 5,
+                mt: { xs: 8, md: 0 },
+              }}
             >
-              <Stack
-                  sx={{
-                    alignItems: 'start',
-                    mx: 3,
-                    pb: 5,
-                    mt: { xs: 8, md: 0 },
-                  }}
-              >
-                <Header role={userRole} />
+              <Header role={userRole} />
 
-                <Routes>
-                  <Route
-                      path={`/${userRole}/*`}
-                      element={
-                        <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
-                          <Typography component="h1" variant="h4" fontWeight="bold">
-                            {title}
-                          </Typography>
-                          {routeMap[userRole]}
-                        </ProtectedRoute>
-                      } />
-                  <Route path="*" element={<NotFoundPage role={userRole} />} />
-                </Routes>
+              <Routes>
+                <Route
+                  path={`/${userRole}/*`}
+                  element={
+                    <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
+                      <Typography component="h1" variant="h4" fontWeight="bold">
+                        {title}
+                      </Typography>
+                      {routeMap[userRole]}
+                    </ProtectedRoute>
+                  } />
+                <Route path="*" element={<NotFoundPage role={userRole} />} />
+              </Routes>
 
-              </Stack>
-            </Box>
+            </Stack>
           </Box>
-        </AppTheme>
-      </div>
+        </Box>
+      </AppTheme>
+    </div>
   );
 }
 

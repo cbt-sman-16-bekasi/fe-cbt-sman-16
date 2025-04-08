@@ -13,9 +13,6 @@ import PropTypes from 'prop-types';
 export default function BankSoal({ role }) {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
-        Bank Soal
-      </Typography>
 
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid size={{ lg: 12 }}>
