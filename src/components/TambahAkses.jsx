@@ -67,6 +67,7 @@ export default function TambahAkses({ alert, roles, addAccess }) {
       await addAccess({
         name: namaGuru,
         nuptk,
+        password,
         role: akses.toUpperCase(),
         username
       });
@@ -89,11 +90,15 @@ export default function TambahAkses({ alert, roles, addAccess }) {
           </Typography>
           <TextField
             fullWidth
+            type="text"
             value={nuptk}
-            onChange={(e) => setNuptk(e.target.value)}
+            onChange={(e) => {
+              const onlyNums = e.target.value.replace(/\D/g, '');
+              setNuptk(onlyNums);
+            }}
             variant="outlined"
-          >
-          </TextField>
+          />
+
         </Grid>
 
         <Grid size={{ md: 12, lg: 6 }}>
