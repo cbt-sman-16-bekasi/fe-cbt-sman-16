@@ -68,19 +68,13 @@ export default function LayoutTambah({ desc }) {
 
   const onAddAccess = async ({ name, nuptk, role, username }) => {
     try {
+
       const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
-
-      if (result?.success) {
-        handleShowAlert('success', 'Akses berhasil ditambahkan!');
-        return result
-      } else {
-        handleShowAlert('error', result?.error || 'Gagal menambahkan akses.');
-        return result
-      }
+      handleShowAlert('success', 'Akses berhasil ditambahkan!');
+      return result
     } catch (error) {
-      console.error('Full error:', error);
-      handleShowAlert('error', error.message || 'Terjadi kesalahan tidak terduga');
-
+      console.error('Error saat menambahkan data:', error);
+      handleShowAlert('error', 'Gagal menambahkan siswa.');
     }
   };
 
@@ -157,10 +151,7 @@ export default function LayoutTambah({ desc }) {
   };
 
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
-        {desc}
-      </Typography>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 4 }}>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={6}>
         <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>

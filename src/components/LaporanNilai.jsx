@@ -2,19 +2,14 @@ import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CustomizedDataGrid from './CustomizedDataGrid';
-import { Alert, Card, CardContent, MenuItem, Paper, TextField } from '@mui/material';
+import { Alert, Card, CardContent, MenuItem, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { columns, rows } from "../internals/data/laporanNilaiData";
 import { useState } from 'react';
 
 export default function LaporanNilai() {
-  const [token, setToken] = useState(0);
   const [masaAktif, setMasaAktif] = useState("");
   const [ujian, setUjian] = useState("");
-
-  const handleGenerateToken = () => {
-    setToken(Math.floor(100000 + Math.random() * 900000));
-  };
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
