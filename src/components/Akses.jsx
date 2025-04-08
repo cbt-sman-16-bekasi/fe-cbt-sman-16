@@ -44,9 +44,6 @@ export default function Akses({ role }) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 2 }}>
-        Hak Akses CBT
-      </Typography>
 
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid size={{ lg: 12 }}>

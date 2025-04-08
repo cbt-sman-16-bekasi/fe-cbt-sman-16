@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { Alert, Card, CardContent, MenuItem, Paper, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -19,11 +18,8 @@ export default function LaporanNilai() {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
-        Laporan Nilai
-      </Typography>
 
-      <Typography component="h3" variant="h3" sx={{ mb: 3 }}>
+      <Typography component="h3" variant="h3" sx={{ mb: 3, mt: 5 }}>
         Generate Laporan Nilai
       </Typography>
 
@@ -110,7 +106,6 @@ export default function LaporanNilai() {
         </Grid>
       </Grid>
 
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
 }
