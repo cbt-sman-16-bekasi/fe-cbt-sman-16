@@ -93,17 +93,6 @@ const api = (() => {
     phone,
     school_name,
   }) {
-    console.log({
-      address,
-      banner,
-      email,
-      level_of_education,
-      logo,
-      npsn,
-      nss,
-      phone,
-      school_name,
-    });
     const response = await _fetchWithAuth('/academic/school/update', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Copyright from '../internals/components/Copyright';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import { Alert, Button, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,6 +8,7 @@ import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { columns, rows } from "../internals/data/bankSoalData";
 import { Link } from 'react-router';
 import CheckIcon from '@mui/icons-material/Check';
+import PropTypes from 'prop-types';
 
 export default function BankSoal({ role }) {
   return (
@@ -70,7 +70,11 @@ export default function BankSoal({ role }) {
           <CustomizedDataGrid columns={columns} rows={rows} />
         </Grid>
       </Grid>
-      <Copyright sx={{ my: 4 }} />
     </Box>
   );
+}
+
+
+BankSoal.propTypes = {
+  role: PropTypes.string.isRequired,
 }
