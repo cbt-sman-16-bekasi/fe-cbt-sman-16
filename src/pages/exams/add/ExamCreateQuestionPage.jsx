@@ -13,7 +13,6 @@ import TiptapEditor from "../../../components/form/TiptapEditor.jsx";
 
 export function ExamCreateQuestionPage({isUpdatePage = false}) {
   const {
-    score, setScore,
     question, setQuestion,
     answer, setAnswer,
     optionA, setOptionA,
@@ -32,7 +31,7 @@ export function ExamCreateQuestionPage({isUpdatePage = false}) {
       <TitleWithIcon icon={<ModeEditOutlined sx={{color: 'white'}} />} text="Detail Soal" iconBackground="red" />
       <BasicCard>
         <Grid container spacing={3} alignItems="center" columns={12}>
-          <CustomInput label="Bobot Soal" placeholder="0" type="number" value={score} onChange={(c) => setScore(parseInt(c.target.value))}  fullWidth={true} />
+          {/*<CustomInput label="Bobot Soal" placeholder="0" type="number" value={score} onChange={(c) => setScore(parseInt(c.target.value))}  fullWidth={true} />*/}
           {typeQuestion === 'PILIHAN_GANDA' && (
             <CustomInput label="Jawaban" fullWidth={true} options={optionAnswer} value={answer} onChange={(c) => setAnswer(c.target.value)}/>) }
         </Grid>
