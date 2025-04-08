@@ -19,6 +19,9 @@ RUN npm run build
 # Gunakan image Nginx untuk serving React build
 FROM nginx:alpine
 
+# Salin file konfigurasi custom nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Copy hasil build dari tahap sebelumnya ke Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
