@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncReceiveStudents } from '../states/students/action';
+import { asyncReceiveClasses } from '../states/classes/action';
 
-export default function EditDataSiswa({ classCodes, updateStudent }) {
+export default function EditDataSiswa({ updateStudent }) {
   const { id } = useParams()
   const students = useSelector((state) => state.students.students)
+  const classes = useSelector((state) => state.classes.classes);
 
   const [nisn, setNisn] = useState('')
   const [namaSiswa, setNamaSiswa] = useState('')
@@ -20,6 +22,7 @@ export default function EditDataSiswa({ classCodes, updateStudent }) {
 
   useEffect(() => {
     dispatch(asyncReceiveStudents())
+    dispatch(asyncReceiveClasses({ size: 1000 }));
 
     if (id) {
       const selectedStudent = students.records.find((std) => std.ID === parseInt(id));
@@ -119,14 +122,13 @@ export default function EditDataSiswa({ classCodes, updateStudent }) {
             onChange={(e) => setNamaKelas(e.target.value)}
             variant="outlined"
           >
-            {classCodes.map((item) => (
-              <MenuItem
-                key={item.code}
-                value={item.code}
-              >
-                {item.name}
-              </MenuItem>
-            ))}
+            {
+              (classes.records || []).map((cls) => (
+                <MenuItem key={cls.ID} value={cls.ID}>
+                  {cls.className}
+                </MenuItem>
+              ))
+            }
           </TextField>
         </Grid>
       </Grid>
