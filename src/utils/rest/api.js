@@ -123,12 +123,13 @@ const useApi = (() => {
       body: formData,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Upload failed: ${errorText}`);
+    // Kalau response sudah berupa data langsung (bukan Response object)
+    if (response && response.ok === false) {
+      const message = response.message || "FAILED";
+      throw new Error(`Upload failed: ${message}`);
     }
 
-    return await response.json(); // atau response.text() sesuai API kamu
+    return await response; // atau response.text() sesuai API kamu
   };
 
   return {

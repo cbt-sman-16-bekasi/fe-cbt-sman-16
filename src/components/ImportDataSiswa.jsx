@@ -2,144 +2,46 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { Button, Card, CardContent } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import {Link, useNavigate} from 'react-router';
 import { Upload } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import Papa from 'papaparse';
 import { asyncReceiveStudents } from '../states/students/action';
 import { useDispatch, useSelector } from 'react-redux';
+import useApi from "../utils/rest/api.js";
+import {useLoading} from "./common/LoadingProvider.jsx";
+import {useModal} from "./common/ModalContext.jsx";
 
 
 export default function ImportDataSiswa({ addStudents, alert }) {
   const students = useSelector((state) => state.students.students);
   const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {showLoading, hideLoading} = useLoading()
+  const {showModal} = useModal()
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(asyncReceiveStudents())
   }, [dispatch])
 
   const handleSubmit = async () => {
-    if (!file) {
-      alert('error', 'File Wajib di Upload!');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const parsedData = await parseFile(file);
-      const existingNISNs = new Set(
-        students.records.map((s) => String(s.nisn).trim())
-      );
-
-      let successCount = 0;
-      let failCount = 0;
-      let failedStudents = [];
-
-      for (const row of parsedData) {
-        const nisn = String(row.nisn || '').trim();
-        const name = row.name || 'Tidak diketahui';
-
-        // Validasi field kosong
-        if (!row.name || !row.gender || !row.class_id || !nisn) {
-          failCount++;
-          failedStudents.push({ name, reason: 'Data tidak lengkap' });
-          continue;
-        }
-
-        // Validasi panjang NISN
-        if (nisn.length !== 10 || !/^\d+$/.test(nisn)) {
-          failCount++;
-          failedStudents.push({ name, reason: 'NISN harus 10 digit angka' });
-          continue;
-        }
-
-        // Cek apakah NISN sudah digunakan
-        if (existingNISNs.has(nisn)) {
-          failCount++;
-          failedStudents.push({ name, reason: 'NISN sudah digunakan' });
-          continue;
-        }
-
-        try {
-          await addStudents({
-            name: row.name,
-            gender: row.gender,
-            class_id: Number(row.class_id),
-            nisn,
-          });
-          successCount++;
-          existingNISNs.add(nisn); // Tambahkan ke daftar agar tidak dobel saat loop
-        } catch (error) {
-          failCount++;
-          failedStudents.push({ name, reason: 'Gagal saat kirim ke server' });
-          console.error('Gagal tambah siswa:', row, error);
-        }
-      }
-
-      let alertMessage = `${successCount} siswa berhasil diimport.\n${failCount} gagal.`;
-
-      if (failCount > 0) {
-        alertMessage += `\n\nDetail gagal:\n` + failedStudents
-          .map((s, i) => `${i + 1}. ${s.name} - ${s.reason}`)
-          .join('\n');
-      }
-
-      alert(failCount > 0 ? 'warning' : 'success', alertMessage);
-      resetInputs();
-    } catch (err) {
-      console.error(err);
-      alert('error', err.message || `Terjadi kesalahan saat parsing file.`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const parseFile = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      const isCSV = file.name.endsWith('.csv');
-
-      reader.onload = (event) => {
-        const data = event.target.result;
-
-        try {
-          let parsedData;
-          if (isCSV) {
-            const result = Papa.parse(data, { header: true });
-            parsedData = result.data;
-          } else {
-            // const workbook = XLSX.read(data, { type: 'binary' });
-            // const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            // parsedData = XLSX.utils.sheet_to_json(worksheet);
-          }
-
-          resolve(parsedData);
-        } catch (error) {
-          reject(error);
-        }
-      };
-
-      if (isCSV) {
-        reader.readAsText(file);
-      } else {
-        reader.readAsBinaryString(file);
-      }
+    showLoading()
+    await useApi.uploadFile({
+      url: `/academic/student/template/upload`,
+      file: file,
+      fieldName: 'file'
     });
+
+    showModal("Success upload student", "success")
+    hideLoading();
+    navigate(-1);
   };
 
-  const handleDownloadTemplate = () => {
-    // const templateData = [
-    //   { class_id: '', gender: '', name: '', nisn: '' }
-    // ];
-    // const worksheet = XLSX.utils.json_to_sheet(templateData);
-    // const workbook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
-    // XLSX.writeFile(workbook, 'template-import-siswa.xlsx');
+  const handleDownloadTemplate = async () => {
+    await useApi.download({url: `/academic/student/template/download`})
   };
 
   const handleFileChange = (event) => {
@@ -175,7 +77,7 @@ export default function ImportDataSiswa({ addStudents, alert }) {
                 Upload File Data Disini
               </Typography>
               <label htmlFor="fileUpload" className="text-purple-600 hover:underline text-sm cursor-pointer">
-                Upload File berbentuk Excel / CSV
+                Upload File berbentuk Excel
               </label>
               <input
                 id="fileUpload"
