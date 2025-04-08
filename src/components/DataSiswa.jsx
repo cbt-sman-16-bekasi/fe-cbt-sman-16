@@ -18,7 +18,6 @@ export default function DataSiswa({ role }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const rows = formatRows(students.records);
-  console.log(students.records)
 
   const [loading, setLoading] = useState(false);
   const [paginationModel, setPaginationModel] = useState({
