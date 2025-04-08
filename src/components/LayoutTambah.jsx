@@ -137,7 +137,7 @@ export default function LayoutTambah({ desc }) {
       case "/kode-jenis-ujian/tambah":
         return <TambahKodeUjian alert={handleShowAlert} roles={roles} addTypeExams={onAddTypeExams} />;
       case "/data-siswa/tambah":
-        return <TambahDataSiswa alert={handleShowAlert} classes={classCodes} addStudent={onAddStudent} />;
+        return <TambahDataSiswa alert={handleShowAlert} addStudent={onAddStudent} />;
       case "/ujian/tambah":
         return <TambahUjian createExams={onCreateExams} />;
       case "/sesi-ujian/tambah":
