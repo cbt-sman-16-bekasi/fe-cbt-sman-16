@@ -124,12 +124,12 @@ export default function ProfilSekolah() {
     setAddress(schoolData.address || '');
 
     setLogo({
-      preview: schoolData.logo || '',
+      preview: `data:${getImageMimeType(schoolData.logo)};base64,${schoolData.logo || ''}`,
       file: null
     });
 
     setBanner({
-      preview: schoolData.banner || '',
+      preview: `data:${getImageMimeType(schoolData.banner)};base64,${schoolData.banner || ''}`,
       file: null
     });
   };
