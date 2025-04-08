@@ -41,6 +41,7 @@ export function useExamSessionDetailHook() {
       setSubject(detailExam.subject_code.subject)
       setClassCode(detailExam.exam_member.map(a => a.detail_class.className).join(", "))
       setTypeExam(detailExam.detail_type_exam.code)
+      setTypeQuestion(detailExam.type_question)
       setSessionName(data.name)
       setStartDate(dateHelper.formattedWithTime(data.start_date))
       setEndDate(dateHelper.formattedWithTime(data.end_date))
@@ -52,38 +53,42 @@ export function useExamSessionDetailHook() {
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nisn", headerName: "NISN", flex: 0.1, minWidth: 50},
+    { field: "name", headerName: "NAMA SISWA", flex: 0.1, minWidth: 50},
     { field: "class", headerName: "KELAS", flex: 0.1, minWidth: 50},
     { field: "start_at", headerName: "WAKTU LOGIN", flex: 0.1, minWidth: 50},
     { field: "end_at", headerName: "WAKTU LOGOUT", flex: 0.1, minWidth: 50},
     { field: "score", headerName: "NILAI", flex: 0.1, minWidth: 50 },
     { field: "status", headerName: "STATUS", flex: 0.1, minWidth: 50 },
-    {
+  ];
+
+  if (typeQuestion === 'ESSAY') {
+    columns.push({
       field: "aksi",
       headerName: "AKSI",
       flex: 1,
       minWidth: 150,
       renderCell: (row) => {
         return (
-          <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
-            {/* Tombol Delete */}
-            <IconButton
-              size="small"
-              sx={{
-                bgcolor: "green",
-                color: "white",
-                "&:hover": { bgcolor: "darkred" },
-              }}
-              onClick={() => handleDelete(row.id)}
-            >
-              Nilai Jawaban
-            </IconButton>
-          </div>
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
+              {/* Tombol Delete */}
+              <IconButton
+                  size="small"
+                  sx={{
+                    bgcolor: "green",
+                    color: "white",
+                    "&:hover": { bgcolor: "darkred" },
+                  }}
+                  onClick={() => handleCorrection(row.id)}
+              >
+                Koreksi
+              </IconButton>
+            </div>
         );
       },
-    },
-  ];
+    },)
+  }
 
-  const handleDelete = (id) => {
+  const handleCorrection = (id) => {
     console.log("Delete kelas dengan ID:", id);
   };
 
