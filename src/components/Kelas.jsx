@@ -21,7 +21,7 @@ export default function Kelas({ role }) {
   const rows = formatRows(classes.records);
 
   useEffect(() => {
-    dispatch(asyncReceiveClasses())
+    dispatch(asyncReceiveClasses({ page: 1, size: 999 }))
   }, [dispatch])
 
   const handleDelete = (id) => {
