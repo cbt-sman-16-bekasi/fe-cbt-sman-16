@@ -53,24 +53,18 @@ export default function ProfilSekolah() {
       setAddress(schoolData.address || '');
 
       setLogo({
-        preview: `data:${getImageMimeType(schoolData.logo)};base64,${schoolData.logo || ''}`,
+        preview: `${ schoolData.logo || ''}`,
         file: null
       });
 
 
       setBanner({
-        preview: `data:${getImageMimeType(schoolData.banner)};base64,${schoolData.banner || ''}`,
+        preview: `${schoolData.banner || ''}`,
         file: null
       });
 
     }
   }, [schoolData]);
-
-  const getImageMimeType = (base64) => {
-    if (base64.startsWith('/9j/')) return 'image/jpeg';
-    if (base64.startsWith('iVBORw0')) return 'image/png';
-    return 'image/*';
-  };
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -93,14 +87,8 @@ export default function ProfilSekolah() {
       };
 
       const result = await dispatch(asyncUpdateSchool(payload));
-
-      if (result) {
-        setAlertSeverity('success');
-        setAlertMessage('Berhasil menyimpan data sekolah');
-      } else {
-        setAlertSeverity('error');
-        setAlertMessage(`Gagal menyimpan`);
-      }
+      setAlertSeverity('success');
+      setAlertMessage('Berhasil menyimpan data sekolah');
 
       setShowAlert(true);
     } catch (err) {
@@ -125,12 +113,12 @@ export default function ProfilSekolah() {
     setAddress(schoolData.address || '');
 
     setLogo({
-      preview: `data:${getImageMimeType(schoolData.logo)};base64,${schoolData.logo || ''}`,
+      preview: `data:${schoolData.logo};base64,${schoolData.logo || ''}`,
       file: null
     });
 
     setBanner({
-      preview: `data:${getImageMimeType(schoolData.banner)};base64,${schoolData.banner || ''}`,
+      preview: `data:${schoolData.banner};base64,${schoolData.banner || ''}`,
       file: null
     });
   };
@@ -156,7 +144,7 @@ export default function ProfilSekolah() {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        const base64 = reader.result.split(',')[1]; // ambil bagian base64-nya aja
+        const base64 = reader.result;
         resolve(base64);
       };
       reader.onerror = (error) => reject(error);
