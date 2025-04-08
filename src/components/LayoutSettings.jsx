@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 import SettingsUjian from './SettingsUjian';
 
-export default function LayoutSettings({ desc, role }) {
+export default function LayoutSettings({ role }) {
   const [displaySuccess, setDisplaySuccess] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -49,10 +49,7 @@ export default function LayoutSettings({ desc, role }) {
   }
 
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h2" variant="h2" sx={{ mb: 5 }}>
-        {desc}
-      </Typography>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 4 }}>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={6}>
         <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -86,6 +83,5 @@ export default function LayoutSettings({ desc, role }) {
 
 
 LayoutSettings.propTypes = {
-  desc: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
 }

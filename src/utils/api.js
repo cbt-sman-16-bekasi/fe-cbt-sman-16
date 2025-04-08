@@ -33,7 +33,6 @@ const api = (() => {
       removeAccessToken();
       window.location.href = '/login';
     }
-    console.log(response);
     return response;
   }
 
@@ -411,7 +410,6 @@ const api = (() => {
       });
 
       const responseJson = await response.json();
-      console.log(responseJson);
 
       const { status, message, data } = responseJson;
       if (status !== 'success') {
@@ -505,10 +503,10 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    const { message, data } = responseJson;
 
-    if (!response.ok) {
-      throw new Error(message || 'Gagal membuat guru baru');
+    const { status, message, data } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
     }
 
     return data;

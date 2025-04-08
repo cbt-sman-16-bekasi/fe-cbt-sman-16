@@ -74,7 +74,7 @@ export default function TambahAkses({ alert, roles, addAccess }) {
       resetInputs();
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
-      alert('Gagal menambahkan akses, coba lagi.');
+      alert('error', 'Gagal menambahkan akses, coba lagi.');
     } finally {
       setIsSubmitting(false);
     }

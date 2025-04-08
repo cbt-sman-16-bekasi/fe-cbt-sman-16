@@ -2,7 +2,6 @@ import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, Card, CardContent } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
@@ -12,7 +11,7 @@ import ImportDataSiswa from './ImportDataSiswa';
 import { asyncCreateStudent } from '../states/students/action';
 import { useDispatch } from 'react-redux';
 
-export default function LayoutImport({ desc }) {
+export default function LayoutImport() {
   const location = useLocation();
   const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
   const navigate = useNavigate();
@@ -60,10 +59,7 @@ export default function LayoutImport({ desc }) {
   };
 
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Typography component="h1" variant="h2" sx={{ mb: 5 }}>
-        {desc}
-      </Typography>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 4 }}>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={6}>
         <Grid size={{ lg: 1.5 }} sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -101,7 +97,3 @@ export default function LayoutImport({ desc }) {
   );
 }
 
-
-LayoutImport.propTypes = {
-  desc: PropTypes.string.isRequired,
-}
