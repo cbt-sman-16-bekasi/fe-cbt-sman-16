@@ -495,11 +495,12 @@ const api = (() => {
     return responseJson.data;
   }
 
-  async function createTeacher({ name, nuptk, role, username }) {
+  async function createTeacher({ name, nuptk, role, password, username }) {
+    console.log({ name, nuptk, role, password, username });
     const response = await _fetchWithAuth('/academic/teacher/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, nuptk, role, username }),
+      body: JSON.stringify({ name, nuptk, role, password, username }),
     });
 
     const responseJson = await response.json();
