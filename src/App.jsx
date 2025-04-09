@@ -128,8 +128,8 @@ function App(props) {
               width: "100vw",
             }} >
             <Routes>
-              <Route path='/login' element={<LoginPage schoolData={schoolData} />} />
-              <Route path='/register' element={<RegisterPage schoolData={schoolData} />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/register' element={<RegisterPage />} />
             </Routes>
           </Box >
         </AppTheme>
