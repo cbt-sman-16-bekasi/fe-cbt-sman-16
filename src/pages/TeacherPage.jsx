@@ -11,11 +11,12 @@ import {ExamCreateQuestionPage} from "./exams/add/ExamCreateQuestionPage.jsx";
 import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
 import {ExamSessionCreatePage} from "./examsession/add/ExamSessionCreatePage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
+import MainGrid from "../components/MainGrid.jsx";
 
 function TeacherPage({ role }) {
   return (
     <Routes>
-      {/*<Route path="dashboard" element={<MainGrid role={role} />} />*/}
+      <Route path="dashboard" element={<MainGrid role={role} />} />
 
       <Route path="bank-soal" element={<BankQuestionListPage />} />
       <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
