@@ -66,10 +66,10 @@ export default function LayoutTambah({ desc }) {
     }
   };
 
-  const onAddAccess = async ({ name, nuptk, role, username }) => {
+  const onAddAccess = async ({ name, nuptk, password, role, username }) => {
     try {
 
-      const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username }));
+      const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username, password }));
       handleShowAlert('success', 'Akses berhasil ditambahkan!');
       return result
     } catch (error) {
