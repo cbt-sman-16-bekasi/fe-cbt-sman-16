@@ -60,9 +60,9 @@ export default function LayoutEditData({ desc }) {
     }, 3000);
   };
 
-  const onUpdateAccess = async ({ id, name, nuptk, role, username }) => {
+  const onUpdateAccess = async ({ id, name, nuptk, password, role, username }) => {
     try {
-      await dispatch(asyncUpdateTeacher({ id, name, nuptk, role, username }));
+      await dispatch(asyncUpdateTeacher({ id, name, nuptk, role, username, password }));
       handleShowAlert('success', 'Update berhasil!');
     } catch (error) {
       console.error('Update error:', error);
