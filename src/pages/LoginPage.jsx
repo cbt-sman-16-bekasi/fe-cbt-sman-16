@@ -4,9 +4,11 @@ import {
 import LoginForm from "../components/LoginForm";
 import { useDispatch } from "react-redux";
 import { asyncSetAuthUser } from "../states/authUser/action";
+import PropTypes from "prop-types";
 
-const LoginPage = () => {
+const LoginPage = ({ schoolData }) => {
   const dispatch = useDispatch()
+  console.log(schoolData)
 
   const onLogin = ({ password, username }) => {
     dispatch(asyncSetAuthUser({ password, username }));
@@ -46,3 +48,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+LoginPage.propTypes = {
+  schoolData: PropTypes.object.isRequired,
+}

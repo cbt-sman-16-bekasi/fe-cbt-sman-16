@@ -15,7 +15,7 @@ import {
 import { Person, Lock } from "@mui/icons-material";
 import PropTypes from "prop-types";
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ login, schoolData }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +37,9 @@ const LoginForm = ({ login }) => {
       >
         {/* Logo */}
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <img src="/logo-sman16.png" alt="Logo Sekolah" width={90} height={90} />
+          {schoolData && (
+            <img src={schoolData.logo} alt="Logo Sekolah" width={90} height={90} />
+          )}
         </Box>
 
         {/* Judul */}
@@ -127,4 +129,5 @@ export default LoginForm;
 
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
+  schoolData: PropTypes.object.isRequired,
 };

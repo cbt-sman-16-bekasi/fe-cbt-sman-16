@@ -28,6 +28,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import { asyncPreloadProcess } from './states/isPreload/action.js';
 import { asyncUnsetAuthUser } from './states/authUser/action.js';
 import Typography from "@mui/material/Typography";
+import { asyncGetSchoolInfo } from './states/school/action.js';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -37,26 +38,36 @@ const xThemeComponents = {
 };
 
 function App(props) {
+  const dispatch = useDispatch();
+  const schoolData = useSelector((state) => state.school.schoolInfo);
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const accessToken = localStorage.getItem("accessToken");
   const [title, setTitle] = useState('')
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const userRole = authUser?.role?.code.toLowerCase();
 
-  const onUserLogout = () => {
-    dispatch(asyncUnsetAuthUser())
-  }
+  useEffect(() => {
+    if (authUser?.SchoolCode) {
+      dispatch(asyncGetSchoolInfo(authUser.SchoolCode));
+    }
+  }, [authUser?.SchoolCode, dispatch]);
 
-  const routeMap = {
-    superadmin: <SuperAdminPage role={userRole} />,
-    admin: <AdminPage role={userRole} />,
-    teacher: <TeacherPage role={userRole} />,
-  };
+  useEffect(() => {
+    if (schoolData?.logo && schoolData.logo.startsWith("data:image")) {
+      const oldIcons = document.querySelectorAll("link[rel*='icon']");
+      oldIcons.forEach((el) => el.parentNode.removeChild(el));
+
+      const link = document.createElement("link");
+      link.type = "image/png";
+      link.rel = "icon";
+      link.href = schoolData.logo;
+      document.head.appendChild(link);
+    }
+  }, [schoolData?.logo]);
 
   useEffect(() => {
     const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
@@ -93,6 +104,16 @@ function App(props) {
     document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
   }, [location, userRole]);
 
+  const onUserLogout = () => {
+    dispatch(asyncUnsetAuthUser())
+  }
+
+  const routeMap = {
+    superadmin: <SuperAdminPage role={userRole} />,
+    admin: <AdminPage role={userRole} />,
+    teacher: <TeacherPage role={userRole} />,
+  };
+
   if (isPreload) null
 
   if (!authUser || !accessToken) {
@@ -107,8 +128,8 @@ function App(props) {
               width: "100vw",
             }} >
             <Routes>
-              <Route path='/login' element={<LoginPage />} />
-              <Route path='/register' element={<RegisterPage />} />
+              <Route path='/login' element={<LoginPage schoolData={schoolData} />} />
+              <Route path='/register' element={<RegisterPage schoolData={schoolData} />} />
             </Routes>
           </Box >
         </AppTheme>
@@ -121,8 +142,8 @@ function App(props) {
       <AppTheme {...props} themeComponents={xThemeComponents}>
         <CssBaseline enableColorScheme />
         <Box sx={{ display: 'flex', width: '100%' }}>
-          <SideMenu user={authUser} role={userRole} logout={onUserLogout} />
-          <AppNavbar user={authUser} role={userRole} logout={onUserLogout} />
+          <SideMenu user={authUser} role={userRole} schoolData={schoolData} logout={onUserLogout} />
+          <AppNavbar user={authUser} role={userRole} schoolData={schoolData} logout={onUserLogout} />
 
           <Box
             component="main"
