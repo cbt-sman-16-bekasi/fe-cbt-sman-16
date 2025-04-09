@@ -29,7 +29,7 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export default function AppNavbar({ user, role, logout }) {
+export default function AppNavbar({ user, role, logout, schoolData }) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -64,8 +64,9 @@ export default function AppNavbar({ user, role, logout }) {
             spacing={1}
             sx={{ justifyContent: 'center', mr: 'auto' }}
           >
-            {/* <CustomIcon /> */}
-            <img src="/logo-sman16.png" alt="logo sekolah" className='h-[35px]' />
+            {schoolData && (
+              <img src={schoolData.logo} alt="Logo Sekolah" className='h-[35px]' />
+            )}
             <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
               Dashboard
             </Typography>
@@ -109,6 +110,7 @@ export function CustomIcon() {
 
 AppNavbar.propTypes = {
   user: PropTypes.object.isRequired,
+  schoolData: PropTypes.object.isRequired,
   role: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
 }
