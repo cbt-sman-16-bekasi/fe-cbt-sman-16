@@ -28,16 +28,23 @@ export default function ImportDataSiswa({ addStudents, alert }) {
   }, [dispatch])
 
   const handleSubmit = async () => {
-    showLoading()
-    await useApi.uploadFile({
-      url: `/academic/student/template/upload`,
-      file: file,
-      fieldName: 'file'
-    });
+    try {
 
-    showModal("Success upload student", "success")
-    hideLoading();
-    navigate(-1);
+      showLoading()
+      const { message, status } = await useApi.uploadFile({
+        url: `/academic/student/template/upload`,
+        file: file,
+        fieldName: 'file'
+      });
+
+      showModal(message, status)
+      hideLoading();
+      navigate(-1);
+    } catch (e) {
+      console.log("Error uplaod student", e)
+      hideLoading()
+      showModal("Failed upload student", "error")
+    }
   };
 
   const handleDownloadTemplate = async () => {
