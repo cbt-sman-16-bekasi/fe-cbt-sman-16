@@ -24,6 +24,7 @@ import { asyncCreateTeacher } from '../states/teachers/action';
 import { asyncGetClassCode, asyncGetSubjects, asyncGetUserRoles } from '../states/common/action';
 import { asyncCreateExam } from '../states/exams/action';
 import { asyncCreateTypeExam } from '../states/typeExams/action';
+import useApi from "../utils/rest/api.js";
 
 export default function LayoutTambah({ desc }) {
   const roles = useSelector((state) => state.common.userRoles);
@@ -68,13 +69,16 @@ export default function LayoutTambah({ desc }) {
 
   const onAddAccess = async ({ name, nuptk, password, role, username }) => {
     try {
-
-      const result = await dispatch(asyncCreateTeacher({ name, nuptk, role, username, password }));
-      handleShowAlert('success', 'Akses berhasil ditambahkan!');
-      return result
+      const {message, status } = await useApi.createOrModify({
+        url: '/academic/teacher/create',
+        body: { name, nuptk, role, username, password },
+        method: 'POST'
+      });
+      handleShowAlert(status, message);
+      return status
     } catch (error) {
       console.error('Error saat menambahkan data:', error);
-      handleShowAlert('error', 'Gagal menambahkan siswa.');
+      handleShowAlert('error', 'Gagal menambahkan guru.');
     }
   };
 

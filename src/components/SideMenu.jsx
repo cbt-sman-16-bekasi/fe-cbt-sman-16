@@ -25,7 +25,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu({ user, role, logout }) {
+export default function SideMenu({ user, role, logout, schoolData }) {
   return (
     <Drawer
       variant="permanent"
@@ -47,15 +47,13 @@ export default function SideMenu({ user, role, logout }) {
           p: 1,
         }}
       >
-        <img
-          src="/logo-sman16.png"
-          alt="logo sekolah"
-          style={{
+        {schoolData && (
+          <img src={schoolData.logo} alt="Logo Sekolah" style={{
             width: "100px",
             height: "auto",
             maxWidth: "150px",
-          }}
-        />
+          }} />
+        )}
         <Typography variant='subtitle1' fontWeight='bold' sx={{ color: 'cbtAccents.white' }}>
           CBT SYSTEM SMAN 16 BEKASI
         </Typography>
@@ -127,6 +125,7 @@ export default function SideMenu({ user, role, logout }) {
 
 SideMenu.propTypes = {
   user: PropTypes.object.isRequired,
+  schoolData: PropTypes.object.isRequired,
   role: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
 }
