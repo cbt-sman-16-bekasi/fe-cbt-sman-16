@@ -5,7 +5,7 @@ import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useParams } from 'react-router';
 
-export function useExamCreateHook({ updatePage = false }) {
+export function useStudentCreateHook({ updatePage = false }) {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [classCode, setClassCode] = useState([]);

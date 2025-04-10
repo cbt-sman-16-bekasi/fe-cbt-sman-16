@@ -26,7 +26,7 @@ export default function KodeJenisUjian({ role }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await dispatch(asyncReceiveTypeExams({ size: 1000 }));
+      await dispatch(asyncReceiveTypeExams());
       setLoading(false);
     };
     fetchData();

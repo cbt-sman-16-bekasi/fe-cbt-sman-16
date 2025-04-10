@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
 import { ModeEditOutlined } from "@mui/icons-material";
 import CustomInput from "../../../components/form/FormInputTextField.jsx";
-import { useExamCreateHook } from "./useExamCreateHook.js";
+import { useStudentCreateHook } from "./useStudentCreateHook.js";
 import TiptapEditor from "../../../components/form/TiptapEditor.jsx";
 import PropTypes from "prop-types";
 
-export function ExamCreate({ isUpdatePage = false }) {
+export function StudentCreate({ isUpdatePage = false }) {
   const {
     optionsTypeQuestion,
     optionsTrueOrFalse,
@@ -30,7 +30,7 @@ export function ExamCreate({ isUpdatePage = false }) {
     typeExam, setTypeExam,
     handleSubmitCreate,
     resetForm
-  } = useExamCreateHook({ updatePage: isUpdatePage })
+  } = useStudentCreateHook({ updatePage: isUpdatePage })
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
       <BackWithTitle title={isUpdatePage ? 'Edit Ujian' : 'Tambah Ujian'} />
@@ -96,6 +96,6 @@ export function ExamCreate({ isUpdatePage = false }) {
   )
 }
 
-ExamCreate.propTypes = {
+StudentCreate.propTypes = {
   isUpdatePage: PropTypes.bool
 }

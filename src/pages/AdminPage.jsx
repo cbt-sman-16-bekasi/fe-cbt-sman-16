@@ -18,12 +18,13 @@ import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
 import { ExamSessionCreatePage } from "./examsession/add/ExamSessionCreatePage.jsx";
 import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import ExamDetailPage from "./exams/detail/ExamDetailPage.jsx";
-import {ExamCreateQuestionPage} from "./exams/add/ExamCreateQuestionPage.jsx";
+import { ExamCreateQuestionPage } from "./exams/add/ExamCreateQuestionPage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
 import BankQuestionListPage from "./bank/BankQuestionListPage.jsx";
 import BankQuestionCreatePage from "./bank/add/BankQuestionCreatePage.jsx";
 import DetailBankQuestionPage from "./bank/detail/DetailBankQuestionPage.jsx";
-import {BankCreateQuestionPage} from "./bank/add/BankCreateQuestionPage.jsx";
+import { BankCreateQuestionPage } from "./bank/add/BankCreateQuestionPage.jsx";
+// import { StudentCreate } from "./students/add/StudentCreate.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -46,6 +47,8 @@ function AdminPage({ role }) {
 
       <Route path="data-siswa" element={<DataSiswa role={role} />} />
       <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
+      {/* <Route path="data-siswa/:id/update" element={<StudentCreate isUpdatePage={true} />} /> */}
+
       <Route path="data-siswa/edit/:id" element={<LayoutEditData desc="Edit Data Siswa" />} />
       <Route path="data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
 
@@ -58,7 +61,7 @@ function AdminPage({ role }) {
 
       <Route path="ujian" element={<ExamList />} />
       <Route path="ujian/tambah" element={<ExamCreate />} />
-      <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true}/>} />
+      <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true} />} />
       <Route path="ujian/:id/detail" element={<ExamDetailPage />} />
       <Route path="ujian/:id/detail/question/create" element={<ExamCreateQuestionPage />} />
       <Route path="ujian/:id/detail/question/:questionId/edit" element={<ExamCreateQuestionPage isUpdatePage={true} />} />

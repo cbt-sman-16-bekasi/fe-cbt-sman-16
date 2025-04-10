@@ -11,11 +11,15 @@ import { asyncGetDashboardData } from '../states/common/action';
 import { icons, MenuConfig } from '../config/MenuConfig3';
 
 export default function MainGrid({ role }) {
-  const dashboardData = useSelector((state) => state.common.dashboardData);
   const dispatch = useDispatch();
+  const dashboardData = useSelector((state) => state.common.dashboardData);
+  const authUser = useSelector((state) => state.authUser);
+
+  console.log(dashboardData)
 
   const updatedMenuItems = MenuConfig.map((item) => {
     const keyMap = {
+      '/akses-system': 'total_access',
       '/kelas': 'total_class',
       '/mata-pelajaran': 'total_subject',
       '/data-siswa': 'total_student',
@@ -46,10 +50,10 @@ export default function MainGrid({ role }) {
               Selamat, Anda Berhasil Login!
             </Typography>
             <Typography variant="body1" sx={{ mt: 1 }}>
-              Halo, <b>Nama Admin</b>! Selamat datang di sistem CBT. Saat ini, Anda memiliki status sebagai <b>Super Admin</b>.
+              Halo, <b>{authUser.detail.name}</b>! Selamat datang di sistem CBT. Saat ini, Anda memiliki status sebagai <b>{authUser.role.name}</b>.
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Sebagai <b>SUPER ADMIN</b>, Anda memiliki hak akses penuh untuk:
+              Sebagai <b>{authUser.role.name}</b>, Anda memiliki hak akses penuh untuk:
             </Typography>
             <Box
               component="ul"

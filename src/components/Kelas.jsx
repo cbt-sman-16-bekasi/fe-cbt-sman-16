@@ -28,7 +28,7 @@ export default function Kelas({ role }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await dispatch(asyncReceiveClasses({ size: 1000 }));
+      await dispatch(asyncReceiveClasses());
       setLoading(false);
     };
     fetchData();

@@ -22,7 +22,7 @@ export default function EditDataSiswa({ updateStudent }) {
 
   useEffect(() => {
     dispatch(asyncReceiveStudents())
-    dispatch(asyncReceiveClasses({ size: 1000 }));
+    dispatch(asyncReceiveClasses());
 
     if (id) {
       const selectedStudent = students.records.find((std) => std.ID === parseInt(id));

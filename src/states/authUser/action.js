@@ -25,12 +25,15 @@ function asyncSetAuthUser({ password, username }) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const { token, user } = await api.login({ password, username });
+      const { token, user, detail } = await api.login({ password, username });
+      console.log(token, user, detail);
 
       api.putAccessToken(token);
-      localStorage.setItem('authUser', JSON.stringify(user));
+      const mergedUser = { ...user, detail };
 
-      dispatch(setAuthUserActionCreator(user));
+      localStorage.setItem('authUser', JSON.stringify(mergedUser));
+      dispatch(setAuthUserActionCreator(mergedUser));
+      console.log(mergedUser);
     } catch (error) {
       dispatch(unsetAuthUserActionCreator());
       alert(error.message);

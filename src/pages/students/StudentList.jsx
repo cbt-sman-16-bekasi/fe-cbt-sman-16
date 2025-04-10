@@ -9,7 +9,7 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
 
-const ExamList = () => {
+const StudentList = () => {
   const {
     search,
     setSearch,
@@ -70,4 +70,4 @@ const ExamList = () => {
   )
 }
 
-export default ExamList;
+export default StudentList;

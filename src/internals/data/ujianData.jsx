@@ -22,7 +22,7 @@ export const columns = [
     field: "subject",
     headerName: "NAMA MATA PELAJARAN",
     flex: 1,
-    minWidth: 150 ,
+    minWidth: 150,
     renderCell: (row) => row.subject?.subject || '-'
   },
   {
