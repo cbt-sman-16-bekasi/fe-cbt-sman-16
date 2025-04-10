@@ -496,7 +496,6 @@ const api = (() => {
   }
 
   async function createTeacher({ name, nuptk, role, password, username }) {
-    console.log({ name, nuptk, role, password, username });
     const response = await _fetchWithAuth('/academic/teacher/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

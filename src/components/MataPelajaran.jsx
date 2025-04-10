@@ -26,7 +26,7 @@ export default function MataPelajaran({ role }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await dispatch(asyncReceiveSubjects({ size: 1000 }));
+      await dispatch(asyncReceiveSubjects());
       setLoading(false);
     };
     fetchData();

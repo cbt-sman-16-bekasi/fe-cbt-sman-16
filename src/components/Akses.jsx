@@ -36,7 +36,7 @@ export default function Akses({ role }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      await dispatch(asyncReceiveTeachers({ size: 1000 }));
+      await dispatch(asyncReceiveTeachers());
       setLoading(false);
     };
     fetchData();
