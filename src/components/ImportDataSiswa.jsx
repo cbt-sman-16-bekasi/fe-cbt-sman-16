@@ -37,9 +37,12 @@ export default function ImportDataSiswa({ addStudents, alert }) {
         fieldName: 'file'
       });
 
+      console.log(message, status);
       showModal(message, status)
       hideLoading();
-      navigate(-1);
+      if (status === 'success') {
+        navigate(-1);
+      }
     } catch (e) {
       console.log("Error uplaod student", e)
       hideLoading()

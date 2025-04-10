@@ -49,8 +49,10 @@ export default function EditAkses({ roles, updateAccess }) {
 
     setIsSubmitting(true);
     try {
-      await updateAccess({ id: parseInt(id), name: namaGuru, nuptk, password, role: akses.toUpperCase(), username });
-      resetInputs()
+      const status = await updateAccess({ id: parseInt(id), name: namaGuru, nuptk, password, role: akses.toUpperCase(), username });
+      if (status === 'success') {
+        resetInputs()
+      }
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
       alert('Gagal menambahkan akses, coba lagi.');
