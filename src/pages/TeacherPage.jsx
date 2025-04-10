@@ -12,6 +12,7 @@ import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
 import {ExamSessionCreatePage} from "./examsession/add/ExamSessionCreatePage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
 import MainGrid from "../components/MainGrid.jsx";
+import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 
 function TeacherPage({ role }) {
   return (
@@ -36,6 +37,7 @@ function TeacherPage({ role }) {
       <Route path="sesi-ujian/:id/update" element={<ExamSessionCreatePage isUpdatePage={true} />} />
       <Route path="sesi-ujian/:id/detail" element={<ExamSessionDetailPage />} />
 
+      <Route path="generate-token" element={<GenerateTokenPage />} />
       <Route path="laporan-nilai" element={<LaporanNilai />} />
       {/*<Route path="dashboard" element={<MainGrid role={role} />} />*/}
 

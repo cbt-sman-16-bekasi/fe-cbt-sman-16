@@ -19,6 +19,7 @@ import EditDataSiswa from './EditDataSiswa';
 import { asyncUpdateStudent } from '../states/students/action';
 import EditMapel from './EditMapel';
 import { asyncUpdateSubject } from '../states/subjects/action';
+import useApi from "../utils/rest/api.js";
 
 export default function LayoutEditData({ desc }) {
   const [alertSeverity, setAlertSeverity] = useState('error');
@@ -62,8 +63,13 @@ export default function LayoutEditData({ desc }) {
 
   const onUpdateAccess = async ({ id, name, nuptk, password, role, username }) => {
     try {
-      await dispatch(asyncUpdateTeacher({ id, name, nuptk, role, username, password }));
-      handleShowAlert('success', 'Update berhasil!');
+      const {message, status } = await useApi.createOrModify({
+        url: '/academic/teacher/update/' + id,
+        body: { name, nuptk, role, username, password },
+        method: 'POST'
+      });
+      handleShowAlert(status, message);
+      return status
     } catch (error) {
       console.error('Update error:', error);
       handleShowAlert('error', error.message || 'Gagal mengupdate');

@@ -186,6 +186,13 @@ export const menuConfig = {
       path: '/sesi-ujian',
     },
     {
+      text: 'Generate Token Ujian',
+      title: 'Generate Token Ujian',
+      icon: 'AssignmentRoundedIcon',
+      value: '123',
+      path: '/generate-token',
+    },
+    {
       text: 'Laporan Nilai',
       icon: 'AssignmentRoundedIcon',
       value: '123',

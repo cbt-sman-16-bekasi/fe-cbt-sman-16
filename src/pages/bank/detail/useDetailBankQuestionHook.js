@@ -62,10 +62,10 @@ export function useDetailBankQuestionHook() {
     navigate(`/${userRole}/bank-soal/${code}/detail/question/${idQuestion}/edit?&typeQuestion=${typeQuestion.replaceAll(' ', '_')}`)
   };
 
-  const handleDelete = (message, idQuestion) => {
+    const handleDelete = (message, idQuestion) => {
     showConfirm(message, async () => {
       showLoading()
-      await useApi.delete({url: `/academic/bank/question/${idQuestion}`})
+      await useApi.delete({url: `/academic/bank/question/delete/${idQuestion}`})
       setIsRefresh(!isRefresh)
       hideLoading()
     });

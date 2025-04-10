@@ -38,40 +38,42 @@ export default function TambahAkses({ alert, roles, addAccess }) {
       return;
     }
 
-    const isNuptkExists = teachers.records.some((teacher) => teacher.nuptk === nuptk);
-    if (isNuptkExists) {
-      alert('error', 'NUPTK sudah terdaftar! Silakan gunakan NUPTK lain.');
-      return;
-    }
-
-    const isUserIdExists = teachers.records.some((teacher) => teacher.user_id === parseInt(username));
-    if (isUserIdExists) {
-      alert('error', 'User ID sudah terdaftar! Silakan gunakan yang lain.');
-      return;
-    }
-
-    const isUsernameExists = teachers.records.some((teacher) => teacher.detail_user?.username === username);
-    if (isUsernameExists) {
-      alert('error', 'Username sudah dipakai! Silakan gunakan username lain.');
-      return;
-    }
-
-    const isnameExists = teachers.records.some((teacher) => teacher.name === namaGuru);
-    if (isnameExists) {
-      alert('error', 'Nama sudah dipakai! Silakan gunakan username lain.');
-      return;
-    }
+    // const isNuptkExists = teachers.records.some((teacher) => teacher.nuptk === nuptk);
+    // if (isNuptkExists) {
+    //   alert('error', 'NUPTK sudah terdaftar! Silakan gunakan NUPTK lain.');
+    //   return;
+    // }
+    //
+    // const isUserIdExists = teachers.records.some((teacher) => teacher.user_id === parseInt(username));
+    // if (isUserIdExists) {
+    //   alert('error', 'User ID sudah terdaftar! Silakan gunakan yang lain.');
+    //   return;
+    // }
+    //
+    // const isUsernameExists = teachers.records.some((teacher) => teacher.detail_user?.username === username);
+    // if (isUsernameExists) {
+    //   alert('error', 'Username sudah dipakai! Silakan gunakan username lain.');
+    //   return;
+    // }
+    //
+    // const isnameExists = teachers.records.some((teacher) => teacher.name === namaGuru);
+    // if (isnameExists) {
+    //   alert('error', 'Nama sudah dipakai! Silakan gunakan username lain.');
+    //   return;
+    // }
 
     setIsSubmitting(true);
     try {
-      await addAccess({
+      const status = await addAccess({
         name: namaGuru,
         nuptk,
         password,
         role: akses.toUpperCase(),
         username
       });
-      resetInputs();
+      if (status === 'success') {
+        resetInputs();
+      }
     } catch (error) {
       console.error('Error saat menambahkan akses:', error);
       alert('error', 'Gagal menambahkan akses, coba lagi.');
