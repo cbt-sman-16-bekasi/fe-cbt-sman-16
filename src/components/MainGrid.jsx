@@ -14,6 +14,7 @@ export default function MainGrid({ role }) {
   const dispatch = useDispatch();
   const dashboardData = useSelector((state) => state.common.dashboardData);
   const authUser = useSelector((state) => state.authUser);
+  console.log(authUser)
 
   console.log(dashboardData)
 
@@ -26,7 +27,6 @@ export default function MainGrid({ role }) {
       '/ujian': 'total_exam',
       '/sesi-ujian': 'total_session_exam',
       '/laporan-nilai': 'total_report_exam',
-      '/akses-system': 'total_access',
     };
 
     return {

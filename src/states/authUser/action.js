@@ -29,7 +29,11 @@ function asyncSetAuthUser({ password, username }) {
       console.log(token, user, detail);
 
       api.putAccessToken(token);
-      const mergedUser = { ...user, detail };
+      const safeDetail = {
+        ...detail,
+        name: 'Super Admin',
+      };
+      const mergedUser = { ...user, detail: safeDetail };
 
       localStorage.setItem('authUser', JSON.stringify(mergedUser));
       dispatch(setAuthUserActionCreator(mergedUser));
