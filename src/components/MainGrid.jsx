@@ -22,6 +22,7 @@ export default function MainGrid({ role }) {
       '/ujian': 'total_exam',
       '/sesi-ujian': 'total_session_exam',
       '/laporan-nilai': 'total_report_exam',
+      '/akses-system': 'total_access',
     };
 
     return {
