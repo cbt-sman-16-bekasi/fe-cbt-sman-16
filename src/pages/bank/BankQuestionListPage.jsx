@@ -25,7 +25,8 @@ const BankQuestionListPage = () => {
     handleSettings,
     handleEdit,
     handleDelete,
-    isRefreshList
+    isRefreshList,
+    authUser,
   } = useBankQuestionListHook()
   const bulletPoints = [
     'Penyimpanan Soal: Semua soal dari setiap ujian dan sesi ujian yang dibuat akan disimpan dalam Bank Soal.',
@@ -33,6 +34,7 @@ const BankQuestionListPage = () => {
     'Penambahan Soal: Bapak/Ibu dapat menambahkan soal baru ke dalam Bank Soal untuk memperkaya koleksi soal.',
   ];
 
+  console.log(authUser);
   const messageDelete = () => {
     return (
       <div>
@@ -68,7 +70,7 @@ const BankQuestionListPage = () => {
             </IconButton>
 
             {/* Tombol Edit */}
-            <IconButton
+            { authUser.role.code === 'ADMIN' && (<IconButton
               size="small"
               sx={{
                 bgcolor: "purple",
@@ -78,10 +80,9 @@ const BankQuestionListPage = () => {
               onClick={() => handleEdit(row.ID)}
             >
               <EditIcon />
-            </IconButton>
+            </IconButton>)}
 
-            {/* Tombol Delete */}
-            <IconButton
+            { authUser.role.code === 'ADMIN' && (<IconButton
               size="small"
               sx={{
                 bgcolor: "red",
@@ -91,7 +92,7 @@ const BankQuestionListPage = () => {
               onClick={() => handleDelete(messageDelete(), row.ID)}
             >
               <DeleteIcon />
-            </IconButton>
+            </IconButton>)}
           </div>
         );
       },

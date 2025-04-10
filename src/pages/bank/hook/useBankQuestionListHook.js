@@ -40,6 +40,7 @@ export function useBankQuestionListHook() {
   };
 
   return {
+    authUser,
     userRole,
     search, setSearch,
     navigate,
