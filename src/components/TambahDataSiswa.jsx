@@ -44,8 +44,8 @@ export default function TambahDataSiswa({ alert, addStudent }) {
 
 
   useEffect(() => {
-    dispatch(asyncReceiveStudents())
-    dispatch(asyncReceiveClasses());
+    dispatch(asyncReceiveStudents({ size: 1000}))
+    dispatch(asyncReceiveClasses( {size: 1000}));
   }, [dispatch])
 
   function resetInputs() {

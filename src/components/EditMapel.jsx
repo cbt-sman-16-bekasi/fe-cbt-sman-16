@@ -20,8 +20,8 @@ export default function EditMapel({ alert, classCodes, updateSubject }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncGetSubjects());
-    dispatch(asyncReceiveSubjects());
+    dispatch(asyncGetSubjects({size: 1000}));
+    dispatch(asyncReceiveSubjects({size: 1000}));
   }, [dispatch])
 
   useEffect(() => {

@@ -16,7 +16,7 @@ export default function TambahMapel({ alert, classCodes, subjectCodes, addSubjec
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(asyncReceiveSubjects())
+    dispatch(asyncReceiveSubjects({size: 1000}))
   }, [dispatch])
 
   function resetInputs() {

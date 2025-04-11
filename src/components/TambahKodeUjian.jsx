@@ -20,7 +20,7 @@ export default function TambahKodeUjian({ alert, roles, addTypeExams }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncReceiveTypeExams())
+    dispatch(asyncReceiveTypeExams({size: 1000}))
   }, [dispatch])
 
   function resetInputs() {

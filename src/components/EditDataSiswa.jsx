@@ -21,8 +21,8 @@ export default function EditDataSiswa({ updateStudent }) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(asyncReceiveStudents())
-    dispatch(asyncReceiveClasses());
+    dispatch(asyncReceiveStudents({size: 1000}))
+    dispatch(asyncReceiveClasses({size: 1000}));
 
     if (id) {
       const selectedStudent = students.records.find((std) => std.ID === parseInt(id));
