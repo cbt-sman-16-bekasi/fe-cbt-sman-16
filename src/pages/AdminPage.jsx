@@ -24,15 +24,20 @@ import BankQuestionListPage from "./bank/BankQuestionListPage.jsx";
 import BankQuestionCreatePage from "./bank/add/BankQuestionCreatePage.jsx";
 import DetailBankQuestionPage from "./bank/detail/DetailBankQuestionPage.jsx";
 import { BankCreateQuestionPage } from "./bank/add/BankCreateQuestionPage.jsx";
+import { AccessCreate } from "./access/add/AccessCreate.jsx";
+import AccessList from "./access/AccessList.jsx";
+import StudentList from "./students/StudentList.jsx";
+import { StudentCreate } from "./students/add/StudentCreate.jsx";
 // import { StudentCreate } from "./students/add/StudentCreate.jsx";
 
 function AdminPage({ role }) {
   return (
     <Routes>
       <Route path="dashboard" element={<MainGrid role={role} />} />
-      <Route path="akses-system" element={<Akses role={role} />} />
-      <Route path="akses-system/tambah" element={<LayoutTambah desc="Tambah Akses" />} />
-      <Route path="akses-system/edit/:id" element={<LayoutEditData desc="Edit Akses" />} />
+
+      <Route path="akses-system" element={<AccessList />} />
+      <Route path="akses-system/tambah" element={<AccessCreate />} />
+      <Route path="akses-system/:id/update" element={<AccessCreate isUpdatePage={true} />} />
 
       <Route path="kelas" element={<Kelas role={role} />} />
       <Route path="kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
@@ -45,12 +50,14 @@ function AdminPage({ role }) {
       <Route path="kode-jenis-ujian" element={<KodeJenisUjian role={role} />} />
       <Route path="kode-jenis-ujian/tambah" element={<LayoutTambah desc="Kode Jenis Ujian" />} />
 
-      <Route path="data-siswa" element={<DataSiswa role={role} />} />
-      <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} />
-      {/* <Route path="data-siswa/:id/update" element={<StudentCreate isUpdatePage={true} />} /> */}
-
-      <Route path="data-siswa/edit/:id" element={<LayoutEditData desc="Edit Data Siswa" />} />
+      <Route path="data-siswa" element={<StudentList />} />
+      <Route path="data-siswa/tambah" element={<StudentCreate />} />
+      <Route path="data-siswa/:id/update" element={<StudentCreate isUpdatePage={true} />} />
       <Route path="data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
+
+      {/* <Route path="data-siswa" element={<DataSiswa role={role} />} /> */}
+      {/* <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} /> */}
+      {/* <Route path="data-siswa/edit/:id" element={<LayoutEditData desc="Edit Data Siswa" />} /> */}
 
       <Route path="bank-soal" element={<BankQuestionListPage />} />
       <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
