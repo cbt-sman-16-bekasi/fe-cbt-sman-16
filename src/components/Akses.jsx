@@ -18,6 +18,7 @@ export default function Akses({ role }) {
   const teachers = useSelector((state) => state.teachers.teachers)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(teachers)
 
   const rows = formatRows(teachers.records);
 

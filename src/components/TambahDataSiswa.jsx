@@ -42,7 +42,6 @@ export default function TambahDataSiswa({ alert, addStudent }) {
   const [namaKelas, setNamaKelas] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   useEffect(() => {
     dispatch(asyncReceiveStudents())
     dispatch(asyncReceiveClasses());

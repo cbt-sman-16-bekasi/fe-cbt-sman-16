@@ -14,9 +14,6 @@ export default function MainGrid({ role }) {
   const dispatch = useDispatch();
   const dashboardData = useSelector((state) => state.common.dashboardData);
   const authUser = useSelector((state) => state.authUser);
-  console.log(authUser)
-
-  console.log(dashboardData)
 
   const updatedMenuItems = MenuConfig.map((item) => {
     const keyMap = {

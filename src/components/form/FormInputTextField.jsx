@@ -1,34 +1,34 @@
-import {Chip, MenuItem, TextField} from "@mui/material";
+import { Chip, MenuItem, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DateTimePicker} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const CustomInput = ({
-                       label,
-                       value,
-                       onChange,
-                       type = "text",
-                       options = [],
-                       placeholder = "",
-                       fullWidth = true,
-                       variant = "outlined",
-                       multiple = false,
-                       sx = {},
-                     }) => {
+  label,
+  value,
+  onChange,
+  type = "text",
+  options = [],
+  placeholder = "",
+  fullWidth = true,
+  variant = "outlined",
+  multiple = false,
+  sx = {},
+}) => {
   return (
-    <Grid item size={{ md: 12, lg: 6 }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
+    <Grid size={{ md: 12, lg: 6 }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
       {label && (
         <Typography variant="body1" fontWeight="bold">
           {label} {multiple === true}
         </Typography>
       )}
-      { multiple ? (<Select
+      {multiple ? (<Select
         labelId="multiple-subject-label"
         multiple
         value={value}
@@ -42,7 +42,7 @@ const CustomInput = ({
             })}
           </div>
         )}
-       variant={variant}>
+        variant={variant}>
         {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

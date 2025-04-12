@@ -5,20 +5,20 @@ import Grid from "@mui/material/Grid2";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
 import { ModeEditOutlined } from "@mui/icons-material";
 import CustomInput from "../../../components/form/FormInputTextField.jsx";
-import { useStudentCreateHook } from "./useStudentCreateHook.js";
+import { useAccessCreateHook } from "./useAccessCreateHook.js";
 import PropTypes from "prop-types";
 
-export function StudentCreate({ isUpdatePage = false }) {
+export function AccessCreate({ isUpdatePage = false }) {
   const {
-    nisn, setNisn,
     name, setName,
-    gender, setGender,
-    classCode, setClassCode,
-    optionsClass,
-    optionsGender,
+    nuptk, setNuptk,
+    username, setUsername,
+    password, setPassword,
+    access, setAccess,
+    optionsAccess,
     handleSubmitCreate,
     resetForm,
-  } = useStudentCreateHook({ updatePage: isUpdatePage })
+  } = useAccessCreateHook({ updatePage: isUpdatePage })
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -27,20 +27,29 @@ export function StudentCreate({ isUpdatePage = false }) {
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Ujian" iconBackground="red" />
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
+
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="NISN" fullWidth={true} type="text" value={nisn} onChange={(c) => setNisn(c.target.value)} placeholder="Nisn Siswa" />
+            <CustomInput label="NUPTK" fullWidth={true} type="text" value={nuptk} onChange={(c) => setNuptk(c.target.value)} placeholder="nuptk" />
 
-            <CustomInput label="Nama Siswa" fullWidth={true} value={name}
+            <CustomInput label="Nama Guru" fullWidth={true} value={name}
               onChange={(c) => setName(c.target.value)}
-              placeholder="Nama Siswa" />
+              placeholder="Nama Guru" />
+
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="Jenis Kelamin" fullWidth={true} options={optionsGender} value={gender} onChange={(c) => setGender(c.target.value)} placeholder="Jenis Kelamin" />
+            <CustomInput label="Username" fullWidth={true} value={username} onChange={(c) => setUsername(c.target.value)} placeholder="Username" />
 
-            <CustomInput label="Kelas" fullWidth={true} options={optionsClass} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="UH" />
+            <CustomInput label="Password" fullWidth={true} value={password} onChange={(c) => setPassword(c.target.value)} placeholder="password" />
+
+          </Grid>
+
+          <Grid container spacing={3} alignItems="center" columns={12}>
+
+            <CustomInput label="Akses" fullWidth={true} options={optionsAccess} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Akses" />
+
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2} mt={3}>
@@ -52,6 +61,7 @@ export function StudentCreate({ isUpdatePage = false }) {
             <Grid size={{ lg: 1.5 }}>
               <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleSubmitCreate}>Simpan</Button>
             </Grid>
+
           </Grid>
 
         </CardContent>
@@ -61,6 +71,6 @@ export function StudentCreate({ isUpdatePage = false }) {
   )
 }
 
-StudentCreate.propTypes = {
+AccessCreate.propTypes = {
   isUpdatePage: PropTypes.bool
 }
