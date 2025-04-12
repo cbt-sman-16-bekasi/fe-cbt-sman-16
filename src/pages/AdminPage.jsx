@@ -1,10 +1,6 @@
 import { Route, Routes } from "react-router"
 import MainGrid from '../components/MainGrid';
-import Akses from '../components/Akses';
-import Kelas from '../components/Kelas';
-import MataPelajaran from '../components/MataPelajaran';
 import KodeJenisUjian from '../components/KodeJenisUjian';
-import DataSiswa from '../components/DataSiswa';
 import LaporanNilai from '../components/LaporanNilai';
 import LayoutTambah from '../components/LayoutTambah';
 import LayoutImport from '../components/LayoutImport';
@@ -28,7 +24,9 @@ import { AccessCreate } from "./access/add/AccessCreate.jsx";
 import AccessList from "./access/AccessList.jsx";
 import StudentList from "./students/StudentList.jsx";
 import { StudentCreate } from "./students/add/StudentCreate.jsx";
-// import { StudentCreate } from "./students/add/StudentCreate.jsx";
+import ClassesList from "./classes/ClassesList.jsx";
+import { ClassesCreate } from "./classes/add/ClassesCreate.jsx";
+import SubjectList from "./subjects/SubjectList.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -39,11 +37,13 @@ function AdminPage({ role }) {
       <Route path="akses-system/tambah" element={<AccessCreate />} />
       <Route path="akses-system/:id/update" element={<AccessCreate isUpdatePage={true} />} />
 
-      <Route path="kelas" element={<Kelas role={role} />} />
-      <Route path="kelas/tambah" element={<LayoutTambah desc="Tambah Kelas" />} />
-      <Route path="kelas/edit/:id" element={<LayoutEditData desc="Edit Kelas" />} />
+      <Route path="kelas" element={<ClassesList />} />
+      <Route path="kelas/tambah" element={<ClassesCreate />} />
+      <Route path="kelas/:id/update" element={<ClassesCreate isUpdatePage={true} />} />
 
-      <Route path="mata-pelajaran" element={<MataPelajaran role={role} />} />
+      <Route path="mata-pelajaran" element={<SubjectList />} />
+
+      {/* <Route path="mata-pelajaran" element={<MataPelajaran role={role} />} /> */}
       <Route path="mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
       <Route path="mata-pelajaran/edit/:id" element={<LayoutEditData desc="Edit Mata Pelajaran" />} />
 
@@ -54,10 +54,6 @@ function AdminPage({ role }) {
       <Route path="data-siswa/tambah" element={<StudentCreate />} />
       <Route path="data-siswa/:id/update" element={<StudentCreate isUpdatePage={true} />} />
       <Route path="data-siswa/import" element={<LayoutImport desc="Data Siswa" />} />
-
-      {/* <Route path="data-siswa" element={<DataSiswa role={role} />} /> */}
-      {/* <Route path="data-siswa/tambah" element={<LayoutTambah desc="Data Siswa" />} /> */}
-      {/* <Route path="data-siswa/edit/:id" element={<LayoutEditData desc="Edit Data Siswa" />} /> */}
 
       <Route path="bank-soal" element={<BankQuestionListPage />} />
       <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
