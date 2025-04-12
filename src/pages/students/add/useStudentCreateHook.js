@@ -3,7 +3,6 @@ import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useParams } from 'react-router';
 import useStudentApi from '../../../utils/rest/student.js';
-import useClassesApi from '../../../utils/rest/classes.js';
 import useMasterController from '../../../utils/rest/master.js';
 
 export function useStudentCreateHook({ updatePage = false }) {

@@ -19,9 +19,9 @@ export function ClassesCreate({ isUpdatePage = false }) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
-      <BackWithTitle title={isUpdatePage ? 'Edit Kelas' : 'Tambah Kelas'} />
+      <BackWithTitle />
 
-      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Ujian" iconBackground="red" />
+      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text={isUpdatePage ? "Detail Kelas" : 'Tambah Kelas'} iconBackground="red" />
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 

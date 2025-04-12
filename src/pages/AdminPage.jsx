@@ -1,13 +1,10 @@
 import { Route, Routes } from "react-router"
 import MainGrid from '../components/MainGrid';
-import KodeJenisUjian from '../components/KodeJenisUjian';
 import LaporanNilai from '../components/LaporanNilai';
-import LayoutTambah from '../components/LayoutTambah';
 import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
-import LayoutEditData from "../components/LayoutEditData";
 import ExamList from "./exams/ExamList.jsx";
 import { ExamCreate } from "./exams/add/ExamCreate.jsx";
 import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
@@ -27,11 +24,20 @@ import { StudentCreate } from "./students/add/StudentCreate.jsx";
 import ClassesList from "./classes/ClassesList.jsx";
 import { ClassesCreate } from "./classes/add/ClassesCreate.jsx";
 import SubjectList from "./subjects/SubjectList.jsx";
+import { SubjectCreate } from "./subjects/add/SubjectCreate.jsx";
+import TypeExamList from "./typeExams/TypeExamList.jsx";
+import { TypeExamCreate } from "./typeExams/add/TypeExamCreate.jsx";
+import TeacherList from "./teacher/TeacherList.jsx";
+import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
 
 function AdminPage({ role }) {
   return (
     <Routes>
       <Route path="dashboard" element={<MainGrid role={role} />} />
+
+      <Route path="guru" element={<TeacherList />} />
+      <Route path="guru/tambah" element={<TeacherCreate />} />
+      <Route path="guru/:id/update" element={<TeacherCreate isUpdatePage={true} />} />
 
       <Route path="akses-system" element={<AccessList />} />
       <Route path="akses-system/tambah" element={<AccessCreate />} />
@@ -42,13 +48,12 @@ function AdminPage({ role }) {
       <Route path="kelas/:id/update" element={<ClassesCreate isUpdatePage={true} />} />
 
       <Route path="mata-pelajaran" element={<SubjectList />} />
+      <Route path="mata-pelajaran/tambah" element={<SubjectCreate />} />
+      <Route path="mata-pelajaran/:id/update" element={<SubjectCreate isUpdatePage={true} />} />
 
-      {/* <Route path="mata-pelajaran" element={<MataPelajaran role={role} />} /> */}
-      <Route path="mata-pelajaran/tambah" element={<LayoutTambah desc="Tambah Mata Pelajaran" />} />
-      <Route path="mata-pelajaran/edit/:id" element={<LayoutEditData desc="Edit Mata Pelajaran" />} />
-
-      <Route path="kode-jenis-ujian" element={<KodeJenisUjian role={role} />} />
-      <Route path="kode-jenis-ujian/tambah" element={<LayoutTambah desc="Kode Jenis Ujian" />} />
+      <Route path="kode-jenis-ujian" element={<TypeExamList />} />
+      <Route path="kode-jenis-ujian/tambah" element={<TypeExamCreate />} />
+      <Route path="kode-jenis-ujian/:id/update" element={<TypeExamCreate isUpdatePage={true} />} />
 
       <Route path="data-siswa" element={<StudentList />} />
       <Route path="data-siswa/tambah" element={<StudentCreate />} />

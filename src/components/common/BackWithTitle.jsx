@@ -9,8 +9,8 @@ export default function BackWithTitle({ title, icon }) {
   const navigate = useNavigate();
   return (
     <>
-      <Grid container spacing={2} sx={{ display: "flex", justifyContent: "flex-start", mb: 3, alignItems: "center" }}>
-        <Grid size={{ xs: 3 / 2, sm: 2, md: 1 }}>
+      <Grid container spacing={2} columns={12} sx={{ display: "flex", justifyContent: "flex-start", mb: 3, alignItems: "center" }}>
+        <Grid size={{ sm: 2 }} sx={{ maxWidth: 110 }}>
           <Button fullWidth variant="contained" color="cbtPrimary"
             onClick={async () => await navigate(-1)}
             startIcon={<ArrowBack />}> Kembali</Button>

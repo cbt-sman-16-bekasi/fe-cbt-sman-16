@@ -29,7 +29,7 @@ const StudentList = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
+      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to={`/${userRole}/data-siswa/tambah`}>
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>

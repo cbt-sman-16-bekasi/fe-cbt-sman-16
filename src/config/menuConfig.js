@@ -89,13 +89,26 @@ export const menuConfig = {
       path: '/dashboard',
     },
     {
+      text: 'Data Guru',
+      title: 'Data Guru',
+      icon: 'PeopleRoundedIcon',
+      value: '123',
+      path: '/guru',
+    },
+    {
       text: 'Akses Sistem',
       title: 'Akses Sistem',
       icon: 'AnalyticsRoundedIcon',
       value: '123',
       path: '/akses-system',
     },
-    { text: 'Kelas', title: 'Kelas', icon: 'PeopleRoundedIcon', value: '123', path: '/kelas' },
+    {
+      text: 'Kelas',
+      title: 'Kelas',
+      icon: 'PeopleRoundedIcon',
+      value: '123',
+      path: '/kelas',
+    },
     {
       text: 'Mata Pelajaran',
       title: 'Mata Pelajaran',

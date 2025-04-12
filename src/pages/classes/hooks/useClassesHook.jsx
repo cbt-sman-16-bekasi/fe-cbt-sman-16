@@ -65,18 +65,7 @@ export function useClassesHook() {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'left' }}>
-          Ujian ini memiliki keterkaitan dengan <strong>beberapa data penting</strong>, seperti:
-        </p>
-        <ul style={{ paddingLeft: 18, marginTop: 4, textAlign: 'left' }}>
-          <li>📌 Daftar <strong>Session Ujian</strong></li>
-          <li>📌 Data <strong>Laporan Sesi</strong></li>
-          <li>📌 Relasi dengan peserta ujian</li>
-        </ul>
-        <p style={{ marginTop: 12, color: '#b91c1c', textAlign: 'left' }}>
-          Menghapus ujian ini akan <strong>menghilangkan semua data yang terkait</strong> secara permanen dan tidak dapat dikembalikan.
-        </p>
-        <p style={{ marginTop: 8, textAlign: 'left' }}>
-          Apakah kamu yakin ingin melanjutkan proses <strong>hapus ujian</strong> ini?
+          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Kelas</strong> ini?
         </p>
       </div>
     )

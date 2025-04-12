@@ -1,8 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Alert, AlertTitle, Button, InputAdornment, TextField } from "@mui/material";
-import { RocketLaunch } from "@mui/icons-material";
-import SettingsIcon from "@mui/icons-material/Settings";
+import { Button, InputAdornment, TextField } from "@mui/material";
 import { useClassesHook } from "./hooks/useClassesHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -20,16 +18,7 @@ const ClassesList = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ sm: 12 }}>
-          <Alert icon={<RocketLaunch fontSize="small" color="info" />} variant="outlined" severity="info" sx={{ p: 1 }}>
-            <AlertTitle fontSize="medium">Perhatian!</AlertTitle>
-            Untuk menambahkan soal di setaip ujian, silahkan klik tombol <b>setting</b> <SettingsIcon sx={{ verticalAlign: "middle", fontSize: 18, color: "black", backgroundColor: 'yellow' }} />
-          </Alert>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
+      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to={`/${userRole}/kelas/tambah`}>
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>

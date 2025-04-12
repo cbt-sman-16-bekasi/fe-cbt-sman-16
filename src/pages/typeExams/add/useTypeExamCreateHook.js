@@ -4,42 +4,41 @@ import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useParams } from 'react-router';
 import useClassesApi from '../../../utils/rest/classes.js';
-import useSubjectApi from '../../../utils/rest/subject.js';
+import useExamTypeApi from '../../../utils/rest/examtype.js';
+import { cbtColor } from '../../../../shared-theme/themePrimitives.jsx';
 
-export function useSubjectCreateHook({ updatePage = false }) {
+export function useTypeExamCreateHook({ updatePage = false }) {
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
 
-  const [subject, setSubject] = useState('');
+  const [examName, setExamName] = useState('');
   const [classCode, setClassCode] = useState('');
-  const [optionsSubjects, setoptionsSubjects] = useState('');
-  const [optionsClassCode, setoptionsClassCode] = useState('');
+  const [access, setAccess] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [optionsUserRoles, setoptionsUserRoles] = useState('');
+  const optionsColor = Object.values(cbtColor.accents).slice(0, -2);
 
   useEffect(() => {
     async function fetchData() {
       showLoading();
-      const { data: classCodes } = await useMasterController.allClassCode();
-      const { data: subjectNames } = await useMasterController.allSubject();
-
-      setoptionsClassCode(
-        classCodes.map((s) => {
-          return { label: s.name, value: s.code };
-        })
-      );
-
-      setoptionsSubjects(
-        subjectNames.map((s) => {
-          return { label: s.subject, value: s.code };
-        })
+      const { data: userRoles } = await useMasterController.allUserRole();
+      setoptionsUserRoles(
+        userRoles
+          .filter((u) => u.code !== 'STUDENT')
+          .map((s) => {
+            return { label: s.name, value: s.code };
+          })
       );
 
       if (updatePage) {
-        const { data: detailSubject } = await useSubjectApi.detailSubject({
+        const { data: detailExam } = await useExamTypeApi.detailExamType({
           id: id,
         });
-        setClassCode(detailSubject.class_code.label);
-        setSubject(detailSubject.subject.key);
+        setClassCode(detailExam.code);
+        setExamName(detailExam.name);
+        setAccess(detailExam.detail_role.code);
+        setSelectedColor(detailExam.color);
       }
       hideLoading();
     }
@@ -48,8 +47,10 @@ export function useSubjectCreateHook({ updatePage = false }) {
 
   const handleSubmitCreate = () => {
     const body = {
-      class_code: classCode,
-      subject_code: subject,
+      code_type_exam: 'string',
+      color: 'string',
+      role: 'string',
+      type_exam: 'string',
     };
 
     showLoading();
@@ -71,17 +72,23 @@ export function useSubjectCreateHook({ updatePage = false }) {
   };
 
   const resetForm = () => {
+    setExamName('');
     setClassCode('');
-    setClassCode('');
+    setAccess('');
+    setSelectedColor('');
   };
 
   return {
+    examName,
+    setExamName,
     classCode,
     setClassCode,
-    subject,
-    setSubject,
-    optionsSubjects,
-    optionsClassCode,
+    access,
+    setAccess,
+    selectedColor,
+    setSelectedColor,
+    optionsColor,
+    optionsUserRoles,
     handleSubmitCreate,
     resetForm,
   };

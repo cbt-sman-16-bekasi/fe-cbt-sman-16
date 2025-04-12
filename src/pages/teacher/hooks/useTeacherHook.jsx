@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import { Chip, IconButton } from "@mui/material";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
@@ -10,7 +8,7 @@ import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
 
-export function UseAccessHook() {
+export function useTeacherHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
@@ -39,8 +37,8 @@ export function UseAccessHook() {
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
-    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user.username || '-' },
-    { field: "password", headerName: "PASSWORD", flex: 1, minWidth: 120, renderCell: () => '*****' },
+    { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user.gender || '-' },
+    { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => row.subject || '-' },
     {
       field: "hakAkses",
       headerName: "HAK AKSES",
@@ -83,14 +81,14 @@ export function UseAccessHook() {
   ];
 
   const handleEdit = (id) => {
-    navigate(`/${userRole}/akses-system/${id}/update`)
+    navigate(`/${userRole}/guru/${id}/update`)
   };
 
   const messageDelete = () => {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Akses</strong> ini?
+          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Guru</strong> ini?
         </p>
       </div>
     )

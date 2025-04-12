@@ -1,16 +1,15 @@
+import { alpha } from '@mui/material/styles';
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
-import { Chip, IconButton } from "@mui/material";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
+import { Chip, IconButton } from "@mui/material";
 
-export function UseAccessHook() {
+export function useExamTypeHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
@@ -19,9 +18,9 @@ export function UseAccessHook() {
   const { showLoading, hideLoading } = useLoading();
   const [isRefreshList, setRefreshList] = useState(false)
 
-  function getHakAksesColor(status) {
+  function getChipColor(status) {
     const colors = {
-      "Admin": "primary",
+      "ADMIN": "primary",
       "Guru": "success",
     };
 
@@ -30,23 +29,45 @@ export function UseAccessHook() {
         variant='outlined'
         label={status}
         color={colors[status] || "default"}
-        size="small"
+        sx={{ px: 2, py: 1.6, width: '8rem' }}
       />
+    );
+  }
+
+  function getExamCodeColor({ label, color }) {
+    return (
+      <Chip
+        variant="outlined"
+        label={label}
+        sx={{
+          px: 2,
+          py: 1.6,
+          width: '8rem',
+          borderColor: (color !== '' ? color : '#9e9e9e'),
+          backgroundColor: (color !== '' ? alpha(color, 0.2) : alpha('#9e9e9e', 0.2)),
+          color: color,
+        }}
+      />
+
     );
   }
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
-    { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
-    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user.username || '-' },
-    { field: "password", headerName: "PASSWORD", flex: 1, minWidth: 120, renderCell: () => '*****' },
+    { field: "name", headerName: "JENIS UJIAN", flex: 1, minWidth: 120 },
     {
-      field: "hakAkses",
-      headerName: "HAK AKSES",
-      flex: 0.5,
+      field: "code",
+      headerName: "KODE UJIAN",
+      flex: 1,
       minWidth: 120,
-      renderCell: (row) => getHakAksesColor(row.detail_user.role.name),
+      renderCell: (params) => getExamCodeColor({ label: params.code, color: params.color }),
+    },
+    {
+      field: "role",
+      headerName: "AKSES",
+      flex: 1,
+      minWidth: 120,
+      renderCell: (params) => getChipColor(params.detail_role.code),
     },
     {
       field: "aksi",
@@ -83,14 +104,14 @@ export function UseAccessHook() {
   ];
 
   const handleEdit = (id) => {
-    navigate(`/${userRole}/akses-system/${id}/update`)
+    navigate(`/${userRole}/kode-jenis-ujian/${id}/update`)
   };
 
   const messageDelete = () => {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Akses</strong> ini?
+          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Kode Ujian</strong> ini?
         </p>
       </div>
     )
@@ -99,7 +120,7 @@ export function UseAccessHook() {
   const handleDelete = (id) => {
     showConfirm(messageDelete(), async () => {
       showLoading()
-      await useApi.delete({ url: `/academic/teacher/delete/${id}` })
+      await useApi.delete({ url: `/academic/exam/type-exam/${id}` })
       setRefreshList(!isRefreshList)
       hideLoading()
     });
