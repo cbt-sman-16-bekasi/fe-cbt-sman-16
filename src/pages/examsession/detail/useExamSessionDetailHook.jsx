@@ -9,6 +9,7 @@ import timezone from "dayjs/plugin/timezone";
 import useExamSessionController from "../../../utils/rest/examsession.js";
 import useDate from "../../../hooks/useDate.js";
 import useApi from "../../../utils/rest/api.js";
+import {useModal} from "../../../components/common/ModalContext.jsx";
 
 export function useExamSessionDetailHook() {
   const { id } = useParams();
@@ -27,6 +28,7 @@ export function useExamSessionDetailHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const dateHelper = useDate();
+  const {showModal} = useModal();
 
   useEffect(() => {
 
@@ -93,9 +95,16 @@ export function useExamSessionDetailHook() {
   };
 
   const handleDownload = async () => {
-    await useApi.download({
-      url: `/academic/exam/session/attendance/download?exam_session_id=${sessionId}&class_id=1`
-    })
+    try {
+      showLoading()
+      await useApi.download({
+        url: `/academic/exam/session/attendance/download?exam_session_id=${sessionId}&class_id=1`
+      })
+
+      hideLoading()
+    } catch (e) {
+      showModal("Failed download report", "error")
+    }
   }
 
   return {
