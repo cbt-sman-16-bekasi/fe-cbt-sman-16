@@ -1,8 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Alert, AlertTitle, Button, InputAdornment, TextField } from "@mui/material";
+import { Alert, AlertTitle, Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { RocketLaunch } from "@mui/icons-material";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { UseAccessHook } from "./hooks/useAccessHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -24,7 +23,41 @@ const AccessList = () => {
         <Grid size={{ sm: 12 }}>
           <Alert icon={<RocketLaunch fontSize="small" color="info" />} variant="outlined" severity="info" sx={{ p: 1 }}>
             <AlertTitle fontSize="medium">Perhatian!</AlertTitle>
-            Untuk menambahkan soal di setaip ujian, silahkan klik tombol <b>setting</b> <SettingsIcon sx={{ verticalAlign: "middle", fontSize: 18, color: "black", backgroundColor: 'yellow' }} />
+
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              Dalam sistem ini terdapat dua jenis hak akses utama yang diberikan kepada pengguna, yaitu:
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              <b>1. Super Admin</b>
+            </Typography>
+            <Box
+              component="ul"
+              sx={{
+                pl: 2,
+                mt: 1,
+                mb: 0,
+                listStyleType: 'disc'
+              }}
+            >
+              <Box component="li"><Typography variant="body2">Super Admin memiliki hak tertinggi dalam sistem.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Mengakses dan mengelola seluruh menu dan fitur yang ada dalam sistem.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Menambahkan, mengedit, dan menghapus data pengguna termasuk admin dan guru.</Typography></Box>
+            </Box>
+            <Typography variant="body1" sx={{ mt: 1 }}>
+              <b>2. Guru</b>
+            </Typography>
+            <Box
+              component="ul"
+              sx={{
+                pl: 2,
+                mt: 1,
+                mb: 0,
+                listStyleType: 'disc'
+              }}
+            >
+              <Box component="li"><Typography variant="body2">Guru memiliki hak akases yang lebih terbatas, fokus pada pengelolaan ujian dan penilaian.</Typography></Box>
+              <Box component="li"><Typography variant="body2">Mengatur setting ujian, termasuk jadwal, durasi, dan aturan ujian, mengakses dan mengunduh laporan nilai siswa untuk ujian yang mereka kelola.</Typography></Box>
+            </Box>
           </Alert>
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useParams } from 'react-router';
 import useStudentApi from '../../../utils/rest/student.js';
+import useClassesApi from '../../../utils/rest/classes.js';
 import useMasterController from '../../../utils/rest/master.js';
 
 export function useStudentCreateHook({ updatePage = false }) {
@@ -29,7 +30,6 @@ export function useStudentCreateHook({ updatePage = false }) {
         const { data: detailStudent } = await useStudentApi.detailStudent({
           id: id,
         });
-        console.log(detailStudent);
         setNisn(detailStudent.nisn);
         setName(detailStudent.name);
         setGender(detailStudent.gender);
@@ -57,7 +57,7 @@ export function useStudentCreateHook({ updatePage = false }) {
       );
       setOptionClass(
         uniqueData.map((r) => {
-          return { label: `${r.classCode} - ${r.className}`, value: r.ID };
+          return { label: `${r.className}`, value: r.ID };
         })
       );
     });
