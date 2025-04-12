@@ -1,4 +1,4 @@
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useLoading} from "../../../components/common/LoadingProvider.jsx";
 import {useModal} from "../../../components/common/ModalContext.jsx";
 import {useEffect, useState} from "react";
@@ -18,6 +18,7 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -69,7 +70,11 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
       setTimeout(() => {
         hideLoading()
         showModal(message, status)
+        if (status === 'error'){
+          return
+        }
         resetForm()
+        navigate(-1)
       }, 1500)
     }).catch(e => {
       console.log(e.data)

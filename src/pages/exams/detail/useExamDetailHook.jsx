@@ -36,7 +36,7 @@ export function useExamDetailHook() {
   const handleUpload = async (file) => {
     try {
       showLoading()
-      await useApi.uploadFile({
+      const {status, message} = await useApi.uploadFile({
         url: `/academic/exam/${id}/question/template/upload`,
         file: file,
         fieldName: 'file'
@@ -44,8 +44,9 @@ export function useExamDetailHook() {
 
       setRefreshList(true)
       hideLoading();
-      showModal('Success upload question', 'success')
+      showModal(message, status)
     } catch (err) {
+      console.log(err)
       hideLoading();
       showModal("Failed upload file", "error")
     }

@@ -11,7 +11,7 @@ export function useExamCreateHook({ updatePage = false }) {
   const [classCode, setClassCode] = useState([]);
   const [typeExam, setTypeExam] = useState('');
   const [description, setDescription] = useState(
-    '<p>Halo, ini contoh konten awal!</p>'
+    ''
   );
   const [randomQuestion, setRandomQuestion] = useState(false);
   const [randomAnswer, setRandomAnswer] = useState(false);
