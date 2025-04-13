@@ -31,19 +31,15 @@ export function TypeExamCreate({ isUpdatePage = false }) {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <Grid size={{ xs: 12, md: 6 }}>
-              <CustomInput label="Jenis Ujian" fullWidth={true} value={examName} onChange={(c) => setExamName(c.target.value)} placeholder="Nama Jenis Ujian" />
-            </Grid>
+            <CustomInput label="Jenis Ujian" fullWidth={true} value={examName} onChange={(c) => setExamName(c.target.value)} placeholder="Nama Jenis Ujian" />
 
-            <Grid size={{ xs: 12, md: 6 }}>
-              <CustomInput label="Buat Kode Jenis Ujian" fullWidth={true} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="Kode Jenis Ujian" />
-            </Grid>
+            <CustomInput label="Buat Kode Jenis Ujian" fullWidth={true} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="Kode Jenis Ujian" />
 
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="Akses" fullWidth={true} options={optionsUserRoles} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Akses" />
+            <CustomInput label="Akses" oneLineInput={true} fullWidth={true} options={optionsUserRoles} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Akses" />
 
           </Grid>
 
