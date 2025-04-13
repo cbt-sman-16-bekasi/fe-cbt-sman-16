@@ -88,13 +88,13 @@ export const menuConfig = {
       value: '123',
       path: '/dashboard',
     },
-    // {
-    //   text: 'Data Guru',
-    //   title: 'Data Guru',
-    //   icon: 'PeopleRoundedIcon',
-    //   value: '123',
-    //   path: '/guru',
-    // },
+    {
+      text: 'Data Guru',
+      title: 'Data Guru',
+      icon: 'PeopleRoundedIcon',
+      value: '123',
+      path: '/guru',
+    },
     {
       text: 'Akses Sistem',
       title: 'Akses Sistem',

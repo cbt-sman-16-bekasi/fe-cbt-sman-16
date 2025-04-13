@@ -15,6 +15,9 @@ export function TeacherCreate({ isUpdatePage = false }) {
     gender, setGender,
     subject, setSubject,
     access, setAccess,
+    isEnable, setIsEnable,
+    optionsEnableAccess,
+    optionsSubject,
     optionsGender,
     optionsAccess,
     handleSubmitCreate,
@@ -43,15 +46,23 @@ export function TeacherCreate({ isUpdatePage = false }) {
 
             <CustomInput label="Jenis Kelamin" fullWidth={true} options={optionsGender} value={gender} onChange={(c) => setGender(c.target.value)} placeholder="Jenis Kelamin" />
 
-            <CustomInput label="Mata Pelajaran" fullWidth={true} value={subject} onChange={(c) => setSubject(c.target.value)} placeholder="Mata Pelajaran" />
+            <CustomInput label="Hak Akses" fullWidth={true} options={optionsEnableAccess} value={isEnable} onChange={(c) => setIsEnable(c.target.value)} placeholder="Hak Akses" />
 
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="Akses" fullWidth={true} options={optionsAccess} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Akses" />
+            <CustomInput label="Mata Pelajaran" oneLineInput={true} fullWidth={true} multiple={true} options={optionsSubject} value={subject} onChange={(c) => setSubject(c.target.value)} placeholder="Mata Pelajaran" />
 
           </Grid>
+
+          {isEnable &&
+            <Grid container spacing={3} alignItems="center" columns={12}>
+
+              <CustomInput label="Pilih Akses" oneLineInput={true} fullWidth={true} options={optionsAccess} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Pilih Akses" />
+
+            </Grid>
+          }
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="start" mb={4} direction='column'>
             <Grid size={{ sm: 12 }}>

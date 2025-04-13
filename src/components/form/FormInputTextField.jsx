@@ -17,12 +17,13 @@ const CustomInput = ({
   options = [],
   placeholder = "",
   fullWidth = true,
+  oneLineInput = false,
   variant = "outlined",
   multiple = false,
   sx = {},
 }) => {
   return (
-    <Grid size={{ md: 12, lg: 6 }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
+    <Grid size={{ ...(oneLineInput ? { sm: 12 } : { md: 12, lg: 6 }), }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
       {label && (
         <Typography variant="body1" fontWeight="bold">
           {label} {multiple === true}
@@ -89,6 +90,7 @@ CustomInput.propTypes = {
   options: PropTypes.array,
   placeholder: PropTypes.string,
   fullWidth: PropTypes.bool,
+  oneLineInput: PropTypes.bool,
   variant: PropTypes.string,
   sx: PropTypes.object,
   multiple: PropTypes.bool

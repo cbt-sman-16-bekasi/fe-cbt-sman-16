@@ -40,8 +40,8 @@ export function useTeacherHook() {
     { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user.gender || '-' },
     { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => row.subject || '-' },
     {
-      field: "hakAkses",
-      headerName: "HAK AKSES",
+      field: "akses",
+      headerName: "AKSES",
       flex: 0.5,
       minWidth: 120,
       renderCell: (row) => getHakAksesColor(row.detail_user.role.name),

@@ -13,23 +13,45 @@ export function useTeacherCreateHook({ updatePage = false }) {
   const [nuptk, setNuptk] = useState('');
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState([]);
   const [access, setAccess] = useState('');
+  const [isEnable, setIsEnable] = useState('');
+  const [optionsSubject, setOptionsSubject] = useState([]);
   const [optionsAccess, setoptionsAccess] = useState('');
   const optionsGender = [
     { label: 'Laki-laki', value: 'laki-laki' },
     { label: 'Perempuan', value: 'perempuan' },
   ];
+  const optionsEnableAccess = [
+    { label: 'Ya', value: true },
+    { label: 'Tidak', value: false },
+  ];
 
   useEffect(() => {
     async function fetchData() {
       showLoading();
-      const { data } = await useMasterController.allUserRole();
+
+      try {
+        const { data: subjects } = await useMasterController.allSubject();
+        setOptionsSubject(
+          subjects?.map((s) => ({
+            label: s.subject,
+            value: s.code,
+          }))
+        );
+      } catch (error) {
+        console.error('Failed to fetch subjects:', error);
+      }
+
+      const { data: roles } = await useMasterController.allUserRole();
       setoptionsAccess(
-        data
-          ?.filter((data) => data.code !== 'STUDENT')
-          .map((s) => {
-            return { label: s.name, value: s.code };
+        roles
+          ?.filter((role) => role.code !== 'STUDENT')
+          .map((r) => {
+            return {
+              label: r.name,
+              value: r.code,
+            };
           })
       );
 
@@ -46,15 +68,15 @@ export function useTeacherCreateHook({ updatePage = false }) {
       hideLoading();
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleSubmitCreate = () => {
     const body = {
       nuptk: nuptk,
       name: name,
       gender: gender,
-      subject: subject,
       role: access,
+      subject: subject,
     };
 
     showLoading();
@@ -79,8 +101,8 @@ export function useTeacherCreateHook({ updatePage = false }) {
     setNuptk('');
     setName('');
     setGender('');
-    setSubject('');
     setAccess('');
+    setSubject([]);
   };
 
   return {
@@ -94,6 +116,10 @@ export function useTeacherCreateHook({ updatePage = false }) {
     setSubject,
     access,
     setAccess,
+    isEnable,
+    setIsEnable,
+    optionsEnableAccess,
+    optionsSubject,
     optionsAccess,
     optionsGender,
     handleSubmitCreate,

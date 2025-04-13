@@ -35,9 +35,9 @@ function AdminPage({ role }) {
     <Routes>
       <Route path="dashboard" element={<MainGrid role={role} />} />
 
-      {/* <Route path="guru" element={<TeacherList />} />
+      <Route path="guru" element={<TeacherList />} />
       <Route path="guru/tambah" element={<TeacherCreate />} />
-      <Route path="guru/:id/update" element={<TeacherCreate isUpdatePage={true} />} /> */}
+      <Route path="guru/:id/update" element={<TeacherCreate isUpdatePage={true} />} />
 
       <Route path="akses-system" element={<AccessList />} />
       <Route path="akses-system/tambah" element={<AccessCreate />} />
