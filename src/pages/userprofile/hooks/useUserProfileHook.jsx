@@ -13,19 +13,20 @@ export function useUserProfileHook() {
   // const [photoProfile, setPhotoProfile] = useState({ preview: '', file: null });
   // const dispatch = useDispatch()
 
-  const { showConfirm, showModal } = useModal();
+  const { showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const authUser = useSelector((state) => state.authUser || localStorage.getItem('authUser'));
 
   const [name, setName] = useState('')
   const [nuptk, setNuptk] = useState('')
   const [userRole, setUserRole] = useState(authUser?.role);
+  const [username, setUsername,] = useState(authUser?.username);
+
   const [formPassword, setFormPassword] = useState({ current: '', newPass: '', confirm: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const isPasswordBeingChanged = formPassword.newPass !== '' || formPassword.confirm !== '';
   const isPasswordValid = !isPasswordBeingChanged || (formPassword.newPass === formPassword.confirm);
-
 
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
@@ -117,15 +118,6 @@ export function useUserProfileHook() {
   //   });
   // };
 
-  const messageDelete = () => {
-    return (
-      <div>
-        <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Mata Pelajaran</strong> ini?
-        </p>
-      </div>
-    )
-  }
 
   // const base64PhotoProfile = photoProfile.file ? await fileToBase64(photoProfile.file) : authUser.logo;
 
@@ -136,28 +128,21 @@ export function useUserProfileHook() {
       name,
       nuptk,
       role: userRole,
-      username: authUser?.username,
+      username,
       ...(formPassword.newPass && formPassword.confirm && formPassword.newPass === formPassword.confirm
         ? { password: formPassword.newPass }
         : {})
     };
 
     try {
-      showConfirm(messageDelete(), async () => {
-        showLoading();
-        await useTeacherApi.modifyTeacher({ body, id: authUser?.id });
-        hideLoading();
-      });
+      const response = await useTeacherApi.modifyTeacher({ body, id: authUser?.ID });
+      const { message, status } = response
+      showModal(message, status);
 
-      setAlertSeverity('success');
-      setAlertMessage('Berhasil menyimpan data.');
-      setShowAlert(true);
-
-      // Reset password form kalau sukses
       setFormPassword({ current: '', newPass: '', confirm: '' });
     } catch (err) {
       console.error(err);
-      alert('error', err.message || `Terjadi kesalahan saat menyimpan data.`);
+      showModal(err.message, err.status);
     } finally {
       setIsSubmitting(false);
     }
@@ -176,6 +161,7 @@ export function useUserProfileHook() {
     name, setName,
     nuptk, setNuptk,
     userRole, setUserRole,
+    username, setUsername,
     photoProfile, setPhotoProfile,
     formPassword, setFormPassword,
     showPassword, setShowPassword,

@@ -16,6 +16,7 @@ const UserProfile = () => {
     name, setName,
     nuptk, setNuptk,
     photoProfile, setPhotoProfile,
+    username, setUsername,
     userRole, setUserRole,
     showAlert,
     alertMessage,
@@ -30,9 +31,10 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (authUser) {
-      setName(authUser.detail?.name || '');
-      setNuptk(authUser.nuptk || '');
-      setUserRole(authUser.role.name || '');
+      setName(authUser?.detail?.name || '');
+      setNuptk(authUser?.nuptk || '');
+      setUserRole(authUser?.role.name || '');
+      setUsername(authUser?.username || '');
 
       // setPhotoProfile({
       //   preview: `${authUser.logo || ''}`,
@@ -132,7 +134,7 @@ const UserProfile = () => {
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ md: 12, lg: 6 }}>
+            <Grid size={{ sm: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Nama
               </Typography>
@@ -145,7 +147,7 @@ const UserProfile = () => {
               >
               </TextField>
             </Grid>
-            <Grid size={{ md: 12, lg: 6 }}>
+            <Grid size={{ sm: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 NUPTK
               </Typography>
@@ -161,7 +163,21 @@ const UserProfile = () => {
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ sm: 12 }}>
+            <Grid size={{ sm: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Username
+              </Typography>
+              <TextField
+                fullWidth
+                value={username}
+                disabled={!isEdit}
+                onChange={(e) => setUsername(e.target.value)}
+                variant="outlined"
+              >
+              </TextField>
+            </Grid>
+
+            <Grid size={{ sm: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Hak Akses
               </Typography>
