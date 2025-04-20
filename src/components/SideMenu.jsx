@@ -1,3 +1,5 @@
+import * as Icons from '@mui/icons-material';
+import { Link, useLocation } from 'react-router';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer';
@@ -8,9 +10,9 @@ import Typography from '@mui/material/Typography';
 import MenuContent from './MenuContent';
 import Grid from '@mui/material/Grid2';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Copyright from '../internals/components/Copyright';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
-import Copyright from '../internals/components/Copyright';
 
 const drawerWidth = 240;
 
@@ -26,6 +28,21 @@ const Drawer = styled(MuiDrawer)({
 });
 
 export default function SideMenu({ user, role, logout, schoolData }) {
+  const location = useLocation();
+  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
+  const to = (menu) => {
+    localStorage.setItem("currentMenu", JSON.stringify(menu));
+  }
+  const path = `/${role}/profil`;
+  const item = {
+    text: 'Profil',
+    title: 'Profil',
+    icon: 'PersonRounded',
+    path: '/profil',
+  }
+  const IconComponent = Icons[item.icon];
+  const isActive = `/${currentPath}` === item.path;
+
   return (
     <Drawer
       variant="permanent"
@@ -68,8 +85,9 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           flexDirection: 'column',
         }}
       >
-        <MenuContent role={role} />
+        <MenuContent role={role} currentPath={currentPath} to={to} />
       </Box>
+
       <Stack
         direction="row"
         sx={{
@@ -84,16 +102,34 @@ export default function SideMenu({ user, role, logout, schoolData }) {
       >
         <Grid
           container
+          component={Link}
+          onClick={() => to(item, path)}
+          to={path}
           alignItems="center"
-          sx={{ border: '1px solid white', display: 'flex', justifyContent: "start", gap: 1, borderRadius: 1, p: 1, width: '100%' }}
+          sx={{ border: isActive ? '' : '1px solid grey', backgroundColor: isActive ? 'primary.main' : '', display: 'flex', justifyContent: "space-between", alignItems: 'center', gap: 1, borderRadius: 1, p: 1, width: '100%' }}
         >
-
-          <Avatar
-            sizes="small"
-            alt="Riley Carter"
-            src="/static/images/avatar/7.jpg"
-            sx={{ width: 36, height: 36 }}
-          />
+          {user?.photoProfile ?
+            <Avatar
+              sizes="small"
+              alt="Riley Carter"
+              src={user?.photoProfile}
+              sx={{ width: 36, height: 36 }}
+            /> : <Box
+              sx={{
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                border: '1px solid',
+                borderColor: isActive ? 'cbtAccents.white' : 'theme.palette.primary.main',
+                backgroundColor: 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <IconComponent sx={{ color: isActive ? 'cbtAccents.white' : 'primary.main' }} fontSize="small" />
+            </Box>
+          }
           <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
             <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
               {user.username}
@@ -119,7 +155,7 @@ export default function SideMenu({ user, role, logout, schoolData }) {
         </Grid>
         <Copyright />
       </Stack>
-    </Drawer>
+    </Drawer >
   );
 }
 

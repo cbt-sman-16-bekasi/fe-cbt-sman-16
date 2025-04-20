@@ -1,27 +1,22 @@
+import * as Icons from '@mui/icons-material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import {Link, useLocation} from 'react-router';
-import { icons, menuConfig } from '../config/menuConfig';
+import { Link } from 'react-router';
+import { menuConfig } from '../config/menuConfig';
 import PropTypes from 'prop-types';
 
-export default function MenuContent({ role }) {
+export default function MenuContent({ role, currentPath, to }) {
   const menuItems = menuConfig[role] || [];
-  const location = useLocation();
-
-  const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
-  const to = (menu) => {
-    localStorage.setItem("currentMenu", JSON.stringify(menu));
-  }
 
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {menuItems.map((item, index) => {
-          const IconComponent = icons[item.icon];
+          const IconComponent = Icons[item.icon];
           const isActive = `/${currentPath}` === item.path;
           const path = `/${role}${item.path}`;
 
@@ -57,4 +52,6 @@ export default function MenuContent({ role }) {
 
 MenuContent.propTypes = {
   role: PropTypes.string.isRequired,
+  currentPath: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 }

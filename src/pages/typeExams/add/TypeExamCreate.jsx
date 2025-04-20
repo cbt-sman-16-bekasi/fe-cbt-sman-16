@@ -43,7 +43,6 @@ export function TypeExamCreate({ isUpdatePage = false }) {
 
           </Grid>
 
-
           <Grid container spacing={2} columns={12} sx={{ mt: 2 }}>
             <Grid size={{ xs: 12 }}>
               <Typography variant="subtitle1" fontWeight="bold">Warna</Typography>

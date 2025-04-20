@@ -62,13 +62,13 @@ export default function AppNavbar({ user, role, logout, schoolData }) {
           <Stack
             direction="row"
             spacing={1}
-            sx={{ justifyContent: 'center', mr: 'auto' }}
+            sx={{ justifyContent: 'center', alignItems: 'center', mr: 'auto' }}
           >
             {schoolData && (
               <img src={schoolData.logo} alt="Logo Sekolah" className='h-[35px]' />
             )}
-            <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
+            <Typography variant="h6" component="h6" sx={{ color: 'text.primary' }}>
+              CBT SYSTEM <br />SMAN 16 BEKASI
             </Typography>
           </Stack>
           <ColorModeIconDropdown />
@@ -78,7 +78,7 @@ export default function AppNavbar({ user, role, logout, schoolData }) {
           <SideMenuMobile open={open} toggleDrawer={toggleDrawer} user={user} role={role} logout={logout} />
         </Stack>
       </Toolbar>
-    </AppBar>
+    </AppBar >
   );
 }
 

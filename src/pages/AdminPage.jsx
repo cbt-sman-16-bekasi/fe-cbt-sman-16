@@ -29,6 +29,7 @@ import TypeExamList from "./typeExams/TypeExamList.jsx";
 import { TypeExamCreate } from "./typeExams/add/TypeExamCreate.jsx";
 import TeacherList from "./teacher/TeacherList.jsx";
 import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
+import UserProfile from "./userprofile/UserProfile.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -83,6 +84,8 @@ function AdminPage({ role }) {
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 
       <Route path="informasi-sekolah" element={<ProfilSekolah />} />
+
+      <Route path="profil" element={<UserProfile />} />
 
       <Route path="*" element={<NotFoundPage role={role} />} />
     </Routes>

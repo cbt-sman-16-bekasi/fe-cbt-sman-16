@@ -8,16 +8,16 @@ import {
   Typography,
   Box
 } from "@mui/material";
-import {UploadFile} from "@mui/icons-material";
+import { UploadFile } from "@mui/icons-material";
 
 export default function UploadFileDialog({
-                                           open,
-                                           onClose,
-                                           onUpload,
-                                           title = "Upload File",
-                                           subTitle,
-                                           accept = ".xlsx,.xls,.csv",
-                                         }) {
+  open,
+  onClose,
+  onUpload,
+  title = "Upload File",
+  subTitle,
+  accept = ".xlsx,.xls,.csv",
+}) {
   const fileInputRef = useRef();
   const [selectedFile, setSelectedFile] = useState(null);
 
