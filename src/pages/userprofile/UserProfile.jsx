@@ -11,11 +11,10 @@ import { ModeEditOutlined } from "@mui/icons-material";
 
 const UserProfile = () => {
   const {
-    // handleSubmit,
     authUser,
     name, setName,
     nuptk, setNuptk,
-    photoProfile, setPhotoProfile,
+    photoProfile,
     username, setUsername,
     userRole, setUserRole,
     showAlert,
@@ -41,12 +40,12 @@ const UserProfile = () => {
       //   file: null
       // });
     }
-  }, [authUser]);
+  }, [authUser, setName, setNuptk, setUserRole, setUsername]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
 
-      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Data Guru" iconBackground="red" />
+      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="red" />
 
       {showAlert && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>

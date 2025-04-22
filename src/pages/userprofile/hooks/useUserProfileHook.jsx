@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
-// import { IconButton } from "@mui/material";
-// import { asyncUpdateSchool } from "../../../states/school/action.js";
 import useTeacherApi from "../../../utils/rest/teacher.js";
 
 export function useUserProfileHook() {
-  // const [photoProfile, setPhotoProfile] = useState({ preview: '', file: null });
-  // const dispatch = useDispatch()
-
   const { showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const authUser = useSelector((state) => state.authUser || localStorage.getItem('authUser'));
@@ -69,60 +61,9 @@ export function useUserProfileHook() {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     const base64PhotoProfile = logo.file ? await fileToBase64(logo.file) : schoolData.logo;
-  //     const payload = {
-  //       // school code buat async func ulang receive data school nya lagi
-  //       schoolCode,
-  //       school_name: schoolName,
-  //       level_of_education: jenjang,
-  //       nss,
-  //       npsn,
-  //       phone: telp,
-  //       email,
-  //       address,
-  //       logo: base64PhotoProfile || '',
-  //       banner: base64Banner || '',
-  //     };
-
-  //     const result = await dispatch(asyncUpdateSchool(payload));
-  //     setAlertSeverity('success');
-  //     setAlertMessage('Berhasil menyimpan data sekolah');
-
-  //     setShowAlert(true);
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert('error', err.message || `Terjadi kesalahan saat parsing file.`);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  //   setTimeout(() => {
-  //     setShowAlert(false);
-  //   }, 5000);
-  // };
-
-
-  // const fileToBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     if (!file) return resolve(null);
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => {
-  //       const base64 = reader.result;
-  //       resolve(base64);
-  //     };
-  //     reader.onerror = (error) => reject(error);
-  //   });
-  // };
-
-
-  // const base64PhotoProfile = photoProfile.file ? await fileToBase64(photoProfile.file) : authUser.logo;
-
   const handleUpdate = async () => {
     setIsSubmitting(true);
+    showLoading()
 
     const body = {
       name,
@@ -144,6 +85,7 @@ export function useUserProfileHook() {
       console.error(err);
       showModal(err.message, err.status);
     } finally {
+      hideLoading()
       setIsSubmitting(false);
     }
 
@@ -173,7 +115,6 @@ export function useUserProfileHook() {
     alertSeverity, setAlertSeverity,
     isSubmitting, setIsSubmitting,
     isEdit, setIsEdit,
-    // handleSubmit,
     handleEdit,
     handleFileChange,
     handleUpdate,
