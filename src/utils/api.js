@@ -501,15 +501,7 @@ const api = (() => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, nuptk, role, password, username }),
     });
-
-    const responseJson = await response.json();
-
-    const { status, message, data } = responseJson;
-    if (status !== 'success') {
-      throw new Error(message);
-    }
-
-    return data;
+    return await response.json();
   }
 
   async function deleteTeacher(id) {

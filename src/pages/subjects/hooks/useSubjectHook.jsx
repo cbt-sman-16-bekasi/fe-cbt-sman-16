@@ -20,8 +20,8 @@ export function useSubjectHook() {
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "namaMapel", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => row.DetailSubject.subject },
-    { field: "kodeKelas", headerName: "KODE KELAS", flex: 1.5, minWidth: 150, renderCell: (row) => row.DetailClassCode.code },
+    { field: "subject", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120},
+    { field: "code", headerName: "KODE", flex: 1.5, minWidth: 150 },
     {
       field: "aksi",
       headerName: "AKSI",
@@ -47,7 +47,7 @@ export function useSubjectHook() {
               color: "white",
               "&:hover": { bgcolor: "darkred" },
             }}
-            onClick={() => handleDelete(row.ID)}
+            onClick={() => handleDelete(row)}
           >
             <DeleteIcon />
           </IconButton>
@@ -60,20 +60,20 @@ export function useSubjectHook() {
     navigate(`/${userRole}/mata-pelajaran/${id}/update`)
   };
 
-  const messageDelete = () => {
+  const messageDelete = (data) => {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Mata Pelajaran</strong> ini?
+          Apakah kamu yakin ingin melanjutkan proses hapus <br/><strong>{data}</strong> ?
         </p>
       </div>
     )
   }
 
-  const handleDelete = (id) => {
-    showConfirm(messageDelete(), async () => {
+  const handleDelete = ({ID, subject}) => {
+    showConfirm(messageDelete(subject), async () => {
       showLoading()
-      await useApi.delete({ url: `/academic/class/delete/${id}` })
+      await useApi.delete({ url: `/academic/curriculum/subject/delete/${ID}` })
       setRefreshList(!isRefreshList)
       hideLoading()
     });

@@ -1,152 +1,110 @@
+import {SchoolSharp} from "@mui/icons-material";
+
 export const menuConfig = {
-  superadmin: [
-    {
-      text: 'Dashboard',
-      icon: 'HomeRoundedIcon',
-      value: '123',
-      path: '/dashboard',
-    },
-    {
-      text: 'Akses Sistem',
-      icon: 'AnalyticsRoundedIcon',
-      value: '123',
-      path: '/akses-system',
-    },
-    { text: 'Kelas', icon: 'PeopleRoundedIcon', value: '123', path: '/kelas' },
-    {
-      text: 'Mata Pelajaran',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/mata-pelajaran',
-    },
-    {
-      text: 'Kode Jenis Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/kode-jenis-ujian',
-    },
-    {
-      text: 'Data Siswa',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/data-siswa',
-    },
-    {
-      text: 'Bank Soal',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/bank-soal',
-    },
-    {
-      text: 'Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/ujian',
-    },
-    {
-      text: 'Sesi Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/sesi-ujian',
-    },
-    {
-      text: 'Generate Token Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/generate-token',
-    },
-    {
-      text: 'Laporan Nilai',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/laporan-nilai',
-    },
-    {
-      text: 'Informasi Sekolah',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/informasi-sekolah',
-    },
-  ],
   admin: [
     {
-      text: 'Dashboard',
-      title: 'Dashboard',
-      icon: 'HomeRounded',
-      path: '/dashboard',
+      title: "Home",
+      menu: [
+        {
+          text: 'Dashboard',
+          title: 'Dashboard',
+          icon: 'HomeRounded',
+          path: '/dashboard',
+        }
+      ]
     },
     {
-      text: 'Data Guru',
-      title: 'Data Guru',
-      icon: 'PersonRounded',
-      path: '/guru',
+      title: 'Data Master',
+      menu: [
+        {
+          text: 'Informasi Sekolah',
+          title: 'Informasi Sekolah',
+          icon: 'SchoolSharp',
+          path: '/informasi-sekolah',
+        },
+        {
+          text: 'Kelas',
+          title: 'Kelas',
+          icon: 'Groups2Rounded',
+          path: '/kelas',
+        },
+        {
+          text: 'Mata Pelajaran',
+          title: 'Mata Pelajaran',
+          icon: 'MenuBookRounded',
+          path: '/mata-pelajaran',
+        },
+        {
+          text: 'Data Guru',
+          title: 'Data Guru',
+          icon: 'PersonRounded',
+          path: '/guru',
+        },
+        {
+          text: 'Data Siswa',
+          title: 'Data Siswa',
+          icon: 'SchoolRounded',
+          path: '/data-siswa',
+        }
+      ]
     },
     {
-      text: 'Akses Sistem',
-      title: 'Akses Sistem',
-      icon: 'AdminPanelSettingsRounded',
-      path: '/akses-system',
+      title: 'Ujian',
+      menu: [
+        {
+          text: 'Kode Jenis Ujian',
+          title: 'Kode Jenis Ujian',
+          icon: 'QrCode2Rounded',
+          path: '/kode-jenis-ujian',
+        },
+        {
+          text: 'Bank Soal',
+          title: 'Bank Soal',
+          icon: 'LibraryBooksRounded',
+          path: '/bank-soal',
+        },
+        {
+          text: 'Ujian',
+          title: 'Setting Ujian',
+          icon: 'AssignmentRounded',
+          path: '/ujian',
+        },
+        {
+          text: 'Sesi Ujian',
+          title: 'Sesi Ujian',
+          icon: 'EventNoteRounded',
+          path: '/sesi-ujian',
+        },
+        {
+          text: 'Generate Token Ujian',
+          title: 'Generate Token Ujian',
+          icon: 'VpnKeyRounded',
+          path: '/generate-token',
+        },
+      ]
     },
     {
-      text: 'Kelas',
-      title: 'Kelas',
-      icon: 'Groups2Rounded',
-      path: '/kelas',
+      title: "Laporan",
+      menu: [
+        {
+          text: 'Laporan Nilai',
+          title: 'Laporan Nilai',
+          icon: 'AssessmentRounded',
+          path: '/laporan-nilai',
+        },
+      ]
     },
     {
-      text: 'Mata Pelajaran',
-      title: 'Mata Pelajaran',
-      icon: 'MenuBookRounded',
-      path: '/mata-pelajaran',
-    },
-    {
-      text: 'Kode Jenis Ujian',
-      title: 'Kode Jenis Ujian',
-      icon: 'QrCode2Rounded',
-      path: '/kode-jenis-ujian',
-    },
-    {
-      text: 'Data Siswa',
-      title: 'Data Siswa',
-      icon: 'SchoolRounded',
-      path: '/data-siswa',
-    },
-    {
-      text: 'Bank Soal',
-      title: 'Bank Soal',
-      icon: 'LibraryBooksRounded',
-      path: '/bank-soal',
-    },
-    {
-      text: 'Ujian',
-      title: 'Setting Ujian',
-      icon: 'AssignmentRounded',
-      path: '/ujian',
-    },
-    {
-      text: 'Sesi Ujian',
-      title: 'Sesi Ujian',
-      icon: 'EventNoteRounded',
-      path: '/sesi-ujian',
-    },
-    {
-      text: 'Generate Token Ujian',
-      title: 'Generate Token Ujian',
-      icon: 'VpnKeyRounded',
-      path: '/generate-token',
-    },
-    {
-      text: 'Laporan Nilai',
-      title: 'Laporan Nilai',
-      icon: 'AssessmentRounded',
-      path: '/laporan-nilai',
-    },
-    {
-      text: 'Informasi Sekolah',
-      title: 'Informasi Sekolah',
-      icon: 'InfoRounded',
-      path: '/informasi-sekolah',
-    },
+      title: "Pengaturan",
+      menu: [
+        {
+          text: 'Akses Sistem',
+          title: 'Akses Sistem',
+          icon: 'AdminPanelSettingsRounded',
+          path: '/akses-system',
+        },
+      ]
+    }
   ],
   teacher: [
     {
