@@ -42,7 +42,6 @@ export default function SideMenu({ user, role, logout, schoolData }) {
   }
   const IconComponent = Icons[item.icon];
   const isActive = `/${currentPath}` === item.path;
-
   return (
     <Drawer
       variant="permanent"
@@ -132,7 +131,7 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           }
           <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
             <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-              {user.username}
+              {user.detail.name}
             </Typography>
           </Box>
           <Button

@@ -70,8 +70,9 @@ function asyncCreateTeacher(teacherData) {
     dispatch(showLoading());
     try {
       const newTeacher = await api.createTeacher(teacherData);
-      console.log(newTeacher);
       dispatch(createTeacherActionCreator(newTeacher));
+      console.log(newTeacher);
+      return await newTeacher
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));
     } finally {

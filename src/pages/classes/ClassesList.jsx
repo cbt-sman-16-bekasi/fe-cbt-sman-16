@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useClassesHook } from "./hooks/useClassesHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
+import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
 const ClassesList = () => {
   const {
@@ -25,17 +25,12 @@ const ClassesList = () => {
           </Link>
         </Grid>
         <Grid lg={4}>
-          <TextField
-            variant="outlined"
-            placeholder="Cari Berdasarkan..."
-            fullWidth
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+          <SearchBarWithFilter
+            onFilterChange={({ searchBy, search: searchData, filters }) => {
+              console.log("Search by:", searchBy);
+              console.log("Search keyword:", search);
+              console.log("Filters:", filters);
+              setSearch(searchData)
             }}
           />
         </Grid>
@@ -50,7 +45,7 @@ const ClassesList = () => {
           borderRight: 'var(--Grid-borderWidth) solid',
           borderBottom: 'var(--Grid-borderWidth) solid',
           borderColor: 'divider',
-        }
+        },
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
           <ApiTable url="/academic/class/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />

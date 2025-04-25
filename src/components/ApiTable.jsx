@@ -62,7 +62,7 @@ export default function ApiTable({
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
 
       {/* Table */}
-      <TableContainer>
+      <TableContainer sx={{borderBottom: '1px solid black'}}>
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#130A36" }}>
@@ -80,7 +80,8 @@ export default function ApiTable({
               </TableRow>
             ) : (
               data.map((row, index) => (
-                <TableRow key={row.id || index}>
+                <TableRow key={row.id || index}
+                          sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
                   {columns.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}

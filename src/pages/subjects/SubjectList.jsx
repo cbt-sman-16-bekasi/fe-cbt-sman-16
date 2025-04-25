@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
+import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
 const SubjectList = () => {
   const {
@@ -25,17 +26,13 @@ const SubjectList = () => {
           </Link>
         </Grid>
         <Grid lg={4}>
-          <TextField
-            variant="outlined"
-            placeholder="Cari Berdasarkan..."
-            fullWidth
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+
+          <SearchBarWithFilter
+            onFilterChange={({ searchBy, search: searchData, filters }) => {
+              console.log("Search by:", searchBy);
+              console.log("Search keyword:", search);
+              console.log("Filters:", filters);
+              setSearch(searchData)
             }}
           />
         </Grid>
@@ -53,7 +50,7 @@ const SubjectList = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/class/subject/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+          <ApiTable url="/academic/curriculum/subject/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

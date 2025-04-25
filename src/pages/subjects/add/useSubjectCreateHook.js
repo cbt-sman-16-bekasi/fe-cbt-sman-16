@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import { useParams } from 'react-router';
-import useClassesApi from '../../../utils/rest/classes.js';
-import useSubjectApi from '../../../utils/rest/subject.js';
+import {useNavigate, useParams} from 'react-router';
+import useCurriculumSubjectApi from "../../../utils/rest/csubject.js";
 
 export function useSubjectCreateHook({ updatePage = false }) {
   const { id } = useParams();
@@ -13,33 +11,20 @@ export function useSubjectCreateHook({ updatePage = false }) {
 
   const [subject, setSubject] = useState('');
   const [classCode, setClassCode] = useState('');
-  const [optionsSubjects, setoptionsSubjects] = useState('');
-  const [optionsClassCode, setoptionsClassCode] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       showLoading();
-      const { data: classCodes } = await useMasterController.allClassCode();
-      const { data: subjectNames } = await useMasterController.allSubject();
-
-      setoptionsClassCode(
-        classCodes.map((s) => {
-          return { label: s.name, value: s.code };
-        })
-      );
-
-      setoptionsSubjects(
-        subjectNames.map((s) => {
-          return { label: s.subject, value: s.code };
-        })
-      );
 
       if (updatePage) {
-        const { data: detailSubject } = await useSubjectApi.detailSubject({
+        const { data: detailSubject } = await useCurriculumSubjectApi.detail({
           id: id,
         });
-        setClassCode(detailSubject.class_code.label);
-        setSubject(detailSubject.subject.key);
+        if (detailSubject !== undefined) {
+          setClassCode(detailSubject.code);
+          setSubject(detailSubject.subject);
+        }
       }
       hideLoading();
     }
@@ -48,30 +33,32 @@ export function useSubjectCreateHook({ updatePage = false }) {
 
   const handleSubmitCreate = () => {
     const body = {
-      class_code: classCode,
-      subject_code: subject,
+      code: classCode,
+      name: subject,
     };
 
     showLoading();
-    useClassesApi
-      .modifyClasses({ body: body, id: id, isCreate: !updatePage })
+    useCurriculumSubjectApi
+      .modifySubject({ body: body, id: id, isCreate: !updatePage })
       .then((r) => {
         const { message, status } = r;
         setTimeout(() => {
           hideLoading();
           showModal(message, status);
-          resetForm();
+          if (status === 'success') {
+            resetForm();
+            navigate(-1)
+          }
         }, 1500);
       })
       .catch((e) => {
-        console.log(e.data);
         hideLoading();
-        showModal('Failed create exam. Please try again!', 'error');
+        showModal(`Failed ${!updatePage ? 'create' : 'update'} 'Mata Pelajaran'. Please try again!`, 'error');
       });
   };
 
   const resetForm = () => {
-    setClassCode('');
+    setSubject('');
     setClassCode('');
   };
 
@@ -80,8 +67,6 @@ export function useSubjectCreateHook({ updatePage = false }) {
     setClassCode,
     subject,
     setSubject,
-    optionsSubjects,
-    optionsClassCode,
     handleSubmitCreate,
     resetForm,
   };
