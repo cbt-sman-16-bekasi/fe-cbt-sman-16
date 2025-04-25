@@ -38,6 +38,10 @@ export function UseStudentHook() {
     }
   };
 
+  const handleDownloadTemplate = async () => {
+    await useApi.download({ url: `/academic/student` })
+  };
+
   const handleEdit = (id) => {
     navigate(`/${userRole}/data-siswa/${id}/update`)
   };
@@ -111,7 +115,8 @@ export function UseStudentHook() {
     columns,
     handleUpload,
     openUpload,
-    setOpenUpload
+    setOpenUpload,
+    handleDownloadTemplate,
   }
 
 }

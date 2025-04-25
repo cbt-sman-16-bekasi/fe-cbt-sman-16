@@ -17,6 +17,7 @@ const ExamList = () => {
     columns,
     isRefreshList
   } = UseExamHook()
+
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       <Grid container spacing={2} sx={{ my: 4 }} columns={12}>

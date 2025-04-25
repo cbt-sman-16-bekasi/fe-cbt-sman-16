@@ -10,10 +10,10 @@ import {
 import Box from "@mui/material/Box";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
-import {Button, Chip} from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import {useExamDetailHook} from "./useExamDetailHook.jsx";
+import { useExamDetailHook } from "./useExamDetailHook.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
 import UploadFileDialog from "../../../components/common/UploadFileDialog.jsx";
 
@@ -41,8 +41,8 @@ const ExamDetailPage = () => {
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
       <BackWithTitle />
 
-      <TitleWithIcon icon={<InfoSharp sx={{color: 'white'}} />} text="Detail Ujian" iconBackground="red" />
-      <BasicCard sx={{mb:4, padding: '40px'}}>
+      <TitleWithIcon icon={<InfoSharp sx={{ color: 'white' }} />} text="Detail Ujian" iconBackground="red" />
+      <BasicCard sx={{ mb: 4, padding: '40px' }}>
         <DetailItem label="Jenis Ujian" value={<Chip
           label={typeExam}
           color="secondary"
@@ -57,16 +57,16 @@ const ExamDetailPage = () => {
         <DetailItem label="Total Nilai" value={totalScore} />
       </BasicCard>
 
-      <TitleWithIcon icon={<DocumentScannerSharp sx={{color: 'white'}} />} text="Soal Ujian" iconBackground="red" />
+      <TitleWithIcon icon={<DocumentScannerSharp sx={{ color: 'white' }} />} text="Soal Ujian" iconBackground="red" />
       <BasicCard>
         <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
-          <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/create?examCode=${examCode}&typeQuestion=${typeQuestion}`)} startIcon={<AddBoxOutlinedIcon/>}>Tambah Soal</Button>
+          <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/create?examCode=${examCode}&typeQuestion=${typeQuestion}`)} startIcon={<AddBoxOutlinedIcon />}>Tambah Soal</Button>
             <Button fullWidth variant="contained" color='error' startIcon={<AddToDriveRounded />}>Bank Soal</Button>
           </Grid>
-          <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined/>} onClick={() => setOpenUpload(true)}>Import Soal</Button>
-            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined/>} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
+          <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
+            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>
         </Grid>
 
@@ -89,7 +89,7 @@ const ExamDetailPage = () => {
 
 
       <UploadFileDialog
-        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{color: 'white'}} />} iconBackground="red" />}
+        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{ color: 'white' }} />} iconBackground="red" />}
         subTitle="Silahkan untuk mengimpor Soal. Pastikan data yang Anda masukkan sesuai dengan template yang telah disediakan!. Jika Anda belum memiliki template, harap unduh template yang tersedia"
         open={openUpload}
         onClose={() => setOpenUpload(false)}
@@ -100,4 +100,4 @@ const ExamDetailPage = () => {
 
 }
 
-export default ExamDetailPage
+export default ExamDetailPage;

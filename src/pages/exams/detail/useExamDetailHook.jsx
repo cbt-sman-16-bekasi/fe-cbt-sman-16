@@ -1,18 +1,18 @@
-import {useNavigate, useParams, useSearchParams} from "react-router";
-import {useLoading} from "../../../components/common/LoadingProvider.jsx";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useLoading } from "../../../components/common/LoadingProvider.jsx";
+import { useEffect, useState } from "react";
 import useExamApi from "../../../utils/rest/exam.js";
-import {useSelector} from "react-redux";
-import {IconButton} from "@mui/material";
+import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useApi from "../../../utils/rest/api.js";
-import {useModal} from "../../../components/common/ModalContext.jsx";
+import { useModal } from "../../../components/common/ModalContext.jsx";
 
 export function useExamDetailHook() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const {showConfirm, showModal} = useModal();
+  const { showConfirm, showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
@@ -36,7 +36,7 @@ export function useExamDetailHook() {
   const handleUpload = async (file) => {
     try {
       showLoading()
-      const {status, message} = await useApi.uploadFile({
+      const { status, message } = await useApi.uploadFile({
         url: `/academic/exam/${id}/question/template/upload`,
         file: file,
         fieldName: 'file'
@@ -56,7 +56,7 @@ export function useExamDetailHook() {
   useEffect(() => {
     async function fetchData() {
       showLoading()
-      const { data: detailExam } = await useExamApi.detailExam({id: id})
+      const { data: detailExam } = await useExamApi.detailExam({ id: id })
       setName(detailExam.name);
       setExamCode(detailExam.code)
       setDescription(detailExam.description);
@@ -125,18 +125,18 @@ export function useExamDetailHook() {
 
   const handleDelete = (id) => {
     showConfirm((<>
-    <strong>Apakah anda yakin ingin menghapus soal ini ?</strong>
+      <strong>Apakah anda yakin ingin menghapus soal ini ?</strong>
       <p>Soal akan terhapus di Ujian ini, tapi tidak di Bank Soal</p>
     </>), async () => {
       showLoading()
-      await useApi.delete({url: `/academic/exam/question/delete/${id}`})
+      await useApi.delete({ url: `/academic/exam/question/delete/${id}` })
       setRefreshList(!isRefreshList)
       hideLoading()
     });
   };
 
   const handleDownloadTemplate = async () => {
-    await useApi.download({url: `/academic/exam/${id}/question/template/download?typeQuestion=${typeQuestion}`})
+    await useApi.download({ url: `/academic/exam/${id}/question/template/download?typeQuestion=${typeQuestion}` })
   };
 
   return {

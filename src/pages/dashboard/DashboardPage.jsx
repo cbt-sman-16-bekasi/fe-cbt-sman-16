@@ -1,20 +1,33 @@
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import StatCard from './StatCard';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { icons, MenuConfig } from '../../config/MenuConfig3';
+import { useDashboardPageHook } from './hooks/useDashboardPageHook';
+import { InputAdornment, TextField } from '@mui/material';
+import SearchIcon from "@mui/icons-material/Search";
+import ApiTable from '../../components/ApiTable';
+import StatCard from '../../components/StatCard';
+import { asyncGetDashboardData } from '../../states/common/action';
 import { useEffect } from 'react';
-import { asyncGetDashboardData } from '../states/common/action';
-import { icons, MenuConfig } from '../config/MenuConfig3';
-import ApiTable from './ApiTable';
 
-export default function MainGrid({ role }) {
-  const dispatch = useDispatch();
+export default function DashboardPage() {
+  const dispatch = useDispatch()
+  const {
+    search,
+    setSearch,
+    userRole,
+    columns
+  } = useDashboardPageHook()
+
   const dashboardData = useSelector((state) => state.common.dashboardData);
   const authUser = useSelector((state) => state.authUser);
+
+  useEffect(() => {
+    dispatch(asyncGetDashboardData())
+  }, [dispatch])
 
   const updatedMenuItems = MenuConfig.map((item) => {
     const keyMap = {
@@ -33,10 +46,6 @@ export default function MainGrid({ role }) {
       icon: icons[item.icon],
     };
   });
-
-  useEffect(() => {
-    dispatch(asyncGetDashboardData())
-  }, [dispatch])
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, pb: 3 }}>
@@ -87,7 +96,7 @@ export default function MainGrid({ role }) {
           >
             {updatedMenuItems.map((card, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-                <StatCard role={role} {...card} />
+                <StatCard role={userRole} {...card} />
               </Grid>
             ))}
           </Grid>
@@ -101,14 +110,42 @@ export default function MainGrid({ role }) {
             Detail Ujian
           </Typography>
 
-          <ApiTable />
+          <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
+            <Grid lg={4}>
+              <TextField
+                variant="outlined"
+                placeholder="Cari Berdasarkan..."
+                fullWidth
+                onChange={(e) => setSearch(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} columns={12} sx={{
+            '--Grid-borderWidth': '1px',
+            borderTop: 'var(--Grid-borderWidth) solid',
+            borderLeft: 'var(--Grid-borderWidth) solid',
+            borderColor: 'divider',
+            '& > div': {
+              borderRight: 'var(--Grid-borderWidth) solid',
+              borderBottom: 'var(--Grid-borderWidth) solid',
+              borderColor: 'divider',
+            }
+          }}>
+            <Grid size={{ xs: 12, lg: 12 }}>
+              <ApiTable url="/academic/dashboard" pageSize={10} columns={columns} searchKey="name" searchValue={search} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 
     </Box>
   );
-}
-
-MainGrid.propTypes = {
-  role: PropTypes.string.isRequired
 }

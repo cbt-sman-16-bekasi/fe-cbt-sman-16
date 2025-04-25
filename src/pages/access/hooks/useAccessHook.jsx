@@ -9,7 +9,7 @@ import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
 
-export function UseAccessHook() {
+export function useAccessHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');

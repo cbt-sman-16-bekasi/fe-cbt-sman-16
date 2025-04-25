@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import { Alert, AlertTitle, Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { RocketLaunch } from "@mui/icons-material";
-import { UseAccessHook } from "./hooks/useAccessHook.jsx";
+import { useAccessHook } from "./hooks/useAccessHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,7 +15,7 @@ const AccessList = () => {
     userRole,
     columns,
     isRefreshList
-  } = UseAccessHook()
+  } = useAccessHook()
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>

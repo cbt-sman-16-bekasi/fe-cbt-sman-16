@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router"
-import MainGrid from '../components/MainGrid';
 import LaporanNilai from '../components/LaporanNilai';
 import LayoutImport from '../components/LayoutImport';
 import ProfilSekolah from '../components/ProfilSekolah';
@@ -30,11 +29,12 @@ import { TypeExamCreate } from "./typeExams/add/TypeExamCreate.jsx";
 import TeacherList from "./teacher/TeacherList.jsx";
 import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
+import DashboardPage from "./dashboard/DashboardPage.jsx";
 
 function AdminPage({ role }) {
   return (
     <Routes>
-      <Route path="dashboard" element={<MainGrid role={role} />} />
+      <Route path="dashboard" element={<DashboardPage role={role} />} />
 
       <Route path="guru" element={<TeacherList />} />
       <Route path="guru/tambah" element={<TeacherCreate />} />
