@@ -7,6 +7,7 @@ import MenuButton from './MenuButton';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
 
 import Search from './Search';
+import PropTypes from 'prop-types';
 
 export default function Header({ role }) {
   return (
@@ -33,4 +34,8 @@ export default function Header({ role }) {
       </Stack>
     </Stack>
   );
+}
+
+Header.propTypes = {
+  role: PropTypes.string.isRequired,
 }

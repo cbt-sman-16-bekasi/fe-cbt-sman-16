@@ -6,10 +6,11 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './states/index.js'
 import { BrowserRouter } from 'react-router';
-import {LoadingProvider} from "./components/common/LoadingProvider.jsx";
+import { LoadingProvider } from "./components/common/LoadingProvider.jsx";
 import LoadingOverlay from "./components/common/LoadingOverlay.jsx";
-import {ModalProvider} from "./components/common/ModalContext.jsx";
+import { ModalProvider } from "./components/common/ModalContext.jsx";
 import ModalPopUp from "./components/common/ModalPopUp.jsx";
+import ModalChangePassword from './components/common/ModalChangePassword.jsx';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
           <ModalProvider>
             <App />
             <ModalPopUp />
+            <ModalChangePassword />
             <LoadingOverlay />
           </ModalProvider>
         </LoadingProvider>

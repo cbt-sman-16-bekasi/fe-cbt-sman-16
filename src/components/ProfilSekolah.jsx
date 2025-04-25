@@ -53,7 +53,7 @@ export default function ProfilSekolah() {
       setAddress(schoolData.address || '');
 
       setLogo({
-        preview: `${ schoolData.logo || ''}`,
+        preview: `${schoolData.logo || ''}`,
         file: null
       });
 

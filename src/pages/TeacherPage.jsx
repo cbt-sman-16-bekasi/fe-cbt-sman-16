@@ -3,16 +3,18 @@ import LaporanNilai from '../components/LaporanNilai';
 import BankQuestionListPage from "./bank/BankQuestionListPage.jsx";
 import BankQuestionCreatePage from "./bank/add/BankQuestionCreatePage.jsx";
 import DetailBankQuestionPage from "./bank/detail/DetailBankQuestionPage.jsx";
-import {BankCreateQuestionPage} from "./bank/add/BankCreateQuestionPage.jsx";
+import { BankCreateQuestionPage } from "./bank/add/BankCreateQuestionPage.jsx";
 import ExamList from "./exams/ExamList.jsx";
-import {ExamCreate} from "./exams/add/ExamCreate.jsx";
+import { ExamCreate } from "./exams/add/ExamCreate.jsx";
 import ExamDetailPage from "./exams/detail/ExamDetailPage.jsx";
-import {ExamCreateQuestionPage} from "./exams/add/ExamCreateQuestionPage.jsx";
+import { ExamCreateQuestionPage } from "./exams/add/ExamCreateQuestionPage.jsx";
 import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
-import {ExamSessionCreatePage} from "./examsession/add/ExamSessionCreatePage.jsx";
+import { ExamSessionCreatePage } from "./examsession/add/ExamSessionCreatePage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
 import MainGrid from "../components/MainGrid.jsx";
 import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
+import UserProfile from "./userprofile/UserProfile.jsx";
+import PropTypes from "prop-types";
 
 function TeacherPage({ role }) {
   return (
@@ -28,7 +30,7 @@ function TeacherPage({ role }) {
 
       <Route path="ujian" element={<ExamList />} />
       <Route path="ujian/tambah" element={<ExamCreate />} />
-      <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true}/>} />
+      <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true} />} />
       <Route path="ujian/:id/detail" element={<ExamDetailPage />} />
       <Route path="ujian/:id/detail/question/create" element={<ExamCreateQuestionPage />} />
       <Route path="ujian/:id/detail/question/:questionId/edit" element={<ExamCreateQuestionPage isUpdatePage={true} />} />
@@ -39,6 +41,9 @@ function TeacherPage({ role }) {
 
       <Route path="generate-token" element={<GenerateTokenPage />} />
       <Route path="laporan-nilai" element={<LaporanNilai />} />
+
+      <Route path="profil" element={<UserProfile />} />
+
       {/*<Route path="dashboard" element={<MainGrid role={role} />} />*/}
 
       {/*<Route path="bank-soal" element={<BankSoal role={role} />} />*/}
@@ -58,3 +63,7 @@ function TeacherPage({ role }) {
 }
 
 export default TeacherPage
+
+TeacherPage.propTypes = {
+  role: PropTypes.string.isRequired,
+}

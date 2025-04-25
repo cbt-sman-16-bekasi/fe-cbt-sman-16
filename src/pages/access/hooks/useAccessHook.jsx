@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import { Chip, IconButton } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,14 +38,14 @@ export function UseAccessHook() {
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
-    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user.username || '-' },
+    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user?.username || '-' },
     { field: "password", headerName: "PASSWORD", flex: 1, minWidth: 120, renderCell: () => '*****' },
     {
       field: "hakAkses",
       headerName: "HAK AKSES",
       flex: 0.5,
       minWidth: 120,
-      renderCell: (row) => getHakAksesColor(row.detail_user.role.name),
+      renderCell: (row) => getHakAksesColor(row.detail_user?.role.name),
     },
     {
       field: "aksi",

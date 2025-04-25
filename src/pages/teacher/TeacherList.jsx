@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import { Button, InputAdornment, TextField } from "@mui/material";
-import { useTeacherHook } from "./hooks/useTeacherHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTeacherHook } from "./hooks/useTeacherHook.jsx";
 import ApiTable from "../../components/ApiTable.jsx";
 
 const TeacherList = () => {

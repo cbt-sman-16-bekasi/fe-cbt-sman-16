@@ -1,15 +1,3 @@
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
-
-export const icons = {
-  HomeRoundedIcon,
-  AnalyticsRoundedIcon,
-  PeopleRoundedIcon,
-  AssignmentRoundedIcon,
-};
-
 export const menuConfig = {
   superadmin: [
     {
@@ -84,92 +72,79 @@ export const menuConfig = {
     {
       text: 'Dashboard',
       title: 'Dashboard',
-      icon: 'HomeRoundedIcon',
-      value: '123',
+      icon: 'HomeRounded',
       path: '/dashboard',
     },
-    // {
-    //   text: 'Data Guru',
-    //   title: 'Data Guru',
-    //   icon: 'PeopleRoundedIcon',
-    //   value: '123',
-    //   path: '/guru',
-    // },
+    {
+      text: 'Data Guru',
+      title: 'Data Guru',
+      icon: 'PersonRounded',
+      path: '/guru',
+    },
     {
       text: 'Akses Sistem',
       title: 'Akses Sistem',
-      icon: 'AnalyticsRoundedIcon',
-      value: '123',
+      icon: 'AdminPanelSettingsRounded',
       path: '/akses-system',
     },
     {
       text: 'Kelas',
       title: 'Kelas',
-      icon: 'PeopleRoundedIcon',
-      value: '123',
+      icon: 'Groups2Rounded',
       path: '/kelas',
     },
     {
       text: 'Mata Pelajaran',
       title: 'Mata Pelajaran',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'MenuBookRounded',
       path: '/mata-pelajaran',
     },
     {
       text: 'Kode Jenis Ujian',
       title: 'Kode Jenis Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'QrCode2Rounded',
       path: '/kode-jenis-ujian',
     },
     {
       text: 'Data Siswa',
       title: 'Data Siswa',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'SchoolRounded',
       path: '/data-siswa',
     },
     {
       text: 'Bank Soal',
       title: 'Bank Soal',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'LibraryBooksRounded',
       path: '/bank-soal',
     },
     {
       text: 'Ujian',
       title: 'Setting Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'AssignmentRounded',
       path: '/ujian',
     },
     {
       text: 'Sesi Ujian',
       title: 'Sesi Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'EventNoteRounded',
       path: '/sesi-ujian',
     },
     {
       text: 'Generate Token Ujian',
       title: 'Generate Token Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'VpnKeyRounded',
       path: '/generate-token',
     },
     {
       text: 'Laporan Nilai',
       title: 'Laporan Nilai',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'AssessmentRounded',
       path: '/laporan-nilai',
     },
     {
       text: 'Informasi Sekolah',
       title: 'Informasi Sekolah',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
+      icon: 'InfoRounded',
       path: '/informasi-sekolah',
     },
   ],

@@ -45,17 +45,20 @@ export const columns = [
 
 const handleDownload = (fileUrl, namaUjian) => {
   if (!fileUrl) {
-    alert('File tidak tersedia')
+    alert('File tidak tersedia');
     return;
   }
 
   const link = document.createElement('a');
   link.href = fileUrl;
-  link.download = `${namaUjian}.xlsx`
+  link.download = `${namaUjian}.xlsx`;
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
-}
+
+  if (document.body.contains(link)) {
+    document.body.removeChild(link);
+  }
+};
 
 
 export const rows = [

@@ -6,7 +6,7 @@ import AppNavbar from './components/AppNavbar';
 import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import { Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,7 +15,6 @@ import AdminPage from "./pages/AdminPage";
 import TeacherPage from "./pages/TeacherPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { menuConfig } from './config/menuConfig';
 
 import {
   chartsCustomizations,
@@ -42,12 +41,10 @@ function App(props) {
   const schoolData = useSelector((state) => state.school.schoolInfo);
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
-  const accessToken = localStorage.getItem("accessToken");
   const [title, setTitle] = useState('')
-
   const navigate = useNavigate();
-  const location = useLocation();
 
+  const accessToken = localStorage.getItem("accessToken");
   const userRole = authUser?.role?.code.toLowerCase();
 
   useEffect(() => {
@@ -72,6 +69,8 @@ function App(props) {
   useEffect(() => {
     const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
     setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+
+    document.title = currentMenu ? `${currentMenu.title} - Admin` : "Admin Panel";
   }, [navigate]);
 
   useEffect(() => {
@@ -79,7 +78,7 @@ function App(props) {
       localStorage.clear()
       navigate("/login");
     }
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     dispatch(asyncPreloadProcess());
@@ -88,21 +87,13 @@ function App(props) {
   useEffect(() => {
     if (userRole) {
       const role = userRole;
-      const path = window.location.pathname;
+      const path = location.pathname;
 
       if (path === "/" || path === "/login" || path === "/register") {
         navigate(`/${role}/dashboard`);
       }
     }
-  }, [userRole]);
-
-  useEffect(() => {
-    const currentPath = location.pathname.split('/').slice(2).join('/') || "/";
-    const userMenu = menuConfig[userRole] || [];
-    const currentMenu = userMenu.find((item) => item.path === `/${currentPath}`);
-
-    document.title = currentMenu ? `${currentMenu.text} - Admin` : "Admin Panel";
-  }, [location, userRole]);
+  }, [navigate, userRole]);
 
   const onUserLogout = () => {
     dispatch(asyncUnsetAuthUser())
@@ -114,7 +105,10 @@ function App(props) {
     teacher: <TeacherPage role={userRole} />,
   };
 
-  if (isPreload) null
+  if (isPreload) {
+    return null;
+  }
+
 
   if (!authUser || !accessToken) {
     return (
@@ -164,25 +158,26 @@ function App(props) {
                 alignItems: 'start',
                 mx: 3,
                 pb: 5,
-                mt: { xs: 8, md: 0 },
+                mt: { xs: 12, md: 0 },
               }}
             >
               <Header role={userRole} />
 
-              <Routes>
-                <Route
-                  path={`/${userRole}/*`}
-                  element={
-                    <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
-                      <Typography component="h1" variant="h4" fontWeight="bold">
-                        {title}
-                      </Typography>
-                      {routeMap[userRole]}
-                    </ProtectedRoute>
-                  } />
-                <Route path="*" element={<NotFoundPage role={userRole} />} />
-              </Routes>
-
+              {userRole && (
+                <Routes>
+                  <Route
+                    path={`/${userRole}/*`}
+                    element={
+                      <ProtectedRoute allowedRoles={[userRole]} userRole={userRole}>
+                        <Typography component="h1" variant="h4" fontWeight="bold">
+                          {title}
+                        </Typography>
+                        {routeMap[userRole]}
+                      </ProtectedRoute>
+                    } />
+                  <Route path="*" element={<NotFoundPage role={userRole} />} />
+                </Routes>
+              )}
             </Stack>
           </Box>
         </Box>

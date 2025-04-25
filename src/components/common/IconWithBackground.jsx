@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 
-export default function IconWithBackground({icon, bgColor = 'lightgray'}) {
+export default function IconWithBackground({ icon, bgColor = 'lightgray' }) {
   return (
     <Box
       sx={{

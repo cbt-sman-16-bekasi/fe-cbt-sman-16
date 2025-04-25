@@ -23,7 +23,6 @@ export default function ApiTable({
   const [loading, setLoading] = useState(false);
   const debouncedSearch = useDebounce(searchValue, 500); // 500ms debounce
 
-
   // Fetch data dari API
   const fetchData = async () => {
     setLoading(true);

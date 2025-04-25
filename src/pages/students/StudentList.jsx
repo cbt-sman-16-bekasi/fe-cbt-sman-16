@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import { Alert, AlertTitle, Button, InputAdornment, TextField } from "@mui/material";
-import { RocketLaunch } from "@mui/icons-material";
+import { RocketLaunch, UploadFile, UploadFileOutlined } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { UseStudentHook } from "./hooks/useStudentHook.jsx";
 import { Link } from "react-router";
@@ -9,6 +9,8 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
+import UploadFileDialog from "../../components/common/UploadFileDialog.jsx";
+import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
 
 const StudentList = () => {
   const {
@@ -16,18 +18,13 @@ const StudentList = () => {
     setSearch,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    handleUpload,
+    openUpload,
+    setOpenUpload
   } = UseStudentHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ sm: 12 }}>
-          <Alert icon={<RocketLaunch fontSize="small" color="info" />} variant="outlined" severity="info" sx={{ p: 1 }}>
-            <AlertTitle fontSize="medium">Perhatian!</AlertTitle>
-            Untuk menambahkan soal di setaip ujian, silahkan klik tombol <b>setting</b> <SettingsIcon sx={{ verticalAlign: "middle", fontSize: 18, color: "black", backgroundColor: 'yellow' }} />
-          </Alert>
-        </Grid>
-      </Grid>
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -36,9 +33,7 @@ const StudentList = () => {
           </Link>
         </Grid>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to={`/${userRole}/data-siswa/import`}>
-            <Button fullWidth variant="contained" color="info" startIcon={<UploadFileOutlinedIcon />}> Import</Button>
-          </Link>
+          <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
         </Grid>
         <Grid lg={4}>
           <TextField
@@ -72,6 +67,14 @@ const StudentList = () => {
           <ApiTable url="/academic/student/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
+
+      <UploadFileDialog
+        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{ color: 'white' }} />} iconBackground="red" />}
+        subTitle="Silahkan untuk mengimpor Data Siswa. Pastikan data yang Anda masukkan sesuai dengan template yang telah disediakan!. Jika Anda belum memiliki template, harap unduh template yang tersedia"
+        open={openUpload}
+        onClose={() => setOpenUpload(false)}
+        onUpload={handleUpload}
+      />
     </Box>
   )
 }

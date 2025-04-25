@@ -29,15 +29,16 @@ import TypeExamList from "./typeExams/TypeExamList.jsx";
 import { TypeExamCreate } from "./typeExams/add/TypeExamCreate.jsx";
 import TeacherList from "./teacher/TeacherList.jsx";
 import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
+import UserProfile from "./userprofile/UserProfile.jsx";
 
 function AdminPage({ role }) {
   return (
     <Routes>
       <Route path="dashboard" element={<MainGrid role={role} />} />
 
-      {/* <Route path="guru" element={<TeacherList />} />
+      <Route path="guru" element={<TeacherList />} />
       <Route path="guru/tambah" element={<TeacherCreate />} />
-      <Route path="guru/:id/update" element={<TeacherCreate isUpdatePage={true} />} /> */}
+      <Route path="guru/:id/update" element={<TeacherCreate isUpdatePage={true} />} />
 
       <Route path="akses-system" element={<AccessList />} />
       <Route path="akses-system/tambah" element={<AccessCreate />} />
@@ -83,6 +84,8 @@ function AdminPage({ role }) {
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 
       <Route path="informasi-sekolah" element={<ProfilSekolah />} />
+
+      <Route path="profil" element={<UserProfile />} />
 
       <Route path="*" element={<NotFoundPage role={role} />} />
     </Routes>
