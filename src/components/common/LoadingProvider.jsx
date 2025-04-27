@@ -10,7 +10,7 @@ export const LoadingProvider = ({ children }) => {
   const showLoading = () => setIsLoading(true);
   const hideLoading = () => setTimeout(() => {
     setIsLoading(false)
-  }, 1500);
+  }, 500);
 
   return (
     <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading }}>
