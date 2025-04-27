@@ -57,7 +57,9 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
           disabled={searchOptions.length === 0}
           size="small"
           sx={{ minWidth: 150 }}
+          placeholder='semua'
         >
+          <MenuItem value="">Semua</MenuItem>
           {searchOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
