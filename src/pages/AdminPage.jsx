@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router"
 import LaporanNilai from '../components/LaporanNilai';
 import LayoutImport from '../components/LayoutImport';
-import ProfilSekolah from '../components/ProfilSekolah';
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import ExamList from "./exams/ExamList.jsx";
@@ -29,6 +28,7 @@ import { TypeExamCreate } from "./typeExams/add/TypeExamCreate.jsx";
 import TeacherList from "./teacher/TeacherList.jsx";
 import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
+import SchoolProfile from './schoolprofile/SchoolProfile.jsx';
 import DashboardPage from "./dashboard/DashboardPage.jsx";
 
 function AdminPage({ role }) {
@@ -83,7 +83,7 @@ function AdminPage({ role }) {
 
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 
-      <Route path="informasi-sekolah" element={<ProfilSekolah />} />
+      <Route path="informasi-sekolah" element={<SchoolProfile />} />
 
       <Route path="profil" element={<UserProfile />} />
 

@@ -5,7 +5,7 @@ import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useTeacherApi from "../../../utils/rest/teacher.js";
 
 export function useUserProfileHook() {
-  const { showModal } = useModal();
+  const { showModal, showModalChangePassword } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const authUser = useSelector((state) => state.authUser || localStorage.getItem('authUser'));
 
@@ -95,7 +95,7 @@ export function useUserProfileHook() {
   };
 
   const onOpenPasswordModal = () => {
-    showModal("", "changePassword");
+    showModalChangePassword();
   };
 
   return {

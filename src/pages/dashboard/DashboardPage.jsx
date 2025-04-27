@@ -6,9 +6,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useDispatch, useSelector } from 'react-redux';
 import { icons, MenuConfig } from '../../config/MenuConfig3';
 import { useDashboardPageHook } from './hooks/useDashboardPageHook';
-import { InputAdornment, TextField } from '@mui/material';
-import SearchIcon from "@mui/icons-material/Search";
-import ApiTable from '../../components/ApiTable';
+// import { InputAdornment, TextField } from '@mui/material';
+// import SearchIcon from "@mui/icons-material/Search";
+// import ApiTable from '../../components/ApiTable';
 import StatCard from '../../components/StatCard';
 import { asyncGetDashboardData } from '../../states/common/action';
 import { useEffect } from 'react';
@@ -16,10 +16,10 @@ import { useEffect } from 'react';
 export default function DashboardPage() {
   const dispatch = useDispatch()
   const {
-    search,
-    setSearch,
+    // search,
+    // setSearch,
     userRole,
-    columns
+    // columns
   } = useDashboardPageHook()
 
   const dashboardData = useSelector((state) => state.common.dashboardData);
@@ -36,7 +36,7 @@ export default function DashboardPage() {
       '/mata-pelajaran': 'total_subject',
       '/data-siswa': 'total_student',
       '/ujian': 'total_exam',
-      '/sesi-ujian': 'total_session_exam',
+      '/sesi-ujian': 'total_active_session_exam',
       '/laporan-nilai': 'total_report_exam',
     };
 
@@ -104,7 +104,7 @@ export default function DashboardPage() {
       </Grid>
 
       {/* exam details */}
-      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
+      {/* <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
         <Grid size={{ sm: 12 }}>
           <Typography component="h1" variant="h4" sx={{ mb: 2 }}>
             Detail Ujian
@@ -144,7 +144,7 @@ export default function DashboardPage() {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
 
     </Box>
   );

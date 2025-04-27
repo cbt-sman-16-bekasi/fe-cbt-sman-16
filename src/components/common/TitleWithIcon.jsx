@@ -2,9 +2,9 @@ import IconWithBackground from "./IconWithBackground.jsx";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
-export default function TitleWithIcon({ icon, text, iconBackground }) {
+export default function TitleWithIcon({ icon, text, iconBackground, sx }) {
   return (
-    <Typography variant="h5" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+    <Typography variant="h5" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, ...sx }}>
       <IconWithBackground icon={icon} bgColor={iconBackground} /> {text}
     </Typography>
   )
@@ -12,5 +12,6 @@ export default function TitleWithIcon({ icon, text, iconBackground }) {
 TitleWithIcon.propTypes = {
   icon: PropTypes.element.isRequired,
   text: PropTypes.string.isRequired,
-  iconBackground: PropTypes.string
+  iconBackground: PropTypes.string,
+  sx: PropTypes.object,
 }

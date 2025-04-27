@@ -17,8 +17,8 @@ import {
 // import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import {useEffect, useState} from "react";
-import {useDebounce} from "../../hooks/useDebounce.js";
+import { useEffect, useState } from "react";
+import { useDebounce } from "../../hooks/useDebounce.js";
 
 const searchOptions = [
   { value: "name", label: "Nama" },
@@ -26,7 +26,7 @@ const searchOptions = [
   { value: "id", label: "ID" },
 ];
 
-export default function SearchBarWithFilter({onFilterChange, renderFilterContent}) {
+export default function SearchBarWithFilter({ onFilterChange, renderFilterContent }) {
   const [searchBy, setSearchBy] = useState("name");
   const [search, setSearch] = useState("");
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
@@ -95,8 +95,8 @@ export default function SearchBarWithFilter({onFilterChange, renderFilterContent
       </Box>
 
       <Dialog open={filterDialogOpen}
-              fullWidth={true}
-              onClose={() => setFilterDialogOpen(false)}>
+        fullWidth={true}
+        onClose={() => setFilterDialogOpen(false)}>
         <DialogTitle>Filter</DialogTitle>
         <DialogContent>
           {renderFilterContent ? (

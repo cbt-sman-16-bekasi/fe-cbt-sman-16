@@ -1,46 +1,57 @@
-import Grid from '@mui/material/Grid2';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Button, Card, CardContent, Stack, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Upload } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
-import CheckIcon from '@mui/icons-material/Check';
-import ErrorIcon from '@mui/icons-material/Error';
-import { asyncGetSchoolInfo, asyncUpdateSchool } from '../states/school/action'
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid2";
+import { Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import { useSchoolProfileHook } from "./hooks/useSchoolProfileHook.jsx";
+import { useEffect } from "react";
+// import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
+// import { ModeEditOutlined } from "@mui/icons-material";
+// import ModalChangePassword from "../../components/common/ModalChangePassword.jsx";
+import { asyncGetSchoolInfo } from "../../states/school/action.js";
+import { Upload } from "@mui/icons-material";
 
-export default function ProfilSekolah() {
-  const dispatch = useDispatch();
+const UserProfile = () => {
+  const {
+    dispatch,
+    authUser, setAuthUser,
+    schoolCode, setSchoolCode,
+    schoolData,
+    schoolName, setSchoolName,
+    jenjang, setJenjang,
+    nss, setNss,
+    npsn, setNpsn,
+    principal, setPrincipal,
+    vicePincipal, setVicePincipal,
+    nipPrincipal, setNipPrincipal,
+    nipVicePrincipal, setNipVicePrincipal,
+    telp, setTelp,
+    email, setEmail,
+    address, setAddress,
+    logo, setLogo,
+    banner, setBanner,
 
-  const [schoolName, setSchoolName] = useState('')
-  const [jenjang, setJenjang] = useState('')
-  const [nss, setNss] = useState('')
-  const [npsn, setNpsn] = useState('')
-  const [telp, setTelp] = useState('')
-  const [email, setEmail] = useState('')
-  const [address, setAddress] = useState('')
-
-  const [logo, setLogo] = useState({ preview: '', file: null });
-  const [banner, setBanner] = useState({ preview: '', file: null });
-
-  const [authUser, setAuthUser] = useState([]);
-  const [schoolCode, setSchoolCode] = useState();
-  const schoolData = useSelector((state) => state.school.schoolInfo)
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('error');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    showLoading, hideLoading,
+    isSubmitting,
+    isEdit,
+    handleEdit,
+    handleFileChange,
+    handleSubmit,
+    handleReset,
+  } = useSchoolProfileHook()
 
   useEffect(() => {
-    setAuthUser(JSON.parse(localStorage.getItem('authUser')));
-    setSchoolCode(authUser?.SchoolCode)
+    const authUserFromStorage = JSON.parse(localStorage.getItem('authUser'));
+    if (authUserFromStorage) {
+      setAuthUser(authUserFromStorage);
+      setSchoolCode(authUser?.SchoolCode);
+    }
+  }, []);
 
+  useEffect(() => {
     if (schoolCode) {
       dispatch(asyncGetSchoolInfo(schoolCode));
     }
-  }, [authUser?.SchoolCode, dispatch, schoolCode]);
+  }, [schoolCode, dispatch]);
 
   useEffect(() => {
     if (schoolData) {
@@ -66,90 +77,13 @@ export default function ProfilSekolah() {
     }
   }, [schoolData]);
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-
-    try {
-      const base64Logo = logo.file ? await fileToBase64(logo.file) : schoolData.logo;
-      const base64Banner = banner.file ? await fileToBase64(banner.file) : schoolData.banner;
-      const payload = {
-        // school code buat async func ulang receive data school nya lagi
-        schoolCode,
-        school_name: schoolName,
-        level_of_education: jenjang,
-        nss,
-        npsn,
-        phone: telp,
-        email,
-        address,
-        logo: base64Logo || '',
-        banner: base64Banner || '',
-      };
-
-      const result = await dispatch(asyncUpdateSchool(payload));
-      setAlertSeverity('success');
-      setAlertMessage('Berhasil menyimpan data sekolah');
-
-      setShowAlert(true);
-    } catch (err) {
-      console.error(err);
-      alert('error', err.message || `Terjadi kesalahan saat parsing file.`);
-    } finally {
-      setIsSubmitting(false);
+  useEffect(() => {
+    if (!schoolData) {
+      showLoading();
+    } else {
+      hideLoading();
     }
-
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
-  };
-
-  const handleReset = () => {
-    setSchoolName(schoolData.school_name || '');
-    setJenjang(schoolData.level_of_education || '');
-    setNss(schoolData.nss || '');
-    setNpsn(schoolData.npsn || '');
-    setTelp(schoolData.phone || '');
-    setEmail(schoolData.email || '');
-    setAddress(schoolData.address || '');
-
-    setLogo({
-      preview: `data:${schoolData.logo};base64,${schoolData.logo || ''}`,
-      file: null
-    });
-
-    setBanner({
-      preview: `data:${schoolData.banner};base64,${schoolData.banner || ''}`,
-      file: null
-    });
-  };
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    const field = event.target.name;
-
-    if (selectedFile) {
-      const fileURL = URL.createObjectURL(selectedFile);
-
-      if (field === 'logo') {
-        setLogo({ preview: fileURL, file: selectedFile });
-      } else if (field === 'banner') {
-        setBanner({ preview: fileURL, file: selectedFile });
-      }
-    }
-  };
-
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      if (!file) return resolve(null);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const base64 = reader.result;
-        resolve(base64);
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  }, [schoolData]);
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -157,26 +91,6 @@ export default function ProfilSekolah() {
       <Typography component="h3" variant="h3" sx={{ mb: 3, mt: 5 }}>
         Profil Sekolah
       </Typography>
-
-      {showAlert && (
-        <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-          <Grid size={{ sm: 12 }}>
-            <Alert
-              icon={alertSeverity === 'success' ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
-              variant="outlined"
-              severity={alertSeverity}
-              sx={{ py: 1, px: 2 }}
-            >
-              <Typography variant="h6" fontWeight="bold">
-                {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 1, whiteSpace: 'pre-line' }}>
-                {alertMessage}
-              </Typography>
-            </Alert>
-          </Grid>
-        </Grid>
-      )}
 
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
@@ -201,7 +115,7 @@ export default function ProfilSekolah() {
 
               <Stack spacing={1.3} direction="row" alignItems="center">
 
-                <Button variant="contained" component="label">
+                <Button variant="contained" component="label" color='info' disabled={!isEdit}>
                   Ganti Logo
                   <input
                     type="file"
@@ -212,7 +126,7 @@ export default function ProfilSekolah() {
                   />
                 </Button>
 
-                <Button variant="outlined" color="error">
+                <Button variant="outlined" color="error" disabled={!isEdit}>
                   Hapus
                 </Button>
 
@@ -235,6 +149,7 @@ export default function ProfilSekolah() {
                 value={schoolName}
                 onChange={(e) => setSchoolName(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -248,6 +163,7 @@ export default function ProfilSekolah() {
                 value={jenjang}
                 onChange={(e) => setJenjang(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -264,6 +180,7 @@ export default function ProfilSekolah() {
                 value={nss}
                 onChange={(e) => setNss(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -277,6 +194,67 @@ export default function ProfilSekolah() {
                 value={npsn}
                 onChange={(e) => setNpsn(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
+              >
+              </TextField>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} alignItems="center" columns={12}>
+            <Grid size={{ md: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Kepala Sekolah
+              </Typography>
+              <TextField
+                fullWidth
+                value={principal}
+                onChange={(e) => setPrincipal(e.target.value)}
+                variant="outlined"
+                disabled={!isEdit}
+              >
+              </TextField>
+            </Grid>
+
+            <Grid size={{ md: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                NIP Kepala Sekolah
+              </Typography>
+              <TextField
+                fullWidth
+                value={nipPrincipal}
+                onChange={(e) => setNipPrincipal(e.target.value)}
+                variant="outlined"
+                disabled={!isEdit}
+              >
+              </TextField>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} alignItems="center" columns={12}>
+            <Grid size={{ md: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Wakil Kepala Sekolah
+              </Typography>
+              <TextField
+                fullWidth
+                value={vicePincipal}
+                onChange={(e) => setVicePincipal(e.target.value)}
+                variant="outlined"
+                disabled={!isEdit}
+              >
+              </TextField>
+            </Grid>
+
+            <Grid size={{ md: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                NIP Wakil Kepala Sekolah
+              </Typography>
+              <TextField
+                fullWidth
+                value={nipVicePrincipal}
+                onChange={(e) => setNipVicePrincipal(e.target.value)}
+                variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -293,6 +271,7 @@ export default function ProfilSekolah() {
                 value={telp}
                 onChange={(e) => setTelp(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -306,6 +285,7 @@ export default function ProfilSekolah() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 variant="outlined"
+                disabled={!isEdit}
               >
               </TextField>
             </Grid>
@@ -325,6 +305,7 @@ export default function ProfilSekolah() {
                 onChange={(e) => setAddress(e.target.value)}
                 variant="outlined"
                 size="medium"
+                disabled={!isEdit}
               />
             </Grid>
 
@@ -336,9 +317,13 @@ export default function ProfilSekolah() {
               <Typography variant="subtitle1" fontWeight="bold">
                 Banner
               </Typography>
-              <Card>
+              <Card
+                style={{
+                  pointerEvents: !isEdit ? 'none' : 'auto',
+                  opacity: !isEdit ? 0.5 : 1,
+                }}
+              >
                 <CardContent className="p-6 flex flex-col items-center justify-center text-center space-y-2 w-full h-40 relative">
-
                   <Upload className="w-10 h-10 " />
                   <Typography variant="body1" className="text-gray-700 font-medium">
                     Upload File Banner
@@ -353,6 +338,7 @@ export default function ProfilSekolah() {
                     accept=".jpg, .png"
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     onChange={handleFileChange}
+                    disabled={!isEdit}
                   />
                 </CardContent>
               </Card>
@@ -367,20 +353,40 @@ export default function ProfilSekolah() {
             </Grid>
           </Grid>
 
-          {/* button submit */}
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-            <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="contained" className='bg-slate-800 text-white' onClick={handleReset}>
-                Reset
-              </Button>
-            </Grid>
-
-            <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="contained" color='success' onClick={handleSubmit}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Menyimpan...' : 'Simpan'}
-              </Button>
+            {isEdit && (
+              <Grid size={{ sm: 1.3 }}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="error"
+                  onClick={() => {
+                    handleEdit({ isCancel: true });
+                    handleReset();
+                  }}
+                >
+                  Batal
+                </Button>
+              </Grid>
+            )}
+            <Grid size={{ sm: 1.3 }}>
+              {isEdit ? (
+                <Button fullWidth variant="contained" color='success'
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan'}
+                </Button>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="info"
+                  onClick={() => handleEdit({ isCancel: false })}
+                  startIcon={<EditIcon />}                >
+                  Edit
+                </Button>
+              )}
             </Grid>
           </Grid>
 
@@ -389,3 +395,5 @@ export default function ProfilSekolah() {
     </Box>
   );
 }
+
+export default UserProfile;

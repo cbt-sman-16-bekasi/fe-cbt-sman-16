@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
@@ -10,6 +10,7 @@ import useApi from "../../../utils/rest/api.js";
 import { IconButton } from "@mui/material";
 
 export function useClassesHook() {
+  const { showModalMemberClass } = useModal();
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
@@ -33,9 +34,20 @@ export function useClassesHook() {
           <IconButton
             size="small"
             sx={{
+              bgcolor: "green",
+              color: "white",
+              "&:hover": { bgcolor: "yellowgreen" },
+            }}
+            onClick={onOpenMemberModal}
+          >
+            <VisibilityIcon />
+          </IconButton>
+          <IconButton
+            size="small"
+            sx={{
               bgcolor: "purple",
               color: "white",
-              "&:hover": { bgcolor: "darkpurple" },
+              "&:hover": { bgcolor: "purple" },
             }}
             onClick={() => handleEdit(row.ID)}
           >
@@ -52,10 +64,14 @@ export function useClassesHook() {
           >
             <DeleteIcon />
           </IconButton>
-        </div>
+        </div >
       ),
     },
   ];
+
+  const onOpenMemberModal = () => {
+    showModalMemberClass();
+  };
 
   const handleEdit = (id) => {
     navigate(`/${userRole}/kelas/${id}/update`)

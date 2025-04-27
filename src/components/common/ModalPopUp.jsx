@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
 import { useModal } from "./ModalContext";
-import {CheckCircleIcon, MessageCircleWarningIcon} from "lucide-react";
+import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
 import ErrorIcon from "@mui/icons-material/Error";
 
 export default function ModalPopUp() {
@@ -9,7 +9,7 @@ export default function ModalPopUp() {
   const getIcon = () => {
     switch (type) {
       case "success":
-        return <CheckCircleIcon style={{ color: "green", fontSize: 40 }} size={40}  />;
+        return <CheckCircleIcon style={{ color: "green", fontSize: 40 }} size={40} />;
       case "error":
         return <ErrorIcon style={{ color: "red" }} />;
       case "warning":
@@ -26,12 +26,15 @@ export default function ModalPopUp() {
     hideModal();
   };
 
+  if (type === "changePassword") return null;
+  if (type === "memberClass") return null;
+
   return (
     <Dialog open={open} onClose={hideModal} fullWidth={true} maxWidth='xs'>
-      <DialogTitle sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 1}}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 1 }}>
         {getIcon()} {type === "success" ? "Success" : type === "error" ? "Error" : "Warning"}
       </DialogTitle>
-      <DialogContent sx={{textAlign: 'center'}}>
+      <DialogContent sx={{ textAlign: 'center' }}>
         <p>{message}</p>
       </DialogContent>
       {type === "confirm" && (

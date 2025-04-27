@@ -6,10 +6,22 @@ const ModalContext = createContext();
 export const useModal = () => useContext(ModalContext);
 
 export const ModalProvider = ({ children }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); //state untuk ModalPopUp
+  const [modalMemberClassOpen, setModalMemberClassOpen] = useState(false); // state khusus buat modalMember
   const [message, setMessage] = useState("");
-  const [type, setType] = useState("success"); // success, error, warning
+  const [type, setType] = useState("success"); // success, error, warning | state untuk ModalPopUp
+  const [modalMemberType, setModalMemberType] = useState("memberClass"); // state khusus buat modalMember
   const [onConfirm, setOnConfirm] = useState(null);
+
+  const showModalMemberClass = (type = "memberClass") => {
+    setType(type);
+    setModalMemberClassOpen(true)
+  };
+
+  const showModalChangePassword = (type = "changePassword") => {
+    setType(type);
+    setOpen(true)
+  };
 
   const showModal = (message, type = "success") => {
     setMessage(message);
@@ -25,9 +37,10 @@ export const ModalProvider = ({ children }) => {
   };
 
   const hideModal = () => setOpen(false);
+  const hideModalMemberClass = () => setModalMemberClassOpen(false);
 
   return (
-    <ModalContext.Provider value={{ open, message, type, showModal, hideModal, showConfirm, onConfirm }}>
+    <ModalContext.Provider value={{ open, modalMemberClassOpen, message, type, modalMemberType, showModalMemberClass, showModalChangePassword, showModal, hideModal, hideModalMemberClass, showConfirm, onConfirm }}>
       {children}
     </ModalContext.Provider>
   );

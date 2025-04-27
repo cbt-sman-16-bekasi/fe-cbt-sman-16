@@ -2,11 +2,11 @@ import Grid from "@mui/material/Grid2";
 import Divider from "@mui/material/Divider";
 import PropTypes from "prop-types";
 
-export default function DetailItem({label, value}) {
+export default function DetailItem({ label, value }) {
   return (
-    <Grid container sx={{display: 'flex', flexDirection: 'column'}}>
+    <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
       {/* Jenis Ujian */}
-      <Grid container sx={{paddingX: '20px'}}>
+      <Grid container sx={{ paddingX: '20px' }}>
         <Grid size={{ xs: 6, md: 2 }}>
           <span >
             {label}
@@ -16,7 +16,7 @@ export default function DetailItem({label, value}) {
           {value}
         </Grid>
       </Grid>
-      <Grid item size={{ xs: 12}}>
+      <Grid size={{ xs: 12 }}>
         <Divider sx={{ mt: 0 }} />
       </Grid>
     </Grid>

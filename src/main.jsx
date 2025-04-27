@@ -10,7 +10,6 @@ import { LoadingProvider } from "./components/common/LoadingProvider.jsx";
 import LoadingOverlay from "./components/common/LoadingOverlay.jsx";
 import { ModalProvider } from "./components/common/ModalContext.jsx";
 import ModalPopUp from "./components/common/ModalPopUp.jsx";
-import ModalChangePassword from './components/common/ModalChangePassword.jsx';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
@@ -20,7 +19,6 @@ createRoot(document.getElementById('root')).render(
           <ModalProvider>
             <App />
             <ModalPopUp />
-            <ModalChangePassword />
             <LoadingOverlay />
           </ModalProvider>
         </LoadingProvider>

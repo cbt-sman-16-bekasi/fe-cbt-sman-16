@@ -22,7 +22,7 @@ export function StudentCreate({ isUpdatePage = false }) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
-      <BackWithTitle title={isUpdatePage ? 'Edit Siswa' : 'Tambah Siswa'} />
+      <BackWithTitle />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Siswa" iconBackground="red" />
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>

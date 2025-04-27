@@ -8,6 +8,7 @@ import { useUserProfileHook } from "./hooks/useUserProfileHook.jsx";
 import { useEffect } from "react";
 import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
 import { ModeEditOutlined } from "@mui/icons-material";
+import ModalChangePassword from "../../components/common/ModalChangePassword.jsx";
 
 const UserProfile = () => {
   const {
@@ -44,8 +45,9 @@ const UserProfile = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
+      <ModalChangePassword />
 
-      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="red" />
+      <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="purple" />
 
       {showAlert && (
         <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
@@ -90,7 +92,7 @@ const UserProfile = () => {
 
               <Stack spacing={1.3} direction="row" alignItems="center">
 
-                <Button variant="contained" component="label" color='info'>
+                <Button variant="contained" component="label" color='success' disabled={!isEdit}>
                   Ganti Photo
                   <input
                     type="file"
@@ -101,7 +103,7 @@ const UserProfile = () => {
                   />
                 </Button>
 
-                <Button variant="outlined" color="error">
+                <Button variant="outlined" color="error" disabled={!isEdit}>
                   Hapus
                 </Button>
 
@@ -196,7 +198,8 @@ const UserProfile = () => {
               <Grid size={{ sm: 1.3 }}>
                 <Button
                   fullWidth
-                  variant="contained"
+                  variant="outlined"
+                  color="error"
                   className="bg-slate-800 text-white"
                   onClick={() => handleEdit({ isCancel: true })}
                 >
@@ -209,7 +212,7 @@ const UserProfile = () => {
                 <Button
                   fullWidth
                   variant="contained"
-                  color="info"
+                  color="success"
                   onClick={handleUpdate}
                   disabled={isSubmitting}
                 >

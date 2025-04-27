@@ -37,7 +37,7 @@ export const MenuConfig = [
     path: '/ujian',
   },
   {
-    text: 'Sesi Ujian',
+    text: 'Sesi Ujian Aktif',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/sesi-ujian',
