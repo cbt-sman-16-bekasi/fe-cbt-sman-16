@@ -17,9 +17,11 @@ export function useBankQuestionListHook() {
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "subject", headerName: "MATA PELAJARAN", flex: 0.1, minWidth: 50, renderCell: (row) => row.detail_subject.subject ?? '-' },
+    { field: "subject", headerName: "MATA PELAJARAN", flex: 0.1, minWidth: 50, renderCell: (row) => row.subject ?? '-' },
     { field: "class_code", headerName: "KODE KELAS", flex: 0.1, minWidth: 50 },
-    { field: "total_question", headerName: "JUMLAH SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => row.total_question ?? 0 },
+    { field: "total", headerName: "JUMLAH SOAL", flex: 0.1, minWidth: 50},
+    { field: "type_question", headerName: "JENIS SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => row.type_question.replaceAll("_", " ") },
+    { field: "name", headerName: "DI BUAT OLEH", flex: 0.1, minWidth: 50, renderCell: (row) => row.name ?? '-' },
   ]
 
   const handleEdit = (id) => {

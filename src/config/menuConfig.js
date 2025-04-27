@@ -1,5 +1,3 @@
-import {SchoolSharp} from "@mui/icons-material";
-
 export const menuConfig = {
   admin: [
     {
