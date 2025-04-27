@@ -15,13 +15,16 @@ const StudentList = () => {
   const {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
     isRefreshList,
     handleUpload,
     openUpload,
     setOpenUpload,
-    handleDownloadTemplate
+    handleDownloadTemplate,
+    searchOptions,
   } = UseStudentHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -36,11 +39,13 @@ const StudentList = () => {
           </Grid>
           <Grid >
             <SearchBarWithFilter
-              onFilterChange={({ searchBy, search: searchData, filters }) => {
-                console.log("Search by:", searchBy);
-                console.log("Search keyword:", search);
+              searchOptions={searchOptions}
+              onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
+                console.log("Search by:", searchByData);
+                console.log("Search keyword:", searchData);
                 console.log("Filters:", filters);
-                setSearch(searchData)
+                setSearch(searchData);
+                setSearchBy(searchByData);
               }}
             />
           </Grid>
@@ -66,7 +71,7 @@ const StudentList = () => {
             }
           }}>
             <Grid size={{ xs: 12, lg: 12 }}>
-              <ApiTable url="/academic/student/all" pageSize={10} columns={columns({ withEdit: true })} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+              <ApiTable url="/academic/student/all" pageSize={10} columns={columns({ withEdit: true })} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
             </Grid>
           </Grid>
         </BasicCard>

@@ -10,12 +10,13 @@ import useApi from "../../../utils/rest/api.js";
 import { Chip, IconButton } from "@mui/material";
 
 export function useExamTypeHook() {
-  const authUser = useSelector((state) => state.authUser);
-  const userRole = authUser?.role?.code.toLowerCase();
-  const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
+  const authUser = useSelector((state) => state.authUser);
+  const userRole = authUser?.role?.code.toLowerCase();
+  const [search, setSearch] = useState('');
+  const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false)
 
   function getChipColor(status) {
@@ -126,12 +127,22 @@ export function useExamTypeHook() {
     });
   };
 
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns.slice(1, -1).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
+
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     isRefreshList,
-    columns
+    columns,
+    searchOptions,
   }
 
 }

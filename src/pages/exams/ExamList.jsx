@@ -1,21 +1,24 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Alert, AlertTitle, Button, InputAdornment, TextField } from "@mui/material";
+import { Alert, AlertTitle, Button } from "@mui/material";
 import { RocketLaunch } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { UseExamHook } from "./hooks/useExamHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
+import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
 const ExamList = () => {
   const {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    searchOptions,
   } = UseExamHook()
 
   return (
@@ -36,17 +39,14 @@ const ExamList = () => {
           </Link>
         </Grid>
         <Grid lg={4}>
-          <TextField
-            variant="outlined"
-            placeholder="Cari Berdasarkan..."
-            fullWidth
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+          <SearchBarWithFilter
+            searchOptions={searchOptions}
+            onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
+              console.log("Search by:", searchByData);
+              console.log("Search keyword:", searchData);
+              console.log("Filters:", filters);
+              setSearch(searchData);
+              setSearchBy(searchByData);
             }}
           />
         </Grid>
@@ -64,7 +64,7 @@ const ExamList = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/exam/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+          <ApiTable url="/academic/exam/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

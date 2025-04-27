@@ -1,9 +1,8 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import { useTeacherHook } from "./hooks/useTeacherHook.jsx";
 import ApiTable from "../../components/ApiTable.jsx";
 import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
@@ -12,11 +11,13 @@ const TeacherList = () => {
   const {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
     isRefreshList,
-    searchOptions
-  } = useTeacherHook()
+    searchOptions,
+  } = useTeacherHook();
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -28,13 +29,14 @@ const TeacherList = () => {
         </Grid>
         <Grid lg={4}>
           <SearchBarWithFilter
-            onFilterChange={({ searchBy, search: searchData, filters }) => {
-              console.log("Search by:", searchBy);
-              console.log("Search keyword:", search);
-              console.log("Filters:", filters);
-              setSearch(searchData)
-            }}
             searchOptions={searchOptions}
+            onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
+              console.log("Search by:", searchByData);
+              console.log("Search keyword:", searchData);
+              console.log("Filters:", filters);
+              setSearch(searchData);
+              setSearchBy(searchByData);
+            }}
           />
         </Grid>
       </Grid>
@@ -51,7 +53,7 @@ const TeacherList = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/teacher/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+          <ApiTable url="/academic/teacher/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

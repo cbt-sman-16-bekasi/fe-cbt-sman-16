@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
@@ -16,11 +15,12 @@ export function useSubjectHook() {
   const navigate = useNavigate();
   const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
-  const [isRefreshList, setRefreshList] = useState(false)
+  const [isRefreshList, setRefreshList] = useState(false);
+  const [searchBy, setSearchBy] = useState('');
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "subject", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120},
+    { field: "subject", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120 },
     { field: "code", headerName: "KODE", flex: 1.5, minWidth: 150 },
     {
       field: "aksi",
@@ -64,13 +64,13 @@ export function useSubjectHook() {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <br/><strong>{data}</strong> ?
+          Apakah kamu yakin ingin melanjutkan proses hapus <br /><strong>{data}</strong> ?
         </p>
       </div>
     )
   }
 
-  const handleDelete = ({ID, subject}) => {
+  const handleDelete = ({ ID, subject }) => {
     showConfirm(messageDelete(subject), async () => {
       showLoading()
       await useApi.delete({ url: `/academic/curriculum/subject/delete/${ID}` })
@@ -79,12 +79,23 @@ export function useSubjectHook() {
     });
   };
 
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns.slice(1, -1).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
+
+
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     isRefreshList,
-    columns
+    columns,
+    searchOptions,
   }
 
 }

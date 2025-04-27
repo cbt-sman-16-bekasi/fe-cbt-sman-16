@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Chip, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
@@ -10,31 +10,36 @@ import useApi from "../../../utils/rest/api.js";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
 export function useTeacherHook() {
-  const authUser = useSelector((state) => state.authUser);
-  const userRole = authUser?.role?.code.toLowerCase();
-  const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
+  const authUser = useSelector((state) => state.authUser);
+  const userRole = authUser?.role?.code.toLowerCase();
   const [isRefreshList, setRefreshList] = useState(false)
+  const [search, setSearch] = useState('');
+  const [searchBy, setSearchBy] = useState('');
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
     { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.gender || '-' },
-    { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => {
-      if (row.teacherClassSubject !== null) {
-        return row.teacherClassSubject.map(r => r.subject.subject).join(', ')
+    {
+      field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => {
+        if (row.teacherClassSubject !== null) {
+          return row.teacherClassSubject.map(r => r.subject.subject).join(', ')
+        }
+        return '-'
       }
-      return '-'
-      } },
-    { field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => {
+    },
+    {
+      field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => {
         if (row.teacherClassSubject !== null) {
           return row.teacherClassSubject.map(r => r.class.className).join(', ')
         }
         return '-'
-      } },
+      }
+    },
     {
       field: "akses",
       headerName: "AKSES",
@@ -99,14 +104,18 @@ export function useTeacherHook() {
     });
   };
 
-  const searchOptions = [
-    {label: 'NUPTK', value: 'nuptk'},
-    {label: 'Nama Guru', value: 'name'},
-  ]
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns.slice(1, -5).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
 
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     isRefreshList,
     columns,

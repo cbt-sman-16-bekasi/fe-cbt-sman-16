@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce.js";
+import PropTypes from "prop-types";
 
 export default function SearchBarWithFilter({ onFilterChange, renderFilterContent, searchOptions = [] }) {
   const [searchBy, setSearchBy] = useState("");
@@ -38,11 +39,12 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
     if (onFilterChange) {
       onFilterChange({
         searchBy,
-        search,
+        search: debouncedSearch,
         filters: filterOptions,
       });
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, searchBy, filterOptions]);
+
 
   return (
     <>
@@ -65,7 +67,8 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
 
         <TextField
           variant="outlined"
-          placeholder={`Cari berdasarkan ${searchBy}`}
+          placeholder={`Cari berdasarkan ${(searchOptions.find((option) => option.value === searchBy)?.label || "").toLowerCase()
+            }`}
           fullWidth
           size="small"
           disabled={searchOptions.length === 0}
@@ -118,3 +121,15 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
     </>
   );
 }
+
+
+SearchBarWithFilter.propTypes = {
+  onFilterChange: PropTypes.func,
+  renderFilterContent: PropTypes.func,
+  searchOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+};

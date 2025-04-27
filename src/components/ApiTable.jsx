@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material/styles";
 export default function ApiTable({
   url,
   columns,
-  searchKey,
+  searchKey = '',
   searchValue,
   pageSize = 10,
   isPagination = true,
@@ -25,7 +25,6 @@ export default function ApiTable({
   const debouncedSearch = useDebounce(searchValue, 500); // 500ms debounce
   const isDarkMode = useTheme().palette.mode === 'dark';
 
-  // Fetch data dari API
   const fetchData = async () => {
     setLoading(true);
     try {

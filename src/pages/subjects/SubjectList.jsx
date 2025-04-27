@@ -1,10 +1,9 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Button, InputAdornment, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useSubjectHook } from "./hooks/useSubjectHook.jsx";
 import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
 import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
@@ -12,10 +11,13 @@ const SubjectList = () => {
   const {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
-    isRefreshList
-  } = useSubjectHook()
+    isRefreshList,
+    searchOptions,
+  } = useSubjectHook();
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -28,11 +30,13 @@ const SubjectList = () => {
         <Grid lg={4}>
 
           <SearchBarWithFilter
-            onFilterChange={({ searchBy, search: searchData, filters }) => {
-              console.log("Search by:", searchBy);
-              console.log("Search keyword:", search);
+            searchOptions={searchOptions}
+            onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
+              console.log("Search by:", searchByData);
+              console.log("Search keyword:", searchData);
               console.log("Filters:", filters);
-              setSearch(searchData)
+              setSearch(searchData);
+              setSearchBy(searchByData);
             }}
           />
         </Grid>
@@ -50,7 +54,7 @@ const SubjectList = () => {
         }
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/curriculum/subject/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+          <ApiTable url="/academic/curriculum/subject/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

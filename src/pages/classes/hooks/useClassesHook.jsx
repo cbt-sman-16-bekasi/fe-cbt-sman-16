@@ -10,14 +10,15 @@ import useApi from "../../../utils/rest/api.js";
 import { IconButton } from "@mui/material";
 
 export function useClassesHook() {
-  const { showModalMemberClass } = useModal();
+  const navigate = useNavigate();
+  const { showConfirm, showModalMemberClass } = useModal();
+  const { showLoading, hideLoading } = useLoading();
+  const [isRefreshList, setRefreshList] = useState(false)
+
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
-  const navigate = useNavigate();
-  const { showConfirm } = useModal();
-  const { showLoading, hideLoading } = useLoading();
-  const [isRefreshList, setRefreshList] = useState(false)
+  const [searchBy, setSearchBy] = useState('');
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
@@ -96,12 +97,22 @@ export function useClassesHook() {
     });
   };
 
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns.slice(1, -2).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
+
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     isRefreshList,
-    columns
+    columns,
+    searchOptions,
   }
 
 }

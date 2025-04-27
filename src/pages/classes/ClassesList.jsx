@@ -12,9 +12,12 @@ const ClassesList = () => {
   const {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    searchOptions,
   } = useClassesHook()
 
   return (
@@ -27,13 +30,15 @@ const ClassesList = () => {
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
           </Link>
         </Grid>
-        <Grid lg={4}>
+        <Grid >
           <SearchBarWithFilter
-            onFilterChange={({ searchBy, search: searchData, filters }) => {
-              console.log("Search by:", searchBy);
-              console.log("Search keyword:", search);
+            searchOptions={searchOptions}
+            onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
+              console.log("Search by:", searchByData);
+              console.log("Search keyword:", searchData);
               console.log("Filters:", filters);
-              setSearch(searchData)
+              setSearch(searchData);
+              setSearchBy(searchByData);
             }}
           />
         </Grid>
@@ -51,7 +56,7 @@ const ClassesList = () => {
         },
       }}>
         <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/class/all" pageSize={10} columns={columns} searchKey="name" searchValue={search} isRefresh={isRefreshList} />
+          <ApiTable url="/academic/class/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </Grid>
     </Box>

@@ -1,22 +1,23 @@
-import {useSelector} from "react-redux";
-import {useState} from "react";
-import {useNavigate} from "react-router";
-import {Box, IconButton, Typography} from "@mui/material";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { Box, IconButton, Typography } from "@mui/material";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useDate from "../../../hooks/useDate.js";
 import useApi from "../../../utils/rest/api.js";
-import {useModal} from "../../../components/common/ModalContext.jsx";
-import {useLoading} from "../../../components/common/LoadingProvider.jsx";
+import { useModal } from "../../../components/common/ModalContext.jsx";
+import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 
 export function UseExamSessionListHook() {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
+  const [searchBy, setSearchBy] = useState('');
   const navigate = useNavigate();
   const dateHelper = useDate();
-  const {showConfirm} = useModal();
+  const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [isRefreshList, setRefreshList] = useState(false)
 
@@ -33,8 +34,8 @@ export function UseExamSessionListHook() {
           <Box>
             <Typography variant="body1" fontWeight="bold">{detailExam.name}</Typography>
             <Typography fontSize={12}>Detail</Typography>
-            <ul style={{ paddingLeft: "16px", fontSize: "12px"}}>
-              <li>Kelas: <strong>{row.exam_member !== null ? row.exam_member.map(r => r.detail_class.className).join(', ') : '-'} </strong></li>
+            <ul style={{ paddingLeft: "16px", fontSize: "12px" }}>
+              <li>Kelas: <strong>{row.exam_member !== null ? row.exam_member?.map(r => r.detail_class.className).join(', ') : '-'} </strong></li>
               <li>Pelajaran: <strong>{detailExam.subject_code.subject ?? '-'}</strong></li>
             </ul>
           </Box>
@@ -114,17 +115,27 @@ export function UseExamSessionListHook() {
   const handleDelete = (id) => {
     showConfirm(messageDelete(), async () => {
       showLoading()
-      await useApi.delete({url: `/academic/exam/session/delete/${id}`})
+      await useApi.delete({ url: `/academic/exam/session/delete/${id}` })
       setRefreshList(!isRefreshList)
       hideLoading()
     });
   };
 
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns.slice(1, -4).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
+
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    searchOptions,
   }
 }

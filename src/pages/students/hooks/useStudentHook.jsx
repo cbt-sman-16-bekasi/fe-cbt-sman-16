@@ -11,10 +11,11 @@ import useApi from "../../../utils/rest/api.js";
 export function UseStudentHook() {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.authUser);
-  const userRole = authUser?.role?.code.toLowerCase();
-  const [search, setSearch] = useState('');
   const { showConfirm, showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
+  const userRole = authUser?.role?.code.toLowerCase();
+  const [search, setSearch] = useState('');
+  const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false)
   const [openUpload, setOpenUpload] = useState(false);
 
@@ -108,10 +109,18 @@ export function UseStudentHook() {
     },
   ];
 
+  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+
+  const searchOptions = columns().slice(1, -3).map((col) => ({
+    value: col.field,
+    label: capitalize(col.headerName),
+  }));
 
   return {
     search,
     setSearch,
+    searchBy,
+    setSearchBy,
     userRole,
     isRefreshList,
     columns,
@@ -119,6 +128,7 @@ export function UseStudentHook() {
     openUpload,
     setOpenUpload,
     handleDownloadTemplate,
+    searchOptions,
   }
 
 }
