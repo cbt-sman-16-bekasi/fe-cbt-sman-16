@@ -34,7 +34,7 @@ const StudentList = () => {
               <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
             </Link>
           </Grid>
-          <Grid lg={4}>
+          <Grid >
             <SearchBarWithFilter
               onFilterChange={({ searchBy, search: searchData, filters }) => {
                 console.log("Search by:", searchBy);
@@ -79,7 +79,7 @@ const StudentList = () => {
         onClose={() => setOpenUpload(false)}
         onUpload={handleUpload}
       />
-    </Box>
+    </Box >
   )
 }
 

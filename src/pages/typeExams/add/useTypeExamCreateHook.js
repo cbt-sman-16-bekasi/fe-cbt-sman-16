@@ -11,9 +11,8 @@ export function useTypeExamCreateHook({ updatePage = false }) {
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
-
-  const [examName, setExamName] = useState('');
-  const [classCode, setClassCode] = useState('');
+  const [examCode, setExamCode] = useState('');
+  const [examTypeCode, setExamTypeCode] = useState('');
   const [access, setAccess] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [optionsUserRoles, setoptionsUserRoles] = useState('');
@@ -35,8 +34,8 @@ export function useTypeExamCreateHook({ updatePage = false }) {
         const { data: detailExam } = await useExamTypeApi.detailExamType({
           id: id,
         });
-        setClassCode(detailExam.code);
-        setExamName(detailExam.name);
+        setExamTypeCode(detailExam.code);
+        setExamCode(detailExam.name);
         setAccess(detailExam.detail_role.code);
         setSelectedColor(detailExam.color);
       }
@@ -47,10 +46,10 @@ export function useTypeExamCreateHook({ updatePage = false }) {
 
   const handleSubmitCreate = () => {
     const body = {
-      code_type_exam: 'string',
-      color: 'string',
-      role: 'string',
-      type_exam: 'string',
+      code_type_exam: examTypeCode,
+      color: selectedColor,
+      role: access,
+      type_exam: examCode,
     };
 
     showLoading();
@@ -72,17 +71,17 @@ export function useTypeExamCreateHook({ updatePage = false }) {
   };
 
   const resetForm = () => {
-    setExamName('');
-    setClassCode('');
+    setExamCode('');
+    setExamTypeCode('');
     setAccess('');
     setSelectedColor('');
   };
 
   return {
-    examName,
-    setExamName,
-    classCode,
-    setClassCode,
+    examCode,
+    setExamCode,
+    examTypeCode,
+    setExamTypeCode,
     access,
     setAccess,
     selectedColor,

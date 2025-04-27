@@ -11,8 +11,8 @@ import PropTypes from "prop-types";
 
 export function TypeExamCreate({ isUpdatePage = false }) {
   const {
-    examName, setExamName,
-    classCode, setClassCode,
+    examCode, setExamCode,
+    examTypeCode, setExamTypeCode,
     access, setAccess,
     selectedColor, setSelectedColor,
     optionsColor,
@@ -31,9 +31,9 @@ export function TypeExamCreate({ isUpdatePage = false }) {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="Jenis Ujian" fullWidth={true} value={examName} onChange={(c) => setExamName(c.target.value)} placeholder="Nama Jenis Ujian" />
+            <CustomInput label="Jenis Ujian" fullWidth={true} value={examCode} onChange={(c) => setExamCode(c.target.value)} placeholder="Nama Jenis Ujian" />
 
-            <CustomInput label="Buat Kode Jenis Ujian" fullWidth={true} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="Kode Jenis Ujian" />
+            <CustomInput label="Buat Kode Jenis Ujian" fullWidth={true} value={examTypeCode} onChange={(c) => setExamTypeCode(c.target.value)} placeholder="Kode Jenis Ujian" />
 
           </Grid>
 

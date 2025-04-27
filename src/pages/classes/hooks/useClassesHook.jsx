@@ -38,7 +38,7 @@ export function useClassesHook() {
               color: "white",
               "&:hover": { bgcolor: "yellowgreen" },
             }}
-            onClick={onOpenMemberModal}
+            onClick={() => onOpenMemberModal(row.ID)}
           >
             <VisibilityIcon />
           </IconButton>
@@ -69,8 +69,8 @@ export function useClassesHook() {
     },
   ];
 
-  const onOpenMemberModal = () => {
-    showModalMemberClass();
+  const onOpenMemberModal = (id) => {
+    showModalMemberClass(id);
   };
 
   const handleEdit = (id) => {

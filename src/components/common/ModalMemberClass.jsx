@@ -10,7 +10,7 @@ import SearchBarWithFilter from "./SearchBarWithFilter";
 import { Link } from "react-router";
 
 export default function ModalMemberClass() {
-  const { modalMemberClassOpen, hideModalMemberClass, modalMemberType } = useModal();
+  const { modalMemberClassOpen, hideModalMemberClass, modalMemberType, classId } = useModal();
 
   const {
     search,
@@ -27,11 +27,10 @@ export default function ModalMemberClass() {
       <Grid sx={{ display: "flex", alignItems: 'center', justifyContent: "space-between", p: 2, width: '100%' }}>
         <TitleWithIcon icon={<People sx={{ color: 'white' }} />} text='Anggota Kelas' iconBackground="red" />
 
-        <Link to={`/${userRole}/data-siswa/tambah`}>
+        <Link to={`/${userRole}/data-siswa/tambah?class=${classId}`}>
           <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}>Tambah Anggota</Button>
         </Link>
       </Grid>
-
 
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" >

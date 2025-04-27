@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import useStudentApi from '../../../utils/rest/student.js';
 import useMasterController from '../../../utils/rest/master.js';
 
 export function useStudentCreateHook({ updatePage = false }) {
   const { id } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const classIdParam = searchParams.get('class');
   const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
 
   const [nisn, setNisn] = useState('');
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
-  const [classCode, setClassCode] = useState('');
+  const [classCode, setClassCode] = useState(classIdParam || '');
 
   const [optionsClass, setOptionClass] = useState([]);
   const optionsGender = [
@@ -110,5 +113,6 @@ export function useStudentCreateHook({ updatePage = false }) {
     optionsGender,
     handleSubmitCreate,
     resetForm,
+    classIdParam,
   };
 }
