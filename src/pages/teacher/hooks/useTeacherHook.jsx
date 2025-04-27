@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
 export function useTeacherHook() {
   const authUser = useSelector((state) => state.authUser);
@@ -17,34 +18,29 @@ export function useTeacherHook() {
   const { showLoading, hideLoading } = useLoading();
   const [isRefreshList, setRefreshList] = useState(false)
 
-  function getHakAksesColor(status) {
-    const colors = {
-      "Admin": "primary",
-      "Guru": "success",
-    };
-
-    return (
-      <Chip
-        variant='outlined'
-        label={status}
-        color={colors[status] || "default"}
-        size="small"
-      />
-    );
-  }
-
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
-    { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user?.gender || '-' },
-    { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => row.subject || '-' },
+    { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.gender || '-' },
+    { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => {
+      if (row.teacherClassSubject !== null) {
+        return row.teacherClassSubject.map(r => r.subject.subject).join(', ')
+      }
+      return '-'
+      } },
+    { field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => {
+        if (row.teacherClassSubject !== null) {
+          return row.teacherClassSubject.map(r => r.class.className).join(', ')
+        }
+        return '-'
+      } },
     {
       field: "akses",
       headerName: "AKSES",
       flex: 0.5,
       minWidth: 120,
-      renderCell: (row) => getHakAksesColor(row.detail_user.role.name),
+      renderCell: () => <CheckRoundedIcon color="primary" />,
     },
     {
       field: "aksi",
@@ -103,12 +99,18 @@ export function useTeacherHook() {
     });
   };
 
+  const searchOptions = [
+    {label: 'NUPTK', value: 'nuptk'},
+    {label: 'Nama Guru', value: 'name'},
+  ]
+
   return {
     search,
     setSearch,
     userRole,
     isRefreshList,
-    columns
+    columns,
+    searchOptions
   }
 
 }

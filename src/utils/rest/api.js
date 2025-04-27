@@ -70,8 +70,8 @@ const useApi = (() => {
     const params = new URLSearchParams({ page, size });
 
     if (searchKey && searchValue) {
-      params.append('search.key', searchKey);
-      params.append('search.value', searchValue);
+      params.append('key', searchKey);
+      params.append('value', searchValue);
     }
 
     if (filter) {

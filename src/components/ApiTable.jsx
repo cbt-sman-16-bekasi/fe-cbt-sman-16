@@ -6,6 +6,7 @@ import {
 import PropTypes from "prop-types";
 import useApi from "../utils/rest/api.js";
 import { useDebounce } from "../hooks/useDebounce.js";
+import { useTheme } from "@mui/material/styles";
 
 export default function ApiTable({
   url,
@@ -22,6 +23,7 @@ export default function ApiTable({
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(false);
   const debouncedSearch = useDebounce(searchValue, 500); // 500ms debounce
+  const isDarkMode = useTheme().palette.mode === 'dark';
 
   // Fetch data dari API
   const fetchData = async () => {
@@ -81,7 +83,8 @@ export default function ApiTable({
             ) : (
               data.map((row, index) => (
                 <TableRow key={row.id || index}
-                  sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
+                  sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: !isDarkMode ? index % 2 === 0 ? '#f9f9f9' : '#ffffff' : 'transparent' }}
+                >
                   {columns.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}

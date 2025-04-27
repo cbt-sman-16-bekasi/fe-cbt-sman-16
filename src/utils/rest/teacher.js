@@ -34,10 +34,36 @@ const useTeacherApi = (() => {
     });
   };
 
+  const modifyTeacherSubject = async ({ body, id = null, isCreate = false }) => {
+    return await useApi.fetch(
+      isCreate ? '/academic/teacher/class-subject/create' : `/academic/teacher/class-subject/update/${id}`,
+      {
+        method: isCreate ? 'POST' : 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
+  };
+
+  const getDetailClassSubject = async ({ id } = {}) => {
+    return await useApi.fetch(`/academic/teacher/class-subject/detail/${id}`, {
+      method: 'GET',
+    });
+  };
+
+  const getDetailClassSubjectList = async ({ id } = {}) => {
+    return await useApi.fetch(`/academic/teacher/${id}/class-subject/all`, {
+      method: 'GET',
+    });
+  };
+
   return {
     allTeacher: getAllTeacher,
     modifyTeacher: modifyTeacher,
     detailTeacher: getDetail,
+    modifyClassSubject: modifyTeacherSubject,
+    detailTeacherClassSubject: getDetailClassSubject,
+    allTeacherClassSubject: getDetailClassSubjectList,
   };
 })();
 
