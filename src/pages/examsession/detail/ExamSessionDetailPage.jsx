@@ -9,11 +9,11 @@ import Grid from "@mui/material/Grid2";
 import {useExamSessionDetailHook} from "./useExamSessionDetailHook.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
 import {UsersIcon} from "lucide-react";
+import CustomInput from "../../../components/form/FormInputTextField.jsx";
 
 const ExamSessionDetailPage = () => {
 
   const {
-    id,
     name, typeExam, subject,
     classCode,
     columns,
@@ -21,7 +21,10 @@ const ExamSessionDetailPage = () => {
     startDate,
     endDate,
     sessionId,
-    handleDownload
+    handleDownload,
+    optionExamMember,classIdSelected, setClassIdSelected,
+    isRefreshTable,
+    detailExamSession
   } = useExamSessionDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -41,12 +44,18 @@ const ExamSessionDetailPage = () => {
         <DetailItem label="Nama Sesi" value={sessionName} />
         <DetailItem label="Mulai" value={startDate} />
         <DetailItem label="Selesai" value={endDate} />
-        <DetailItem label="Kehadiran Siswa" value={0} />
+        <DetailItem label="Kehadiran Siswa" value={detailExamSession.total_attendance ?? 0} />
+        <DetailItem label="Total Siswa Mengumpulkan" value={detailExamSession.total_submit ?? 0} />
+        <DetailItem label="Total Siswa Terindikasi Curang" value={detailExamSession.total_cheating ?? 0} />
+        <DetailItem label="Total Siswa Mengumpulkan Pada Waktu Habis" value={detailExamSession.total_times_over ?? 0} />
       </BasicCard>
 
       <TitleWithIcon icon={<UsersIcon sx={{color: 'black'}} />} text="Daftar Peserta Ujian" iconBackground="yellow" />
       <BasicCard>
-        <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2} mt={3}>
+        <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
+          <Grid size={{ lg: 5, md: 4, sm: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
+            <CustomInput label="Kelas" fullWidth={true} type="text" options={optionExamMember} value={classIdSelected} onChange={(c) => setClassIdSelected(c.target.value)} placeholder="Kelas" />
+          </Grid>
           <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
             <Button fullWidth variant="contained" color='info' onClick={handleDownload} startIcon={<DownloadOutlined/>}>Download Data Peserta Ujian</Button>
           </Grid>
@@ -64,7 +73,10 @@ const ExamSessionDetailPage = () => {
           }
         }}>
           <Grid size={{ xs: 12, lg: 12 }}>
-            <ApiTable url={`/academic/exam/session/attendance?exam_session_id=${sessionId}&class_id=1`} pageSize={10} columns={columns} isPagination={false} />
+            { classIdSelected && (<ApiTable url={`/academic/exam/session/attendance?exam_session_id=${sessionId}&class_id=${classIdSelected}`}
+                                            isRefresh={isRefreshTable}
+              pageSize={10} columns={columns} isPagination={false} />)
+            }
           </Grid>
         </Grid>
       </BasicCard>

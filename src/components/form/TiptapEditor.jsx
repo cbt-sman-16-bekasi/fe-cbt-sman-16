@@ -15,6 +15,7 @@ import {
   AlignLeft, AlignCenter, AlignRight, PaintBucket, Highlighter, Link as LinkIcon
 } from "lucide-react";
 import PropTypes from "prop-types";
+import useApi from "../../utils/rest/api.js";
 
 const MenuBar = ({ editor, onImageUpload }) => {
   if (!editor) return null;
@@ -128,8 +129,14 @@ const TiptapEditor = ({ value = "", onChange, sx = {}, editable = true }) => {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      editor.chain().focus().setImage({ src: reader.result }).run();
+    reader.onloadend = async () => {
+      const { data, status } = await useApi.fetch("/upload/base64", {
+        method: 'POST',
+        body: JSON.stringify({ file_data: reader.result})
+      })
+      if (status === 'success') {
+        editor.chain().focus().setImage({ src: data.url }).run();
+      }
     };
     reader.readAsDataURL(file);
   };

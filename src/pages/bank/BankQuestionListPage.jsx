@@ -64,7 +64,7 @@ const BankQuestionListPage = () => {
                 color: isDarkMode ? "white" : "black",
                 "&:hover": { bgcolor: "gold" },
               }}
-              onClick={() => handleSettings(row.ID)}
+              onClick={() => handleSettings(row.id)}
             >
               <SettingsOutlinedIcon />
             </IconButton>
@@ -77,7 +77,7 @@ const BankQuestionListPage = () => {
                 color: "white",
                 "&:hover": { bgcolor: "darkviolet" },
               }}
-              onClick={() => handleEdit(row.ID)}
+              onClick={() => handleEdit(row.id)}
             >
               <EditIcon />
             </IconButton>)}
@@ -89,7 +89,7 @@ const BankQuestionListPage = () => {
                 color: "white",
                 "&:hover": { bgcolor: "darkred" },
               }}
-              onClick={() => handleDelete(messageDelete(), row.ID)}
+              onClick={() => handleDelete(messageDelete(), row.id)}
             >
               <DeleteIcon />
             </IconButton>)}

@@ -120,11 +120,17 @@ export function UseExamSessionListHook() {
     });
   };
 
+  const searchOptions = [
+    {label: 'Nama Ujian', value: 'detail_exam.name'},
+    {label: 'Nama Sesi Ujian', value: 'name'},
+  ]
+
   return {
     search,
     setSearch,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    searchOptions
   }
 }

@@ -15,7 +15,9 @@ export function ExamSessionCreatePage({isUpdatePage = false}) {
     optionExam,
     startDate, setStartDate,
     endDate, setEndDate,
-    resetForm, submitForm
+    resetForm, submitForm,
+    optionMember,
+    classId, setClassId
   } = useExamSessionCreateHook({isUpdatePage: isUpdatePage})
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -26,6 +28,10 @@ export function ExamSessionCreatePage({isUpdatePage = false}) {
         <Grid container spacing={3} alignItems="center" columns={12}>
           <CustomInput label="Nama Sesi Ujian" fullWidth={true} type="text" value={name} onChange={(c) => setName(c.target.value)} placeholder="Sesi Ujian" />
           <CustomInput label="Nama Ujian" fullWidth={true} type="text" options={optionExam} value={examCode} onChange={(c) => setExamCode(c.target.value)} placeholder="Pilih Nama Ujian" />
+        </Grid>
+        <Grid container spacing={3} alignItems="center" columns={12}>
+          <CustomInput label="Kelas" subLabel={<small>*Pilih kelas yang anda ikutkan dalam ujian</small>} fullWidth={true} type="text" multiple
+                       options={optionMember} value={classId} onChange={(c) => setClassId(c.target.value)} placeholder="Pilih Kelas" />
         </Grid>
         <Grid container spacing={3} alignItems="center" columns={12}>
           <CustomInput label="Waktu Mulai" fullWidth={true} value={startDate} onChange={setStartDate} type="customdate"/>

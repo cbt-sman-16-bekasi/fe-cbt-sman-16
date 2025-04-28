@@ -29,6 +29,10 @@ export function useExamSessionDetailHook() {
   const userRole = authUser?.role?.code.toLowerCase();
   const dateHelper = useDate();
   const {showModal} = useModal();
+  const [optionExamMember, setOptionExamMember] = useState([])
+  const [classIdSelected, setClassIdSelected] = useState(null)
+  const [isRefreshTable, setIsRefreshTable] = useState(false)
+  const [detailExamSession, setDetailExamSession] = useState({})
 
   useEffect(() => {
 
@@ -41,17 +45,32 @@ export function useExamSessionDetailHook() {
       const detailExam = data.detail_exam
       setName(detailExam.name);
       setSubject(detailExam.subject_code.subject)
-      setClassCode(detailExam.exam_member.map(a => a.detail_class.className).join(", "))
+      setClassCode(data.exam_member.map(a => a.detail_class.className).join(", "))
       setTypeExam(detailExam.detail_type_exam.code)
       setTypeQuestion(detailExam.type_question)
       setSessionName(data.name)
       setStartDate(dateHelper.formattedWithTime(data.start_date))
       setEndDate(dateHelper.formattedWithTime(data.end_date))
+      setDetailExamSession(data)
+
+      const { data: dataClass } = await useExamSessionController.examSessionMember({sessionId: sessionId})
+      setOptionExamMember(dataClass.map(r => { return {label: r.detail_class.className, value: r.detail_class.ID}}))
       hideLoading()
     }
 
     fetchData()
   }, []);
+
+  useEffect(() => {
+    if (optionExamMember.length > 0) {
+      setClassIdSelected(optionExamMember[0].value)
+    }
+  }, [optionExamMember]);
+
+  useEffect(() => {
+    setIsRefreshTable(!isRefreshTable)
+  }, [classIdSelected]);
+
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nisn", headerName: "NISN", flex: 0.1, minWidth: 50},
@@ -98,7 +117,7 @@ export function useExamSessionDetailHook() {
     try {
       showLoading()
       await useApi.download({
-        url: `/academic/exam/session/attendance/download?exam_session_id=${sessionId}&class_id=1`
+        url: `/academic/exam/session/attendance/download?exam_session_id=${sessionId}&class_id=${classIdSelected}`
       })
 
       hideLoading()
@@ -122,6 +141,11 @@ export function useExamSessionDetailHook() {
     endDate,
     sessionId,
     sessionName,
-    handleDownload
+    handleDownload,
+    optionExamMember,
+    setOptionExamMember,
+    classIdSelected, setClassIdSelected,
+    isRefreshTable,
+    detailExamSession
   }
 }

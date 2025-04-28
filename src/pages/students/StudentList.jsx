@@ -11,6 +11,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ApiTable from "../../components/ApiTable.jsx";
 import UploadFileDialog from "../../components/common/UploadFileDialog.jsx";
 import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
+import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
 const StudentList = () => {
   const {
@@ -21,7 +22,8 @@ const StudentList = () => {
     isRefreshList,
     handleUpload,
     openUpload,
-    setOpenUpload
+    setOpenUpload,
+    optionSearchStudent
   } = UseStudentHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -36,18 +38,11 @@ const StudentList = () => {
           <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
         </Grid>
         <Grid lg={4}>
-          <TextField
-            variant="outlined"
-            placeholder="Cari Berdasarkan..."
-            fullWidth
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+          <SearchBarWithFilter
+            onFilterChange={({ searchBy, search: searchData, filters }) => {
+              setSearch(searchData)
             }}
+            searchOptions={optionSearchStudent}
           />
         </Grid>
       </Grid>

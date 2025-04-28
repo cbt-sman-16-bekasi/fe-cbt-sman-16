@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {UseExamSessionListHook} from "./hook/useExamSessionListHook.jsx";
 import AlertWithTitle from "../../components/common/AlertWithTitle.jsx";
 import ApiTable from "../../components/ApiTable.jsx";
+import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 
 const ExamSessionListPage = () => {
   const {
@@ -15,7 +16,8 @@ const ExamSessionListPage = () => {
     search,
     userRole,
     columns,
-    isRefreshList
+    isRefreshList,
+    searchOptions
   } = UseExamSessionListHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -30,19 +32,13 @@ const ExamSessionListPage = () => {
           </Link>
         </Grid>
         <Grid lg={4}>
-          <TextField
-            variant="outlined"
-            placeholder="Cari Berdasarkan..."
-            fullWidth
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+
+          <SearchBarWithFilter
+            onFilterChange={({ searchBy, search: searchData, filters }) => {
+              console.log("Filters:", filters);
+              setSearch(searchData)
             }}
+            searchOptions={searchOptions}
           />
         </Grid>
       </Grid>
