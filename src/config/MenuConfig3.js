@@ -16,36 +16,43 @@ export const MenuConfig = [
     icon: 'AnalyticsRoundedIcon',
     value: '123',
     path: '/akses-system',
+    allowRole: ['ADMIN']
   },
-  { text: 'Kelas', icon: 'PeopleRoundedIcon', value: '123', path: '/kelas' },
+  { text: 'Kelas', icon: 'PeopleRoundedIcon', value: '123', path: '/kelas',
+    allowRole: ['ADMIN','TEACHER'] },
   {
     text: 'Mata Pelajaran',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/mata-pelajaran',
+    allowRole: ['ADMIN']
   },
   {
     text: 'Data Siswa',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/data-siswa',
+    allowRole: ['ADMIN']
   },
   {
     text: 'Ujian',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/ujian',
+    allowRole: ['ADMIN','TEACHER']
   },
   {
     text: 'Sesi Ujian Aktif',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/sesi-ujian',
+    allowRole: ['ADMIN','TEACHER']
   },
   {
     text: 'Laporan Nilai',
     icon: 'AssignmentRoundedIcon',
     value: '123',
     path: '/laporan-nilai',
+    allowRole: ['ADMIN','TEACHER']
   },
 ];

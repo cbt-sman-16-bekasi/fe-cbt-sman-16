@@ -16,7 +16,7 @@ export default function MainGrid({ role }) {
   const dashboardData = useSelector((state) => state.common.dashboardData);
   const authUser = useSelector((state) => state.authUser);
 
-  const updatedMenuItems = MenuConfig.map((item) => {
+  const updatedMenuItems = MenuConfig.filter((item) => item.allowRole.includes(authUser.role.code)).map((item) => {
     const keyMap = {
       '/akses-system': 'total_access',
       '/kelas': 'total_class',

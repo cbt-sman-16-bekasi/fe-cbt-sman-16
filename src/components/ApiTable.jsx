@@ -67,7 +67,7 @@ export default function ApiTable({
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#130A36" }}>
-              {columns.map((col) => (
+              {columns?.map((col) => (
                 <TableCell key={col.field} sx={{ color: "white", fontWeight: "bold" }}>{col.headerName}</TableCell>
               ))}
             </TableRow>
@@ -75,7 +75,7 @@ export default function ApiTable({
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={columns.length} align="center">
+                <TableCell colSpan={columns?.length} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
@@ -84,7 +84,7 @@ export default function ApiTable({
                 <TableRow key={row.id || index}
                   sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: !isDarkMode ? index % 2 === 0 ? '#f9f9f9' : '#ffffff' : 'transparent' }}
                 >
-                  {columns.map((col) => (
+                  {columns?.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}
                     </TableCell>) : (

@@ -125,9 +125,9 @@ const BankQuestionListPage = () => {
       </Grid>
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to={`/${userRole}/bank-soal/tambah`}>
+          { authUser?.role?.code === 'ADMIN' && (<Link to={`/${userRole}/bank-soal/tambah`}>
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
-          </Link>
+          </Link>)}
         </Grid>
         <Grid lg={4}>
           <SearchBarWithFilter
