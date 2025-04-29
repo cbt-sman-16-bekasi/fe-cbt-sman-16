@@ -121,12 +121,10 @@ export function UseExamSessionListHook() {
     });
   };
 
-  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-
-  const searchOptions = columns.slice(1, -4).map((col) => ({
-    value: col.field,
-    label: capitalize(col.headerName),
-  }));
+  const searchOptions = [
+    {label: 'Nama Ujian', value: 'detail_exam.name'},
+    {label: 'Nama Sesi Ujian', value: 'name'},
+  ]
 
   return {
     search,
@@ -136,6 +134,6 @@ export function UseExamSessionListHook() {
     userRole,
     columns,
     isRefreshList,
-    searchOptions,
+    searchOptions
   }
 }

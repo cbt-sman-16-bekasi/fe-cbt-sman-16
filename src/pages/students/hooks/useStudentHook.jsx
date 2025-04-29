@@ -67,12 +67,12 @@ export function UseStudentHook() {
 
   const columns = (options = { withEdit: true }) => [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "nisn", headerName: "NISN", flex: 0.5, minWidth: 120, renderCell: (row) => row?.detail_student.nisn },
+    { field: "nisn", headerName: "NISN", flex: 0.5, minWidth: 120, renderCell: (row) => row.nisn },
     {
-      field: "name", headerName: "NAMA SISWA", flex: 1.5, minWidth: 150, renderCell: (row) => row?.detail_student.name.toUpperCase()
+      field: "name", headerName: "NAMA SISWA", flex: 1.5, minWidth: 150, renderCell: (row) => row.name.toUpperCase()
     },
-    { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row?.detail_student.gender },
-    { field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => row?.detail_class.className },
+    { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.gender.toUpperCase() },
+    { field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => row.class_name },
     {
       field: "aksi",
       headerName: "AKSI",
@@ -109,12 +109,10 @@ export function UseStudentHook() {
     },
   ];
 
-  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-
-  const searchOptions = columns().slice(1, -3).map((col) => ({
-    value: col.field,
-    label: capitalize(col.headerName),
-  }));
+  const optionSearchStudent = [
+    {label: 'Nama Siswa', value: 'name'},
+    {label: 'NISN', value: 'nisn'},
+  ]
 
   return {
     search,
@@ -126,9 +124,8 @@ export function UseStudentHook() {
     columns,
     handleUpload,
     openUpload,
-    setOpenUpload,
+    setOpenUpload,optionSearchStudent,
     handleDownloadTemplate,
-    searchOptions,
   }
 
 }

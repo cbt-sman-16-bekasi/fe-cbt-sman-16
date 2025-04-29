@@ -57,49 +57,49 @@ const BankQuestionListPage = () => {
       const theme = useTheme();
       const isDarkMode = theme.palette.mode === "dark";
 
-      return (
-        <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
-          {/* Tombol Settings */}
-          <IconButton
-            size="small"
-            sx={{
-              bgcolor: "yellow",
-              color: isDarkMode ? "white" : "black",
-              "&:hover": { bgcolor: "gold" },
-            }}
-            onClick={() => handleSettings(row.ID)}
-          >
-            <SettingsOutlinedIcon />
-          </IconButton>
+        return (
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
+            {/* Tombol Settings */}
+            <IconButton
+              size="small"
+              sx={{
+                bgcolor: "yellow",
+                color: isDarkMode ? "white" : "black",
+                "&:hover": { bgcolor: "gold" },
+              }}
+              onClick={() => handleSettings(row.id)}
+            >
+              <SettingsOutlinedIcon />
+            </IconButton>
 
-          {/* Tombol Edit */}
-          {authUser.role.code === 'ADMIN' && (<IconButton
-            size="small"
-            sx={{
-              bgcolor: "purple",
-              color: "white",
-              "&:hover": { bgcolor: "darkviolet" },
-            }}
-            onClick={() => handleEdit(row.ID)}
-          >
-            <EditIcon />
-          </IconButton>)}
+            {/* Tombol Edit */}
+            { authUser.role.code === 'ADMIN' && (<IconButton
+              size="small"
+              sx={{
+                bgcolor: "purple",
+                color: "white",
+                "&:hover": { bgcolor: "darkviolet" },
+              }}
+              onClick={() => handleEdit(row.id)}
+            >
+              <EditIcon />
+            </IconButton>)}
 
-          {authUser.role.code === 'ADMIN' && (<IconButton
-            size="small"
-            sx={{
-              bgcolor: "red",
-              color: "white",
-              "&:hover": { bgcolor: "darkred" },
-            }}
-            onClick={() => handleDelete(messageDelete(), row.ID)}
-          >
-            <DeleteIcon />
-          </IconButton>)}
-        </div>
-      );
-    },
-  }
+            { authUser.role.code === 'ADMIN' && (<IconButton
+              size="small"
+              sx={{
+                bgcolor: "red",
+                color: "white",
+                "&:hover": { bgcolor: "darkred" },
+              }}
+              onClick={() => handleDelete(messageDelete(), row.id)}
+            >
+              <DeleteIcon />
+            </IconButton>)}
+          </div>
+        );
+      },
+    }
 
   columns.push(action)
 

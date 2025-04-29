@@ -21,13 +21,17 @@ const CustomInput = ({
   variant = "outlined",
   multiple = false,
   sx = {},
+  subLabel = null
 }) => {
   return (
     <Grid size={{ ...(oneLineInput ? { sm: 12 } : { md: 12, lg: 6 }), }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
       {label && (
-        <Typography variant="body1" fontWeight="bold">
-          {label} {multiple === true}
-        </Typography>
+        <>
+          <Typography variant="body1" fontWeight="bold">
+            {label}
+          </Typography>
+          { subLabel && (subLabel)}
+        </>
       )}
       {multiple ? (<Select
         labelId="multiple-subject-label"

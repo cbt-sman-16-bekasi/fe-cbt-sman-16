@@ -66,6 +66,12 @@ const useExamApi = (() => {
     })
   }
 
+  const getExamMember = async ({ code } = {}) => {
+    return await useApi.fetch(`/academic/exam/member/${code}`, {
+      method: 'GET'
+    })
+  }
+
   return {
     allExam: getAllExam,
     modifyExam: modifyExam,
@@ -75,7 +81,8 @@ const useExamApi = (() => {
     detailMasterBank: getDetailMasterBank,
     createMasterBank: createMasterBank,
     createBankQuestion: createBankQuestion,
-    detailBankQuestion: getDetailBankQuestion
+    detailBankQuestion: getDetailBankQuestion,
+    examMember: getExamMember
   }
 })()
 

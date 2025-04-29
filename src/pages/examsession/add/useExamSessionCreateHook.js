@@ -14,6 +14,8 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
   const [optionExam, setOptionExam] = useState([]);
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs());
+  const [optionMember, setOptionMember] = useState([]);
+  const [classId, setClassId] = useState([]);
 
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
@@ -36,6 +38,7 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
         setExamCode(data.exam.code)
         setStartDate(dayjs(new Date(data.start_date)))
         setEndDate(dayjs(new Date(data.end_date)))
+        setClassId(data.exam_member !== null ? data.exam_member.map(m => m.class) : [])
       }
       hideLoading()
     }
@@ -50,7 +53,20 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
     setOptionExam([]);
     setStartDate(dayjs());
     setEndDate(dayjs());
+    setOptionMember([]);
+    setClassId([]);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const {status, data} = await useExamApi.examMember({code: examCode})
+      console.log(status, data);
+      if (status === 'success') {
+        setOptionMember(data.map(r => { return {label: r.detail_class.className, value: r.detail_class.ID } }))
+      }
+    }
+    fetchData()
+  }, [examCode]);
 
   const submitForm = () => {
     const body = {
@@ -61,7 +77,8 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
         .format('YYYY-MM-DDTHH:mm:ssZ'),
       "end_at": dayjs(endDate)
         .tz('Asia/Jakarta')
-        .format('YYYY-MM-DDTHH:mm:ssZ')
+        .format('YYYY-MM-DDTHH:mm:ssZ'),
+      "class_id": classId
     }
 
     showLoading();
@@ -93,6 +110,8 @@ export function useExamSessionCreateHook({isUpdatePage = false}) {
     id, showLoading, hideLoading,
     showModal,
     resetForm,
-    submitForm
+    submitForm,
+    optionMember,
+    classId, setClassId
   }
 }

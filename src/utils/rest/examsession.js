@@ -31,12 +31,19 @@ const useExamSessionController = (() => {
     })
   }
 
+  const examSessionMember = async ({sessionId}) => {
+    return await useApi.fetch(`/academic/exam/session/member/${sessionId}`, {
+      method: 'GET'
+    })
+  }
+
 
   return {
     modify: modifyExamSession,
     retrieveDetail: getDetail,
     generateToken: generateToken,
-    allExamSession: getAllExamSession
+    allExamSession: getAllExamSession,
+    examSessionMember: examSessionMember
   }
 })()
 

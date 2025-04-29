@@ -23,8 +23,8 @@ const StudentList = () => {
     handleUpload,
     openUpload,
     setOpenUpload,
+    optionSearchStudent,
     handleDownloadTemplate,
-    searchOptions,
   } = UseStudentHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
@@ -39,7 +39,7 @@ const StudentList = () => {
           </Grid>
           <Grid >
             <SearchBarWithFilter
-              searchOptions={searchOptions}
+              searchOptions={optionSearchStudent}
               onFilterChange={({ searchBy: searchByData, search: searchData, filters }) => {
                 console.log("Search by:", searchByData);
                 console.log("Search keyword:", searchData);
