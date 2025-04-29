@@ -29,8 +29,9 @@ const UserProfile = () => {
     handleEdit,
     isTeacher, setIsTeacher,
   } = useUserProfileHook();
+  console.log(authUser)
 
-  const sizeProps = !isTeacher
+  const sizeProps = isTeacher
     ? { sm: 12, lg: 6 }
     : { sm: 12 };
 
@@ -141,7 +142,7 @@ const UserProfile = () => {
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ sm: 12, lg: 6 }}>
+            <Grid size={sizeProps}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Nama
               </Typography>
@@ -154,23 +155,26 @@ const UserProfile = () => {
               >
               </TextField>
             </Grid>
-            <Grid size={{ sm: 12, lg: 6 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                NUPTK
-              </Typography>
-              <TextField
-                fullWidth
-                value={nuptk}
-                disabled={!isEdit}
-                onChange={(e) => setNuptk(e.target.value)}
-                variant="outlined"
-              >
-              </TextField>
-            </Grid>
+
+            {isTeacher &&
+              <Grid size={{ sm: 12, lg: 6 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  NUPTK
+                </Typography>
+                <TextField
+                  fullWidth
+                  value={nuptk}
+                  disabled={!isEdit}
+                  onChange={(e) => setNuptk(e.target.value)}
+                  variant="outlined"
+                >
+                </TextField>
+              </Grid>
+            }
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={sizeProps}>
+            <Grid size={{ sm: 12, lg: 6 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Username
               </Typography>
@@ -184,21 +188,19 @@ const UserProfile = () => {
               </TextField>
             </Grid>
 
-            {!isTeacher &&
-              <Grid size={{ sm: 12, lg: 6 }}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Hak Akses
-                </Typography>
-                <TextField
-                  fullWidth
-                  value={userRole}
-                  disabled={true}
-                  onChange={(e) => setName(e.target.value)}
-                  variant="outlined"
-                >
-                </TextField>
-              </Grid>
-            }
+            <Grid size={{ sm: 12, lg: 6 }}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Hak Akses
+              </Typography>
+              <TextField
+                fullWidth
+                value={userRole}
+                disabled={true}
+                onChange={(e) => setName(e.target.value)}
+                variant="outlined"
+              >
+              </TextField>
+            </Grid>
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
