@@ -1,15 +1,15 @@
 export const menuConfig = {
   admin: [
     {
-      title: "Home",
+      title: 'Home',
       menu: [
         {
           text: 'Dashboard',
           title: 'Dashboard',
           icon: 'HomeRounded',
           path: '/dashboard',
-        }
-      ]
+        },
+      ],
     },
     {
       title: 'Data Master',
@@ -43,8 +43,8 @@ export const menuConfig = {
           title: 'Data Siswa',
           icon: 'SchoolRounded',
           path: '/data-siswa',
-        }
-      ]
+        },
+      ],
     },
     {
       title: 'Ujian',
@@ -79,10 +79,10 @@ export const menuConfig = {
           icon: 'VpnKeyRounded',
           path: '/generate-token',
         },
-      ]
+      ],
     },
     {
-      title: "Laporan",
+      title: 'Laporan',
       menu: [
         {
           text: 'Laporan Nilai',
@@ -90,10 +90,10 @@ export const menuConfig = {
           icon: 'AssessmentRounded',
           path: '/laporan-nilai',
         },
-      ]
+      ],
     },
     {
-      title: "Pengaturan",
+      title: 'Pengaturan',
       menu: [
         {
           text: 'Akses Sistem',
@@ -101,20 +101,20 @@ export const menuConfig = {
           icon: 'AdminPanelSettingsRounded',
           path: '/akses-system',
         },
-      ]
-    }
+      ],
+    },
   ],
   teacher: [
     {
-      title: "Home",
+      title: 'Home',
       menu: [
         {
           text: 'Dashboard',
           title: 'Dashboard',
           icon: 'HomeRounded',
           path: '/dashboard',
-        }
-      ]
+        },
+      ],
     },
     {
       title: 'Ujian',
@@ -143,10 +143,10 @@ export const menuConfig = {
           icon: 'VpnKeyRounded',
           path: '/generate-token',
         },
-      ]
+      ],
     },
     {
-      title: "Laporan",
+      title: 'Laporan',
       menu: [
         {
           text: 'Laporan Nilai',
@@ -154,18 +154,18 @@ export const menuConfig = {
           icon: 'AssessmentRounded',
           path: '/laporan-nilai',
         },
-      ]
+      ],
     },
-    {
-      title: "Pengaturan",
-      menu: [
-        {
-          text: 'Profile',
-          title: 'Profile',
-          icon: 'VpnKeyRounded',
-          path: '/profile',
-        },
-      ]
-    }
+    // {
+    //   title: "Pengaturan",
+    //   menu: [
+    //     {
+    //       text: 'Profile',
+    //       title: 'Profile',
+    //       icon: 'VpnKeyRounded',
+    //       path: '/profile',
+    //     },
+    //   ]
+    // }
   ],
 };
