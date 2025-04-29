@@ -27,14 +27,20 @@ const UserProfile = () => {
     onOpenPasswordModal,
     isEdit,
     handleEdit,
-  } = useUserProfileHook()
+    isTeacher, setIsTeacher,
+  } = useUserProfileHook();
+
+  const sizeProps = !isTeacher
+    ? { sm: 12, lg: 6 }
+    : { sm: 12 };
 
   useEffect(() => {
     if (authUser) {
-      setName(authUser?.detail?.name || '');
-      setNuptk(authUser?.nuptk || '');
+      setName(authUser?.name || '');
+      setNuptk(authUser?.detail?.nuptk || '');
       setUserRole(authUser?.role.name || '');
       setUsername(authUser?.username || '');
+      setIsTeacher(authUser?.role?.code === 'TEACHER');
 
       // setPhotoProfile({
       //   preview: `${authUser.logo || ''}`,
@@ -164,7 +170,7 @@ const UserProfile = () => {
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ sm: 12, lg: 6 }}>
+            <Grid size={sizeProps}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Username
               </Typography>
@@ -178,19 +184,21 @@ const UserProfile = () => {
               </TextField>
             </Grid>
 
-            <Grid size={{ sm: 12, lg: 6 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Hak Akses
-              </Typography>
-              <TextField
-                fullWidth
-                value={userRole}
-                disabled={true}
-                onChange={(e) => setName(e.target.value)}
-                variant="outlined"
-              >
-              </TextField>
-            </Grid>
+            {!isTeacher &&
+              <Grid size={{ sm: 12, lg: 6 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Hak Akses
+                </Typography>
+                <TextField
+                  fullWidth
+                  value={userRole}
+                  disabled={true}
+                  onChange={(e) => setName(e.target.value)}
+                  variant="outlined"
+                >
+                </TextField>
+              </Grid>
+            }
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
