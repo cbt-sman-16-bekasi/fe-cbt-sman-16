@@ -85,7 +85,7 @@ function AdminPage({ role }) {
 
       <Route path="informasi-sekolah" element={<SchoolProfile />} />
 
-      <Route path="profil" element={<UserProfile />} />
+      <Route path="profile" element={<UserProfile />} />
 
       <Route path="*" element={<NotFoundPage role={role} />} />
     </Routes>
