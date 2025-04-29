@@ -33,13 +33,14 @@ export function useUserProfileHook() {
   const [alertSeverity, setAlertSeverity] = useState('error');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
 
   const handleEdit = ({ isCancel = false }) => {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
-      setName(authUser?.detail.name || '');
-      setNuptk(authUser?.nuptk || '');
+      setName(authUser?.name || '');
+      setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
         preview: authUser?.logo
           ? `data:${authUser?.logo};base64,${authUser?.logo}` : defaultProfileImg,
@@ -115,6 +116,7 @@ export function useUserProfileHook() {
     alertSeverity, setAlertSeverity,
     isSubmitting, setIsSubmitting,
     isEdit, setIsEdit,
+    isTeacher, setIsTeacher,
     handleEdit,
     handleFileChange,
     handleUpdate,
