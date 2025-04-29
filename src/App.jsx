@@ -10,11 +10,9 @@ import { Route, Routes, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import SuperAdminPage from "./pages/SuperAdminPage";
 import AdminPage from "./pages/AdminPage";
 import TeacherPage from "./pages/TeacherPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 
 import {
   chartsCustomizations,
@@ -100,7 +98,6 @@ function App(props) {
   }
 
   const routeMap = {
-    superadmin: <SuperAdminPage role={userRole} />,
     admin: <AdminPage role={userRole} />,
     teacher: <TeacherPage role={userRole} />,
   };
@@ -123,7 +120,6 @@ function App(props) {
             }} >
             <Routes>
               <Route path='/login' element={<LoginPage />} />
-              <Route path='/register' element={<RegisterPage />} />
             </Routes>
           </Box >
         </AppTheme>

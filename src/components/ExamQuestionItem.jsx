@@ -16,7 +16,6 @@ import {
 import ImageIcon from "@mui/icons-material/Image";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CustomCkEditor from "./CustomCkEditor";
 import PropTypes from "prop-types";
 
 export default function ExamQuestionItem({ questionData, onDelete }) {
