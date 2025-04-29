@@ -42,7 +42,7 @@ function TeacherPage({ role }) {
       <Route path="generate-token" element={<GenerateTokenPage />} />
       <Route path="laporan-nilai" element={<LaporanNilai />} />
 
-      <Route path="profile" element={<UserProfile />} />
+      <Route path="profil" element={<UserProfile />} />
 
       {/*<Route path="dashboard" element={<MainGrid role={role} />} />*/}
 
