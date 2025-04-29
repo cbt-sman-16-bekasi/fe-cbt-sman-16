@@ -106,41 +106,55 @@ export const menuConfig = {
   ],
   teacher: [
     {
-      text: 'Dashboard',
-      icon: 'HomeRoundedIcon',
-      value: '123',
-      path: '/dashboard',
+      title: "Home",
+      menu: [
+        {
+          text: 'Dashboard',
+          title: 'Dashboard',
+          icon: 'HomeRounded',
+          path: '/dashboard',
+        }
+      ]
     },
     {
-      text: 'Bank Soal',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/bank-soal',
+      title: 'Ujian',
+      menu: [
+        {
+          text: 'Bank Soal',
+          title: 'Bank Soal',
+          icon: 'LibraryBooksRounded',
+          path: '/bank-soal',
+        },
+        {
+          text: 'Ujian',
+          title: 'Setting Ujian',
+          icon: 'AssignmentRounded',
+          path: '/ujian',
+        },
+        {
+          text: 'Sesi Ujian',
+          title: 'Sesi Ujian',
+          icon: 'EventNoteRounded',
+          path: '/sesi-ujian',
+        },
+        {
+          text: 'Generate Token Ujian',
+          title: 'Generate Token Ujian',
+          icon: 'VpnKeyRounded',
+          path: '/generate-token',
+        },
+      ]
     },
     {
-      text: 'Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/ujian',
-    },
-    {
-      text: 'Sesi Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/sesi-ujian',
-    },
-    {
-      text: 'Generate Token Ujian',
-      title: 'Generate Token Ujian',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/generate-token',
-    },
-    {
-      text: 'Laporan Nilai',
-      icon: 'AssignmentRoundedIcon',
-      value: '123',
-      path: '/laporan-nilai',
+      title: "Laporan",
+      menu: [
+        {
+          text: 'Laporan Nilai',
+          title: 'Laporan Nilai',
+          icon: 'AssessmentRounded',
+          path: '/laporan-nilai',
+        },
+      ]
     },
   ],
 };

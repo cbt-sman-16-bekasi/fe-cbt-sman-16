@@ -18,6 +18,7 @@ export function useBankQuestionListHook() {
 
   const columns = [
     { field: 'no', headerName: 'NO', flex: 0.1, minWidth: 50 },
+    { field: 'bank_name', headerName: 'NAMA BANK SOAL', flex: 0.1, minWidth: 50 },
     {
       field: 'subject',
       headerName: 'MATA PELAJARAN',

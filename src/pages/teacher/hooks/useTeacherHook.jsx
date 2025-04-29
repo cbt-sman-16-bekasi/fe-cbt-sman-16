@@ -104,12 +104,10 @@ export function useTeacherHook() {
     });
   };
 
-  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-
-  const searchOptions = columns.slice(1, -5).map((col) => ({
-    value: col.field,
-    label: capitalize(col.headerName),
-  }));
+  const searchOptions = [
+    {label: 'NUPTK', value: 'nuptk'},
+    {label: 'Nama Guru', value: 'name'},
+  ]
 
   return {
     search,

@@ -62,6 +62,10 @@ const UserProfile = () => {
       setTelp(schoolData.phone || '');
       setEmail(schoolData.email || '');
       setAddress(schoolData.address || '');
+      setPrincipal(schoolData.principal_name || '');
+      setVicePincipal(schoolData.vice_principal_name || '');
+      setNipPrincipal(schoolData.principal_nip || '')
+      setNipVicePrincipal(schoolData.vice_principal_nip || '');
 
       setLogo({
         preview: `${schoolData.logo || ''}`,

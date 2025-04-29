@@ -11,7 +11,7 @@ import { IconButton } from "@mui/material";
 
 export function useClassesHook() {
   const navigate = useNavigate();
-  const { showConfirm, showModalMemberClass } = useModal();
+  const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [isRefreshList, setRefreshList] = useState(false)
 
@@ -19,6 +19,8 @@ export function useClassesHook() {
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
   const [searchBy, setSearchBy] = useState('');
+  const [classId, setClassId] = useState(null);
+  const [openModalMember, setOpenModalMember] = useState(false);
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
@@ -39,7 +41,7 @@ export function useClassesHook() {
               color: "white",
               "&:hover": { bgcolor: "yellowgreen" },
             }}
-            onClick={() => onOpenMemberModal(row.ID)}
+            onClick={() => onOpenMemberModal(row.class_id)}
           >
             <VisibilityIcon />
           </IconButton>
@@ -71,7 +73,8 @@ export function useClassesHook() {
   ];
 
   const onOpenMemberModal = (id) => {
-    showModalMemberClass(id);
+    setOpenModalMember(true)
+    setClassId(id)
   };
 
   const handleEdit = (id) => {
@@ -113,6 +116,8 @@ export function useClassesHook() {
     isRefreshList,
     columns,
     searchOptions,
+    classId, setClassId,
+    openModalMember, setOpenModalMember
   }
 
 }

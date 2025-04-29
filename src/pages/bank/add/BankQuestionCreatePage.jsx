@@ -19,7 +19,7 @@ const BankQuestionCreatePage = ({isUpdatePage = false}) => {
     optionsTypeQuestion,
     typeQuestion, setTypeQuestion,
     handleSubmitCreate,
-    resetForm
+    resetForm, bankName, setBankName
   } = useBankQuestionCreateHook({isUpdatePage})
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -27,13 +27,16 @@ const BankQuestionCreatePage = ({isUpdatePage = false}) => {
       <TitleWithIcon icon={<ModeEditOutlined sx={{color: 'white'}} />} text="Detail Bank Soal" iconBackground="red" />
       <BasicCard>
         <Grid container spacing={3} alignItems="center" columns={12}>
+          <CustomInput label="Nama Bank Soal" fullWidth={true} value={bankName}
+                       onChange={(c) => setBankName(c.target.value)}
+                       placeholder="Nama Bank Soal"/>
           <CustomInput label="Nama Mata Pelajaran" fullWidth={true} options={optionSubject} value={subject}
                        onChange={(c) => setSubject(c.target.value)}
                        placeholder="Nama Mata Pelajaran"/>
-          <CustomInput label="Kode Kelas" fullWidth={true} type="text" value={classCode} options={optionsClass}
-                       onChange={(c) => setClassCode(c.target.value)} placeholder="Kode Kelas"/>
         </Grid>
         <Grid container spacing={3} alignItems="center" columns={12}>
+          <CustomInput label="Kode Kelas" fullWidth={true} type="text" value={classCode} options={optionsClass}
+                       onChange={(c) => setClassCode(c.target.value)} placeholder="Kode Kelas"/>
           <CustomInput label="Jenis Soal" fullWidth={true} options={optionsTypeQuestion} value={typeQuestion}
                        onChange={(c) => setTypeQuestion(c.target.value)}
                        placeholder="Jenis Soal"/>

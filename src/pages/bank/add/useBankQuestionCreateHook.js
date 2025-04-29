@@ -11,6 +11,7 @@ export function useBankQuestionCreateHook({isUpdatePage = false}) {
   const { showModal } = useModal();
   const [optionsClass, setOptionClass] = useState([]);
   const [optionSubject, setOptionSubject] = useState([]);
+  const [bankName, setBankName] = useState('');
   const [subject, setSubject] = useState('');
   const [classCode, setClassCode] = useState('');
   const [typeQuestion, setTypeQuestion] = useState('PILIHAN_GANDA')
@@ -35,6 +36,7 @@ export function useBankQuestionCreateHook({isUpdatePage = false}) {
         setSubject(detail.subject_code)
         setClassCode(detail.class_code)
         setTypeQuestion(detail.type_question)
+        setBankName(detail.bank_name)
       }
       hideLoading()
     }
@@ -44,6 +46,7 @@ export function useBankQuestionCreateHook({isUpdatePage = false}) {
 
   const handleSubmitCreate = () => {
     const body = {
+      bank_name: bankName,
       subject_code: subject,
       class_code: classCode,
       type_question: typeQuestion,
@@ -81,6 +84,7 @@ export function useBankQuestionCreateHook({isUpdatePage = false}) {
     optionsTypeQuestion,
     typeQuestion, setTypeQuestion,
     handleSubmitCreate,
-    resetForm
+    resetForm,
+    bankName, setBankName
   }
 }

@@ -53,8 +53,8 @@ export function useTypeExamCreateHook({ updatePage = false }) {
     };
 
     showLoading();
-    useClassesApi
-      .modifyClasses({ body: body, id: id, isCreate: !updatePage })
+    useExamTypeApi
+      .modifyExamType({ body: body, id: id, isCreate: !updatePage })
       .then((r) => {
         const { message, status } = r;
         setTimeout(() => {

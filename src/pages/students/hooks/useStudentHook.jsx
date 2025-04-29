@@ -65,7 +65,7 @@ export function UseStudentHook() {
     });
   };
 
-  const columns = (options = { withEdit: true }) => [
+  const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nisn", headerName: "NISN", flex: 0.5, minWidth: 120, renderCell: (row) => row.nisn },
     {
@@ -80,19 +80,17 @@ export function UseStudentHook() {
       minWidth: 120,
       renderCell: (row) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          {options.withEdit && (
-            <IconButton
-              size="small"
-              sx={{
-                bgcolor: "purple",
-                color: "white",
-                "&:hover": { bgcolor: "darkpurple" },
-              }}
-              onClick={() => handleEdit(row?.ID)}
-            >
-              <EditIcon />
-            </IconButton>
-          )}
+          <IconButton
+            size="small"
+            sx={{
+              bgcolor: "purple",
+              color: "white",
+              "&:hover": { bgcolor: "darkpurple" },
+            }}
+            onClick={() => handleEdit(row?.id)}
+          >
+            <EditIcon />
+          </IconButton>
           <IconButton
             size="small"
             sx={{
@@ -100,7 +98,7 @@ export function UseStudentHook() {
               color: "white",
               "&:hover": { bgcolor: "darkred" },
             }}
-            onClick={() => handleDelete(row?.ID)}
+            onClick={() => handleDelete(row?.id)}
           >
             <DeleteIcon />
           </IconButton>

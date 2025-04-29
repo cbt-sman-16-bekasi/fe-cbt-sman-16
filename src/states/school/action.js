@@ -49,6 +49,7 @@ function asyncUpdateSchool(schoolData) {
     dispatch(showLoading());
     try {
       const updatedSchool = await api.updateSchool(schoolData);
+      console.log(updatedSchool)
       dispatch(updateSchoolActionCreator(updatedSchool));
     } catch (error) {
       dispatch(setErrorActionCreator(error.message));

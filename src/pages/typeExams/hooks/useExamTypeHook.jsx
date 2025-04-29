@@ -19,17 +19,17 @@ export function useExamTypeHook() {
   const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false)
 
-  function getChipColor(status) {
+  function getChipColor(code, name) {
     const colors = {
       "ADMIN": "primary",
-      "Guru": "success",
+      "TEACHER": "success",
     };
 
     return (
       <Chip
         variant='outlined'
-        label={status}
-        color={colors[status] || "default"}
+        label={name}
+        color={colors[code] || "default"}
         sx={{ px: 2, py: 1.6, width: '8rem' }}
       />
     );
@@ -68,7 +68,7 @@ export function useExamTypeHook() {
       headerName: "AKSES",
       flex: 1,
       minWidth: 120,
-      renderCell: (params) => getChipColor(params.detail_role.code),
+      renderCell: (params) => getChipColor(params.detail_role.code, params.detail_role.name),
     },
     {
       field: "aksi",

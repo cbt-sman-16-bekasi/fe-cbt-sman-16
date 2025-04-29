@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import { asyncUpdateSchool } from "../../../states/school/action.js";
+import useApi from "../../../utils/rest/api.js";
 
 export function useSchoolProfileHook() {
   const { showLoading, hideLoading } = useLoading();
@@ -42,6 +43,10 @@ export function useSchoolProfileHook() {
       setTelp(schoolData.phone || '');
       setEmail(schoolData.email || '');
       setAddress(schoolData.address || '');
+      setPrincipal(schoolData.principal_name || '');
+      setVicePincipal(schoolData.vice_principal_name || '');
+      setNipPrincipal(schoolData.principal_nip || '')
+      setNipVicePrincipal(schoolData.vice_principal_nip || '');
 
       setLogo({
         preview: `${schoolData.logo || ''}`,
@@ -56,14 +61,22 @@ export function useSchoolProfileHook() {
     }
   };
 
+  const upload = async(base64) => {
+    const { data: logoData } = await useApi.fetch('/upload/base64', {
+      method: 'POST',
+      body: JSON.stringify({file_data: base64})
+    })
+    return logoData.url
+  }
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     try {
-      const base64Logo = logo.file ? await fileToBase64(logo.file) : schoolData.logo;
-      const base64Banner = banner.file ? await fileToBase64(banner.file) : schoolData.banner;
+      const base64Logo = logo.file ? await upload(fileToBase64(logo.file)) : schoolData.logo;
+      const base64Banner = banner.file ? await upload(fileToBase64(banner.file)) : schoolData.banner;
+
       const payload = {
-        // school code buat async func ulang receive data school nya lagi
         schoolCode,
         school_name: schoolName,
         level_of_education: jenjang,
@@ -74,13 +87,16 @@ export function useSchoolProfileHook() {
         address,
         logo: base64Logo || '',
         banner: base64Banner || '',
+        principal_name: principal,
+        principal_nip: nipPrincipal,
+        vice_principal_name: vicePincipal,
+        vice_principal_nip: nipVicePrincipal
       };
 
-      const result = await dispatch(asyncUpdateSchool(payload));
-      const { message, status } = result
-      showModal(message, status);
+      await dispatch(asyncUpdateSchool(payload));
+      showModal("Berhasil meperbarui data sekolah", 'success');
     } catch (err) {
-      console.error(err);
+      console.error("ERROR HERE", err);
       showModal(err.message, err.status);
     } finally {
       setIsSubmitting(false);

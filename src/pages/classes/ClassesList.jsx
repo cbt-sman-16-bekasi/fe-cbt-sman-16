@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import ApiTable from "../../components/ApiTable.jsx";
 import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
-import ModalMemberClass from "../../components/common/ModalMemberClass.jsx";
+import ModalMemberClass from "../../components/page/student/ModalMemberClass.jsx";
 
 const ClassesList = () => {
   const {
@@ -18,11 +18,13 @@ const ClassesList = () => {
     columns,
     isRefreshList,
     searchOptions,
+    classId,
+    openModalMember, setOpenModalMember
   } = useClassesHook()
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <ModalMemberClass />
+      <ModalMemberClass open={openModalMember} setHide={setOpenModalMember} classId={classId} />
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
