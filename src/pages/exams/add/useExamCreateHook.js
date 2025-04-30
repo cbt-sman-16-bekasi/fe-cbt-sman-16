@@ -4,6 +4,8 @@ import useExamApi from '../../../utils/rest/exam.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useParams } from 'react-router';
+import {useSelector} from "react-redux";
+import useTeacherApi from "../../../utils/rest/teacher.js";
 
 export function useExamCreateHook({ updatePage = false }) {
   const [name, setName] = useState('');
@@ -22,6 +24,8 @@ export function useExamCreateHook({ updatePage = false }) {
   const [optionsClass, setOptionClass] = useState([]);
   const [optionSubject, setOptionSubject] = useState([]);
   const [optionsTypeExam, setOptionsTypeExam] = useState([]);
+  const authUser = useSelector((state) => state.authUser);
+  const userRole = authUser?.role?.code.toLowerCase();
 
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
@@ -38,12 +42,28 @@ export function useExamCreateHook({ updatePage = false }) {
   useEffect(() => {
     async function fetchData() {
       showLoading();
-      const { data } = await useMasterController.allSubject();
-      setOptionSubject(
-        data.map((s) => {
-          return { label: s.subject, value: s.code };
-        })
-      );
+      if (userRole === 'admin') {
+        const { data } = await useMasterController.allSubject();
+        setOptionSubject(
+          data.map((s) => {
+            return { label: s.subject, value: s.code };
+          })
+        );
+      }
+
+      if (userRole === 'teacher') {
+        const { data } = await useTeacherApi.allTeacherClassSubject({id: authUser?.detail?.ID});
+        setOptionSubject(
+          data.map((s) => {
+            return { label: s.subject.subject, value: s.subject.code };
+          })
+        );
+        setOptionClass(
+          data.map((s) => {
+            return { label: s?.class?.className, value: s.classId };
+          })
+        )
+      }
 
       const { data: dataTypeExam } = await useMasterController.allTypeExam({
         page: 0,
@@ -76,27 +96,29 @@ export function useExamCreateHook({ updatePage = false }) {
   }, []);
 
   useEffect(() => {
-    setOptionClass([]);
-    const allClass = useMasterController.allClassSubject({
-      size: 100,
-      filter: { subject_code: subject },
-    });
-    allClass.then((c) => {
-      const { data } = c;
-      const { records } = data;
-      const members = [];
-      records.forEach((r) => {
-        members.push(...r.DetailClassCode.class_member);
+    if (userRole === 'admin') {
+      setOptionClass([]);
+      const allClass = useMasterController.allClassSubject({
+        size: 100,
+        filter: { subject_code: subject },
       });
-      const uniqueData = members.filter(
-        (item, index, self) => index === self.findIndex((t) => t.ID === item.ID)
-      );
-      setOptionClass(
-        uniqueData.map((r) => {
-          return { label: `${r.classCode} - ${r.className}`, value: r.ID };
-        })
-      );
-    });
+      allClass.then((c) => {
+        const { data } = c;
+        const { records } = data;
+        const members = [];
+        records.forEach((r) => {
+          members.push(...r.DetailClassCode.class_member);
+        });
+        const uniqueData = members.filter(
+          (item, index, self) => index === self.findIndex((t) => t.ID === item.ID)
+        );
+        setOptionClass(
+          uniqueData.map((r) => {
+            return { label: `${r.classCode} - ${r.className}`, value: r.ID };
+          })
+        );
+      });
+    }
   }, [subject]);
 
   const handleSubmitCreate = () => {

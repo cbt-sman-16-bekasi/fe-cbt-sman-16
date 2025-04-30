@@ -29,24 +29,23 @@ export function UseExamSessionListHook() {
       flex: 1.5,
       minWidth: 200,
       renderCell: (row) => {
-        const detailExam = row.detail_exam
         return (
           <Box>
-            <Typography variant="body1" fontWeight="bold">{detailExam.name}</Typography>
+            <Typography variant="body1" fontWeight="bold">{row.exam_name}</Typography>
             <Typography fontSize={12}>Detail</Typography>
             <ul style={{ paddingLeft: "16px", fontSize: "12px" }}>
-              <li>Kelas: <strong>{row.exam_member !== null ? row.exam_member?.map(r => r.detail_class.className).join(', ') : '-'} </strong></li>
-              <li>Pelajaran: <strong>{detailExam.subject_code.subject ?? '-'}</strong></li>
+              <li>Kelas: <strong>{row.kelas ?? '-'} </strong></li>
+              <li>Pelajaran: <strong>{row.subject ?? '-'}</strong></li>
             </ul>
           </Box>
         )
       },
     },
-    { field: "name", headerName: "NAMA SESI UJIAN", flex: 1, minWidth: 150 },
-    { field: "total_student", headerName: "JUMLAH SISWA", flex: 0.7, minWidth: 100 },
+    { field: "session_name", headerName: "NAMA SESI UJIAN", flex: 1, minWidth: 150 },
+    { field: "total", headerName: "JUMLAH SISWA", flex: 0.7, minWidth: 100 },
     { field: "start_date", headerName: "MULAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.start_date) },
     { field: "end_date", headerName: "SELESAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.end_date) },
-    { field: "is_active", headerName: "STATUS", flex: 1, minWidth: 150, renderCell: (row) => row.is_active ? 'AKTIF' : "SELESAI" },
+    { field: "status", headerName: "STATUS", flex: 1, minWidth: 150 },
     {
       field: "aksi",
       headerName: "AKSI",
@@ -56,7 +55,7 @@ export function UseExamSessionListHook() {
         <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <IconButton
             size="small"
-            onClick={() => navigate(`/${userRole}/sesi-ujian/${row.ID}/detail?sessionId=${row.session_id}`)}
+            onClick={() => navigate(`/${userRole}/sesi-ujian/${row.id}/detail?sessionId=${row.session_id}`)}
             sx={{
               bgcolor: "yellow",
               color: "black",
@@ -67,7 +66,7 @@ export function UseExamSessionListHook() {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => navigate(`/${userRole}/sesi-ujian/${row.ID}/update`)}
+            onClick={() => navigate(`/${userRole}/sesi-ujian/${row.id}/update`)}
             sx={{
               bgcolor: "purple",
               color: "white",
@@ -83,7 +82,7 @@ export function UseExamSessionListHook() {
               color: "white",
               "&:hover": { bgcolor: "darkred" },
             }}
-            onClick={() => handleDelete(row.ID)}
+            onClick={() => handleDelete(row.id)}
           >
             <DeleteIcon />
           </IconButton>
