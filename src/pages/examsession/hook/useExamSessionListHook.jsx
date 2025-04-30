@@ -46,6 +46,7 @@ export function UseExamSessionListHook() {
     { field: "total_student", headerName: "JUMLAH SISWA", flex: 0.7, minWidth: 100 },
     { field: "start_date", headerName: "MULAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.start_date) },
     { field: "end_date", headerName: "SELESAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.end_date) },
+    { field: "is_active", headerName: "STATUS", flex: 1, minWidth: 150, renderCell: (row) => row.is_active ? 'AKTIF' : "SELESAI" },
     {
       field: "aksi",
       headerName: "AKSI",

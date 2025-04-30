@@ -156,16 +156,5 @@ export const menuConfig = {
         },
       ],
     },
-    // {
-    //   title: "Pengaturan",
-    //   menu: [
-    //     {
-    //       text: 'Profile',
-    //       title: 'Profile',
-    //       icon: 'VpnKeyRounded',
-    //       path: '/profile',
-    //     },
-    //   ]
-    // }
   ],
 };
