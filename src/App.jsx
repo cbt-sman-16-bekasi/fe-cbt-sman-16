@@ -6,7 +6,7 @@ import AppNavbar from './components/AppNavbar';
 import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import AppTheme from '../shared-theme/AppTheme';
-import { Route, Routes, useNavigate } from 'react-router';
+import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -36,14 +36,22 @@ const xThemeComponents = {
 
 function App(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const schoolData = useSelector((state) => state.school.schoolInfo);
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const [title, setTitle] = useState('')
-  const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
   const userRole = authUser?.role?.code.toLowerCase();
+
+  const pathParts = location.pathname.split('/');
+  const rawTitle = pathParts[2] || '';
+  const pageTitle = rawTitle
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
   useEffect(() => {
     if (authUser?.SchoolCode) {
@@ -66,10 +74,11 @@ function App(props) {
 
   useEffect(() => {
     const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
-    setTitle(currentMenu === null ? 'Dashboard' : currentMenu.title);
+    const defaultTitle = currentMenu?.title || pageTitle || 'Dashboard';
 
-    document.title = currentMenu ? `${currentMenu.title} - Admin` : "Admin Panel";
-  }, [navigate]);
+    setTitle(defaultTitle);
+    document.title = `${defaultTitle} - Admin`;
+  }, [location]);
 
   useEffect(() => {
     if (!accessToken) {
