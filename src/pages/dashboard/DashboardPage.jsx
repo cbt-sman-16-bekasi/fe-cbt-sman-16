@@ -96,7 +96,7 @@ export default function DashboardPage() {
           >
             {updatedMenuItems.map((card, index) => (
               <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-                <StatCard role={userRole} {...card} />
+                <StatCard role={userRole} card={card} />
               </Grid>
             ))}
           </Grid>
