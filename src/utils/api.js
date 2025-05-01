@@ -91,7 +91,10 @@ const api = (() => {
     nss,
     phone,
     school_name,
-    principal_name, vice_principal_name, principal_nip, vice_principal_nip
+    principal_name,
+    vice_principal_name,
+    principal_nip,
+    vice_principal_nip,
   }) {
     const response = await _fetchWithAuth('/academic/school/update', {
       method: 'PUT',
@@ -106,7 +109,10 @@ const api = (() => {
         nss,
         phone,
         school_name,
-        principal_name, vice_principal_name, principal_nip, vice_principal_nip
+        principal_name,
+        vice_principal_name,
+        principal_nip,
+        vice_principal_nip,
       }),
     });
 
