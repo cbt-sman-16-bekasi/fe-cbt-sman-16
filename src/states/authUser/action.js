@@ -25,12 +25,12 @@ function asyncSetAuthUser({ password, username }) {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const { token, user, detail } = await api.login({ password, username });
+      const responsne = await api.login({ password, username });
+      const { token, user, detail } = responsne;
 
       api.putAccessToken(token);
       const safeDetail = {
         ...detail,
-        name: 'Super Admin',
       };
       const mergedUser = { ...user, detail: safeDetail };
 
