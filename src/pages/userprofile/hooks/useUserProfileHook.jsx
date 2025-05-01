@@ -39,7 +39,7 @@ export function useUserProfileHook() {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
-      setName(authUser?.name || '');
+      setName(authUser?.detail.name || '');
       setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
         preview: authUser?.logo
