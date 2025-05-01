@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
-// import { useTheme } from '@mui/material/styles';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import Stack from '@mui/material/Stack';
-// import Typography from '@mui/material/Typography';
 import { Link } from 'react-router';
 
-function StatCard({ text, value, path, role }) {
+function StatCard({ card, role }) {
+  const { text, value, path } = card;
+  const pathMenu = `/${role}${path}`;
+
+  const to = (menu) => {
+    localStorage.setItem("currentMenu", JSON.stringify(menu));
+  }
 
   return (
     <div className="h-full rounded-2xl overflow-hidden shadow-lg">
@@ -30,8 +31,7 @@ function StatCard({ text, value, path, role }) {
         </div>
       </div>
 
-      {/* Bagian Bawah */}
-      <Link to={`/${role}${path}`} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+      <Link onClick={() => to(card, pathMenu)} to={pathMenu} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
         <span className='text-white'>Lihat Detail</span>
         <span className='text-white'>→</span>
       </Link>
@@ -40,28 +40,12 @@ function StatCard({ text, value, path, role }) {
 }
 
 StatCard.propTypes = {
-  // interval: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  card: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }).isRequired,
   role: PropTypes.string.isRequired,
-  // trend: PropTypes.oneOf(['down', 'neutral', 'up']).isRequired,
-  value: PropTypes.string.isRequired,
 };
 
 export default StatCard;
-
-// <Card variant="outlined" sx={{ height: '100%', flexGrow: 1, pb: '0' }} >
-//   <CardContent className='flex flex-col gap-5 w-full h-full relative'>
-//     <div className="summary-content">
-//       <Typography gutterBottom variant='p' sx={{ color: 'text.secondary', fontSize: '4rem', fontWeight: 'bold', display: 'block', p: 0, m: 0 }}>
-//         {value}
-//       </Typography>
-//       <Typography variant="p" sx={{ p: 0, mb: 10 }}>
-//         {text}
-//       </Typography>
-//     </div>
-//     <div className="summary-cta p-5 bg-slate-900 mb-2">
-//       <Typography sx={{ color: 'text.secondary' }}>lihat detail</Typography>
-//     </div>
-//   </CardContent>
-// </Card >
