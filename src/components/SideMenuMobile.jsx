@@ -98,7 +98,7 @@ function SideMenuMobile({ open, toggleDrawer, user, role, logout }) {
             }
             <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
               <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-                {user.name}
+                {user?.detail.name}
               </Typography>
             </Box>
             <Button
