@@ -57,7 +57,7 @@ export default function DashboardPage() {
               Selamat, Anda Berhasil Login!
             </Typography>
             <Typography variant="body1" sx={{ mt: 1 }}>
-              Halo, <b>{(authUser.detail === undefined || authUser.detail === null) ? '-' : authUser.name}</b>! Selamat datang di sistem CBT. Saat ini, Anda memiliki status sebagai <b>{authUser.role.name}</b>.
+              Halo, <b>{(authUser.detail === undefined || authUser.detail === null) ? '-' : authUser?.detail.name}</b>! Selamat datang di sistem CBT. Saat ini, Anda memiliki status sebagai <b>{authUser.role.name}</b>.
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
               Sebagai <b>{authUser.role.name}</b>, Anda memiliki hak akses penuh untuk:
