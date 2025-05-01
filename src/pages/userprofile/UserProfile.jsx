@@ -29,7 +29,6 @@ const UserProfile = () => {
     handleEdit,
     isTeacher, setIsTeacher,
   } = useUserProfileHook();
-  console.log(authUser)
 
   const sizeProps = isTeacher
     ? { sm: 12, lg: 6 }
@@ -37,7 +36,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (authUser) {
-      setName(authUser?.name || '');
+      setName(authUser?.detail.name || '');
       setNuptk(authUser?.detail?.nuptk || '');
       setUserRole(authUser?.role.name || '');
       setUsername(authUser?.username || '');
