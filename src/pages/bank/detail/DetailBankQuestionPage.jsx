@@ -100,8 +100,8 @@ const DetailBankQuestionPage = () => {
             <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/bank-soal/${code}/detail/question/create?typeQuestion=${typeQuestion.replaceAll(' ', '_')}`)} startIcon={<AddBoxOutlinedIcon/>}>Tambah Soal</Button>
           </Grid>
           <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined/>} onClick={() => setOpenUpload(true)}>Import Soal</Button>
-            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined/>} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
+            <Button fullWidth variant="contained" color='warning' disabled startIcon={<UploadFileOutlined/>} onClick={() => setOpenUpload(true)}>Import Soal</Button>
+            <Button fullWidth variant="contained" color='success' disabled startIcon={<DownloadOutlined/>} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>
         </Grid>
         <Grid container spacing={1} columns={12} sx={{
