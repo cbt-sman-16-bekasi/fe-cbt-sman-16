@@ -94,6 +94,7 @@ const ExamDetailPage = () => {
         open={openUpload}
         onClose={() => setOpenUpload(false)}
         onUpload={handleUpload}
+        accept=".docx"
       />
     </Box>
   )
