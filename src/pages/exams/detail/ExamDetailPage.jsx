@@ -65,8 +65,8 @@ const ExamDetailPage = () => {
             <Button fullWidth variant="contained" color='error' disabled={true} startIcon={<AddToDriveRounded />}>Bank Soal</Button>
           </Grid>
           <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-            <Button fullWidth variant="contained" color='warning' disabled startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
-            <Button fullWidth variant="contained" color='success' disabled startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
+            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
+            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>
         </Grid>
 
