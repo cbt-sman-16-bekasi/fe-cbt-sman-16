@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import { Link } from 'react-router';
 import { menuConfig } from '../config/menuConfig';
 import PropTypes from 'prop-types';
-import {Fragment} from "react";
+import { Fragment } from "react";
 import Divider from "@mui/material/Divider";
 
 export default function MenuContent({ role, currentPath, to }) {
@@ -19,7 +19,7 @@ export default function MenuContent({ role, currentPath, to }) {
       <List dense>
         {menuItems.map((section, sectionIndex) => (
           <Fragment key={sectionIndex}>
-            {sectionIndex > 0 && (<Divider sx={{mb: 1, mt: 2}} />)}
+            {sectionIndex > 0 && (<Divider sx={{ mb: 1, mt: 2 }} />)}
             {section.menu.map((item, index) => {
               const IconComponent = Icons[item.icon];
               const isActive = `/${currentPath}` === item.path;
