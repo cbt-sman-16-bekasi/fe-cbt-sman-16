@@ -40,14 +40,6 @@ export function AccessCreate({ isUpdatePage = false }) {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
 
-            <CustomInput label="Username" fullWidth={true} value={username} onChange={(c) => setUsername(c.target.value)} placeholder="Username" />
-
-            <CustomInput label="Password" fullWidth={true} value={password} onChange={(c) => setPassword(c.target.value)} placeholder="password" />
-
-          </Grid>
-
-          <Grid container spacing={3} alignItems="center" columns={12}>
-
             <CustomInput label="Akses" fullWidth={true} options={optionsAccess} value={access} onChange={(c) => setAccess(c.target.value)} placeholder="Akses" />
 
           </Grid>
