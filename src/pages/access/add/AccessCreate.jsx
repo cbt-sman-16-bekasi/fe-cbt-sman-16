@@ -12,8 +12,6 @@ export function AccessCreate({ isUpdatePage = false }) {
   const {
     name, setName,
     nuptk, setNuptk,
-    username, setUsername,
-    password, setPassword,
     access, setAccess,
     optionsAccess,
     handleSubmitCreate,
