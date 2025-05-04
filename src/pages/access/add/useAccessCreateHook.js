@@ -23,7 +23,7 @@ export function useAccessCreateHook({ updatePage = false }) {
       const { data } = await useMasterController.allUserRole();
       setoptionsAccess(
         data
-          ?.filter((data) => data.code !== 'STUDENT')
+          ?.filter((data) => data.code !== 'STUDENT' && data.code !== 'TEACHER')
           .map((s) => {
             return { label: s.name, value: s.code };
           })
