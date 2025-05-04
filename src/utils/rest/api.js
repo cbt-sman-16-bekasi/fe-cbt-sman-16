@@ -24,7 +24,7 @@ const useApi = (() => {
     responseType = 'json',
     dispatch
   ) => {
-    const fullUrl = `${BASE_URL}${url}`;
+    const fullUrl = url.includes('http') ? url : `${BASE_URL}${url}`;
     const response = await fetch(fullUrl, {
       ...options,
       headers: {

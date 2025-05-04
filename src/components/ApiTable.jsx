@@ -80,7 +80,7 @@ export default function ApiTable({
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((row, index) => (
+              data?.map((row, index) => (
                 <TableRow key={row.id || index}
                   sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: !isDarkMode ? index % 2 === 0 ? '#f9f9f9' : '#ffffff' : 'transparent' }}
                 >
