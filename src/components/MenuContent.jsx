@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import { Link } from 'react-router';
 import { menuConfig } from '../config/menuConfig';
 import PropTypes from 'prop-types';
-import {Fragment} from "react";
+import { Fragment } from "react";
 import Divider from "@mui/material/Divider";
 import Box from '@mui/material/Box';
 import ComingSoonBadge from "./common/ComingSoonBadge.jsx";
