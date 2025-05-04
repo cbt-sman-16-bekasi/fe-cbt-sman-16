@@ -130,7 +130,7 @@ export function TeacherCreate({ isUpdatePage = false }) {
                            type="text" value={subject} onChange={(c) => setSubject(c.target.value)}
                            sx={{ width: '100% !important' }}
                            placeholder="Mata Pelajaran" />
-              <CustomInput label="Kelas" fullWidth options={optionClass}
+              <CustomInput label="Kelas" fullWidth options={optionClass} multiple
                            type="text" value={classData} onChange={(c) => setClassData(c.target.value)}
                            sx={{ width: '100% !important' }}
                            placeholder="Kelas" />
