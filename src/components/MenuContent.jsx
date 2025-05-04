@@ -10,6 +10,8 @@ import { menuConfig } from '../config/menuConfig';
 import PropTypes from 'prop-types';
 import { Fragment } from "react";
 import Divider from "@mui/material/Divider";
+import Box from '@mui/material/Box';
+import ComingSoonBadge from "./common/ComingSoonBadge.jsx";
 
 export default function MenuContent({ role, currentPath, to }) {
   const menuItems = menuConfig[role] || [];
@@ -34,18 +36,25 @@ export default function MenuContent({ role, currentPath, to }) {
                     style={{ textDecoration: 'none', color: '#FFFFFF' }}
                     selected={isActive}
                     sx={{
-                      // bgcolor: isActive ? 'primary.light' : 'inherit',
-                      // color: isActive ? 'primary.dark' : 'inherit',
                       borderRadius: 2,
                       px: 3,
                       py: 2,
                       minHeight: 48,
                     }}
                   >
-                    <ListItemIcon >
+                    <ListItemIcon>
                       {<IconComponent />}
                     </ListItemIcon>
-                    <ListItemText primary={item.text} />
+
+                    <ListItemText
+                      primary={
+                        <Box display="flex" alignItems="left" flexDirection="column" gap={1}>
+                          {item.text}
+                          {item.comingSoon && (<ComingSoonBadge />)}
+                        </Box>
+                      }
+                    />
+
                   </ListItemButton>
                 </ListItem>
               );
@@ -53,7 +62,8 @@ export default function MenuContent({ role, currentPath, to }) {
           </Fragment>
         ))}
       </List>
-    </Stack >
+    </Stack>
+
   );
 }
 

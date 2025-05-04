@@ -134,7 +134,7 @@ const UserProfile = () => {
                 onClick={onOpenPasswordModal}
                 disabled={!isEdit}
               >
-                ganti password?
+                Ganti Password?
               </Button>
             </Grid>
 

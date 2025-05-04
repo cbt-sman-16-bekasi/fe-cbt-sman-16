@@ -38,7 +38,7 @@ export function useGenerateTokenFormHook({onChangeGenerate}) {
       showLoading()
       const { data: dataSession } = await useExamSessionController.allExamSession({page: 0, size: 100})
       const { records: recordsSession } = dataSession;
-      setOptionExamSession(recordsSession.map(r => { return {label: r.name, value: r.session_id	}}))
+      setOptionExamSession(recordsSession.map(r => { return {label: r.session_name, value: r.session_id	}}))
       hideLoading()
     }
     fetchData()

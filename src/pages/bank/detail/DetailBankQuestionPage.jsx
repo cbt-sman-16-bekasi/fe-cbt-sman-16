@@ -129,6 +129,7 @@ const DetailBankQuestionPage = () => {
         open={openUpload}
         onClose={() => setOpenUpload(false)}
         onUpload={handleUpload}
+        accept=".docx"
       />
     </Box>
   )

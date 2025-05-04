@@ -62,7 +62,7 @@ const ExamDetailPage = () => {
         <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
           <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/create?examCode=${examCode}&typeQuestion=${typeQuestion}`)} startIcon={<AddBoxOutlinedIcon />}>Tambah Soal</Button>
-            <Button fullWidth variant="contained" color='error' startIcon={<AddToDriveRounded />}>Bank Soal</Button>
+            <Button fullWidth variant="contained" color='error' disabled={true} startIcon={<AddToDriveRounded />}>Bank Soal</Button>
           </Grid>
           <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
@@ -94,6 +94,7 @@ const ExamDetailPage = () => {
         open={openUpload}
         onClose={() => setOpenUpload(false)}
         onUpload={handleUpload}
+        accept=".docx"
       />
     </Box>
   )
