@@ -36,17 +36,8 @@ export function useAccessHook() {
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
-    { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
-    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120, renderCell: (row) => row.detail_user?.username || '-' },
-    { field: "password", headerName: "PASSWORD", flex: 1, minWidth: 120, renderCell: () => '*****' },
-    {
-      field: "hakAkses",
-      headerName: "HAK AKSES",
-      flex: 0.5,
-      minWidth: 120,
-      renderCell: (row) => getHakAksesColor(row.detail_user?.role.name),
-    },
+    { field: "nuptk", headerName: "ID", flex: 1, minWidth: 120 },
+    { field: "name", headerName: "NAMA USER", flex: 1.5, minWidth: 150 },
     {
       field: "aksi",
       headerName: "AKSI",
