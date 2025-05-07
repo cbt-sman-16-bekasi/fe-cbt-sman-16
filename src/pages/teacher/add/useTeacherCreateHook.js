@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import {useNavigate, useParams} from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useTeacherApi from '../../../utils/rest/teacher.js';
-import useClassesApi from "../../../utils/rest/classes.js";
-import useApi from "../../../utils/rest/api.js";
+import useClassesApi from '../../../utils/rest/classes.js';
+import useApi from '../../../utils/rest/api.js';
 
 export function useTeacherCreateHook({ updatePage = false }) {
   const { id } = useParams();
@@ -50,7 +50,10 @@ export function useTeacherCreateHook({ updatePage = false }) {
         }
 
         try {
-          const { data: classes } = await useClassesApi.allClasses({ size: 1000, page: 0 });
+          const { data: classes } = await useClassesApi.allClasses({
+            size: 1000,
+            page: 0,
+          });
           setOptionClass(
             classes?.records?.map((s) => ({
               label: s.className,
@@ -111,16 +114,28 @@ export function useTeacherCreateHook({ updatePage = false }) {
   };
 
   const columns = [
-    { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => row.subject.subject ?? '-' },
-    { field: "class", headerName: "KELAS", flex: 1.5, minWidth: 150, renderCell: (row) => row.class.className ?? '-' },
+    { field: 'no', headerName: 'NO', flex: 0.1, minWidth: 50 },
+    {
+      field: 'subject',
+      headerName: 'MATA PELAJARAN',
+      flex: 1,
+      minWidth: 120,
+      renderCell: (row) => row.subject.subject ?? '-',
+    },
+    {
+      field: 'class',
+      headerName: 'KELAS',
+      flex: 1.5,
+      minWidth: 150,
+      renderCell: (row) => row.class.className ?? '-',
+    },
   ];
 
   const handleSubmitTeacherClassSubject = () => {
     const body = {
       teacherId: parseInt(id),
       classId: classData,
-      subjectId: subject
+      subjectId: subject,
     };
 
     showLoading();
@@ -132,23 +147,28 @@ export function useTeacherCreateHook({ updatePage = false }) {
           hideLoading();
           showModal(message, status);
           if (status === 'success') {
-            setShowAddSubject(false)
-            setIsRefreshList(true)
+            setShowAddSubject(false);
+            setIsRefreshList(true);
           }
         }, 1500);
       })
       .catch((e) => {
         hideLoading();
-        showModal('Failed save changes Class Subject teacher. Please try again!', 'error');
+        showModal(
+          'Failed save changes Class Subject teacher. Please try again!',
+          'error'
+        );
       });
   };
 
   const handleDelete = (id) => {
     showConfirm('Apakah anda yakin menghapus data ini ?', async () => {
-      showLoading()
-      await useApi.delete({ url: `/academic/teacher/class-subject/delete/${id}` })
-      setIsRefreshList(!isRefreshList)
-      hideLoading()
+      showLoading();
+      await useApi.delete({
+        url: `/academic/teacher/class-subject/delete/${id}`,
+      });
+      setIsRefreshList(!isRefreshList);
+      hideLoading();
     });
   };
 
@@ -165,14 +185,18 @@ export function useTeacherCreateHook({ updatePage = false }) {
     optionsEnableAccess,
     handleSubmitCreate,
     resetForm,
-    classData, optionClass,
-    optionsSubject, setSubject,
-    setClassData, subject,
+    classData,
+    optionClass,
+    optionsSubject,
+    setSubject,
+    setClassData,
+    subject,
     columns,
-    showAddSubject, setShowAddSubject,
+    showAddSubject,
+    setShowAddSubject,
     isRefreshList,
     handleSubmitTeacherClassSubject,
     id,
-    handleDelete
+    handleDelete,
   };
 }
