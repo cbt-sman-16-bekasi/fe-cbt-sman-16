@@ -1,25 +1,34 @@
 import Grid from "@mui/material/Grid2";
 import Divider from "@mui/material/Divider";
 import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 export default function DetailItem({ label, value }) {
   return (
-    <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
-      {/* Jenis Ujian */}
-      <Grid container sx={{ paddingX: '20px' }}>
-        <Grid size={{ xs: 6, md: 2 }}>
-          <span >
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'center', px: 2, py: 0 }}>
+        {/* Label kiri, lebar tetap */}
+        <Box sx={{ width: 300, minWidth: 140 }}>
+          <Typography
+            variant="body2"
+            fontWeight="bold"
+            sx={{ lineHeight: 1.2, m: 0 }}>
             {label}
-          </span>
-        </Grid>
-        <Grid size={{ xs: 6, md: 8 }}>
-          {value}
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <Divider sx={{ mt: 0 }} />
-      </Grid>
-    </Grid>
+          </Typography>
+        </Box>
+
+        {/* Value kanan, sisa ruang */}
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="body2"
+            sx={{ lineHeight: 1.2, m: 0 }}>
+            {value}
+          </Typography>
+        </Box>
+      </Box>
+      <Divider />
+    </>
   )
 }
 

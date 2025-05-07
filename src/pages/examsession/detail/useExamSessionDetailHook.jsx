@@ -2,7 +2,7 @@ import {useNavigate, useParams, useSearchParams} from "react-router";
 import {useLoading} from "../../../components/common/LoadingProvider.jsx";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -33,6 +33,8 @@ export function useExamSessionDetailHook() {
   const [classIdSelected, setClassIdSelected] = useState(null)
   const [isRefreshTable, setIsRefreshTable] = useState(false)
   const [detailExamSession, setDetailExamSession] = useState({})
+  const [correctionQuestion, setCorrectionQuestion] = useState(false)
+  const [correctionRowStudent, setCorrectionRowStudent] = useState({})
 
   useEffect(() => {
 
@@ -89,28 +91,30 @@ export function useExamSessionDetailHook() {
       flex: 1,
       minWidth: 150,
       renderCell: (row) => {
-        return (
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
-              {/* Tombol Delete */}
-              <IconButton
-                  size="small"
-                  sx={{
-                    bgcolor: "green",
-                    color: "white",
-                    "&:hover": { bgcolor: "darkred" },
-                  }}
-                  onClick={() => handleCorrection(row.id)}
-              >
-                Koreksi
-              </IconButton>
-            </div>
-        );
+        if (row.need_correction) {
+          return (<div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
+            {/* Tombol Delete */}
+            <Button
+              size="small"
+              sx={{
+                bgcolor: "green",
+                color: "white",
+                "&:hover": { bgcolor: "darkred" },
+              }}
+              onClick={() => handleCorrection(row)}
+            >
+              Koreksi
+            </Button>
+          </div>)
+        }
+        return (<></>)
       },
     },)
   }
 
-  const handleCorrection = (id) => {
-    console.log("Delete kelas dengan ID:", id);
+  const handleCorrection = (row) => {
+    setCorrectionQuestion(true)
+    setCorrectionRowStudent(row)
   };
 
   const handleDownload = async () => {
@@ -145,7 +149,8 @@ export function useExamSessionDetailHook() {
     optionExamMember,
     setOptionExamMember,
     classIdSelected, setClassIdSelected,
-    isRefreshTable,
-    detailExamSession
+    isRefreshTable, setIsRefreshTable,
+    detailExamSession,correctionQuestion, setCorrectionQuestion,
+    correctionRowStudent, setCorrectionRowStudent
   }
 }

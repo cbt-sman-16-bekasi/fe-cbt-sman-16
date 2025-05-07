@@ -21,7 +21,8 @@ const CustomInput = ({
   variant = "outlined",
   multiple = false,
   sx = {},
-  subLabel = null
+  subLabel = null,
+  max = 100
 }) => {
   return (
     <Grid size={{ ...(oneLineInput ? { sm: 12 } : { md: 12, lg: 6 }), }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
@@ -71,6 +72,12 @@ const CustomInput = ({
         value={value}
         onChange={onChange}
         variant={variant}
+        InputProps={{
+          inputProps: {
+            max: max,
+            min: 0,
+          },
+        }}
         select={options.length > 0}
       >
         {options.length > 0 &&
