@@ -41,7 +41,7 @@ export function useClassesHook() {
               color: "white",
               "&:hover": { bgcolor: "yellowgreen" },
             }}
-            onClick={() => onOpenMemberModal(row.class_id)}
+            onClick={() => onOpenMemberModal(row.ID)}
           >
             <VisibilityIcon />
           </IconButton>
