@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid2";
 import { Button, Dialog, DialogContent } from '@mui/material';
 import { People } from '@mui/icons-material';
 import { Link } from "react-router";
-import {useModalMemberClassHook} from "./hook/useModalMemberClassHook.js";
+import { useModalMemberClassHook } from "./hook/useModalMemberClassHook.jsx";
 import TitleWithIcon from "../../common/TitleWithIcon.jsx";
 import SearchBarWithFilter from "../../common/SearchBarWithFilter.jsx";
 import ApiTable from "../../ApiTable.jsx";
@@ -17,7 +17,7 @@ export default function ModalMemberClass({ open, setHide, classId }) {
     search,
     searchBy, setSearchBy,
     isRefreshList, columns,
-    optionsSearch
+    optionSearchStudent
   } = useModalMemberClassHook()
 
   return (
@@ -43,7 +43,7 @@ export default function ModalMemberClass({ open, setHide, classId }) {
         <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" >
           <Grid lg={4}>
             <SearchBarWithFilter
-              searchOptions={optionsSearch}
+              searchOptions={optionSearchStudent}
               onFilterChange={({ searchBy, search: searchData, filters }) => {
                 setSearch(searchData)
                 setSearchBy(searchBy)
