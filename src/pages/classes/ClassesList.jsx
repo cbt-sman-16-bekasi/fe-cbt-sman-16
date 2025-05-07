@@ -24,7 +24,7 @@ const ClassesList = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <ModalMemberClass open={openModalMember} setHide={setOpenModalMember} classId={classId} />
+      <ModalMemberClass open={openModalMember} setHide={setOpenModalMember} classId={String(classId)} />
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
