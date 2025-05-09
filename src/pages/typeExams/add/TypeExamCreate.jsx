@@ -79,7 +79,7 @@ export function TypeExamCreate({ isUpdatePage = false }) {
             </Grid>
 
             <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleSubmitCreate}>Simpan</Button>
+              <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleSubmitCreate}>{isUpdatePage ? 'Update' : 'Tambah'}</Button>
             </Grid>
 
           </Grid>
