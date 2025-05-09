@@ -121,7 +121,7 @@ export function useExamTypeHook() {
   const handleDelete = (id) => {
     showConfirm(messageDelete(), async () => {
       showLoading()
-      await useApi.delete({ url: `/academic/exam/type-exam/${id}` })
+      await useApi.delete({ url: `/academic/exam/type-exam/delete/${id}` })
       setRefreshList(!isRefreshList)
       hideLoading()
     });
