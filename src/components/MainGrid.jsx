@@ -1,3 +1,4 @@
+import * as Icons from '@mui/icons-material';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,7 +9,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { asyncGetDashboardData } from '../states/common/action';
-import { icons, MenuConfig } from '../config/MenuConfig3';
+import { MenuConfig } from '../config/MenuConfig3';
 import ApiTable from './ApiTable';
 
 export default function MainGrid({ role }) {
@@ -30,7 +31,7 @@ export default function MainGrid({ role }) {
     return {
       ...item,
       value: dashboardData[keyMap[item.path]] ?? '0',
-      icon: icons[item.icon],
+      icon: Icons[item.icon],
     };
   });
 
