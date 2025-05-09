@@ -1,61 +1,49 @@
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
-
-export const icons = {
-  HomeRoundedIcon,
-  AnalyticsRoundedIcon,
-  PeopleRoundedIcon,
-  AssignmentRoundedIcon,
-};
-
 export const MenuConfig = [
   {
     text: 'Akses Sistem',
-    icon: 'AnalyticsRoundedIcon',
+    icon: 'AdminPanelSettingsRounded',
     value: '123',
     path: '/akses-system',
     allowRole: ['ADMIN'],
   },
   {
     text: 'Kelas',
-    icon: 'PeopleRoundedIcon',
+    icon: 'Groups2Rounded',
     value: '123',
     path: '/kelas',
     allowRole: ['ADMIN', 'TEACHER'],
   },
   {
     text: 'Mata Pelajaran',
-    icon: 'AssignmentRoundedIcon',
+    icon: 'MenuBookRounded',
     value: '123',
     path: '/mata-pelajaran',
     allowRole: ['ADMIN'],
   },
   {
     text: 'Data Siswa',
-    icon: 'AssignmentRoundedIcon',
+    icon: 'SchoolRounded',
     value: '123',
     path: '/data-siswa',
     allowRole: ['ADMIN'],
   },
   {
     text: 'Ujian',
-    icon: 'AssignmentRoundedIcon',
+    icon: 'AssignmentRounded',
     value: '123',
     path: '/ujian',
     allowRole: ['ADMIN', 'TEACHER'],
   },
   {
     text: 'Sesi Ujian Aktif',
-    icon: 'AssignmentRoundedIcon',
+    icon: 'EventNoteRounded',
     value: '123',
     path: '/sesi-ujian',
     allowRole: ['ADMIN', 'TEACHER'],
   },
   {
     text: 'Laporan Nilai',
-    icon: 'AssignmentRoundedIcon',
+    icon: 'AssessmentRounded',
     value: '123',
     path: '/laporan-nilai',
     allowRole: ['ADMIN', 'TEACHER'],
