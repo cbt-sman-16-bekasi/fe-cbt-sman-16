@@ -15,6 +15,7 @@ import MainGrid from "../components/MainGrid.jsx";
 import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
 import PropTypes from "prop-types";
+import ReportPage from "./report/ReportPage.jsx";
 
 function TeacherPage({ role }) {
   return (
@@ -40,7 +41,7 @@ function TeacherPage({ role }) {
       <Route path="sesi-ujian/:id/detail" element={<ExamSessionDetailPage />} />
 
       <Route path="generate-token" element={<GenerateTokenPage />} />
-      <Route path="laporan-nilai" element={<LaporanNilai />} />
+      <Route path="laporan-nilai" element={<ReportPage />} />
 
       <Route path="profil" element={<UserProfile />} />
 

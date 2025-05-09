@@ -89,7 +89,7 @@ export const menuConfig = {
           title: 'Laporan Nilai',
           icon: 'AssessmentRounded',
           path: '/laporan-nilai',
-          comingSoon: true
+          comingSoon: false
         },
       ],
     },
@@ -154,7 +154,7 @@ export const menuConfig = {
           title: 'Laporan Nilai',
           icon: 'AssessmentRounded',
           path: '/laporan-nilai',
-          comingSoon: true
+          comingSoon: false
         },
       ],
     },

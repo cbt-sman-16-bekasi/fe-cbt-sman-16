@@ -36,13 +36,13 @@ export function useGenerateTokenFormHook({onChangeGenerate}) {
 
     async function fetchData() {
       showLoading()
-      const { data: dataSession } = await useExamSessionController.allExamSession({page: 0, size: 100})
+      const { data: dataSession } = await useExamSessionController.allExamSession({page: 0, size: 100, filter: {exam_code: examCode}})
       const { records: recordsSession } = dataSession;
       setOptionExamSession(recordsSession.map(r => { return {label: r.session_name, value: r.session_id	}}))
       hideLoading()
     }
     fetchData()
-  }, [optionExam]);
+  }, [examCode]);
 
   const handleGenerate = () => {
     const body = {

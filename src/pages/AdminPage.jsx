@@ -30,6 +30,7 @@ import { TeacherCreate } from "./teacher/add/TeacherCreate.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
 import SchoolProfile from './schoolprofile/SchoolProfile.jsx';
 import DashboardPage from "./dashboard/DashboardPage.jsx";
+import ReportPage from "./report/ReportPage.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -81,7 +82,7 @@ function AdminPage({ role }) {
 
       <Route path="generate-token" element={<GenerateTokenPage />} />
 
-      <Route path="laporan-nilai" element={<LaporanNilai />} />
+      <Route path="laporan-nilai" element={<ReportPage />} />
 
       <Route path="informasi-sekolah" element={<SchoolProfile />} />
 

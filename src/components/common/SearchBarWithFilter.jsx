@@ -83,9 +83,9 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
           }}
         />
 
-        <IconButton onClick={() => setFilterDialogOpen(true)}>
-          <FilterListIcon />
-        </IconButton>
+        {/*<IconButton onClick={() => setFilterDialogOpen(true)}>*/}
+        {/*  <FilterListIcon />*/}
+        {/*</IconButton>*/}
       </Box>
 
       <Dialog open={filterDialogOpen}

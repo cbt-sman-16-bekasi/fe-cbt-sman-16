@@ -8,6 +8,7 @@ import TitleWithIcon from "../../common/TitleWithIcon.jsx";
 import SearchBarWithFilter from "../../common/SearchBarWithFilter.jsx";
 import ApiTable from "../../ApiTable.jsx";
 import ServerSearchAutocomplete from "../../common/ServerSearchAutocomplete.jsx";
+import UnderMaintenance from "../../common/UnderMaintenance.jsx";
 
 export default function ModalMemberClass({ open, setHide, classId }) {
 
@@ -19,6 +20,8 @@ export default function ModalMemberClass({ open, setHide, classId }) {
     isRefreshList, columns,
     optionSearchStudent
   } = useModalMemberClassHook()
+
+  const isMaintenance = true;
 
   return (
     <Dialog open={open} onClose={() => setHide(false)} fullWidth maxWidth="md">
@@ -43,7 +46,7 @@ export default function ModalMemberClass({ open, setHide, classId }) {
         <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" >
           <Grid lg={4}>
             <SearchBarWithFilter
-              searchOptions={optionSearchStudent}
+              searchOptions={optionsSearch}
               onFilterChange={({ searchBy, search: searchData, filters }) => {
                 setSearch(searchData)
                 setSearchBy(searchBy)
@@ -68,6 +71,11 @@ export default function ModalMemberClass({ open, setHide, classId }) {
           </Grid>
         </Grid>
       </DialogContent>
+    </>
+  )
+}
+
+{ isMaintenance && (<UnderMaintenance />) }
     </Dialog >
   );
 }
