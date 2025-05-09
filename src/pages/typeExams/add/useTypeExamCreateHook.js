@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useClassesApi from '../../../utils/rest/classes.js';
 import useExamTypeApi from '../../../utils/rest/examtype.js';
 import { cbtColor } from '../../../../shared-theme/themePrimitives.jsx';
 
 export function useTypeExamCreateHook({ updatePage = false }) {
   const { id } = useParams();
-  const { showLoading, hideLoading } = useLoading();
+  const navigate = useNavigate();
   const { showModal } = useModal();
+  const { showLoading, hideLoading } = useLoading();
   const [examCode, setExamCode] = useState('');
   const [examTypeCode, setExamTypeCode] = useState('');
   const [access, setAccess] = useState('');
@@ -60,13 +61,20 @@ export function useTypeExamCreateHook({ updatePage = false }) {
         setTimeout(() => {
           hideLoading();
           showModal(message, status);
-          resetForm();
+          if (status === 'success') {
+            resetForm();
+            navigate(-1);
+          }
         }, 1500);
       })
       .catch((e) => {
-        console.log(e.data);
         hideLoading();
-        showModal('Failed create exam. Please try again!', 'error');
+        showModal(
+          `Failed ${
+            !updatePage ? 'create' : 'update'
+          } 'Kode Jenis Ujian'. Please try again!`,
+          'error'
+        );
       });
   };
 
