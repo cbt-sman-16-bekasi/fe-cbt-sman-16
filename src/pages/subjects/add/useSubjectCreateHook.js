@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import {useNavigate, useParams} from 'react-router';
-import useCurriculumSubjectApi from "../../../utils/rest/csubject.js";
+import { useNavigate, useParams } from 'react-router';
+import useCurriculumSubjectApi from '../../../utils/rest/csubject.js';
 
 export function useSubjectCreateHook({ updatePage = false }) {
   const { id } = useParams();
@@ -47,13 +47,18 @@ export function useSubjectCreateHook({ updatePage = false }) {
           showModal(message, status);
           if (status === 'success') {
             resetForm();
-            navigate(-1)
+            navigate(-1);
           }
         }, 1500);
       })
       .catch((e) => {
         hideLoading();
-        showModal(`Failed ${!updatePage ? 'create' : 'update'} 'Mata Pelajaran'. Please try again!`, 'error');
+        showModal(
+          `Failed ${
+            !updatePage ? 'create' : 'update'
+          } 'Mata Pelajaran'. Please try again!`,
+          'error'
+        );
       });
   };
 
