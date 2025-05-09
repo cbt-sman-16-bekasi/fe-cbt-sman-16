@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useClassesApi from '../../../utils/rest/classes.js';
 
 export function useClassesCreateHook({ updatePage = false }) {
   const { id } = useParams();
-  const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
+  const { showLoading, hideLoading } = useLoading();
+  const navigate = useNavigate();
 
   const [classCode, setClassCode] = useState('');
   const [className, setClassName] = useState('');
@@ -50,13 +51,21 @@ export function useClassesCreateHook({ updatePage = false }) {
         setTimeout(() => {
           hideLoading();
           showModal(message, status);
-          resetForm();
+          if (status === 'success') {
+            resetForm();
+            navigate(-1);
+          }
         }, 1500);
       })
       .catch((e) => {
         console.log(e.data);
         hideLoading();
-        showModal('Failed create exam. Please try again!', 'error');
+        showModal(
+          `Failed ${
+            !updatePage ? 'create' : 'update'
+          } 'Data Kelas'. Please try again!`,
+          'error'
+        );
       });
   };
 
