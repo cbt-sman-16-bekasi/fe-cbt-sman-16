@@ -1,6 +1,6 @@
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
-import {DownloadOutlined, InfoSharp, UploadFileOutlined} from "@mui/icons-material";
+import {DownloadOutlined, InfoSharp} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
@@ -10,6 +10,7 @@ import {useExamSessionDetailHook} from "./useExamSessionDetailHook.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
 import {UsersIcon} from "lucide-react";
 import CustomInput from "../../../components/form/FormInputTextField.jsx";
+import ModalExamCorrection from "../../../components/page/examsession/ModalExamCorrection.jsx";
 
 const ExamSessionDetailPage = () => {
 
@@ -24,10 +25,19 @@ const ExamSessionDetailPage = () => {
     handleDownload,
     optionExamMember,classIdSelected, setClassIdSelected,
     isRefreshTable,
-    detailExamSession
+    detailExamSession,
+    correctionQuestion, setCorrectionQuestion,
+    correctionRowStudent, setIsRefreshTable
   } = useExamSessionDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
+      <ModalExamCorrection
+        setHide={setCorrectionQuestion}
+        open={correctionQuestion}
+        row={correctionRowStudent}
+        dataSession={detailExamSession}
+        isRefresh={setIsRefreshTable}
+        isRefreshTable={isRefreshTable} />
       <BackWithTitle />
 
       <TitleWithIcon icon={<InfoSharp sx={{color: 'white'}} />} text="Detail Sesi Ujian" iconBackground="red" />
