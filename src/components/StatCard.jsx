@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 function StatCard({ card, role }) {
-  console.log(card)
   const { text, value, path, icon } = card;
   const pathMenu = `/${role}${path}`;
   const IconComponent = Icons[icon];
