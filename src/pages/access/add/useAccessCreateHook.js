@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useAccessApi from '../../../utils/rest/access.js';
 
 export function useAccessCreateHook({ updatePage = false }) {
+  const navigate = useNavigate();
   const [nuptk, setNuptk] = useState('');
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -61,13 +62,21 @@ export function useAccessCreateHook({ updatePage = false }) {
         setTimeout(() => {
           hideLoading();
           showModal(message, status);
-          resetForm();
+          if (status === 'success') {
+            resetForm();
+            navigate(-1);
+          }
         }, 1500);
       })
       .catch((e) => {
         console.log(e.data);
         hideLoading();
-        showModal('Failed create exam. Please try again!', 'error');
+        showModal(
+          `Failed ${
+            !updatePage ? 'create' : 'update'
+          } 'Akses'. Please try again!`,
+          'error'
+        );
       });
   };
 
