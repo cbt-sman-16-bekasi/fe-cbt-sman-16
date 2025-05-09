@@ -1,4 +1,3 @@
-import * as Icons from '@mui/icons-material';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -31,7 +30,7 @@ export default function MainGrid({ role }) {
     return {
       ...item,
       value: dashboardData[keyMap[item.path]] ?? '0',
-      icon: Icons[item.icon],
+      icon: item.icon,
     };
   });
 
