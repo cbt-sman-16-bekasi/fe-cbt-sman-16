@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import { useDispatch, useSelector } from 'react-redux';
-import { icons, MenuConfig } from '../../config/MenuConfig3';
+import { MenuConfig } from '../../config/MenuConfig3';
 import { useDashboardPageHook } from './hooks/useDashboardPageHook';
 // import { InputAdornment, TextField } from '@mui/material';
 // import SearchIcon from "@mui/icons-material/Search";
@@ -43,7 +43,7 @@ export default function DashboardPage() {
     return {
       ...item,
       value: dashboardData[keyMap[item.path]] ?? '0',
-      icon: icons[item.icon],
+      icon: item.icon,
     };
   });
 
