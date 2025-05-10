@@ -50,8 +50,8 @@ const ReportPage = () => {
         </Box>)
     })
   return (<Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-    <AlertWithTitle icon={<RocketLaunch fontSize="small" color="info" />} title="Setting Session Ujian!"
-                    message="Setting sesi ujian digunakan untuk <strong>menjadwalkan waktu pelaksanaan ujian</strong>. Anda dapat menentukan kapan ujian akan dimulai dan kapan ujian akan berakhir. Pastikan untuk mengatur waktu dengan tepat agar semua peserta dapat mengikuti ujian sesuai jadwal yang telah ditentukan."
+    <AlertWithTitle icon={<RocketLaunch fontSize="small" color="info" />} title="Laporan Nilai!"
+                    message="Mengunduh laporan nilai dengan memilih terlebih dahulu Data Ujian kemudian sesuaikan terhadap sesi ujian masing-masing"
     />
     <BasicCard sx={{ width: '100%', mb: '20px'}}>
       <Grid container spacing={3} alignItems="center" columns={12}>
