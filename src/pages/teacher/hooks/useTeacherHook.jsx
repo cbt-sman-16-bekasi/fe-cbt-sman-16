@@ -19,25 +19,55 @@ export function useTeacherHook() {
   const [search, setSearch] = useState('');
   const [searchBy, setSearchBy] = useState('');
 
+  const groupTeacherClassSubjects = (teacherClassSubject) => {
+    const grouped = {};
+
+    teacherClassSubject?.forEach((item) => {
+      const subjectName = item.subject?.subject;
+      const className = item.class?.className;
+
+      if (!grouped[subjectName]) {
+        grouped[subjectName] = new Set();
+      }
+
+      grouped[subjectName].add(className);
+    });
+
+    return Object.entries(grouped).map(([subject, classes]) => ({
+      subject,
+      classes: Array.from(classes).sort()
+    }));
+  };
+
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
     { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.gender || '-' },
     {
-      field: "subject", headerName: "MATA PELAJARAN", flex: 1, minWidth: 120, renderCell: (row) => {
-        if (row.teacherClassSubject !== null) {
-          return row.teacherClassSubject.map(r => r.subject.subject).join(', ')
+      field: "subject",
+      headerName: "MATA PELAJARAN",
+      flex: 1,
+      minWidth: 120,
+      renderCell: (row) => {
+        if (row.teacherClassSubject) {
+          const grouped = groupTeacherClassSubjects(row.teacherClassSubject);
+          return grouped.map(g => g.subject).join(', ');
         }
-        return '-'
+        return '-';
       }
     },
     {
-      field: "class", headerName: "KELAS", flex: 1, minWidth: 120, renderCell: (row) => {
-        if (row.teacherClassSubject !== null) {
-          return row.teacherClassSubject.map(r => r.class.className).join(', ')
+      field: "class",
+      headerName: "KELAS",
+      flex: 1,
+      minWidth: 120,
+      renderCell: (row) => {
+        if (row.teacherClassSubject) {
+          const grouped = groupTeacherClassSubjects(row.teacherClassSubject);
+          return grouped.map(g => g.classes.join(', ')).join(', ');
         }
-        return '-'
+        return '-';
       }
     },
     {
@@ -105,8 +135,8 @@ export function useTeacherHook() {
   };
 
   const searchOptions = [
-    {label: 'NUPTK', value: 'nuptk'},
-    {label: 'Nama Guru', value: 'name'},
+    { label: 'NUPTK', value: 'nuptk' },
+    { label: 'Nama Guru', value: 'name' },
   ]
 
   return {
