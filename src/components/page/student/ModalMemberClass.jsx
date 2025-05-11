@@ -21,7 +21,7 @@ export default function ModalMemberClass({ open, setHide, classId }) {
     optionSearchStudent
   } = useModalMemberClassHook()
 
-  const isMaintenance = true;
+  const isMaintenance = false;
 
   return (
     <Dialog open={open} onClose={() => setHide(false)} fullWidth maxWidth="md">
@@ -43,18 +43,6 @@ export default function ModalMemberClass({ open, setHide, classId }) {
             </Link>
           </Grid>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" >
-              <Grid lg={4}>
-                <SearchBarWithFilter
-                  searchOptions={optionsSearch}
-                  onFilterChange={({ searchBy, search: searchData, filters }) => {
-                    setSearch(searchData)
-                    setSearchBy(searchBy)
-                  }}
-                />
-              </Grid>
-            </Grid>
-
             <Grid container spacing={1} columns={12} sx={{
               '--Grid-borderWidth': '1px',
               borderTop: 'var(--Grid-borderWidth) solid',
@@ -67,7 +55,7 @@ export default function ModalMemberClass({ open, setHide, classId }) {
               },
             }}>
               <Grid size={{ xs: 12, lg: 12 }}>
-                <ApiTable url={`/academic/student/all?class_id=${classId}`} pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
+                <ApiTable url={`/academic/class/${classId}/member`} pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} isPagination={false} />
               </Grid>
             </Grid>
           </DialogContent>
