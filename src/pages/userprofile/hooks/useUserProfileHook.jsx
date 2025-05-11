@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
-import useTeacherApi from "../../../utils/rest/teacher.js";
+import useApi from "../../../utils/rest/api.js";
+import {setAuthUserActionCreator} from "../../../states/authUser/action.js";
 
 export function useUserProfileHook() {
   const { showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
+  const dispatch = useDispatch()
   const authUser = useSelector((state) => state.authUser || localStorage.getItem('authUser'));
 
   const [name, setName] = useState('')
@@ -23,8 +25,8 @@ export function useUserProfileHook() {
 
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
-    preview: authUser?.logo
-      ? `data:${authUser?.logo};base64,${authUser?.logo}`
+    preview: authUser?.detail?.profile_url
+      ? authUser?.detail?.profile_url
       : defaultProfileImg,
     file: null,
   });
@@ -43,12 +45,21 @@ export function useUserProfileHook() {
       setName(authUser?.detail.name || '');
       setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
-        preview: authUser?.logo
-          ? `data:${authUser?.logo};base64,${authUser?.logo}` : defaultProfileImg,
-        file: null
+        preview: authUser?.detail?.profile_url
+            ? authUser?.detail?.profile_url
+            : defaultProfileImg,
+        file: null,
       });
     }
   };
+
+  const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // baca file sebagai DataURL (Base64)
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -63,37 +74,43 @@ export function useUserProfileHook() {
     }
   };
 
+  const upload = async(base64) => {
+    const { data: logoData } = await useApi.fetch('/upload/base64', {
+      method: 'POST',
+      body: JSON.stringify({file_data: base64})
+    })
+    return logoData.url
+  }
+
   const handleUpdate = async () => {
-    setIsSubmitting(true);
     showLoading()
 
-    const body = {
-      name,
-      nuptk,
-      role: userRole,
-      username,
-      ...(formPassword.newPass && formPassword.confirm && formPassword.newPass === formPassword.confirm
-        ? { password: formPassword.newPass }
-        : {})
-    };
-
+    const url = photoProfile.file ? await upload(await toBase64(photoProfile.file)) : authUser?.detail?.profile_url;
     try {
-      const response = await useTeacherApi.modifyTeacher({ body, id: authUser?.ID });
+      const response = await useApi.createOrModify({
+        url: '/auth/change-profile',
+        method: 'POST',
+        body: {
+          full_name: name,
+          username: username,
+          profile_url: url
+        }
+      });
       const { message, status } = response
       showModal(message, status);
-
-      setFormPassword({ current: '', newPass: '', confirm: '' });
     } catch (err) {
       console.error(err);
       showModal(err.message, err.status);
     } finally {
       hideLoading()
-      setIsSubmitting(false);
+      setIsEdit(false);
+      let userData = authUser;
+      userData.detail.name = name;
+      userData.username = username
+      userData.detail.profile_url = url
+      localStorage.setItem('authUser', JSON.stringify(userData));
+      dispatch(setAuthUserActionCreator(userData));
     }
-
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
   };
 
   const onChangePasswordModal = () => {
