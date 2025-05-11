@@ -8,7 +8,7 @@ import { useUserProfileHook } from "./hooks/useUserProfileHook.jsx";
 import { useEffect } from "react";
 import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
 import { ModeEditOutlined } from "@mui/icons-material";
-import ModalChangePassword from "../../components/common/ModalChangePassword.jsx";
+import ModalChangePassword from "../../components/page/profile/ModalChangePassword.jsx";
 
 const UserProfile = () => {
   const {
@@ -24,7 +24,8 @@ const UserProfile = () => {
     isSubmitting,
     handleFileChange,
     handleUpdate,
-    onOpenPasswordModal,
+    onChangePasswordModal,
+    modalPassword,
     isEdit,
     handleEdit,
     isTeacher, setIsTeacher,
@@ -51,7 +52,7 @@ const UserProfile = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
-      <ModalChangePassword />
+      <ModalChangePassword isOpen={modalPassword} isHide={onChangePasswordModal} />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="purple" />
 
@@ -131,8 +132,7 @@ const UserProfile = () => {
                 fullWidth
                 variant="contained"
                 color="info"
-                onClick={onOpenPasswordModal}
-                disabled={!isEdit}
+                onClick={onChangePasswordModal}
               >
                 Ganti Password?
               </Button>
