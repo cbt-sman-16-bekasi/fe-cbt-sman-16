@@ -5,7 +5,7 @@ import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useTeacherApi from "../../../utils/rest/teacher.js";
 
 export function useUserProfileHook() {
-  const { showModal, showModalChangePassword } = useModal();
+  const { showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const authUser = useSelector((state) => state.authUser || localStorage.getItem('authUser'));
 
@@ -19,6 +19,7 @@ export function useUserProfileHook() {
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const isPasswordBeingChanged = formPassword.newPass !== '' || formPassword.confirm !== '';
   const isPasswordValid = !isPasswordBeingChanged || (formPassword.newPass === formPassword.confirm);
+  const [modalPassword, setModalPassword] = useState(false);
 
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
@@ -95,8 +96,8 @@ export function useUserProfileHook() {
     }, 5000);
   };
 
-  const onOpenPasswordModal = () => {
-    showModalChangePassword();
+  const onChangePasswordModal = () => {
+    setModalPassword(!modalPassword)
   };
 
   return {
@@ -120,7 +121,8 @@ export function useUserProfileHook() {
     handleEdit,
     handleFileChange,
     handleUpdate,
-    onOpenPasswordModal,
+    onChangePasswordModal,
+    modalPassword,
   }
 
 }

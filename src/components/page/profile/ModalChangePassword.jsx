@@ -3,72 +3,26 @@ import { Dialog, DialogContent, DialogActions, TextField, Button, FormControlLab
 import { Lock } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
-import { useModal } from './ModalContext';
-import TitleWithIcon from './TitleWithIcon';
-import { useUserProfileHook } from '../../pages/userprofile/hooks/useUserProfileHook';
+import { useModal } from '../../common/ModalContext.jsx';
+import TitleWithIcon from '../../common/TitleWithIcon.jsx';
+import { useUserProfileHook } from '../../../pages/userprofile/hooks/useUserProfileHook.jsx';
+import {useProfileChangePassword} from "./hook/useProfileChangePassword.js";
 
-export default function ModalChangePassword() {
-  const { open, hideModal, type } = useModal();
-
+export default function ModalChangePassword({ isOpen, isHide}) {
   const {
-    formPassword, setFormPassword,
-    showPassword, setShowPassword,
-    passwordMatchError, setPasswordMatchError,
-    isPasswordValid,
-    showAlert,
-    alertMessage,
-    alertSeverity,
-    isSubmitting,
-    handleUpdate,
-  } = useUserProfileHook()
+      currentPassword, setCurrentPassword,
+      newPassword, setNewPassword,
+      confirmPassword, setConfirmPassword,
+      showPassword, setShowPassword,
+      passwordMatchError, handleSaveChanges
+  } = useProfileChangePassword({hideModalChangePassword: isHide})
 
-  const handleChange = (field) => (e) => {
-    const value = e.target.value;
-
-    setFormPassword((prev) => {
-      const updated = { ...prev, [field]: value };
-
-      if (field === 'newPass' || field === 'confirm') {
-        if (updated.confirm && updated.newPass !== updated.confirm) {
-          setPasswordMatchError('Password tidak cocok');
-        } else {
-          setPasswordMatchError('');
-        }
-      }
-
-      return updated;
-    });
-  };
-
-  const isOpen = open && type === 'changePassword';
 
   return (
-    <Dialog open={isOpen} onClose={hideModal} fullWidth maxWidth="xs">
+    <Dialog open={isOpen} onClose={isHide} fullWidth maxWidth="xs">
       <Stack sx={{ gap: 1, p: 2, border: '1px solid black' }}>
         <TitleWithIcon sx={{ mb: 0 }} icon={<Lock sx={{ color: 'white' }} />} text='Ubah Password' iconBackground="red" />
       </Stack>
-
-      {
-        showAlert && (
-          <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-            <Grid size={{ sm: 12 }}>
-              <Alert
-                icon={alertSeverity === 'success' ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
-                variant="outlined"
-                severity={alertSeverity}
-                sx={{ py: 1, px: 2 }}
-              >
-                <Typography variant="h6" fontWeight="bold">
-                  {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
-                </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                  {alertMessage}
-                </Typography>
-              </Alert>
-            </Grid>
-          </Grid>
-        )
-      }
 
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Grid container spacing={2} columns={12}>
@@ -77,8 +31,8 @@ export default function ModalChangePassword() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              value={formPassword.current}
-              onChange={handleChange('current')}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -95,8 +49,8 @@ export default function ModalChangePassword() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              value={formPassword.newPass}
-              onChange={handleChange('newPass')}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -113,8 +67,8 @@ export default function ModalChangePassword() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              value={formPassword.confirm}
-              onChange={handleChange('confirm')}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               error={!!passwordMatchError}
               helperText={passwordMatchError}
               InputProps={{
@@ -129,13 +83,13 @@ export default function ModalChangePassword() {
         </Grid>
         <FormControlLabel
           control={<Checkbox checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} />}
-          label="Show Password"
+          label="Tampilkan Password"
         />
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2 }}>
-        <Button onClick={handleUpdate} variant="contained" color='success' fullWidth disabled={!isPasswordValid || isSubmitting}>
-          {isSubmitting ? 'Menyimpan...' : 'Simpan'}
-        </Button>
+          { (passwordMatchError === '' && confirmPassword && newPassword && currentPassword) && (<Button onClick={handleSaveChanges} variant="contained" color='success' fullWidth>
+          Simpan
+      </Button>)}
       </DialogActions>
     </Dialog >
   );
