@@ -107,11 +107,11 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           alignItems="center"
           sx={{ border: isActive ? '' : '1px solid grey', backgroundColor: isActive ? 'primary.main' : '', display: 'flex', justifyContent: "space-between", alignItems: 'center', gap: 1, borderRadius: 1, p: 1, width: '100%' }}
         >
-          {user?.photoProfile ?
+          {user?.detail?.profile_url ?
             <Avatar
               sizes="small"
               alt="Riley Carter"
-              src={user?.photoProfile}
+              src={user?.detail?.profile_url}
               sx={{ width: 36, height: 36 }}
             /> : <Box
               sx={{

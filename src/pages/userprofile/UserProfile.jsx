@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
 import { ModeEditOutlined } from "@mui/icons-material";
 import ModalChangePassword from "../../components/page/profile/ModalChangePassword.jsx";
+import CustomInput from "../../components/form/FormInputTextField.jsx";
 
 const UserProfile = () => {
   const {
@@ -56,85 +57,84 @@ const UserProfile = () => {
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="purple" />
 
-      {showAlert && (
-        <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-          <Grid size={{ sm: 12 }}>
-            <Alert
-              icon={alertSeverity === 'success' ? <CheckIcon fontSize="inherit" /> : <ErrorIcon fontSize="inherit" />}
-              variant="outlined"
-              severity={alertSeverity}
-              sx={{ py: 1, px: 2 }}
-            >
-              <Typography variant="h6" fontWeight="bold">
-                {alertSeverity === 'success' ? 'Berhasil!' : 'Error!'}
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 1, whiteSpace: 'pre-line' }}>
-                {alertMessage}
-              </Typography>
-            </Alert>
-          </Grid>
-        </Grid>
-      )}
-
       <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           {/* photo profile */}
-          <Grid container spacing={2} alignItems="center" columns={12}>
-            <Grid size={{ lg: 2 }}>
-
-              <Card variant="outlined" sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
-                <CardContent>
+          <Grid container spacing={3} justifyContent="center" alignItems="center">
+            <Grid item xs={12} md={4}>
+              <Card
+                  variant="outlined"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    p: 2,
+                    borderRadius: 3,
+                    boxShadow: 2,
+                  }}
+              >
+                <CardContent sx={{ p: 0 }}>
                   <img
-                    src={photoProfile.preview}
-                    alt="user photo"
-                    style={{ maxWidth: '100%', maxHeight: '120px', objectFit: 'contain' }}
+                      src={photoProfile.preview}
+                      alt="user photo"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '200px',
+                        objectFit: 'cover',
+                        borderRadius: '16px',
+                      }}
                   />
                 </CardContent>
+
+                {isEdit && (
+                  <Stack direction="row" spacing={2} mt={2}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        color="primary"
+                        disabled={!isEdit}
+                    >
+                      Ganti Foto
+                      <input
+                          type="file"
+                          accept="image/*"
+                          hidden
+                          name="logo"
+                          onChange={handleFileChange}
+                      />
+                    </Button>
+
+                    <Button
+                        variant="outlined"
+                        color="error"
+                        disabled={!isEdit}
+                    >
+                      Hapus
+                    </Button>
+                  </Stack>
+                )}
+
+                <Typography
+                    variant="caption"
+                    sx={{ color: "text.secondary", mt: 2, textAlign: "center" }}
+                >
+                  Ukuran gambar 1080 × 1080 piksel. Hanya file JPG atau PNG.
+                </Typography>
               </Card>
-
-            </Grid>
-
-            <Grid size={{ lg: 9 }}>
-
-              <Stack spacing={1.3} direction="row" alignItems="center">
-
-                <Button variant="contained" component="label" color='success' disabled={!isEdit}>
-                  Ganti Photo
-                  <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    name="logo"
-                    onChange={handleFileChange}
-                  />
-                </Button>
-
-                <Button variant="outlined" color="error" disabled={!isEdit}>
-                  Hapus
-                </Button>
-
-              </Stack>
-              <Typography variant="caption" sx={{ color: "gray", mt: 1 }}>
-                Image size 1080 × 1080 pixels. JPG and PNG files.
-              </Typography>
-
             </Grid>
           </Grid>
 
-          <Grid container spacing={3} alignItems="center" columns={12}>
+          <Grid container spacing={3} justifyContent="center" alignItems="center">
             <Grid size={{ sm: 3 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Password
-              </Typography>
-
               <Button
                 fullWidth
                 variant="contained"
-                color="info"
+                color="success"
                 onClick={onChangePasswordModal}
               >
-                Ganti Password?
+                Ganti Password
               </Button>
             </Grid>
 
@@ -142,64 +142,20 @@ const UserProfile = () => {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
             <Grid size={sizeProps}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Nama
-              </Typography>
-              <TextField
-                fullWidth
-                value={name}
-                disabled={!isEdit}
-                onChange={(e) => setName(e.target.value)}
-                variant="outlined"
-              >
-              </TextField>
+              <CustomInput label="Nama User" fullWidth={true} value={name}
+                           disabled={!isEdit}
+                           onChange={(c) => setName(c.target.value)}
+                           placeholder="Nama User"/>
             </Grid>
-
-            {isTeacher &&
-              <Grid size={{ sm: 12, lg: 6 }}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  NUPTK
-                </Typography>
-                <TextField
-                  fullWidth
-                  value={nuptk}
-                  disabled={!isEdit}
-                  onChange={(e) => setNuptk(e.target.value)}
-                  variant="outlined"
-                >
-                </TextField>
-              </Grid>
-            }
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ sm: 12, lg: 6 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Username
-              </Typography>
-              <TextField
-                fullWidth
-                value={username}
-                disabled={!isEdit}
-                onChange={(e) => setUsername(e.target.value)}
-                variant="outlined"
-              >
-              </TextField>
-            </Grid>
-
-            <Grid size={{ sm: 12, lg: 6 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Hak Akses
-              </Typography>
-              <TextField
-                fullWidth
-                value={userRole}
-                disabled={true}
-                onChange={(e) => setName(e.target.value)}
-                variant="outlined"
-              >
-              </TextField>
-            </Grid>
+            <CustomInput label="Username" fullWidth={true} value={username}
+                         onChange={(c) => setUsername(c.target.value)}
+                         disabled={!isEdit}
+                         placeholder="Username"/>
+            <CustomInput label="Hak Akses" fullWidth={true} disabled value={userRole}
+                         placeholder="Hak Akses"/>
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>

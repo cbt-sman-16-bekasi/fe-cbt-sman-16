@@ -22,7 +22,8 @@ const CustomInput = ({
   multiple = false,
   sx = {},
   subLabel = null,
-  max = 100
+  max = 100,
+  disabled = false,
 }) => {
   return (
     <Grid size={{ ...(oneLineInput ? { sm: 12 } : { md: 12, lg: 6 }), }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
@@ -38,6 +39,7 @@ const CustomInput = ({
         labelId="multiple-subject-label"
         multiple
         value={value}
+        disabled={disabled}
         onChange={onChange}
         input={<OutlinedInput label="Pilih Mata Pelajaran" />}
         renderValue={(selected) => (
@@ -57,6 +59,7 @@ const CustomInput = ({
       </Select>) : type === 'customdate' ? (<LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateTimePicker
           value={value}
+          disabled={disabled}
           onChange={(newValue) => onChange(newValue)}
           ampm={false}
           renderInput={(params) => <TextField {...params} fullWidth />}
@@ -68,6 +71,7 @@ const CustomInput = ({
       </LocalizationProvider>) : (<TextField
         fullWidth={fullWidth}
         type={type}
+        disabled={disabled}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
