@@ -124,6 +124,23 @@ export function useExamCreateHook({ updatePage = false }) {
   }, [subject]);
 
   const handleSubmitCreate = () => {
+    if (
+      !classCode ||
+      !description ||
+      !duration ||
+      !name ||
+      !randomAnswer ||
+      !randomQuestion ||
+      !showResult ||
+      !subject ||
+      !typeExam ||
+      !typeQuestion ||
+      !score
+    ) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       class_id: classCode,
       description: description,
