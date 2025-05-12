@@ -67,6 +67,11 @@ export function useStudentCreateHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!classCode || !gender || !name || !nisn) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       class_id: classCode,
       gender: gender,
