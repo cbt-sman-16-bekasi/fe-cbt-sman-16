@@ -42,7 +42,13 @@ export function useTeacherHook() {
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "NUPTK", flex: 1, minWidth: 120 },
-    { field: "name", headerName: "NAMA GURU", flex: 1.5, minWidth: 150 },
+    {
+      field: "name",
+      headerName: "NAMA GURU",
+      flex: 1.5,
+      minWidth: 150,
+      renderCell: ({ name }) => (name || '-').toUpperCase()
+    },
     { field: "gender", headerName: "JENIS KELAMIN", flex: 1, minWidth: 120, renderCell: (row) => row.gender || '-' },
     {
       field: "subject",
