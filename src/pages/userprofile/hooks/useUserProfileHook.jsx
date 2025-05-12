@@ -1,9 +1,9 @@
 import { useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
-import {setAuthUserActionCreator} from "../../../states/authUser/action.js";
+import { setAuthUserActionCreator } from "../../../states/authUser/action.js";
 
 export function useUserProfileHook() {
   const { showModal } = useModal();
@@ -23,6 +23,7 @@ export function useUserProfileHook() {
   const isPasswordValid = !isPasswordBeingChanged || (formPassword.newPass === formPassword.confirm);
   const [modalPassword, setModalPassword] = useState(false);
 
+  const [isPhotoDeleted, setIsPhotoDeleted] = useState(false);
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
     preview: authUser?.detail?.profile_url
@@ -46,20 +47,20 @@ export function useUserProfileHook() {
       setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
         preview: authUser?.detail?.profile_url
-            ? authUser?.detail?.profile_url
-            : defaultProfileImg,
+          ? authUser?.detail?.profile_url
+          : defaultProfileImg,
         file: null,
       });
     }
   };
 
   const toBase64 = (file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file); // baca file sebagai DataURL (Base64)
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); // baca file sebagai DataURL (Base64)
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -74,43 +75,72 @@ export function useUserProfileHook() {
     }
   };
 
-  const upload = async(base64) => {
+  const upload = async (base64) => {
     const { data: logoData } = await useApi.fetch('/upload/base64', {
       method: 'POST',
-      body: JSON.stringify({file_data: base64})
+      body: JSON.stringify({ file_data: base64 })
     })
     return logoData.url
   }
 
   const handleUpdate = async () => {
-    showLoading()
+    showLoading();
 
-    const url = photoProfile.file ? await upload(await toBase64(photoProfile.file)) : authUser?.detail?.profile_url;
+    let url = authUser?.detail?.profile_url;
+
     try {
+      // jika file baru diunggah
+      if (photoProfile.file) {
+        const base64 = await toBase64(photoProfile.file);
+        url = await upload(base64);
+      }
+
+      // jika user menghapus foto
+      if (isPhotoDeleted && !photoProfile.file) {
+        url = null; // atau '' jika backend lebih suka kosong
+      }
+
       const response = await useApi.createOrModify({
         url: '/auth/change-profile',
         method: 'POST',
         body: {
           full_name: name,
           username: username,
-          profile_url: url
-        }
+          profile_url: url,
+        },
       });
-      const { message, status } = response
+
+      const { message, status } = response;
       showModal(message, status);
+
+      let userData = {
+        ...authUser,
+        detail: {
+          ...authUser.detail,
+          name: name,
+          profile_url: url,
+        },
+        username: username,
+      };
+      localStorage.setItem('authUser', JSON.stringify(userData));
+      dispatch(setAuthUserActionCreator(userData));
     } catch (err) {
       console.error(err);
       showModal(err.message, err.status);
     } finally {
-      hideLoading()
+      hideLoading();
       setIsEdit(false);
-      let userData = authUser;
-      userData.detail.name = name;
-      userData.username = username
-      userData.detail.profile_url = url
-      localStorage.setItem('authUser', JSON.stringify(userData));
-      dispatch(setAuthUserActionCreator(userData));
+      setIsPhotoDeleted(false);
     }
+  };
+
+
+  const handleDeletePhotoProfile = () => {
+    setPhotoProfile({
+      preview: defaultProfileImg,
+      file: null,
+    });
+    setIsPhotoDeleted(true);
   };
 
   const onChangePasswordModal = () => {
@@ -140,6 +170,7 @@ export function useUserProfileHook() {
     handleUpdate,
     onChangePasswordModal,
     modalPassword,
+    handleDeletePhotoProfile,
   }
 
 }
