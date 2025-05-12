@@ -32,6 +32,11 @@ export function useSubjectCreateHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!classCode || !subject) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       code: classCode,
       name: subject,
