@@ -38,6 +38,11 @@ export function useClassesCreateHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!className || !classCode) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       class_name: className,
       class_code: classCode,
