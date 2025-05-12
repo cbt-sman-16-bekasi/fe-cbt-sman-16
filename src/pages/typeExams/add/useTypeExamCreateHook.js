@@ -3,7 +3,6 @@ import useMasterController from '../../../utils/rest/master.js';
 import { useLoading } from '../../../components/common/LoadingProvider.jsx';
 import { useModal } from '../../../components/common/ModalContext.jsx';
 import { useNavigate, useParams } from 'react-router';
-import useClassesApi from '../../../utils/rest/classes.js';
 import useExamTypeApi from '../../../utils/rest/examtype.js';
 import { cbtColor } from '../../../../shared-theme/themePrimitives.jsx';
 
@@ -46,6 +45,11 @@ export function useTypeExamCreateHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!examTypeCode || !selectedColor || !access || !examCode) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       code_type_exam: examTypeCode,
       color: selectedColor,
