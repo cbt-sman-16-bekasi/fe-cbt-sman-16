@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Chip, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
@@ -18,26 +18,11 @@ export function useAccessHook() {
   const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false)
 
-  function getHakAksesColor(status) {
-    const colors = {
-      "Admin": "primary",
-      "Guru": "success",
-    };
-
-    return (
-      <Chip
-        variant='outlined'
-        label={status}
-        color={colors[status] || "default"}
-        size="small"
-      />
-    );
-  }
-
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "nuptk", headerName: "ID", flex: 1, minWidth: 120 },
     { field: "name", headerName: "NAMA USER", flex: 1.5, minWidth: 150 },
+    { field: "role", headerName: "ROLE", flex: 1, minWidth: 150, renderCell: (row) => row?.role ? row.role : '-' },
     {
       field: "aksi",
       headerName: "AKSI",
@@ -95,9 +80,12 @@ export function useAccessHook() {
     });
   };
 
-  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  const capitalize = (text) => text.toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
-  const searchOptions = columns.slice(1, -3).map((col) => ({
+  const searchOptions = columns.slice(1, -1).map((col) => ({
     value: col.field,
     label: capitalize(col.headerName),
   }));
