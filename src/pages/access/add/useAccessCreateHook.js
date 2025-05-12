@@ -7,7 +7,6 @@ import useAccessApi from '../../../utils/rest/access.js';
 
 export function useAccessCreateHook({ updatePage = false }) {
   const navigate = useNavigate();
-  const [nuptk, setNuptk] = useState('');
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +33,6 @@ export function useAccessCreateHook({ updatePage = false }) {
         const { data: detailExam } = await useAccessApi.detailAccess({
           id: id,
         });
-        setNuptk(detailExam.nuptk);
         setName(detailExam.name);
         setUsername(detailExam.username);
         setPassword('****');
@@ -46,9 +44,13 @@ export function useAccessCreateHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!name || !username) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       name: name,
-      nuptk: nuptk,
       password: password,
       role: access,
       username: username,
@@ -81,7 +83,6 @@ export function useAccessCreateHook({ updatePage = false }) {
   };
 
   const resetForm = () => {
-    setNuptk('');
     setName('');
     setUsername('');
     setPassword('');
@@ -91,8 +92,6 @@ export function useAccessCreateHook({ updatePage = false }) {
   return {
     name,
     setName,
-    nuptk,
-    setNuptk,
     username,
     setUsername,
     password,
