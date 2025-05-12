@@ -25,6 +25,7 @@ const UserProfile = () => {
     isEdit,
     handleEdit,
     isTeacher, setIsTeacher,
+    handleDeletePhotoProfile,
   } = useUserProfileHook();
 
   const sizeProps = isTeacher
@@ -57,54 +58,55 @@ const UserProfile = () => {
 
           {/* photo profile */}
           <Grid container spacing={3} justifyContent="center" alignItems="center">
-            <Grid item xs={12} md={4}>
+            <Grid xs={12} md={4}>
               <Card
-                  variant="outlined"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    p: 2,
-                    borderRadius: 3,
-                    boxShadow: 2,
-                  }}
+                variant="outlined"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  p: 2,
+                  borderRadius: 3,
+                  boxShadow: 2,
+                }}
               >
                 <CardContent sx={{ p: 0 }}>
                   <img
-                      src={photoProfile.preview}
-                      alt="user photo"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        maxHeight: '200px',
-                        objectFit: 'cover',
-                        borderRadius: '16px',
-                      }}
+                    src={photoProfile.preview}
+                    alt="user photo"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      maxHeight: '200px',
+                      objectFit: 'cover',
+                      borderRadius: '16px',
+                    }}
                   />
                 </CardContent>
 
                 {isEdit && (
                   <Stack direction="row" spacing={2} mt={2}>
                     <Button
-                        variant="contained"
-                        component="label"
-                        color="primary"
-                        disabled={!isEdit}
+                      variant="contained"
+                      component="label"
+                      color="primary"
+                      disabled={!isEdit}
                     >
                       Ganti Foto
                       <input
-                          type="file"
-                          accept="image/*"
-                          hidden
-                          name="logo"
-                          onChange={handleFileChange}
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        name="logo"
+                        onChange={handleFileChange}
                       />
                     </Button>
 
                     <Button
-                        variant="outlined"
-                        color="error"
-                        disabled={!isEdit}
+                      variant="outlined"
+                      color="error"
+                      disabled={!isEdit}
+                      onClick={handleDeletePhotoProfile}
                     >
                       Hapus
                     </Button>
@@ -112,8 +114,8 @@ const UserProfile = () => {
                 )}
 
                 <Typography
-                    variant="caption"
-                    sx={{ color: "text.secondary", mt: 2, textAlign: "center" }}
+                  variant="caption"
+                  sx={{ color: "text.secondary", mt: 2, textAlign: "center" }}
                 >
                   Ukuran gambar 1080 × 1080 piksel. Hanya file JPG atau PNG.
                 </Typography>
@@ -138,19 +140,19 @@ const UserProfile = () => {
           <Grid container spacing={3} alignItems="center" columns={12}>
             <Grid size={sizeProps}>
               <CustomInput label="Nama User" fullWidth={true} value={name}
-                           disabled={!isEdit}
-                           onChange={(c) => setName(c.target.value)}
-                           placeholder="Nama User"/>
+                disabled={!isEdit}
+                onChange={(c) => setName(c.target.value)}
+                placeholder="Nama User" />
             </Grid>
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
             <CustomInput label="Username" fullWidth={true} value={username}
-                         onChange={(c) => setUsername(c.target.value)}
-                         disabled={!isEdit}
-                         placeholder="Username"/>
+              onChange={(c) => setUsername(c.target.value)}
+              disabled={!isEdit}
+              placeholder="Username" />
             <CustomInput label="Hak Akses" fullWidth={true} disabled value={userRole}
-                         placeholder="Hak Akses"/>
+              placeholder="Hak Akses" />
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
