@@ -65,6 +65,21 @@ export function useExamCreateQuestionHook({ updatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (
+      !answer ||
+      !examCode ||
+      !optionA ||
+      !optionB ||
+      !optionC ||
+      !optionD ||
+      !optionE ||
+      !question ||
+      !score
+    ) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       answer: answer,
       exam_code: examCode,
