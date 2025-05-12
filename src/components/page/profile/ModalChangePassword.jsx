@@ -6,16 +6,16 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { useModal } from '../../common/ModalContext.jsx';
 import TitleWithIcon from '../../common/TitleWithIcon.jsx';
 import { useUserProfileHook } from '../../../pages/userprofile/hooks/useUserProfileHook.jsx';
-import {useProfileChangePassword} from "./hook/useProfileChangePassword.js";
+import { useProfileChangePassword } from "./hook/useProfileChangePassword.js";
 
-export default function ModalChangePassword({ isOpen, isHide}) {
+export default function ModalChangePassword({ isOpen, isHide }) {
   const {
-      currentPassword, setCurrentPassword,
-      newPassword, setNewPassword,
-      confirmPassword, setConfirmPassword,
-      showPassword, setShowPassword,
-      passwordMatchError, handleSaveChanges
-  } = useProfileChangePassword({hideModalChangePassword: isHide})
+    currentPassword, setCurrentPassword,
+    newPassword, setNewPassword,
+    confirmPassword, setConfirmPassword,
+    showPassword, setShowPassword,
+    passwordMatchError, handleSaveChanges
+  } = useProfileChangePassword({ hideModalChangePassword: isHide })
 
 
   return (
@@ -87,9 +87,9 @@ export default function ModalChangePassword({ isOpen, isHide}) {
         />
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2 }}>
-          { (passwordMatchError === '' && confirmPassword && newPassword && currentPassword) && (<Button onClick={handleSaveChanges} variant="contained" color='success' fullWidth>
+        {(passwordMatchError === '' && confirmPassword && newPassword && currentPassword) && (<Button onClick={handleSaveChanges} variant="contained" color='success' fullWidth>
           Simpan
-      </Button>)}
+        </Button>)}
       </DialogActions>
     </Dialog >
   );
