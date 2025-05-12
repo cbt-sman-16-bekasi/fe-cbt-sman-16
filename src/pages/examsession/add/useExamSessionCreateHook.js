@@ -82,6 +82,11 @@ export function useExamSessionCreateHook({ isUpdatePage = false }) {
   }, [examCode]);
 
   const submitForm = () => {
+    if (!name || !examCode || !classId || !startDate || !endDate) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       name: name,
       exam_code: examCode,
