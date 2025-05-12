@@ -61,10 +61,10 @@ export function useSchoolProfileHook() {
     }
   };
 
-  const upload = async(base64) => {
+  const upload = async (base64) => {
     const { data: logoData } = await useApi.fetch('/upload/base64', {
       method: 'POST',
-      body: JSON.stringify({file_data: base64})
+      body: JSON.stringify({ file_data: base64 })
     })
     return logoData.url
   }

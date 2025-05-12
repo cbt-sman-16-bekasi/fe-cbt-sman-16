@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useTeacherApi from "../../../utils/rest/teacher.js";
+import useApi from "../../../utils/rest/api.js";
 
 export function useUserProfileHook() {
   const { showModal, showModalChangePassword } = useModal();
@@ -62,21 +63,33 @@ export function useUserProfileHook() {
     }
   };
 
+  const upload = async (base64) => {
+    const { data: logoData } = await useApi.fetch('/upload/base64', {
+      method: 'POST',
+      body: JSON.stringify({ file_data: base64 })
+    })
+    return logoData.url
+  }
+
   const handleUpdate = async () => {
     setIsSubmitting(true);
     showLoading()
 
-    const body = {
-      name,
-      nuptk,
-      role: userRole,
-      username,
-      ...(formPassword.newPass && formPassword.confirm && formPassword.newPass === formPassword.confirm
-        ? { password: formPassword.newPass }
-        : {})
-    };
 
     try {
+      const base64PhotoProfile = photoProfile.file ? await upload(fileToBase64(photoProfile.file)) : authUser.logo;
+
+      const body = {
+        name,
+        nuptk,
+        role: userRole,
+        username,
+        ...(formPassword.newPass && formPassword.confirm && formPassword.newPass === formPassword.confirm
+          ? { password: formPassword.newPass }
+          : {}),
+        photoProfile: base64PhotoProfile
+      };
+
       const response = await useTeacherApi.modifyTeacher({ body, id: authUser?.ID });
       const { message, status } = response
       showModal(message, status);
@@ -93,6 +106,19 @@ export function useUserProfileHook() {
     setTimeout(() => {
       setShowAlert(false);
     }, 5000);
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve(null);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64 = reader.result;
+        resolve(base64);
+      };
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   const onOpenPasswordModal = () => {
