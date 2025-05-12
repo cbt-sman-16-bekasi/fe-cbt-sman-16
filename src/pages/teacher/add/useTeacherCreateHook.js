@@ -78,6 +78,11 @@ export function useTeacherCreateHook({ updatePage = false }) {
   }, [id]);
 
   const handleSubmitCreate = () => {
+    if (!nuptk || !name || !gender || !access) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       nuptk: nuptk,
       name: name,
@@ -132,6 +137,11 @@ export function useTeacherCreateHook({ updatePage = false }) {
   ];
 
   const handleSubmitTeacherClassSubject = () => {
+    if (!id || !classData || !subject) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       teacherId: parseInt(id),
       classId: classData,
