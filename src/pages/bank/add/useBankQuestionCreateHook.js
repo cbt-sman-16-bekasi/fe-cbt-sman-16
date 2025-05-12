@@ -51,6 +51,11 @@ export function useBankQuestionCreateHook({ isUpdatePage = false }) {
   }, []);
 
   const handleSubmitCreate = () => {
+    if (!bankName || !subject || !classCode || !typeQuestion) {
+      showModal('Semua Data Harus Diisi', 'warning');
+      return;
+    }
+
     const body = {
       bank_name: bankName,
       subject_code: subject,
