@@ -1,28 +1,43 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { IconButton } from "@mui/material";
+import {Chip, IconButton} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
+import useDate from "../../../hooks/useDate.js";
+import {LockOutlined, PasswordOutlined} from "@mui/icons-material";
 
 export function useAccessHook() {
   const navigate = useNavigate();
-  const { showConfirm } = useModal();
+  const { showConfirm, showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const [search, setSearch] = useState('');
   const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false)
+  const {formattedWithTime} = useDate()
+
+  const statusChip = ( {isActive} ) => {
+    return (
+      <Chip
+        label={isActive ? "Aktif" : "Tidak Aktif"}
+        color={isActive ? "success" : "default"}
+        variant={isActive ? "filled" : "outlined"}
+      />
+    );
+  }
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "nuptk", headerName: "ID", flex: 1, minWidth: 120 },
-    { field: "name", headerName: "NAMA USER", flex: 1.5, minWidth: 150 },
-    { field: "role", headerName: "ROLE", flex: 1, minWidth: 150, renderCell: (row) => row?.role ? row.role : '-' },
+    { field: "username", headerName: "USERNAME", flex: 1, minWidth: 120 },
+    { field: "name", headerName: "NAMA USER", flex: 1.5, minWidth: 150, renderCell: (row) => !row?.name ? '-' : row?.name?.toUpperCase() },
+    { field: "role_name", headerName: "ROLE", flex: 1, minWidth: 150, renderCell: (row) => row?.role_name ? row.role_name : '-' },
+    { field: "status", headerName: "STATUS ACCOUNT", flex: 1, minWidth: 150, renderCell: (row) => statusChip({isActive: row?.status || 0}) },
+    { field: "last_update", headerName: "LAST UPDATE", flex: 1, minWidth: 150, renderCell: (row) => formattedWithTime(row?.last_update) },
     {
       field: "aksi",
       headerName: "AKSI",
@@ -37,7 +52,7 @@ export function useAccessHook() {
               color: "white",
               "&:hover": { bgcolor: "darkpurple" },
             }}
-            onClick={() => handleEdit(row.ID)}
+            onClick={() => handleEdit(row.id)}
           >
             <EditIcon />
           </IconButton>
@@ -48,9 +63,9 @@ export function useAccessHook() {
               color: "white",
               "&:hover": { bgcolor: "darkred" },
             }}
-            onClick={() => handleDelete(row.ID)}
+            onClick={() => handleResetPassword(row.id)}
           >
-            <DeleteIcon />
+            <LockOutlined />
           </IconButton>
         </div>
       ),
@@ -65,30 +80,35 @@ export function useAccessHook() {
     return (
       <div>
         <p style={{ marginTop: 8, textAlign: 'center' }}>
-          Apakah kamu yakin ingin melanjutkan proses hapus <strong>Data Akses</strong> ini?
+          Apakah kamu yakin ingin melanjutkan proses <br/><strong>RESET PASSWORD</strong> pada akun ini?
         </p>
       </div>
     )
   }
 
-  const handleDelete = (id) => {
+  const handleResetPassword = (id) => {
     showConfirm(messageDelete(), async () => {
       showLoading()
-      await useApi.delete({ url: `/academic/teacher/delete/${id}` })
+      const {status, message} = await useApi.createOrModify({
+        url: `/academic/user/${id}/reset-password`,
+        method: 'POST'
+      })
       setRefreshList(!isRefreshList)
       hideLoading()
-    });
+      showModal(message, status)
+    }, 'Ya, Reset Password');
   };
 
-  const capitalize = (text) => text.toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-
-  const searchOptions = columns.slice(1, -1).map((col) => ({
-    value: col.field,
-    label: capitalize(col.headerName),
-  }));
+  const searchOptions = [
+    {
+      label: 'Nama User',
+      value: 'name'
+    },
+    {
+      label: 'Username',
+      value: 'username'
+    }
+  ]
 
   return {
     search,
