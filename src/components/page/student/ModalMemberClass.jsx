@@ -11,15 +11,17 @@ import ServerSearchAutocomplete from "../../common/ServerSearchAutocomplete.jsx"
 import UnderMaintenance from "../../common/UnderMaintenance.jsx";
 
 export default function ModalMemberClass({ open, setHide, classId }) {
-
   const {
     userRole,
     setSearch,
     search,
     searchBy, setSearchBy,
     isRefreshList, columns,
-    optionSearchStudent
-  } = useModalMemberClassHook()
+    optionSearchStudent,
+    handleAddMember,
+    selectedStudents,
+    setSelectedStudents,
+  } = useModalMemberClassHook({ classId: classId })
 
   const isMaintenance = false;
 
@@ -37,10 +39,10 @@ export default function ModalMemberClass({ open, setHide, classId }) {
               optionValue="id"
               searchKey="name"
               multiple={true}
+              value={selectedStudents}
+              onChange={setSelectedStudents}
             />
-            <Link to={`/${userRole}/data-siswa/tambah`}>
-              <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}>Tambah Anggota</Button>
-            </Link>
+            <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />} onClick={handleAddMember}>Tambah Anggota</Button>
           </Grid>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Grid container spacing={1} columns={12} sx={{
