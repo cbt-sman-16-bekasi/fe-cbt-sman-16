@@ -30,7 +30,7 @@ const UserProfile = () => {
     isEdit,
     handleEdit,
     isTeacher, setIsTeacher,
-    handleDeletePhotoProfile,
+    handleRemovePhoto,
   } = useUserProfileHook();
 
   const sizeProps = isTeacher
@@ -111,7 +111,7 @@ const UserProfile = () => {
                       variant="outlined"
                       color="error"
                       disabled={!isEdit}
-                      onClick={handleDeletePhotoProfile}
+                      onClick={handleRemovePhoto}
                     >
                       Hapus
                     </Button>
