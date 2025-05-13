@@ -1,4 +1,4 @@
-import {useParams, useSearchParams} from "react-router";
+import {useNavigate, useParams, useSearchParams} from "react-router";
 import {useModal} from "../../../../../components/common/ModalContext.jsx";
 import {useLoading} from "../../../../../components/common/LoadingProvider.jsx";
 import {useEffect, useState} from "react";
@@ -15,6 +15,7 @@ export function useExamBankQuestionHook() {
   const [selected, setSelected] = useState([]);
   const isSelected = (id) => selected.indexOf(id) !== -1;
   const [rows, setRows] = useState([])
+  const navigate = useNavigate()
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -53,6 +54,9 @@ export function useExamBankQuestionHook() {
       )
       hideLoading()
       showModal(message, status)
+      if (status === 'success') {
+        navigate(-1)
+      }
     } catch (e) {
       console.error("Error", e)
       showModal("Failed add question from 'Bank Soal'")
