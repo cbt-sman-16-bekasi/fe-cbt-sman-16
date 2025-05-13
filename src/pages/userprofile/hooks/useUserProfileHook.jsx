@@ -30,6 +30,7 @@ export function useUserProfileHook() {
       : defaultProfileImg,
     file: null,
   });
+  const [emptyPhotoProfile, setEmptyPhotoProfile] = useState(false)
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -42,6 +43,7 @@ export function useUserProfileHook() {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
+      setEmptyPhotoProfile(false)
       setName(authUser?.detail.name || '');
       setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
@@ -86,12 +88,11 @@ export function useUserProfileHook() {
     showLoading();
 
     try {
-      let url = authUser?.detail?.profile_url;
+      let url = emptyPhotoProfile ? "" : authUser?.detail?.profile_url;
 
       if (photoProfile.file) {
         const base64 = await toBase64(photoProfile.file);
-        const uploaded = await upload(base64);
-        url = uploaded;
+        url = await upload(base64);
       }
 
       const response = await useApi.createOrModify({
@@ -136,47 +137,11 @@ export function useUserProfileHook() {
 
 
   const handleRemovePhoto = async () => {
-    showLoading();
-
-    try {
-      const url = "";
-      const response = await useApi.createOrModify({
-        url: '/auth/change-profile',
-        method: 'POST',
-        body: {
-          full_name: name,
-          username: username,
-          profile_url: url,
-        }
-      });
-
-      const { message, status } = response;
-      showModal(message, status);
-
-      const updatedUser = {
-        ...authUser,
-        username,
-        detail: {
-          ...authUser.detail,
-          name,
-          profile_url: "",
-        }
-      };
-
-      setPhotoProfile({
-        preview: defaultProfileImg,
-        file: null
-      });
-
-      localStorage.setItem('authUser', JSON.stringify(updatedUser));
-      dispatch(setAuthUserActionCreator(updatedUser));
-      setIsEdit(false);
-    } catch (err) {
-      console.error(err);
-      showModal(err.message, err.status);
-    } finally {
-      hideLoading();
-    }
+    setPhotoProfile({
+      preview: defaultProfileImg,
+      file: null
+    });
+    setEmptyPhotoProfile(true)
   };
 
 
