@@ -32,7 +32,7 @@ const CustomInput = ({
           <Typography variant="body1" fontWeight="bold">
             {label}
           </Typography>
-          { subLabel && (subLabel)}
+          { subLabel && (<small style={{ color: 'gray'}}>*) {subLabel}</small>)}
         </>
       )}
       {multiple ? (<Select
