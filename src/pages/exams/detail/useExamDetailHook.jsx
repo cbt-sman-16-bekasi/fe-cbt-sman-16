@@ -32,6 +32,8 @@ export function useExamDetailHook() {
   const userRole = authUser?.role?.code.toLowerCase();
   const [isRefreshList, setRefreshList] = useState(false)
   const [openUpload, setOpenUpload] = useState(false);
+  const [masterBankData, setMasterBankData] = useState({})
+  const [detailExamData, setDetailExamData] = useState({})
 
   const handleUpload = async (file) => {
     try {
@@ -52,6 +54,16 @@ export function useExamDetailHook() {
     }
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await useApi.fetch(`/academic/bank/detail/bank/subject?subject_code=${detailExamData?.subject_code?.code}&class_code=${detailExamData?.exam_member[0]?.detail_class?.classCode}&type_question=${detailExamData.type_question}`, {
+        method: 'GET'
+      })
+      setMasterBankData(data)
+    }
+    fetchData()
+  }, [detailExamData]);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -70,15 +82,18 @@ export function useExamDetailHook() {
       setTotalScore(detailExam.total_score)
       setClassCode(detailExam.exam_member.map(a => a.detail_class.className).join(", "))
       setTypeExam(detailExam.detail_type_exam.code)
+
+      setDetailExamData(detailExam)
       hideLoading()
     }
 
     fetchData()
   }, [isRefreshList]);
+
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
     { field: "question", headerName: "SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.question }} />) },
-    { field: "score", headerName: "BOBOT SOAL", flex: 0.1, minWidth: 50 },
+    { field: "score", headerName: "BOBOT SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => detailExamData?.score_question },
     {
       field: "answer_single", headerName: "JAWABAN BENAR", flex: 0.1, minWidth: 50, renderCell: (row) => (
         <div dangerouslySetInnerHTML={{ __html: row.answer_single }} />
@@ -165,6 +180,8 @@ export function useExamDetailHook() {
     handleDownloadTemplate,
     handleUpload,
     setOpenUpload,
-    openUpload
+    openUpload,
+    masterBankData, setMasterBankData,
+    detailExamData
   }
 }
