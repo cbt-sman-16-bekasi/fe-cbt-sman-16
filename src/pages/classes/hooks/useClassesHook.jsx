@@ -100,12 +100,14 @@ export function useClassesHook() {
     });
   };
 
-  const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-
-  const searchOptions = columns.slice(1, -2).map((col) => ({
-    value: col.field,
-    label: capitalize(col.headerName),
-  }));
+  const searchOptions = [{
+    value: 'class_code',
+    label: 'Kode Kelas',
+  },
+  {
+    value: 'class_name',
+    label: 'Nama Kelas'
+  }];
 
   return {
     search,
