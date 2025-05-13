@@ -78,7 +78,7 @@ export function useTeacherCreateHook({ updatePage = false }) {
   }, [id]);
 
   const handleSubmitCreate = () => {
-    if (!nuptk || !name || !gender || !access) {
+    if (!nuptk || !name || !gender) {
       showModal('Semua Data Harus Diisi', 'warning');
       return;
     }
