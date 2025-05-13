@@ -1,9 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import { Alert, Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, CardContent, Stack, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import ErrorIcon from '@mui/icons-material/Error';
 import { useUserProfileHook } from "./hooks/useUserProfileHook.jsx";
 import { useEffect } from "react";
 import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
@@ -15,13 +13,10 @@ const UserProfile = () => {
   const {
     authUser,
     name, setName,
-    nuptk, setNuptk,
+    setNuptk,
     photoProfile,
     username, setUsername,
     userRole, setUserRole,
-    showAlert,
-    alertMessage,
-    alertSeverity,
     isSubmitting,
     handleFileChange,
     handleUpdate,

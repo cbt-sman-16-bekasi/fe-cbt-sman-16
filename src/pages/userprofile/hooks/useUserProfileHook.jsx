@@ -23,6 +23,7 @@ export function useUserProfileHook() {
   const isPasswordValid = !isPasswordBeingChanged || (formPassword.newPass === formPassword.confirm);
   const [modalPassword, setModalPassword] = useState(false);
 
+  const [isPhotoDeleted, setIsPhotoDeleted] = useState(false);
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
     preview: authUser?.detail?.profile_url
@@ -101,8 +102,8 @@ export function useUserProfileHook() {
         body: {
           full_name: name,
           username: username,
-          profile_url: url
-        }
+          profile_url: url,
+        },
       });
 
       const { message, status } = response;
@@ -143,7 +144,6 @@ export function useUserProfileHook() {
     });
     setEmptyPhotoProfile(true)
   };
-
 
   const onChangePasswordModal = () => {
     setModalPassword(!modalPassword)
