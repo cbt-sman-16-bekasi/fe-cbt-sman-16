@@ -109,25 +109,27 @@ export function useUserProfileHook() {
       const { message, status } = response;
       showModal(message, status);
 
-      const updatedUser = {
-        ...authUser,
-        username,
-        detail: {
-          ...authUser.detail,
-          name,
-          profile_url: url,
-        },
-      };
+      if (status === 'success') {
+        const updatedUser = {
+          ...authUser,
+          username,
+          detail: {
+            ...authUser.detail,
+            name,
+            profile_url: url,
+          },
+        };
 
-      localStorage.setItem('authUser', JSON.stringify(updatedUser));
-      dispatch(setAuthUserActionCreator(updatedUser));
+        localStorage.setItem('authUser', JSON.stringify(updatedUser));
+        dispatch(setAuthUserActionCreator(updatedUser));
 
-      setPhotoProfile({
-        preview: url || defaultProfileImg,
-        file: null,
-      });
+        setPhotoProfile({
+          preview: url || defaultProfileImg,
+          file: null,
+        });
 
-      setIsEdit(false);
+        setIsEdit(false);
+      }
     } catch (err) {
       console.error(err);
       showModal(err.message, err.status);
