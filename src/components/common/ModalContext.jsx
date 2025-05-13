@@ -10,6 +10,7 @@ export const ModalProvider = ({ children }) => {
   const [message, setMessage] = useState("");
   const [type, setType] = useState("success"); // success, error, warning | state untuk ModalPopUp
   const [onConfirm, setOnConfirm] = useState(null);
+  const [confirmText, setConfirmText] = useState('Ya, Hapus')
 
   const showModal = (message, type = "success") => {
     setMessage(message);
@@ -17,17 +18,18 @@ export const ModalProvider = ({ children }) => {
     setOpen(true);
   };
 
-  const showConfirm = (message, callback) => {
+  const showConfirm = (message, callback, confirmText = 'Ya, Hapus') => {
     setMessage(message);
     setType("confirm");
     setOnConfirm(() => callback);
     setOpen(true);
+    setConfirmText(confirmText)
   };
 
   const hideModal = () => setOpen(false);
 
   return (
-    <ModalContext.Provider value={{ open, message, type, showModal, hideModal, showConfirm, onConfirm }}>
+    <ModalContext.Provider value={{ open, message, type, showModal, hideModal, showConfirm, onConfirm, confirmText }}>
       {children}
     </ModalContext.Provider>
   );

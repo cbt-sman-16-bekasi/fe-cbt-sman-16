@@ -9,36 +9,35 @@ export function useAccessCreateHook({ updatePage = false }) {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [access, setAccess] = useState('');
-  const [optionsAccess, setoptionsAccess] = useState('');
+  const [status, setStatus] = useState(1)
 
   const { id } = useParams();
   const { showLoading, hideLoading } = useLoading();
   const { showModal } = useModal();
 
+  const statusOption = [
+    {
+      label: 'Aktif',
+      value: 1
+    },
+    {
+      label: 'Tidak Aktif',
+      value: 0
+    }
+  ]
+
   useEffect(() => {
     async function fetchData() {
-      showLoading();
-      const { data } = await useMasterController.allUserRole();
-      setoptionsAccess(
-        data
-          ?.filter((data) => data.code !== 'STUDENT' && data.code !== 'TEACHER')
-          .map((s) => {
-            return { label: s.name, value: s.code };
-          })
-      );
-
       if (updatePage) {
-        const { data: detailExam } = await useAccessApi.detailAccess({
+        showLoading();
+        const { data: detailUser } = await useAccessApi.detailAccess({
           id: id,
         });
-        setName(detailExam.name);
-        setUsername(detailExam.username);
-        setPassword('****');
-        setAccess(detailExam.role.key);
+        setName(detailUser.name);
+        setUsername(detailUser.username);
+        setStatus(detailUser.status)
+        hideLoading();
       }
-      hideLoading();
     }
     fetchData();
   }, []);
@@ -49,26 +48,27 @@ export function useAccessCreateHook({ updatePage = false }) {
       return;
     }
 
-    const body = {
+    let body = {
       name: name,
-      password: password,
-      role: access,
       username: username,
+      status: status
     };
+
+    if (!updatePage) {
+      body['role'] = 2
+    }
 
     showLoading();
     useAccessApi
       .modifyAccess({ body: body, id: id, isCreate: !updatePage })
       .then((r) => {
         const { message, status } = r;
-        setTimeout(() => {
-          hideLoading();
-          showModal(message, status);
-          if (status === 'success') {
-            resetForm();
-            navigate(-1);
-          }
-        }, 1500);
+        hideLoading();
+        showModal(message, status);
+        if (status === 'success') {
+          resetForm();
+          navigate(-1);
+        }
       })
       .catch((e) => {
         console.log(e.data);
@@ -85,8 +85,6 @@ export function useAccessCreateHook({ updatePage = false }) {
   const resetForm = () => {
     setName('');
     setUsername('');
-    setPassword('');
-    setAccess('');
   };
 
   return {
@@ -94,12 +92,9 @@ export function useAccessCreateHook({ updatePage = false }) {
     setName,
     username,
     setUsername,
-    password,
-    setPassword,
-    access,
-    setAccess,
-    optionsAccess,
     handleSubmitCreate,
     resetForm,
+    status, setStatus,
+    statusOption
   };
 }
