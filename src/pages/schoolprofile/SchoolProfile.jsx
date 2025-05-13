@@ -27,7 +27,7 @@ const UserProfile = () => {
     telp, setTelp,
     email, setEmail,
     address, setAddress,
-    logo, setLogo,
+    logo,
     banner, setBanner,
 
     showLoading, hideLoading,
@@ -37,7 +37,7 @@ const UserProfile = () => {
     handleFileChange,
     handleSubmit,
     handleReset,
-    handleDeleteLogo,
+    handleRemoveLogo,
   } = useSchoolProfileHook()
 
   useEffect(() => {
@@ -56,26 +56,26 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (schoolData) {
-      setSchoolName(schoolData.school_name || '');
-      setJenjang(schoolData.level_of_education || '');
-      setNss(schoolData.nss || '');
-      setNpsn(schoolData.npsn || '');
-      setTelp(schoolData.phone || '');
-      setEmail(schoolData.email || '');
-      setAddress(schoolData.address || '');
-      setPrincipal(schoolData.principal_name || '');
-      setVicePincipal(schoolData.vice_principal_name || '');
-      setNipPrincipal(schoolData.principal_nip || '')
-      setNipVicePrincipal(schoolData.vice_principal_nip || '');
+      setSchoolName(schoolData?.school_name || '');
+      setJenjang(schoolData?.level_of_education || '');
+      setNss(schoolData?.nss || '');
+      setNpsn(schoolData?.npsn || '');
+      setTelp(schoolData?.phone || '');
+      setEmail(schoolData?.email || '');
+      setAddress(schoolData?.address || '');
+      setPrincipal(schoolData?.principal_name || '');
+      setVicePincipal(schoolData?.vice_principal_name || '');
+      setNipPrincipal(schoolData?.principal_nip || '')
+      setNipVicePrincipal(schoolData?.vice_principal_nip || '');
 
-      setLogo({
-        preview: `${schoolData.logo || ''}`,
-        file: null
-      });
+      // setLogo({
+      //   preview: schoolData?.logo,
+      //   file: null
+      // });
 
 
       setBanner({
-        preview: `${schoolData.banner || ''}`,
+        preview: schoolData?.banner,
         file: null
       });
 
@@ -131,7 +131,7 @@ const UserProfile = () => {
                   />
                 </Button>
 
-                <Button variant="outlined" color="error" disabled={!isEdit} onClick={handleDeleteLogo}>
+                <Button variant="outlined" color="error" disabled={!isEdit} onClick={handleRemoveLogo}>
                   Hapus
                 </Button>
 
