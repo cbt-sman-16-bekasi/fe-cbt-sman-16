@@ -37,6 +37,7 @@ const UserProfile = () => {
     handleFileChange,
     handleSubmit,
     handleReset,
+    handleDeleteLogo,
   } = useSchoolProfileHook()
 
   useEffect(() => {
@@ -130,7 +131,7 @@ const UserProfile = () => {
                   />
                 </Button>
 
-                <Button variant="outlined" color="error" disabled={!isEdit}>
+                <Button variant="outlined" color="error" disabled={!isEdit} onClick={handleDeleteLogo}>
                   Hapus
                 </Button>
 
