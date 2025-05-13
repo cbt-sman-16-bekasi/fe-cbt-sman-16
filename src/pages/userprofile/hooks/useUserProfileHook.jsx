@@ -23,7 +23,6 @@ export function useUserProfileHook() {
   const isPasswordValid = !isPasswordBeingChanged || (formPassword.newPass === formPassword.confirm);
   const [modalPassword, setModalPassword] = useState(false);
 
-  const [isPhotoDeleted, setIsPhotoDeleted] = useState(false);
   const defaultProfileImg = "/default-user.png";
   const [photoProfile, setPhotoProfile] = useState({
     preview: authUser?.detail?.profile_url
@@ -86,18 +85,13 @@ export function useUserProfileHook() {
   const handleUpdate = async () => {
     showLoading();
 
-    let url = authUser?.detail?.profile_url;
-
     try {
-      // jika file baru diunggah
+      let url = authUser?.detail?.profile_url;
+
       if (photoProfile.file) {
         const base64 = await toBase64(photoProfile.file);
-        url = await upload(base64);
-      }
-
-      // jika user menghapus foto
-      if (isPhotoDeleted && !photoProfile.file) {
-        url = null; // atau '' jika backend lebih suka kosong
+        const uploaded = await upload(base64);
+        url = uploaded;
       }
 
       const response = await useApi.createOrModify({
@@ -106,42 +100,85 @@ export function useUserProfileHook() {
         body: {
           full_name: name,
           username: username,
-          profile_url: url,
-        },
+          profile_url: url
+        }
       });
 
       const { message, status } = response;
       showModal(message, status);
 
-      let userData = {
+      const updatedUser = {
         ...authUser,
+        username,
         detail: {
           ...authUser.detail,
-          name: name,
+          name,
           profile_url: url,
         },
-        username: username,
       };
-      localStorage.setItem('authUser', JSON.stringify(userData));
-      dispatch(setAuthUserActionCreator(userData));
+
+      localStorage.setItem('authUser', JSON.stringify(updatedUser));
+      dispatch(setAuthUserActionCreator(updatedUser));
+
+      setPhotoProfile({
+        preview: url || defaultProfileImg,
+        file: null,
+      });
+
+      setIsEdit(false);
     } catch (err) {
       console.error(err);
       showModal(err.message, err.status);
     } finally {
       hideLoading();
-      setIsEdit(false);
-      setIsPhotoDeleted(false);
     }
   };
 
 
-  const handleDeletePhotoProfile = () => {
-    setPhotoProfile({
-      preview: defaultProfileImg,
-      file: null,
-    });
-    setIsPhotoDeleted(true);
+  const handleRemovePhoto = async () => {
+    showLoading();
+
+    try {
+      const url = "";
+      const response = await useApi.createOrModify({
+        url: '/auth/change-profile',
+        method: 'POST',
+        body: {
+          full_name: name,
+          username: username,
+          profile_url: url,
+        }
+      });
+
+      const { message, status } = response;
+      showModal(message, status);
+
+      const updatedUser = {
+        ...authUser,
+        username,
+        detail: {
+          ...authUser.detail,
+          name,
+          profile_url: "",
+        }
+      };
+
+      setPhotoProfile({
+        preview: defaultProfileImg,
+        file: null
+      });
+
+      localStorage.setItem('authUser', JSON.stringify(updatedUser));
+      dispatch(setAuthUserActionCreator(updatedUser));
+      setIsEdit(false);
+    } catch (err) {
+      console.error(err);
+      showModal(err.message, err.status);
+    } finally {
+      hideLoading();
+    }
   };
+
 
   const onChangePasswordModal = () => {
     setModalPassword(!modalPassword)
@@ -170,7 +207,7 @@ export function useUserProfileHook() {
     handleUpdate,
     onChangePasswordModal,
     modalPassword,
-    handleDeletePhotoProfile,
+    handleRemovePhoto,
   }
 
 }
