@@ -31,6 +31,7 @@ export function useUserProfileHook() {
       : defaultProfileImg,
     file: null,
   });
+  const [emptyPhotoProfile, setEmptyPhotoProfile] = useState(false)
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -43,6 +44,7 @@ export function useUserProfileHook() {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
+      setEmptyPhotoProfile(false)
       setName(authUser?.detail.name || '');
       setNuptk(authUser?.detail.nuptk || '');
       setPhotoProfile({
@@ -86,18 +88,12 @@ export function useUserProfileHook() {
   const handleUpdate = async () => {
     showLoading();
 
-    let url = authUser?.detail?.profile_url;
-
     try {
-      // jika file baru diunggah
+      let url = emptyPhotoProfile ? "" : authUser?.detail?.profile_url;
+
       if (photoProfile.file) {
         const base64 = await toBase64(photoProfile.file);
         url = await upload(base64);
-      }
-
-      // jika user menghapus foto
-      if (isPhotoDeleted && !photoProfile.file) {
-        url = null; // atau '' jika backend lebih suka kosong
       }
 
       const response = await useApi.createOrModify({
@@ -113,34 +109,42 @@ export function useUserProfileHook() {
       const { message, status } = response;
       showModal(message, status);
 
-      let userData = {
-        ...authUser,
-        detail: {
-          ...authUser.detail,
-          name: name,
-          profile_url: url,
-        },
-        username: username,
-      };
-      localStorage.setItem('authUser', JSON.stringify(userData));
-      dispatch(setAuthUserActionCreator(userData));
+      if (status === 'success') {
+        const updatedUser = {
+          ...authUser,
+          username,
+          detail: {
+            ...authUser.detail,
+            name,
+            profile_url: url,
+          },
+        };
+
+        localStorage.setItem('authUser', JSON.stringify(updatedUser));
+        dispatch(setAuthUserActionCreator(updatedUser));
+
+        setPhotoProfile({
+          preview: url || defaultProfileImg,
+          file: null,
+        });
+
+        setIsEdit(false);
+      }
     } catch (err) {
       console.error(err);
       showModal(err.message, err.status);
     } finally {
       hideLoading();
-      setIsEdit(false);
-      setIsPhotoDeleted(false);
     }
   };
 
 
-  const handleDeletePhotoProfile = () => {
+  const handleRemovePhoto = async () => {
     setPhotoProfile({
       preview: defaultProfileImg,
-      file: null,
+      file: null
     });
-    setIsPhotoDeleted(true);
+    setEmptyPhotoProfile(true)
   };
 
   const onChangePasswordModal = () => {
@@ -170,7 +174,7 @@ export function useUserProfileHook() {
     handleUpdate,
     onChangePasswordModal,
     modalPassword,
-    handleDeletePhotoProfile,
+    handleRemovePhoto,
   }
 
 }
