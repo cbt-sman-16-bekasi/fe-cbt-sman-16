@@ -31,6 +31,7 @@ import UserProfile from "./userprofile/UserProfile.jsx";
 import SchoolProfile from './schoolprofile/SchoolProfile.jsx';
 import DashboardPage from "./dashboard/DashboardPage.jsx";
 import ReportPage from "./report/ReportPage.jsx";
+import ExamBankQuestionPage from "./exams/detail/bank/ExamBankQuestionPage.jsx";
 
 function AdminPage({ role }) {
   return (
@@ -74,6 +75,7 @@ function AdminPage({ role }) {
       <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true} />} />
       <Route path="ujian/:id/detail" element={<ExamDetailPage />} />
       <Route path="ujian/:id/detail/question/create" element={<ExamCreateQuestionPage />} />
+      <Route path="ujian/:id/detail/question/bank" element={<ExamBankQuestionPage />} />
       <Route path="ujian/:id/detail/question/:questionId/edit" element={<ExamCreateQuestionPage isUpdatePage={true} />} />
       <Route path="sesi-ujian" element={<ExamSessionListPage />} />
       <Route path="sesi-ujian/tambah" element={<ExamSessionCreatePage />} />
