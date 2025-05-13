@@ -19,7 +19,7 @@ const useAccessApi = (() => {
 
   const modifyAccess = async ({ body, id = null, isCreate = false }) => {
     return await useApi.fetch(
-      isCreate ? '/academic/teacher/create' : `/academic/teacher/update/${id}`,
+      isCreate ? '/academic/user/create' : `/academic/user/${id}/update`,
       {
         method: isCreate ? 'POST' : 'PUT',
         headers: { 'Content-Type': 'application/json' },
