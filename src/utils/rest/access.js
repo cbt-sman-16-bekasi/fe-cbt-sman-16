@@ -29,7 +29,7 @@ const useAccessApi = (() => {
   };
 
   const getDetail = async ({ id } = {}) => {
-    return await useApi.fetch(`/academic/teacher/detail/${id}`, {
+    return await useApi.fetch(`/academic/user/${id}/detail`, {
       method: 'GET',
     });
   };
