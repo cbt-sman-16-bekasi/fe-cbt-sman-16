@@ -4,7 +4,7 @@ import { useDebounce } from "../../hooks/useDebounce.js";
 import Box from "@mui/material/Box";
 import useApi from "../../utils/rest/api.js";
 
-const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey, setOptionData, optionLabel, optionValue }) => {
+const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey, setOptionData, optionLabel, optionValue, value, onChange }) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -25,7 +25,6 @@ const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey
     }
   };
 
-
   useEffect(() => {
     fetchOptions(inputValue)
   }, [searchDebounce]);
@@ -35,8 +34,14 @@ const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey
       multiple={multiple}
       options={options}
       getOptionLabel={(option) => option.label || ''}
-      value={selectedOptions}
-      onChange={(event, newValue) => setSelectedOptions(newValue)}
+      value={value !== undefined ? value : selectedOptions}
+      onChange={(event, newValue) => {
+        if (onChange) {
+          onChange(newValue);
+        } else {
+          setSelectedOptions(newValue);
+        }
+      }}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
       loading={loading}
