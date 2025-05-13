@@ -35,6 +35,8 @@ const ExamDetailPage = () => {
     handleDownloadTemplate,
     handleUpload,
     setOpenUpload,
+    masterBankData,
+    detailExamData,
     openUpload
   } = useExamDetailHook()
   return (
@@ -53,6 +55,7 @@ const ExamDetailPage = () => {
         <DetailItem label="Mata Pelajaran" value={subject} />
         <DetailItem label="Kelas" value={classCode} />
         <DetailItem label="Durasi (Menit)" value={duration} />
+        <DetailItem label="Jenis Soal" value={detailExamData?.type_question?.replaceAll("_", " ")} />
         <DetailItem label="Jumlah Soal" value={totalQuestion} />
         <DetailItem label="Total Nilai" value={totalScore} />
       </BasicCard>
@@ -60,11 +63,11 @@ const ExamDetailPage = () => {
       <TitleWithIcon icon={<DocumentScannerSharp sx={{ color: 'white' }} />} text="Soal Ujian" iconBackground="red" />
       <BasicCard>
         <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
-          <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+          <Grid size={{ lg: 4, md: 6, sm: 6 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/create?examCode=${examCode}&typeQuestion=${typeQuestion}`)} startIcon={<AddBoxOutlinedIcon />}>Tambah Soal</Button>
-            <Button fullWidth variant="contained" color='error' disabled={true} startIcon={<AddToDriveRounded />}>Bank Soal</Button>
+            <Button fullWidth variant="contained" color='error' disabled={!masterBankData?.code} onClick={() => navigate(`/${userRole}/ujian/${id}/detail/question/bank?examCode=${examCode}&typeQuestion=${typeQuestion}&masterBank=${masterBankData?.code}`)} startIcon={<AddToDriveRounded />}>Bank Soal</Button>
           </Grid>
-          <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+          <Grid size={{ lg: 4, md: 6, sm: 6 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
             <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>

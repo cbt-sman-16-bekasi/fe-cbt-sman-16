@@ -49,7 +49,6 @@ export function useExamCreateQuestionHook({ updatePage = false }) {
       showLoading();
       if (updatePage) {
         const { data: detailQuestion } = await useExamApi.question({ id: id });
-        console.log(detailQuestion);
         setQuestion(detailQuestion.question);
         setOptionA(detailQuestion.option_a);
         setOptionB(detailQuestion.option_b);
@@ -68,13 +67,7 @@ export function useExamCreateQuestionHook({ updatePage = false }) {
     if (
       !answer ||
       !examCode ||
-      !optionA ||
-      !optionB ||
-      !optionC ||
-      !optionD ||
-      !optionE ||
-      !question ||
-      !score
+      !question
     ) {
       showModal('Semua Data Harus Diisi', 'warning');
       return;

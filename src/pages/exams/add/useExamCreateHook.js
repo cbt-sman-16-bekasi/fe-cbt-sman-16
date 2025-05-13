@@ -89,7 +89,7 @@ export function useExamCreateHook({ updatePage = false }) {
         setTypeQuestion(detailExam.type_question);
         setClassCode(detailExam.exam_member.map((a) => a.class));
         setTypeExam(detailExam.detail_type_exam.code);
-        setScore(detailExam.total_score);
+        setScore(detailExam.score_question || 0);
       }
       hideLoading();
     }
@@ -124,23 +124,6 @@ export function useExamCreateHook({ updatePage = false }) {
   }, [subject]);
 
   const handleSubmitCreate = () => {
-    if (
-      !classCode ||
-      !description ||
-      !duration ||
-      !name ||
-      !randomAnswer ||
-      !randomQuestion ||
-      !showResult ||
-      !subject ||
-      !typeExam ||
-      !typeQuestion ||
-      !score
-    ) {
-      showModal('Semua Data Harus Diisi', 'warning');
-      return;
-    }
-
     const body = {
       class_id: classCode,
       description: description,
