@@ -80,13 +80,7 @@ export function useBankCreateQuestionHook({ updatePage = false }) {
     if (
       !answer ||
       !examCode ||
-      !optionA ||
-      !optionB ||
-      !optionC ||
-      !optionD ||
-      !optionE ||
-      !question ||
-      !score
+      !question
     ) {
       showModal('Semua Data Harus Diisi', 'warning');
       return;
