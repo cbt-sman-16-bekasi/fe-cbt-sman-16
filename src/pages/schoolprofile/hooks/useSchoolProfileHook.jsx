@@ -6,13 +6,14 @@ import { asyncUpdateSchool } from "../../../states/school/action.js";
 import useApi from "../../../utils/rest/api.js";
 
 export function useSchoolProfileHook() {
-  const { showLoading, hideLoading } = useLoading();
-  const [authUser, setAuthUser] = useState([]);
   const dispatch = useDispatch()
-
   const { showModal } = useModal();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { showLoading, hideLoading } = useLoading();
+  const schoolData = useSelector((state) => state.school.schoolInfo)
+
+  const [authUser, setAuthUser] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [schoolName, setSchoolName] = useState('')
   const [jenjang, setJenjang] = useState('')
@@ -26,36 +27,37 @@ export function useSchoolProfileHook() {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
 
-  const [logo, setLogo] = useState({ preview: '', file: null });
+  const defaultLogo = "/logo-default.png";
+  const [logo, setLogo] = useState({ preview: schoolData?.logo ? schoolData?.logo : defaultLogo, file: null });
   const [banner, setBanner] = useState({ preview: '', file: null });
+  const [emptyPhotoProfile, setEmptyPhotoProfile] = useState(false)
 
   const [schoolCode, setSchoolCode] = useState();
-  const schoolData = useSelector((state) => state.school.schoolInfo)
 
   const handleEdit = ({ isCancel = false }) => {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
-      setSchoolName(schoolData.school_name || '');
-      setJenjang(schoolData.level_of_education || '');
-      setNss(schoolData.nss || '');
-      setNpsn(schoolData.npsn || '');
-      setTelp(schoolData.phone || '');
-      setEmail(schoolData.email || '');
-      setAddress(schoolData.address || '');
-      setPrincipal(schoolData.principal_name || '');
-      setVicePincipal(schoolData.vice_principal_name || '');
-      setNipPrincipal(schoolData.principal_nip || '')
-      setNipVicePrincipal(schoolData.vice_principal_nip || '');
+      setEmptyPhotoProfile(false)
+      setSchoolName(schoolData?.school_name || '');
+      setJenjang(schoolData?.level_of_education || '');
+      setNss(schoolData?.nss || '');
+      setNpsn(schoolData?.npsn || '');
+      setTelp(schoolData?.phone || '');
+      setEmail(schoolData?.email || '');
+      setAddress(schoolData?.address || '');
+      setPrincipal(schoolData?.principal_name || '');
+      setVicePincipal(schoolData?.vice_principal_name || '');
+      setNipPrincipal(schoolData?.principal_nip || '')
+      setNipVicePrincipal(schoolData?.vice_principal_nip || '');
 
       setLogo({
-        preview: `${schoolData.logo || ''}`,
+        preview: schoolData?.logo ? schoolData?.logo : defaultLogo,
         file: null
       });
 
-
       setBanner({
-        preview: `${schoolData.banner || ''}`,
+        preview: schoolData?.banner,
         file: null
       });
     }
@@ -69,11 +71,34 @@ export function useSchoolProfileHook() {
     return logoData.url
   }
 
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); // baca file sebagai DataURL (Base64)
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handleRemoveLogo = async () => {
+    setLogo({
+      preview: defaultLogo,
+      file: null
+    });
+    setEmptyPhotoProfile(true)
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     try {
-      const base64Logo = logo.file ? await upload(fileToBase64(logo.file)) : schoolData.logo;
+      let urlLogo = emptyPhotoProfile ? "" : authUser?.detail?.profile_url;
+
+      if (logo.file) {
+        const base64 = await toBase64(logo.file);
+        urlLogo = await upload(base64);
+      }
+
+      // const base64Logo = logo.file ? await upload(fileToBase64(logo.file)) : schoolData.logo;
       const base64Banner = banner.file ? await upload(fileToBase64(banner.file)) : schoolData.banner;
 
       const payload = {
@@ -85,7 +110,7 @@ export function useSchoolProfileHook() {
         phone: telp,
         email,
         address,
-        logo: base64Logo || '',
+        logo: urlLogo,
         banner: base64Banner || '',
         principal_name: principal,
         principal_nip: nipPrincipal,
@@ -93,8 +118,15 @@ export function useSchoolProfileHook() {
         vice_principal_nip: nipVicePrincipal
       };
 
-      await dispatch(asyncUpdateSchool(payload));
+      dispatch(asyncUpdateSchool(payload));
       showModal("Berhasil meperbarui data sekolah", 'success');
+
+      setLogo({
+        preview: urlLogo || defaultLogo,
+        file: null,
+      });
+
+      setIsEdit(false);
     } catch (err) {
       console.error("ERROR HERE", err);
       showModal(err.message, err.status);
@@ -102,14 +134,6 @@ export function useSchoolProfileHook() {
       setIsSubmitting(false);
     }
 
-  };
-
-  const handleDeleteLogo = () => {
-    const initialLogo = schoolData?.logo || '';
-    setLogo({
-      preview: initialLogo,
-      file: null,
-    });
   };
 
   const handleReset = () => {
@@ -185,7 +209,7 @@ export function useSchoolProfileHook() {
     handleFileChange,
     handleSubmit,
     handleReset,
-    handleDeleteLogo,
+    handleRemoveLogo,
   }
 
 }
