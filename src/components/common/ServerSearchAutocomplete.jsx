@@ -14,9 +14,41 @@ const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey
   // Function untuk fetch ke server
   const fetchOptions = async (search) => {
     setLoading(true);
+
+    const isSearch = search.trim() !== '';
+    const size = isSearch ? 200 : 10;
+    let page = 1;
+    let foundRecords = [];
+    let totalPages = 1;
+
     try {
-      const { data } = await useApi.fetch(`${url}?${searchKey}=${search}`)
-      setOptions(data.records.map(r => { return { label: r[optionLabel].toUpperCase(), value: r[optionValue] } }));
+      while (page <= totalPages) {
+        const query = `${url}?search.key=${searchKey}&search.value=${search}&page=${page}&size=${size}`;
+        const { data } = await useApi.fetch(query);
+
+        totalPages = data.totalPage;
+
+        const matched = isSearch
+          ? data.records.filter(r =>
+            r[optionLabel].toLowerCase().includes(search.toLowerCase())
+          )
+          : data.records;
+
+        if (matched.length > 0) {
+          foundRecords = matched;
+          break;
+        }
+
+        if (!isSearch) break;
+        page++;
+      }
+
+      setOptions(
+        foundRecords.map(r => ({
+          label: r[optionLabel].toUpperCase(),
+          value: r[optionValue],
+        }))
+      );
     } catch (error) {
       console.error('Fetch error:', error);
       setOptions([]);
@@ -24,6 +56,7 @@ const ServerSearchAutocomplete = ({ multiple = false, label = '', url, searchKey
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchOptions(inputValue)
