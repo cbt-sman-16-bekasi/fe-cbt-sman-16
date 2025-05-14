@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
-import {Button, Card, CardContent, Dialog, DialogActions, IconButton, Stack} from "@mui/material";
+import { Button, Card, CardContent, Dialog, DialogActions, IconButton, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
 import {
@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
-import {BookMarkedIcon} from "lucide-react";
+import { BookMarkedIcon } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export function TeacherCreate({ isUpdatePage = false }) {
@@ -95,13 +95,13 @@ export function TeacherCreate({ isUpdatePage = false }) {
         </CardContent>
       </Card>
 
-      { isUpdatePage && (
+      {isUpdatePage && (
         <>
           <TitleWithIcon icon={<MenuBookRounded sx={{ color: 'white' }} />} text={'Mata Pelajaran dan Kelas'} iconBackground="gray" />
           <BasicCard>
             <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
-              <Grid size={{ lg: 2 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-                <Button fullWidth variant="contained" color='cbtPrimary' startIcon={<AddBoxOutlinedIcon/>} onClick={() => setShowAddSubject(true)}>Tambah Mata Pelajaran</Button>
+              <Grid size={{ lg: 2 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+                <Button fullWidth variant="contained" color='cbtPrimary' startIcon={<AddBoxOutlinedIcon />} onClick={() => setShowAddSubject(true)}>Tambah Mata Pelajaran</Button>
               </Grid>
             </Grid>
             <Grid container spacing={1} columns={12} sx={{
@@ -125,15 +125,15 @@ export function TeacherCreate({ isUpdatePage = false }) {
             <Stack sx={{ display: 'flex', alignItems: 'start', justifyContent: 'center', gap: 1, p: 2 }}>
               <TitleWithIcon icon={<BookMarkedIcon sx={{ color: 'white' }} />} text='Mata Pelajaran & Kelas' iconBackground="white" />
             </Stack>
-            <Grid container sx={{ p: 2, display: 'flex',  alignItems: 'start', justifyContent: 'left', gap: 1 }}>
+            <Grid container sx={{ p: 2, display: 'flex', alignItems: 'start', justifyContent: 'left', gap: 1 }}>
               <CustomInput label="Mata Pelajaran" fullWidth options={optionsSubject}
-                           type="text" value={subject} onChange={(c) => setSubject(c.target.value)}
-                           sx={{ width: '100% !important' }}
-                           placeholder="Mata Pelajaran" />
+                type="text" value={subject} onChange={(c) => setSubject(c.target.value)}
+                sx={{ width: '100% !important' }}
+                placeholder="Mata Pelajaran" />
               <CustomInput label="Kelas" fullWidth options={optionClass} multiple
-                           type="text" value={classData} onChange={(c) => setClassData(c.target.value)}
-                           sx={{ width: '100% !important' }}
-                           placeholder="Kelas" />
+                type="text" value={classData} onChange={(c) => setClassData(c.target.value)}
+                sx={{ width: '100% !important' }}
+                placeholder="Kelas" />
             </Grid>
 
             <DialogActions sx={{ justifyContent: 'end', mb: 2 }}>

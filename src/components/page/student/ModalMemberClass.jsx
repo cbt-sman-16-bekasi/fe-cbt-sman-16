@@ -11,15 +11,17 @@ import ServerSearchAutocomplete from "../../common/ServerSearchAutocomplete.jsx"
 import UnderMaintenance from "../../common/UnderMaintenance.jsx";
 
 export default function ModalMemberClass({ open, setHide, classId }) {
-
   const {
     userRole,
     setSearch,
     search,
     searchBy, setSearchBy,
     isRefreshList, columns,
-    optionSearchStudent
-  } = useModalMemberClassHook()
+    optionSearchStudent,
+    handleAddMember,
+    selectedStudents,
+    setSelectedStudents,
+  } = useModalMemberClassHook({ classId: classId })
 
   const isMaintenance = false;
 
@@ -30,18 +32,19 @@ export default function ModalMemberClass({ open, setHide, classId }) {
       </Grid>
       {!isMaintenance && (
         <>
-          <Grid sx={{ display: "flex", alignItems: 'center', justifyContent: "space-between", p: 2, width: '100%' }}>
+          <Grid sx={{ display: "flex", flexDirection: 'column', gap: '10px', alignItems: 'end', justifyContent: "space-between", py: 2, px:4, width: '100%' }}>
             <ServerSearchAutocomplete
               url="/academic/student/all"
               optionLabel="name"
               optionValue="id"
               searchKey="name"
               multiple={true}
+              value={selectedStudents}
+              onChange={setSelectedStudents}
             />
-            <Link to={`/${userRole}/data-siswa/tambah`}>
-              <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}>Tambah Anggota</Button>
-            </Link>
+            <Button disabled={selectedStudents?.length > 4} variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />} onClick={handleAddMember}>Tambah Anggota</Button>
           </Grid>
+          <hr/>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Grid container spacing={1} columns={12} sx={{
               '--Grid-borderWidth': '1px',

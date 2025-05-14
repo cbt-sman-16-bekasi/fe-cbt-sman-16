@@ -6,14 +6,15 @@ import { useModal } from '../../../common/ModalContext';
 import { useLoading } from '../../../common/LoadingProvider';
 import useApi from '../../../../utils/rest/api';
 
-export function useModalMemberClassHook() {
+export function useModalMemberClassHook({ classId }) {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
-  const { showConfirm } = useModal();
+  const { showConfirm, showModal } = useModal();
   const { showLoading, hideLoading } = useLoading();
   const [search, setSearch] = useState('');
   const [searchBy, setSearchBy] = useState('');
   const [isRefreshList, setRefreshList] = useState(false);
+  const [selectedStudents, setSelectedStudents] = useState([]);
 
   const columns = [
     { field: 'no', headerName: 'NO', flex: 0.1, minWidth: 50 },
@@ -88,6 +89,39 @@ export function useModalMemberClassHook() {
     });
   };
 
+  const handleAddMember = async () => {
+    if (!selectedStudents || selectedStudents.length === 0) {
+      showModal("Tidak ada siswa yang dipilih", "error");
+      return;
+    }
+
+    showLoading();
+    try {
+      // Pastikan semua ID bertipe integer
+      const studentIds = selectedStudents.map(student => parseInt(student.value, 10));
+      const classIdInt = parseInt(classId, 10);
+
+      const response = await useApi.fetch('/academic/class/member/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          class_id: classIdInt,
+          student_id: studentIds,
+        }),
+      });
+
+      const { message, status } = response;
+      showModal(message, status);
+      setSelectedStudents([]);
+      setRefreshList(!isRefreshList);
+    } catch (err) {
+      console.error(err);
+      showModal(err.message, "error");
+    } finally {
+      hideLoading();
+    }
+  };
+
   const optionSearchStudent = [
     { label: 'Nama Siswa', value: 'name' },
     { label: 'NISN', value: 'nisn' },
@@ -103,5 +137,8 @@ export function useModalMemberClassHook() {
     setSearchBy,
     columns,
     optionSearchStudent,
+    handleAddMember,
+    selectedStudents,
+    setSelectedStudents,
   };
 }
