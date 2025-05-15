@@ -29,7 +29,7 @@ const UserProfile = () => {
     address, setAddress,
     logo,
     banner, setBanner,
-
+    setLogo,
     showLoading, hideLoading,
     isSubmitting,
     isEdit,
@@ -68,10 +68,10 @@ const UserProfile = () => {
       setNipPrincipal(schoolData?.principal_nip || '')
       setNipVicePrincipal(schoolData?.vice_principal_nip || '');
 
-      // setLogo({
-      //   preview: schoolData?.logo,
-      //   file: null
-      // });
+      setLogo({
+        preview: schoolData?.logo,
+        file: null
+      });
 
 
       setBanner({
