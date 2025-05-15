@@ -104,7 +104,10 @@ export default function ModalExamCorrection({ open, setHide, row, dataSession, i
                   mt: 3,
                 }}
               >
-                <CustomInput label="Nilai" fullWidth={true} type="number" max={dataSession?.exam?.total_score} value={a.score} onChange={(s) => setScore(s?.target?.value, i)} placeholder="0" />
+                <CustomInput label="Nilai"
+                             fullWidth={true} type="number"
+                             max={dataSession?.exam?.score_question} value={a.score} onChange={(s) => setScore(s?.target?.value, i)}
+                             placeholder="0" />
               </Box>
             </Box>)
         })}
