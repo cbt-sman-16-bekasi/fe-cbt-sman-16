@@ -80,9 +80,9 @@ export function useModalExamCorrection({row, dataSession, setRefreshData, setHid
         const score = a.score || 0;
         totalScore += score;
       })
-    console.log("TOTAL", totalScore);
+    console.log("TOTAL", totalScore, dataSession?.exam?.score_question, answerStudent.length);
     const averageScore = answerStudent.length > 0
-      ? totalScore / (answerStudent.length * dataSession?.exam?.total_score)
+      ? totalScore / (answerStudent.length * dataSession?.exam?.score_question)
       : 0;
 
     setFinalScore(Math.ceil(averageScore * 100))
