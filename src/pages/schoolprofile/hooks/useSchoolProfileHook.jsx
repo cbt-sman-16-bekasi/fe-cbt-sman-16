@@ -30,7 +30,7 @@ export function useSchoolProfileHook() {
   const defaultLogo = "/logo-default.png";
   const [logo, setLogo] = useState({ preview: schoolData?.logo ? schoolData?.logo : defaultLogo, file: null });
   const [banner, setBanner] = useState({ preview: '', file: null });
-  const [emptyPhotoProfile, setEmptyPhotoProfile] = useState(false)
+  const [emptyLogo, setEmptyLogo] = useState(false)
 
   const [schoolCode, setSchoolCode] = useState();
 
@@ -38,7 +38,7 @@ export function useSchoolProfileHook() {
     setIsEdit((prev) => !prev);
 
     if (isCancel) {
-      setEmptyPhotoProfile(false)
+      setEmptyLogo(false)
       setSchoolName(schoolData?.school_name || '');
       setJenjang(schoolData?.level_of_education || '');
       setNss(schoolData?.nss || '');
@@ -71,35 +71,26 @@ export function useSchoolProfileHook() {
     return logoData.url
   }
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file); // baca file sebagai DataURL (Base64)
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
   const handleRemoveLogo = async () => {
     setLogo({
       preview: defaultLogo,
       file: null
     });
-    setEmptyPhotoProfile(true)
+    setEmptyLogo(true)
   };
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     try {
-      let urlLogo = emptyPhotoProfile ? "" : authUser?.detail?.profile_url;
+      let urlLogo = emptyLogo ? "" : schoolData.logo;
 
       if (logo.file) {
-        const base64 = await toBase64(logo.file);
+        const base64 = await fileToBase64(logo.file);
         urlLogo = await upload(base64);
       }
 
-      // const base64Logo = logo.file ? await upload(fileToBase64(logo.file)) : schoolData.logo;
-      const base64Banner = banner.file ? await upload(fileToBase64(banner.file)) : schoolData.banner;
+      const base64Banner = banner.file ? await upload(await fileToBase64(banner.file)) : schoolData.banner;
 
       const payload = {
         schoolCode,
@@ -129,7 +120,7 @@ export function useSchoolProfileHook() {
       setIsEdit(false);
     } catch (err) {
       console.error("ERROR HERE", err);
-      showModal(err.message, err.status);
+      showModal(err.message, "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -158,6 +149,7 @@ export function useSchoolProfileHook() {
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     const field = event.target.name;
+    console.log(field)
 
     if (selectedFile) {
       const fileURL = URL.createObjectURL(selectedFile);
