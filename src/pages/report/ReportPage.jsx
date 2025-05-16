@@ -20,7 +20,7 @@ const ReportPage = () => {
     isRefreshList
   } = useReportPageHook()
 
-  columns.splice(2, 0, {
+  columns.splice(3, 0, {
     field: "detail",
     headerName: "DETAIL UJIAN",
     flex: 0.8,
@@ -37,6 +37,26 @@ const ReportPage = () => {
         </ul>
       </Box>)
   })
+
+  columns.push(
+    {
+      field: "start_date",
+      headerName: "TANGGAL UJIAN",
+      flex: 0.8,
+      minWidth: 120,
+      renderCell: (row) => dateHelper.formatted(row.start_date) ?? '-'
+    }
+  )
+
+  columns.push(
+    {
+      field: "created_at",
+      headerName: "TANGGAL LAPORAN DIBUAT",
+      flex: 0.8,
+      minWidth: 120,
+      renderCell: (row) => dateHelper.formattedWithTime(row.UpdatedAt) ?? '-'
+    }
+  )
 
   columns.push(
     {

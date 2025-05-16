@@ -19,8 +19,26 @@ const useDate  = () => {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
   }
 
+  const getFormatDate = (data) => {
+    if (data === '') {
+      return '-';
+    }
+
+    const now = new Date(data);
+    const yyyy = now.getFullYear();
+
+    if (yyyy === 1) {
+      return ''
+    }
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
   return {
-    formattedWithTime: getFormattedDate
+    formattedWithTime: getFormattedDate,
+    formatted: getFormatDate,
   }
 }
 

@@ -36,6 +36,7 @@ export function useReportPageHook() {
       const { data: dataSession } = await useExamSessionController.allExamSession({page: 0, size: 100, filter: {'exam_code': examCode}})
       const { records: recordsSession } = dataSession;
       setOptionExamSession(recordsSession.map(r => { return {label: r.session_name, value: r.session_id	}}))
+      setExamSession('')
       hideLoading()
     }
     fetchData()
@@ -48,6 +49,7 @@ export function useReportPageHook() {
   const columns = [
     { field: "no", headerName: "NO", flex: 0.2, minWidth: 50 },
     { field: "exam_name", headerName: "NAMA UJIAN", flex: 0.2, minWidth: 50 },
+    { field: "session_name", headerName: "NAMA SESI UJIAN", flex: 0.2, minWidth: 50 },
     { field: "total", headerName: "TOTAL SISWA", flex: 0.2, minWidth: 50 },
   ]
 

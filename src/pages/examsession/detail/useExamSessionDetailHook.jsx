@@ -126,7 +126,27 @@ export function useExamSessionDetailHook() {
 
       hideLoading()
     } catch (e) {
+      hideLoading()
       showModal("Failed download report", "error")
+    }
+  }
+
+  const handleGenerateReport = async () => {
+    try {
+      showLoading()
+      const { status, message } = await useApi.createOrModify({
+        url: '/academic/exam/session/generate/report',
+        method: 'POST',
+        body: {
+          session_id: sessionId
+        }
+      })
+      showModal(message, status)
+      hideLoading()
+    } catch (e) {
+      console.error("ERROR: ", e)
+      hideLoading()
+      showModal("Gagal membuat laporan", "error")
     }
   }
 
@@ -146,6 +166,7 @@ export function useExamSessionDetailHook() {
     sessionId,
     sessionName,
     handleDownload,
+    handleGenerateReport,
     optionExamMember,
     setOptionExamMember,
     classIdSelected, setClassIdSelected,

@@ -46,6 +46,7 @@ export function UseExamSessionListHook() {
     { field: "start_date", headerName: "MULAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.start_date) },
     { field: "end_date", headerName: "SELESAI", flex: 1, minWidth: 150, renderCell: (row) => dateHelper.formattedWithTime(row.end_date) },
     { field: "status", headerName: "STATUS", flex: 1, minWidth: 150 },
+    { field: "status_report", headerName: "STATUS LAPORAN", flex: 1, minWidth: 150, renderCell: (row) => row.status_report === 'READY' ? 'TERSEDIA' : 'BELUM TERSEDIA' },
     {
       field: "aksi",
       headerName: "AKSI",

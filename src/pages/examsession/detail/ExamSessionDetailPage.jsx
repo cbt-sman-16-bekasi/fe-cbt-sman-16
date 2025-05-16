@@ -1,6 +1,6 @@
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
-import {DownloadOutlined, InfoSharp} from "@mui/icons-material";
+import {DownloadOutlined, InfoSharp, MultilineChart, ReportOffOutlined} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
@@ -22,7 +22,7 @@ const ExamSessionDetailPage = () => {
     startDate,
     endDate,
     sessionId,
-    handleDownload,
+    handleDownload, handleGenerateReport,
     optionExamMember,classIdSelected, setClassIdSelected,
     isRefreshTable,
     detailExamSession,
@@ -66,8 +66,9 @@ const ExamSessionDetailPage = () => {
           <Grid size={{ lg: 5, md: 4, sm: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
             <CustomInput label="Kelas" fullWidth={true} type="text" options={optionExamMember} value={classIdSelected} onChange={(c) => setClassIdSelected(c.target.value)} placeholder="Kelas" />
           </Grid>
-          <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='info' onClick={handleDownload} startIcon={<DownloadOutlined/>}>Download Data Peserta Ujian</Button>
+          <Grid size={{ lg: 5, md: 4, sm: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
+            <Button fullWidth variant="contained" color='info' onClick={handleDownload} startIcon={<DownloadOutlined/>}>Download Peserta Ujian</Button>
+            <Button fullWidth variant="contained" color='error' onClick={handleGenerateReport} startIcon={<MultilineChart />}>{ detailExamSession?.status_report === 'READY' ? 'Regenerate' : 'Generate' } Laporan</Button>
           </Grid>
         </Grid>
 
