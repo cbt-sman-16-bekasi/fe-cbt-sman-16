@@ -37,7 +37,6 @@ const BankQuestionListPage = () => {
     'Penambahan Soal: Bapak/Ibu dapat menambahkan soal baru ke dalam Bank Soal untuk memperkaya koleksi soal.',
   ];
 
-  console.log(authUser);
   const messageDelete = () => {
     return (
       <div>

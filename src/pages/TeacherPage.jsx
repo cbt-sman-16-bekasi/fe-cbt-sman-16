@@ -18,6 +18,7 @@ import PropTypes from "prop-types";
 import ReportPage from "./report/ReportPage.jsx";
 import DashboardPage from "./dashboard/DashboardPage.jsx";
 import UnderMaintenance from "../components/common/UnderMaintenance.jsx";
+import ExamBankQuestionPage from "./exams/detail/bank/ExamBankQuestionPage.jsx";
 
 function TeacherPage({ role }) {
   return (
@@ -36,6 +37,7 @@ function TeacherPage({ role }) {
       <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true} />} />
       <Route path="ujian/:id/detail" element={<ExamDetailPage />} />
       <Route path="ujian/:id/detail/question/create" element={<ExamCreateQuestionPage />} />
+      <Route path="ujian/:id/detail/question/bank" element={<ExamBankQuestionPage />} />
       <Route path="ujian/:id/detail/question/:questionId/edit" element={<ExamCreateQuestionPage isUpdatePage={true} />} />
       <Route path="sesi-ujian" element={<ExamSessionListPage />} />
       <Route path="sesi-ujian/tambah" element={<ExamSessionCreatePage />} />
@@ -46,21 +48,6 @@ function TeacherPage({ role }) {
       <Route path="laporan-nilai" element={<ReportPage />} />
 
       <Route path="profil" element={<UserProfile />} />
-
-      {/*<Route path="dashboard" element={<MainGrid role={role} />} />*/}
-
-      {/*<Route path="bank-soal" element={<BankSoal role={role} />} />*/}
-      {/*<Route path="bank-soal/tambah" element={<LayoutTambah desc="Bank Soal" />} />*/}
-
-      {/*<Route path="ujian" element={<Ujian role={role} />} />*/}
-      {/*<Route path="ujian/tambah" element={<LayoutTambah desc="Tambah Ujian" />} />*/}
-
-      {/*<Route path="sesi-ujian" element={<SesiUjian role={role} />} />*/}
-      {/*<Route path="sesi-ujian/tambah" element={<LayoutTambah desc="Tambah Sesi Ujian" />} />*/}
-
-      {/*<Route path="laporan-nilai" element={<LaporanNilai />} />*/}
-
-      {/*<Route path="*" element={<NotFoundPage role={role} />} />*/}
     </Routes>
   )
 }
