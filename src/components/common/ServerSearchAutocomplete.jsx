@@ -8,21 +8,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import {useDebounce} from "../../hooks/useDebounce.js";
+import { useDebounce } from "../../hooks/useDebounce.js";
 import useApi from "../../utils/rest/api.js";
 
 const ServerSearchAutocomplete = ({
-                                    multiple = false,
-                                    label = '',
-                                    url,
-                                    searchKey,
-                                    setOptionData,
-                                    optionLabel,
-                                    optionValue,
-                                    value,
-                                    onChange,
-                                    maxSelected = 4,
-                                  }) => {
+  multiple = false,
+  label = '',
+  url,
+  searchKey,
+  setOptionData,
+  optionLabel,
+  optionValue,
+  value,
+  onChange,
+  maxSelected = 4,
+}) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -102,6 +102,7 @@ const ServerSearchAutocomplete = ({
       renderTags={(value, getTagProps) =>
         value.map((option, index) => (
           <Chip
+            key={index}
             variant="outlined"
             label={option.label}
             {...getTagProps({ index })}
@@ -153,6 +154,9 @@ const ServerSearchAutocomplete = ({
             borderRadius: 1,
             '& .MuiOutlinedInput-root': {
               pr: 5,
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              height: '100%'
             },
           }}
           InputProps={{

@@ -29,7 +29,7 @@ export default function DashboardPage() {
     dispatch(asyncGetDashboardData())
   }, [dispatch])
 
-  const updatedMenuItems = MenuConfig.map((item) => {
+  const updatedMenuItems = MenuConfig.filter((item) => item.allowRole.includes(authUser.role.code)).map((item) => {
     const keyMap = {
       '/akses-system': 'total_access',
       '/kelas': 'total_class',

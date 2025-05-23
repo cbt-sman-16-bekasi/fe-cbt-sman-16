@@ -16,11 +16,13 @@ import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
 import PropTypes from "prop-types";
 import ReportPage from "./report/ReportPage.jsx";
+import DashboardPage from "./dashboard/DashboardPage.jsx";
+import UnderMaintenance from "../components/common/UnderMaintenance.jsx";
 
 function TeacherPage({ role }) {
   return (
     <Routes>
-      <Route path="dashboard" element={<MainGrid role={role} />} />
+      <Route path="dashboard" element={<UnderMaintenance role={role} />} />
 
       <Route path="bank-soal" element={<BankQuestionListPage />} />
       <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
