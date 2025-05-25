@@ -6,7 +6,7 @@ import { useModal } from '../../../common/ModalContext';
 import { useLoading } from '../../../common/LoadingProvider';
 import useApi from '../../../../utils/rest/api';
 
-export function useModalMemberClassHook({ classId }) {
+export function useModalMemberClassHook({ classId, role = 'ADMIN' }) {
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
   const { showConfirm, showModal } = useModal();
@@ -16,7 +16,7 @@ export function useModalMemberClassHook({ classId }) {
   const [isRefreshList, setRefreshList] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  const columns = [
+  let columns = [
     { field: 'no', headerName: 'NO', flex: 0.1, minWidth: 50 },
     {
       field: 'nisn',
@@ -68,6 +68,10 @@ export function useModalMemberClassHook({ classId }) {
       ),
     },
   ];
+
+  if (role !== 'ADMIN') {
+    columns = columns.filter((row) => row.field !== 'aksi');
+  }
 
   const messageDelete = () => {
     return (
