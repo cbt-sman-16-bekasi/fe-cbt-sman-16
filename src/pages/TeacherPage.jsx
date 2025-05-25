@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router"
-import LaporanNilai from '../components/LaporanNilai';
 import BankQuestionListPage from "./bank/BankQuestionListPage.jsx";
 import BankQuestionCreatePage from "./bank/add/BankQuestionCreatePage.jsx";
 import DetailBankQuestionPage from "./bank/detail/DetailBankQuestionPage.jsx";
@@ -11,19 +10,18 @@ import { ExamCreateQuestionPage } from "./exams/add/ExamCreateQuestionPage.jsx";
 import ExamSessionListPage from "./examsession/ExamSessionListPage.jsx";
 import { ExamSessionCreatePage } from "./examsession/add/ExamSessionCreatePage.jsx";
 import ExamSessionDetailPage from "./examsession/detail/ExamSessionDetailPage.jsx";
-import MainGrid from "../components/MainGrid.jsx";
 import GenerateTokenPage from "./token/GenerateTokenPage.jsx";
 import UserProfile from "./userprofile/UserProfile.jsx";
 import PropTypes from "prop-types";
 import ReportPage from "./report/ReportPage.jsx";
 import DashboardPage from "./dashboard/DashboardPage.jsx";
-import UnderMaintenance from "../components/common/UnderMaintenance.jsx";
 import ExamBankQuestionPage from "./exams/detail/bank/ExamBankQuestionPage.jsx";
+import ClassesList from "./classes/ClassesList.jsx";
 
 function TeacherPage({ role }) {
   return (
     <Routes>
-      <Route path="dashboard" element={<UnderMaintenance role={role} />} />
+      <Route path="dashboard" element={<DashboardPage role={role} />} />
 
       <Route path="bank-soal" element={<BankQuestionListPage />} />
       <Route path="bank-soal/tambah" element={<BankQuestionCreatePage />} />
@@ -32,6 +30,7 @@ function TeacherPage({ role }) {
       <Route path="bank-soal/:bankMasterCode/detail/question/create" element={<BankCreateQuestionPage />} />
       <Route path="bank-soal/:bankMasterCode/detail/question/:id/edit" element={<BankCreateQuestionPage isUpdatePage={true} />} />
 
+      <Route path="kelas" element={<ClassesList role={role} />} />
       <Route path="ujian" element={<ExamList />} />
       <Route path="ujian/tambah" element={<ExamCreate />} />
       <Route path="ujian/:id/update" element={<ExamCreate isUpdatePage={true} />} />

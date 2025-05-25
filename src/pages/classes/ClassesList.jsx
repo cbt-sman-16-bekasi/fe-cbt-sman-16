@@ -8,7 +8,7 @@ import ApiTable from "../../components/ApiTable.jsx";
 import SearchBarWithFilter from "../../components/common/SearchBarWithFilter.jsx";
 import ModalMemberClass from "../../components/page/student/ModalMemberClass.jsx";
 
-const ClassesList = () => {
+const ClassesList = ({role = 'ADMIN'}) => {
   const {
     search,
     setSearch,
@@ -20,18 +20,18 @@ const ClassesList = () => {
     searchOptions,
     classId,
     openModalMember, setOpenModalMember
-  } = useClassesHook()
+  } = useClassesHook({role})
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <ModalMemberClass open={openModalMember} setHide={setOpenModalMember} classId={String(classId)} />
+      <ModalMemberClass open={openModalMember} setHide={setOpenModalMember} classId={String(classId)} role={role} />
 
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" my={4}>
-        <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Link to={`/${userRole}/kelas/tambah`}>
-            <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
-          </Link>
-        </Grid>
+          {role === 'ADMIN' && (<Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
+              <Link to={`/${userRole}/kelas/tambah`}>
+                  <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
+              </Link>
+          </Grid>)}
         <Grid >
           <SearchBarWithFilter
             searchOptions={searchOptions}
