@@ -9,7 +9,7 @@ import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
 import { IconButton } from "@mui/material";
 
-export function useClassesHook() {
+export function useClassesHook({role = 'ADMIN'}) {
   const navigate = useNavigate();
   const { showConfirm } = useModal();
   const { showLoading, hideLoading } = useLoading();
@@ -45,28 +45,32 @@ export function useClassesHook() {
           >
             <VisibilityIcon />
           </IconButton>
-          <IconButton
-            size="small"
-            sx={{
-              bgcolor: "purple",
-              color: "white",
-              "&:hover": { bgcolor: "purple" },
-            }}
-            onClick={() => handleEdit(row.ID)}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            size="small"
-            sx={{
-              bgcolor: "red",
-              color: "white",
-              "&:hover": { bgcolor: "darkred" },
-            }}
-            onClick={() => handleDelete(row.ID)}
-          >
-            <DeleteIcon />
-          </IconButton>
+            {role === 'ADMIN' && (
+              <>
+                <IconButton
+                  size="small"
+                  sx={{
+                      bgcolor: "purple",
+                      color: "white",
+                      "&:hover": { bgcolor: "purple" },
+                  }}
+                  onClick={() => handleEdit(row.ID)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  sx={{
+                      bgcolor: "red",
+                      color: "white",
+                      "&:hover": { bgcolor: "darkred" },
+                  }}
+                  onClick={() => handleDelete(row.ID)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </>
+            )}
         </div >
       ),
     },

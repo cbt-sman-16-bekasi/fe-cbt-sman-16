@@ -22,7 +22,7 @@ function StatCard({ card, role }) {
         </div>
       </div>
 
-      <Link onClick={() => to(card, pathMenu)} to={pathMenu} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+      <Link to={pathMenu} className="bg-gray-900 p-5 text-white flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
         <span className='text-white'>Lihat Detail</span>
         <span className='text-white'>→</span>
       </Link>
