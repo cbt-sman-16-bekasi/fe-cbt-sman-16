@@ -10,19 +10,27 @@ export function useSubjectCreateHook({ updatePage = false }) {
   const { showModal } = useModal();
 
   const [subject, setSubject] = useState('');
-  const [classCode, setClassCode] = useState('');
+  const [code, setCode] = useState('');
+  const [classCode, setClassCode] = useState([]);
+  const [optionsClassCode, setOptionsClassCode] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       showLoading();
 
+      const { data: classLevel } = await useCurriculumSubjectApi.getAllClassLevels()
+      if (classLevel) {
+        setOptionsClassCode(classLevel?.map(c => { return {label: c.name, value: c.code} }));
+      }
+
       if (updatePage) {
         const { data: detailSubject } = await useCurriculumSubjectApi.detail({
           id: id,
         });
         if (detailSubject !== undefined) {
-          setClassCode(detailSubject.code);
+          setCode(detailSubject.code);
+          setClassCode(detailSubject?.class_code ? detailSubject?.class_code?.split(',') : []);
           setSubject(detailSubject.subject);
         }
       }
@@ -38,8 +46,9 @@ export function useSubjectCreateHook({ updatePage = false }) {
     }
 
     const body = {
-      code: classCode,
+      code: code,
       name: subject,
+      class_code: classCode,
     };
 
     showLoading();
@@ -69,10 +78,13 @@ export function useSubjectCreateHook({ updatePage = false }) {
 
   const resetForm = () => {
     setSubject('');
-    setClassCode('');
+    setClassCode([]);
+    setCode('');
   };
 
   return {
+    code, setCode,
+    optionsClassCode,
     classCode,
     setClassCode,
     subject,

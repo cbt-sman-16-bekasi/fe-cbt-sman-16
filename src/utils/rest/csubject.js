@@ -20,9 +20,16 @@ const useCurriculumSubjectApi = (() => {
     });
   };
 
+  const getAllClassLevels = async () => {
+    return await useApi.fetch(`/academic/class-code`, {
+      method: 'GET',
+    });
+  }
+
   return {
     modifySubject: modifySubject,
-    detail: getDetail
+    detail: getDetail,
+    getAllClassLevels: getAllClassLevels
   }
 })()
 

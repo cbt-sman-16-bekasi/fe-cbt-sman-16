@@ -10,8 +10,10 @@ import PropTypes from "prop-types";
 
 export function SubjectCreate({ isUpdatePage = false }) {
   const {
+    code, setCode,
     classCode, setClassCode,
     subject, setSubject,
+    optionsClassCode,
     handleSubmitCreate,
     resetForm,
   } = useSubjectCreateHook({ updatePage: isUpdatePage })
@@ -26,7 +28,11 @@ export function SubjectCreate({ isUpdatePage = false }) {
 
           <Grid container spacing={3} alignItems="center" columns={12}>
             <CustomInput label="Nama Mata Pelajaran" fullWidth={true} value={subject} onChange={(c) => setSubject(c.target.value)} placeholder="Nama Mata Pelajaran" />
-            <CustomInput label="Kode" fullWidth={true} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="XXXX" />
+            <CustomInput label="Kode" fullWidth={true} value={code} onChange={(c) => setCode(c.target.value)} placeholder="XXXX" />
+          </Grid>
+
+          <Grid container spacing={3} alignItems="center" columns={12}>
+            <CustomInput label="Tingkat Kelas" multiple options={optionsClassCode} fullWidth={true} value={classCode} onChange={(c) => setClassCode(c.target.value)} placeholder="Tingkat Kelas" />
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2} mt={3}>
