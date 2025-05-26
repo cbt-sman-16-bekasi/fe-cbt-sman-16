@@ -20,8 +20,9 @@ export function useSubjectHook() {
 
   const columns = [
     { field: "no", headerName: "NO", flex: 0.1, minWidth: 50 },
-    { field: "subject", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120 },
     { field: "code", headerName: "KODE", flex: 1.5, minWidth: 150 },
+    { field: "subject", headerName: "NAMA MATA PELAJARAN", flex: 1, minWidth: 120 },
+    { field: "class_code", headerName: "TINGKAT KELAS", flex: 1.5, minWidth: 150 },
     {
       field: "aksi",
       headerName: "AKSI",
