@@ -44,8 +44,8 @@ export function useExamCreateHook({ updatePage = false }) {
       if (userRole === 'admin') {
         const { data } = await useMasterController.allSubject();
         setOptionSubject(
-          data.map((s) => {
-            return { label: s.subject, value: s.code };
+          data?.records?.map((s) => {
+            return { label: s.subject, value: s.code, row: s };
           })
         );
       }
@@ -102,27 +102,24 @@ export function useExamCreateHook({ updatePage = false }) {
   useEffect(() => {
     if (userRole === 'admin') {
       setOptionClass([]);
-      const allClass = useMasterController.allClassSubject({
-        size: 100,
-        filter: { subject_code: subject },
-      });
-      allClass.then((c) => {
-        const { data } = c;
-        const { records } = data;
-        const members = [];
-        records.forEach((r) => {
-          members.push(...r.DetailClassCode.class_member);
+      const objectRowSubject = optionSubject.find((s) => s.value === subject);
+
+      if (objectRowSubject) {
+        const allClass = useMasterController.allClass({
+          size: 100,
+          filter: { class_code: objectRowSubject?.row?.class_code?.split(',') },
         });
-        const uniqueData = members.filter(
-          (item, index, self) =>
-            index === self.findIndex((t) => t.ID === item.ID)
-        );
-        setOptionClass(
-          uniqueData.map((r) => {
-            return { label: `${r.classCode} - ${r.className}`, value: r.ID };
-          })
-        );
-      });
+
+        allClass.then((c) => {
+          const { data } = c;
+          const { records } = data;
+          setOptionClass(
+            records.map((r) => {
+              return { label: `${r.classCode} - ${r.className}`, value: r.ID };
+            })
+          );
+        });
+      }
     }
   }, [subject]);
 
