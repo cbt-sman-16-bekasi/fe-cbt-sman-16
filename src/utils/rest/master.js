@@ -18,7 +18,7 @@ const useMasterController = (() => {
   };
 
   const getAllSubject = async () => {
-    return await useApi.fetch(`/academic/subjects`, {
+    return await useApi.fetch(`/academic/curriculum/subject/all?page=1&size=100`, {
       method: 'GET',
     });
   };
@@ -51,12 +51,29 @@ const useMasterController = (() => {
     });
   };
 
+  const getAllClass = async ({
+                                      page = 0,
+                                      size = 10,
+                                      searchKey,
+                                      searchValue,
+                                      filter,
+                                    } = {}) => {
+    return await useApi.fetchPagination(`/academic/class/all`, {
+      page,
+      size,
+      searchKey,
+      searchValue,
+      filter,
+    });
+  };
+
   return {
     allTypeExam: getAllTypeExam,
     allSubject: getAllSubject,
     allClassSubject: getAllClassSubject,
     allClassCode: getAllClassCode,
     allUserRole: getUserRoles,
+    allClass: getAllClass
   };
 })();
 
