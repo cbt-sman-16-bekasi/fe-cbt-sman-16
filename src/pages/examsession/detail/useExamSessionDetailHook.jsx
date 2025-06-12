@@ -82,34 +82,44 @@ export function useExamSessionDetailHook() {
     { field: "end_at", headerName: "WAKTU LOGOUT", flex: 0.1, minWidth: 50, renderCell: (row) => row.start_at.slice(0,2) === '00' || row.end_at === null ? '' : dateHelper.formattedWithTime(row.end_at) },
     { field: "score", headerName: "NILAI", flex: 0.1, minWidth: 50 },
     { field: "status", headerName: "STATUS", flex: 0.1, minWidth: 50},
-  ];
-
-  if (typeQuestion === 'ESSAY') {
-    columns.push({
+    {
       field: "aksi",
       headerName: "AKSI",
       flex: 1,
       minWidth: 150,
       renderCell: (row) => {
-        if (row.need_correction) {
-          return (<div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
-            {/* Tombol Delete */}
-            <Button
-              size="small"
-              sx={{
-                bgcolor: "green",
-                color: "white",
-                "&:hover": { bgcolor: "darkred" },
-              }}
-              onClick={() => handleCorrection(row)}
-            >
-              Koreksi
-            </Button>
-          </div>)
-        }
-        return (<></>)
+        return (<div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
+          {/* Tombol Delete */}
+          {typeQuestion === 'ESSAY' && row.need_correction && (<Button
+            size="small"
+            sx={{
+              bgcolor: "green",
+              color: "white",
+              "&:hover": { bgcolor: "darkred" },
+            }}
+            onClick={() => handleCorrection(row)}
+          >
+            Koreksi
+          </Button>)}
+          <Button
+            size="small"
+            sx={{
+              bgcolor: "red",
+              color: "white",
+              "&:hover": { bgcolor: "darkred" },
+            }}
+            onClick={() => handleReset(row)}
+          >
+            Reset
+          </Button>
+
+        </div>)
       },
-    },)
+    }
+  ];
+
+  if (typeQuestion === 'ESSAY') {
+
   }
 
   const handleCorrection = (row) => {
@@ -147,6 +157,25 @@ export function useExamSessionDetailHook() {
       console.error("ERROR: ", e)
       hideLoading()
       showModal("Gagal membuat laporan", "error")
+    }
+  }
+  const handleReset = async (row) => {
+    try {
+      showLoading()
+      const { status, message } = await useApi.createOrModify({
+        url: '/academic/exam/session/reset',
+        method: 'POST',
+        body: {
+          session_id: sessionId,
+          student_id: row?.student_id
+        }
+      })
+      showModal(message, status)
+      hideLoading()
+    } catch (e) {
+      console.error("ERROR: ", e)
+      hideLoading()
+      showModal("Gagal reset session student", "error")
     }
   }
 
