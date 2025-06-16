@@ -11,6 +11,7 @@ import ApiTable from "../../../components/ApiTable.jsx";
 import {UsersIcon} from "lucide-react";
 import CustomInput from "../../../components/form/FormInputTextField.jsx";
 import ModalExamCorrection from "../../../components/page/examsession/ModalExamCorrection.jsx";
+import ModalStudentAnswer from "../../../components/page/examsession/ModalStudentAnswer.jsx";
 
 const ExamSessionDetailPage = () => {
 
@@ -27,7 +28,8 @@ const ExamSessionDetailPage = () => {
     isRefreshTable,
     detailExamSession,
     correctionQuestion, setCorrectionQuestion,
-    correctionRowStudent, setIsRefreshTable
+    correctionRowStudent, setIsRefreshTable,
+    showAnswer, setShowAnswer
   } = useExamSessionDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -39,6 +41,11 @@ const ExamSessionDetailPage = () => {
         isRefresh={setIsRefreshTable}
         isRefreshTable={isRefreshTable} />
       <BackWithTitle />
+      <ModalStudentAnswer
+        setHide={setShowAnswer}
+        open={showAnswer}
+        row={correctionRowStudent}
+        dataSession={detailExamSession} />
 
       <TitleWithIcon icon={<InfoSharp sx={{color: 'white'}} />} text="Detail Sesi Ujian" iconBackground="red" />
       <BasicCard sx={{mb:4, padding: '40px'}}>

@@ -35,6 +35,9 @@ export function useExamSessionDetailHook() {
   const [detailExamSession, setDetailExamSession] = useState({})
   const [correctionQuestion, setCorrectionQuestion] = useState(false)
   const [correctionRowStudent, setCorrectionRowStudent] = useState({})
+  const [showAnswer, setShowAnswer] = useState(false)
+
+  console.log(detailExamSession)
 
   useEffect(() => {
 
@@ -95,12 +98,23 @@ export function useExamSessionDetailHook() {
             sx={{
               bgcolor: "green",
               color: "white",
-              "&:hover": { bgcolor: "darkred" },
+              "&:hover": { bgcolor: "darkgreen" },
             }}
             onClick={() => handleCorrection(row)}
           >
             Koreksi
           </Button>)}
+          <Button
+            size="small"
+            sx={{
+              bgcolor: "purple",
+              color: "white",
+              "&:hover": { bgcolor: "darkred" },
+            }}
+            onClick={() => handleShowAnswer(row)}
+          >
+            Detail
+          </Button>
           <Button
             size="small"
             sx={{
@@ -118,9 +132,10 @@ export function useExamSessionDetailHook() {
     }
   ];
 
-  if (typeQuestion === 'ESSAY') {
-
-  }
+  const handleShowAnswer = (row) => {
+    setShowAnswer(true)
+    setCorrectionRowStudent(row)
+  };
 
   const handleCorrection = (row) => {
     setCorrectionQuestion(true)
@@ -201,6 +216,7 @@ export function useExamSessionDetailHook() {
     classIdSelected, setClassIdSelected,
     isRefreshTable, setIsRefreshTable,
     detailExamSession,correctionQuestion, setCorrectionQuestion,
-    correctionRowStudent, setCorrectionRowStudent
+    correctionRowStudent, setCorrectionRowStudent,
+    showAnswer, setShowAnswer
   }
 }
