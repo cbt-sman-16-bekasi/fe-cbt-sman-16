@@ -24,6 +24,7 @@ export function BankCreateQuestionPage({isUpdatePage = false}) {
     optionAnswer,
     handleSubmitCreate,
   } = useBankCreateQuestionHook({updatePage: isUpdatePage})
+  console.log(typeQuestion, optionAnswer, answer, optionA)
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
       <BackWithTitle title={isUpdatePage ? 'Edit Soal' : 'Tambah Soal'} />
@@ -32,7 +33,7 @@ export function BankCreateQuestionPage({isUpdatePage = false}) {
       <BasicCard>
         <Grid container spacing={3} alignItems="center" columns={12}>
           {typeQuestion === 'PILIHAN_GANDA' && (
-            <CustomInput label="Jawaban" fullWidth={true} options={optionAnswer} value={answer} onChange={(c) => setAnswer(c.target.value)}/>) }
+            <CustomInput label="Jawaban" fullWidth={true} options={optionAnswer} value={answer?.split("_").pop()} onChange={(c) => setAnswer(c.target.value)}/>) }
         </Grid>
         <Grid container spacing={3} alignItems="center" columns={12}>
           <Grid size={{ lg: 12 }}>

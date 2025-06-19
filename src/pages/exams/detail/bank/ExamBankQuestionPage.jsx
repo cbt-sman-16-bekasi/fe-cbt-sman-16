@@ -42,6 +42,11 @@ const ExamBankQuestionPage = () => {
           <TableBody>
             {rows.map((row) => {
               const isItemSelected = isSelected(row?.ID);
+              const isPilihanGanda = row.type_question === "PILIHAN_GANDA";
+              const answerCode = row.answer_single;
+              const answerLetter = isPilihanGanda
+                ? answerCode?.split("_").pop()
+                : answerCode;
               return (
                 <TableRow
                   hover
@@ -54,7 +59,7 @@ const ExamBankQuestionPage = () => {
                     <Checkbox checked={isItemSelected} />
                   </TableCell>
                   <TableCell dangerouslySetInnerHTML={{ __html: row.question }}></TableCell>
-                  <TableCell dangerouslySetInnerHTML={{ __html: row.answer_single }}></TableCell>
+                  <TableCell dangerouslySetInnerHTML={{ __html: answerLetter }}></TableCell>
                 </TableRow>
               );
             })}
