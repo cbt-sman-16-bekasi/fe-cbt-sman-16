@@ -1,4 +1,4 @@
-import {useDetailBankQuestionHook} from "./useDetailBankQuestionHook.js";
+import { useDetailBankQuestionHook } from "./useDetailBankQuestionHook.js";
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
 import {
@@ -12,7 +12,7 @@ import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
 import Grid from "@mui/material/Grid2";
 import ApiTable from "../../../components/ApiTable.jsx";
-import {Button, IconButton} from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -36,8 +36,24 @@ const DetailBankQuestionPage = () => {
     handleUpload
   } = useDetailBankQuestionHook()
 
-  columns.push({ field: "question", headerName: "SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.question }} />)})
-  columns.push({ field: "answer_single", headerName: "JAWABAN", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.answer_single }} />)})
+  columns.push({ field: "question", headerName: "SOAL", flex: 0.1, minWidth: 50, renderCell: (row) => (<div dangerouslySetInnerHTML={{ __html: row.question }} />) })
+  columns.push({
+    field: "answer_single",
+    headerName: "JAWABAN",
+    flex: 0.1,
+    minWidth: 50,
+    renderCell: (row) => {
+      const isPilihanGanda = row.type_question === "PILIHAN_GANDA";
+      const answerCode = row.answer_single;
+
+      const answerLetter = isPilihanGanda
+        ? answerCode?.split("_").pop()
+        : answerCode;
+
+      return <div>{answerLetter}</div>;
+    },
+  });
+
 
   const messageConfirmDelete = () => {
     return (<>
@@ -86,22 +102,22 @@ const DetailBankQuestionPage = () => {
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
       <BackWithTitle />
 
-      <TitleWithIcon icon={<InfoSharp sx={{color: 'white'}} />} text="Detail Bank Soal" iconBackground="red" />
-      <BasicCard sx={{mb:4, padding: '40px'}}>
+      <TitleWithIcon icon={<InfoSharp sx={{ color: 'white' }} />} text="Detail Bank Soal" iconBackground="red" />
+      <BasicCard sx={{ mb: 4, padding: '40px' }}>
         <DetailItem label="Mata Pelajaran" value={subject} />
         <DetailItem label="Kode Kelas" value={classCode} />
         <DetailItem label="Jumlah Soal" value={totalQuestion} />
         <DetailItem label="Jenis Soal" value={typeQuestion ?? '-'} />
       </BasicCard>
-      <TitleWithIcon icon={<DocumentScannerSharp sx={{color: 'white'}} />} text="Soal Ujian" iconBackground="red" />
+      <TitleWithIcon icon={<DocumentScannerSharp sx={{ color: 'white' }} />} text="Soal Ujian" iconBackground="red" />
       <BasicCard>
         <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" mb={2} mt={3}>
-          <Grid size={{ lg: 2 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/bank-soal/${code}/detail/question/create?typeQuestion=${typeQuestion.replaceAll(' ', '_')}`)} startIcon={<AddBoxOutlinedIcon/>}>Tambah Soal</Button>
+          <Grid size={{ lg: 2 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Button fullWidth variant="contained" color='cbtPrimary' onClick={() => navigate(`/${userRole}/bank-soal/${code}/detail/question/create?typeQuestion=${typeQuestion.replaceAll(' ', '_')}`)} startIcon={<AddBoxOutlinedIcon />}>Tambah Soal</Button>
           </Grid>
-          <Grid size={{ lg: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
-            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined/>} onClick={() => setOpenUpload(true)}>Import Soal</Button>
-            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined/>} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
+          <Grid size={{ lg: 3 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Soal</Button>
+            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Sample</Button>
           </Grid>
         </Grid>
         <Grid container spacing={1} columns={12} sx={{
@@ -124,7 +140,7 @@ const DetailBankQuestionPage = () => {
 
 
       <UploadFileDialog
-        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{color: 'white'}} />} iconBackground="red" />}
+        title={<TitleWithIcon text="Upload File" icon={<UploadFile sx={{ color: 'white' }} />} iconBackground="red" />}
         subTitle="Silahkan untuk mengimpor Soal. Pastikan data yang Anda masukkan sesuai dengan template yang telah disediakan!. Jika Anda belum memiliki template, harap unduh template yang tersedia"
         open={openUpload}
         onClose={() => setOpenUpload(false)}
