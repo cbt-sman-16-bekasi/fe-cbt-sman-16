@@ -123,8 +123,8 @@ export function UseExamSessionListHook() {
   };
 
   const searchOptions = [
-    {label: 'Nama Ujian', value: 'detail_exam.name'},
-    {label: 'Nama Sesi Ujian', value: 'name'},
+    {label: 'Nama Ujian', value: 'exam_name'},
+    {label: 'Nama Sesi Ujian', value: 'session_name'},
   ]
 
   return {
