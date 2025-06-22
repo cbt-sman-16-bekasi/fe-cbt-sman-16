@@ -10,6 +10,8 @@ import useExamSessionController from "../../../utils/rest/examsession.js";
 import useDate from "../../../hooks/useDate.js";
 import useApi from "../../../utils/rest/api.js";
 import {useModal} from "../../../components/common/ModalContext.jsx";
+import {CheckBox, InfoOutlined, MedicalInformation, RestartAlt, Scoreboard} from "@mui/icons-material";
+import {CheckCircle} from "lucide-react";
 
 export function useExamSessionDetailHook() {
   const { id } = useParams();
@@ -36,8 +38,8 @@ export function useExamSessionDetailHook() {
   const [correctionQuestion, setCorrectionQuestion] = useState(false)
   const [correctionRowStudent, setCorrectionRowStudent] = useState({})
   const [showAnswer, setShowAnswer] = useState(false)
-
-  console.log(detailExamSession)
+  const [showCorrectionScore, setShowCorrectionScore] = useState(false)
+  const [newScore, setNewScore] = useState('0')
 
   useEffect(() => {
 
@@ -102,7 +104,18 @@ export function useExamSessionDetailHook() {
             }}
             onClick={() => handleCorrection(row)}
           >
-            Koreksi
+            <CheckCircle />
+          </Button>)}
+          {userRole === 'admin' && (<Button
+            size="small"
+            sx={{
+              bgcolor: "green",
+              color: "gray",
+              "&:hover": { bgcolor: "darkgreen" },
+            }}
+            onClick={() => handleCorrectionScore(row)}
+          >
+            <Scoreboard />
           </Button>)}
           <Button
             size="small"
@@ -113,7 +126,7 @@ export function useExamSessionDetailHook() {
             }}
             onClick={() => handleShowAnswer(row)}
           >
-            Detail
+            <InfoOutlined />
           </Button>
           <Button
             size="small"
@@ -124,7 +137,7 @@ export function useExamSessionDetailHook() {
             }}
             onClick={() => handleReset(row)}
           >
-            Reset
+            <RestartAlt />
           </Button>
 
         </div>)
@@ -139,6 +152,11 @@ export function useExamSessionDetailHook() {
 
   const handleCorrection = (row) => {
     setCorrectionQuestion(true)
+    setCorrectionRowStudent(row)
+  };
+
+  const handleCorrectionScore = (row) => {
+    setShowCorrectionScore(true)
     setCorrectionRowStudent(row)
   };
 
@@ -193,6 +211,27 @@ export function useExamSessionDetailHook() {
       showModal("Gagal reset session student", "error")
     }
   }
+  const handleSubmitChangeScore = async () => {
+    try {
+      showLoading()
+      const { status, message } = await useApi.createOrModify({
+        url: '/academic/exam/session/change/score',
+        method: 'POST',
+        body: {
+          session_id: sessionId,
+          student_id: correctionRowStudent?.student_id,
+          score: parseFloat(newScore)
+        }
+      })
+      setIsRefreshTable(true)
+      showModal(message, status)
+      hideLoading()
+    } catch (e) {
+      console.error("ERROR: ", e)
+      hideLoading()
+      showModal("Gagal mengubah nilai siswa", "error")
+    }
+  }
 
   return {
     showLoading,
@@ -217,6 +256,8 @@ export function useExamSessionDetailHook() {
     isRefreshTable, setIsRefreshTable,
     detailExamSession,correctionQuestion, setCorrectionQuestion,
     correctionRowStudent, setCorrectionRowStudent,
-    showAnswer, setShowAnswer
+    showAnswer, setShowAnswer,
+    showCorrectionScore, setShowCorrectionScore,
+    newScore, setNewScore, handleSubmitChangeScore
   }
 }

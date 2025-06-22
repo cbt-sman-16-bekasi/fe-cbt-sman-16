@@ -1,17 +1,18 @@
 import BackWithTitle from "../../../components/common/BackWithTitle.jsx";
 import TitleWithIcon from "../../../components/common/TitleWithIcon.jsx";
-import {DownloadOutlined, InfoSharp, MultilineChart, ReportOffOutlined} from "@mui/icons-material";
+import {DownloadOutlined, InfoSharp, MultilineChart, Scoreboard} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import BasicCard from "../../../components/common/BasicCard.jsx";
 import DetailItem from "../../../components/common/DetailItem.jsx";
-import {Button, Chip} from "@mui/material";
+import {Button, Chip, Dialog} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {useExamSessionDetailHook} from "./useExamSessionDetailHook.jsx";
 import ApiTable from "../../../components/ApiTable.jsx";
-import {UsersIcon} from "lucide-react";
+import {PencilLine, UsersIcon} from "lucide-react";
 import CustomInput from "../../../components/form/FormInputTextField.jsx";
 import ModalExamCorrection from "../../../components/page/examsession/ModalExamCorrection.jsx";
 import ModalStudentAnswer from "../../../components/page/examsession/ModalStudentAnswer.jsx";
+import Typography from "@mui/material/Typography";
 
 const ExamSessionDetailPage = () => {
 
@@ -29,7 +30,9 @@ const ExamSessionDetailPage = () => {
     detailExamSession,
     correctionQuestion, setCorrectionQuestion,
     correctionRowStudent, setIsRefreshTable,
-    showAnswer, setShowAnswer
+    showAnswer, setShowAnswer,
+    showCorrectionScore, setShowCorrectionScore,
+    newScore, setNewScore, handleSubmitChangeScore
   } = useExamSessionDetailHook()
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -46,6 +49,30 @@ const ExamSessionDetailPage = () => {
         open={showAnswer}
         row={correctionRowStudent}
         dataSession={detailExamSession} />
+
+      <Dialog open={showCorrectionScore} onClose={() => setShowCorrectionScore(false)} fullWidth maxWidth="sm"
+              PaperProps={{
+                sx: {
+                  marginTop: 4, // jarak dari atas
+                  alignSelf: 'flex-start', // posisikan ke atas
+                  borderRadius: 2,
+                },
+              }}>
+        <Grid sx={{ display: "flex", alignItems: 'center', justifyContent: "space-between", p: 2, width: '100%' }}>
+          <TitleWithIcon icon={<Scoreboard sx={{ color: 'white' }} />} text='Perbaikan Nilai Siswa' iconBackground="red" />
+        </Grid>
+        <BasicCard sx={{mb:4, padding: '20px', ml: 3, mr: 3, maxHeight: '500px', overflow: 'auto'}}>
+          <CustomInput label="Nilai Sekarang" value={correctionRowStudent?.score} disabled />
+          <CustomInput label="Nilai di koreksi" value={newScore} onChange={(e) => setNewScore(e?.target?.value)} type="number" />
+          <span>Terakhir di ubah pada: <span>{correctionRowStudent?.lastCorrectionScore ?? '-'}</span>  oleh: <span>{correctionRowStudent?.lastCorrectionBy ?? '-'}</span> </span>
+        </BasicCard>
+        <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
+          <Button sx={{ display: 'flex', mx: 2}} variant="contained" color='info' onClick={handleSubmitChangeScore}>
+            Simpan
+          </Button>
+        </Grid>
+
+      </Dialog >
 
       <TitleWithIcon icon={<InfoSharp sx={{color: 'white'}} />} text="Detail Sesi Ujian" iconBackground="red" />
       <BasicCard sx={{mb:4, padding: '40px'}}>
