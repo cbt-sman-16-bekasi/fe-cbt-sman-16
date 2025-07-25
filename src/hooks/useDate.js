@@ -1,6 +1,6 @@
 const useDate  = () => {
   const getFormattedDate = (data) => {
-    if (data === '') {
+    if (data === '' || data === null) {
       return '-';
     }
 

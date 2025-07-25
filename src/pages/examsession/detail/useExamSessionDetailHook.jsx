@@ -81,8 +81,8 @@ export function useExamSessionDetailHook() {
     { field: "nisn", headerName: "NISN", flex: 0.1, minWidth: 50},
     { field: "name", headerName: "NAMA SISWA", flex: 0.1, minWidth: 50},
     { field: "class", headerName: "KELAS", flex: 0.1, minWidth: 50},
-    { field: "start_at", headerName: "WAKTU LOGIN", flex: 0.1, minWidth: 50, renderCell: (row) => dateHelper.formattedWithTime(row.start_at) },
-    { field: "end_at", headerName: "WAKTU LOGOUT", flex: 0.1, minWidth: 50, renderCell: (row) => row.start_at.slice(0,2) === '00' || row.end_at === null ? '' : dateHelper.formattedWithTime(row.end_at) },
+    { field: "start_at", headerName: "WAKTU LOGIN", flex: 0.1, minWidth: 50, renderCell: (row) => dateHelper.formattedWithTime(row?.start_at) },
+    { field: "end_at", headerName: "WAKTU LOGOUT", flex: 0.1, minWidth: 50, renderCell: (row) => row?.start_at?.slice(0,2) === '00' || row.end_at === null ? '' : dateHelper.formattedWithTime(row.end_at) },
     { field: "score", headerName: "NILAI", flex: 0.1, minWidth: 50 },
     { field: "status", headerName: "STATUS", flex: 0.1, minWidth: 50},
     {
@@ -92,7 +92,6 @@ export function useExamSessionDetailHook() {
       minWidth: 150,
       renderCell: (row) => {
         return (<div style={{ display: "flex", gap: "8px", alignItems: "center", height: "100%" }}>
-          {/* Tombol Delete */}
           {typeQuestion === 'ESSAY' && row.need_correction && (<Button
             size="small"
             sx={{
@@ -104,28 +103,32 @@ export function useExamSessionDetailHook() {
           >
             Koreksi
           </Button>)}
-          <Button
-            size="small"
-            sx={{
-              bgcolor: "purple",
-              color: "white",
-              "&:hover": { bgcolor: "darkred" },
-            }}
-            onClick={() => handleShowAnswer(row)}
-          >
-            Detail
-          </Button>
-          <Button
-            size="small"
-            sx={{
-              bgcolor: "red",
-              color: "white",
-              "&:hover": { bgcolor: "darkred" },
-            }}
-            onClick={() => handleReset(row)}
-          >
-            Reset
-          </Button>
+          {row?.start_at && (
+            <>
+              <Button
+                size="small"
+                sx={{
+                  bgcolor: "purple",
+                  color: "white",
+                  "&:hover": { bgcolor: "darkred" },
+                }}
+                onClick={() => handleShowAnswer(row)}
+              >
+                Detail
+              </Button>
+              <Button
+                size="small"
+                sx={{
+                  bgcolor: "red",
+                  color: "white",
+                  "&:hover": { bgcolor: "darkred" },
+                }}
+                onClick={() => handleReset(row)}
+              >
+                Reset
+              </Button>
+            </>
+          )}
 
         </div>)
       },
