@@ -23,7 +23,7 @@ export default function ModalStudentAnswer({ open, setHide, row, dataSession }) 
               },
             }}>
       <Grid sx={{ display: "flex", alignItems: 'center', justifyContent: "space-between", p: 2, width: '100%' }}>
-        <TitleWithIcon icon={<PencilLine sx={{ color: 'white' }} />} text='Koreksi Jawaban' iconBackground="red" />
+        <TitleWithIcon icon={<PencilLine sx={{ color: 'white' }} />} text='Detail Siswa' iconBackground="red" />
       </Grid>
 
 
