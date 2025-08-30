@@ -9,6 +9,7 @@ import SearchBarWithFilter from "../../common/SearchBarWithFilter.jsx";
 import ApiTable from "../../ApiTable.jsx";
 import ServerSearchAutocomplete from "../../common/ServerSearchAutocomplete.jsx";
 import UnderMaintenance from "../../common/UnderMaintenance.jsx";
+import {TrashIcon} from "lucide-react";
 
 export default function ModalMemberClass({ open, setHide, classId, role = 'ADMIN' }) {
   const {
@@ -18,7 +19,9 @@ export default function ModalMemberClass({ open, setHide, classId, role = 'ADMIN
     handleAddMember,
     selectedStudents,
     setSelectedStudents,
-  } = useModalMemberClassHook({ classId: classId, role })
+    selectedRow, setSelectedRow,
+    handleDeleteBatch
+  } = useModalMemberClassHook({ classId: classId, role, open })
 
   const isMaintenance = false;
 
@@ -41,7 +44,10 @@ export default function ModalMemberClass({ open, setHide, classId, role = 'ADMIN
                   value={selectedStudents}
                   onChange={setSelectedStudents}
                 />
-                <Button variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />} onClick={handleAddMember}>Tambah Anggota</Button>
+                <Grid sx={{ display: "flex", flexDirection: 'row', gap: '10px', alignItems: 'end', justifyContent: "right", py: 2, px: 0, width: '100%' }}>
+                  {selectedRow?.length > 0 && (<Button variant="contained" color="error" startIcon={<TrashIcon />} onClick={handleDeleteBatch}>Hapus Anggota</Button>)}
+                  <Button variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />} onClick={handleAddMember}>Tambah Anggota</Button>
+                </Grid>
               </Grid>
               <hr />
             </>
@@ -59,7 +65,12 @@ export default function ModalMemberClass({ open, setHide, classId, role = 'ADMIN
               },
             }}>
               <Grid size={{ xs: 12, lg: 12 }}>
-                <ApiTable url={`/academic/class/${classId}/member`} pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} isPagination={false} />
+                <ApiTable url={`/academic/class/${classId}/member`}
+                          checkbox
+                          selectedRow={selectedRow} setSelectedRow={setSelectedRow}
+                          pageSize={10} columns={columns}
+                          searchKey={searchBy} searchValue={search}
+                          isRefresh={isRefreshList} isPagination={false} />
               </Grid>
             </Grid>
           </DialogContent>

@@ -121,6 +121,14 @@ const useApi = (() => {
     });
   };
 
+  const _deleteWithBody = async ({ url, body }) => {
+    return await useApi.fetch(url, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  };
+
   const uploadFile = async ({
     url,
     method = 'POST',
@@ -155,6 +163,7 @@ const useApi = (() => {
     createOrModify: _create,
     download: _download,
     delete: _delete,
+    deleteWithBody: _deleteWithBody,
     uploadFile: uploadFile,
   };
 })();

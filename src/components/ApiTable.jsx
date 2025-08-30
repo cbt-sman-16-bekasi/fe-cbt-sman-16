@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, TablePagination, CircularProgress, Paper
+    Table, TableBody, TableCell, TableContainer, TableHead,
+    TableRow, TablePagination, CircularProgress, Paper, Checkbox
 } from "@mui/material";
 import PropTypes from "prop-types";
 import useApi from "../utils/rest/api.js";
@@ -15,7 +15,10 @@ export default function ApiTable({
   searchValue,
   pageSize = 10,
   isPagination = true,
-  isRefresh = false
+  isRefresh = false,
+  checkbox = false,
+  selectedRow = [],
+  setSelectedRow = () => { },
 }) {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
@@ -24,6 +27,7 @@ export default function ApiTable({
   const [loading, setLoading] = useState(false);
   const debouncedSearch = useDebounce(searchValue, 500); // 500ms debounce
   const isDarkMode = useTheme().palette.mode === 'dark';
+  const isSelected = (id) => selectedRow.indexOf(id) !== -1;
 
   const fetchData = async () => {
     setLoading(true);
@@ -59,6 +63,29 @@ export default function ApiTable({
     return (index + 1) + (page * rowsPerPage);
   }
 
+  const handleSelectedRow = (event, id) => {
+    if (!checkbox) return;
+    const selectedIndex = selectedRow.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = [...selectedRow, id];
+    } else {
+      newSelected = selectedRow.filter((s) => s !== id);
+    }
+
+    setSelectedRow(newSelected);
+  };
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = data?.map((row) => row?.id);
+      setSelectedRow(newSelected);
+    } else {
+      setSelectedRow([]);
+    }
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
 
@@ -67,6 +94,14 @@ export default function ApiTable({
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#130A36" }}>
+                {checkbox && (<TableCell padding="checkbox">
+                    <Checkbox
+                        indeterminate={selectedRow.length > 0 && selectedRow.length < data.length}
+                        checked={data.length > 0 && selectedRow.length === data.length}
+                        onChange={handleSelectAllClick}
+                    />
+                </TableCell>
+                )}
               {columns?.map((col) => (
                 <TableCell key={col.field} sx={{ color: "white", fontWeight: "bold" }}>{col.headerName}</TableCell>
               ))}
@@ -83,7 +118,14 @@ export default function ApiTable({
               data?.map((row, index) => (
                 <TableRow key={row.id || index}
                   sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: !isDarkMode ? index % 2 === 0 ? '#f9f9f9' : '#ffffff' : 'transparent' }}
+                  hover
+                  role="checkbox"
+                  selected={isSelected(row.id)}
+                  onClick={(event) => handleSelectedRow(event, row?.id)}
                 >
+                    {checkbox && (<TableCell padding="checkbox">
+                        <Checkbox checked={isSelected(row.id)} />
+                    </TableCell>)}
                   {columns?.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}
