@@ -87,13 +87,13 @@ export default function ApiTable({
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+    <Paper sx={{ width: "100%", overflow: "hidden", p: 0 }}>
 
       {/* Table */}
-      <TableContainer sx={{ borderBottom: '1px solid black' }}>
+      <TableContainer sx={{ borderBottom: '1px solid rgba(224, 224, 224, 0.4)' }}>
         <Table>
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#130A36" }}>
+            <TableRow sx={{ backgroundColor: (theme) => theme.palette.primary.dark, color: "white" }}>
                 {checkbox && (<TableCell padding="checkbox">
                     <Checkbox
                         indeterminate={selectedRow.length > 0 && selectedRow.length < data.length}
@@ -111,13 +111,14 @@ export default function ApiTable({
             {loading ? (
               <TableRow>
                 <TableCell colSpan={columns?.length} align="center">
-                  <CircularProgress />
+                  <CircularProgress /><br/>
+                  Sedang memuat...
                 </TableCell>
               </TableRow>
             ) : (
               data?.map((row, index) => (
                 <TableRow key={row.id || index}
-                  sx={{ borderBottom: '1px solid #e0e0e0', backgroundColor: !isDarkMode ? index % 2 === 0 ? '#f9f9f9' : '#ffffff' : 'transparent' }}
+                  sx={{ borderBottom: '1px solid rgba(224, 224, 224, 0.4)', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}
                   hover
                   role="checkbox"
                   selected={isSelected(row.id)}

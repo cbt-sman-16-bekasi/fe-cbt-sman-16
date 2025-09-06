@@ -1,5 +1,6 @@
 import { alpha } from '@mui/material/styles';
-import { gray, orange, cbtColor } from '../themePrimitives';
+import { cbtColor } from '../themePrimitives';
+import { orange, grey as gray } from "@mui/material/colors";
 
 /* eslint-disable import/prefer-default-export */
 export const feedbackCustomizations = {

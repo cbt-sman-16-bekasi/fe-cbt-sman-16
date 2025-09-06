@@ -1,5 +1,5 @@
 import { alpha } from '@mui/material/styles';
-import { gray } from '../themePrimitives';
+import { grey as gray } from "@mui/material/colors";
 
 /* eslint-disable import/prefer-default-export */
 export const surfacesCustomizations = {
@@ -62,12 +62,12 @@ export const surfacesCustomizations = {
           padding: 16,
           gap: 16,
           transition: 'all 100ms ease',
-          backgroundColor: gray[50],
+          backgroundColor: (theme.vars || theme).palette.background.default,
           borderRadius: (theme.vars || theme).shape.borderRadius,
           border: `1px solid ${(theme.vars || theme).palette.divider}`,
           boxShadow: 'none',
           ...theme.applyStyles('dark', {
-            backgroundColor: gray[800],
+            backgroundColor: (theme.vars || theme).palette.background.default,
           }),
           variants: [
             {

@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Person, Lock } from "@mui/icons-material";
 import PropTypes from "prop-types";
+import BasicCard from "./common/BasicCard.jsx";
 
 const LoginForm = ({ login, schoolData }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,33 +27,28 @@ const LoginForm = ({ login, schoolData }) => {
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-
       <Card
         sx={{
           p: 2,
           width: 400,
           boxShadow: 3,
           borderRadius: 2,
+          backgroundColor: (theme) =>
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[900]
+              : theme.palette.common.white,
         }}
       >
-        {/* Logo */}
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
           {schoolData && (
-            <img src={schoolData.logo} alt="Logo Sekolah" width={90} height={90} />
+            <img src="/sinau-logo-remove.png" alt="Logo Sekolah" width={300} height={90} />
           )}
         </Box>
-
-        {/* Judul */}
-        <Typography variant="h6" fontWeight="bold" gutterBottom align={'center'}>
-          COMPUTER BASED TEST <br /> SMAN 16 BEKASI
-        </Typography>
-
-        {/* Form Login */}
         <CardContent>
           <Grid container spacing={2} alignItems="center" columns={12} sx={{ padding: 2 }}>
 
             <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
-              <Typography variant="subtitle2" fontWeight="bold" pb={1} >
+              <Typography variant="subtitle2" sx={{ color: (theme) => theme.palette.text.main}} pb={1} >
                 Username
               </Typography>
               <TextField
@@ -71,7 +67,7 @@ const LoginForm = ({ login, schoolData }) => {
             </Grid>
 
             <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
-              <Typography variant="subtitle2" fontWeight="bold" pb={1} >
+              <Typography variant="subtitle2"  sx={{ color: (theme) => theme.palette.text.main}} >
                 Password
               </Typography>
               <TextField
@@ -94,31 +90,38 @@ const LoginForm = ({ login, schoolData }) => {
               <FormControlLabel
                 control={<Checkbox onChange={() => setShowPassword(!showPassword)} />}
                 label="Show Password"
-                sx={{ textAlign: "left", width: "100%" }}
+                sx={{
+                  textAlign: "left",
+                  width: "100%",
+                  color: (theme) => theme.palette.text.primary,
+                  "& .MuiFormControlLabel-label": {
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                  },
+                }}
               />
             </Grid>
 
-            <Grid size={{ sm: 12 }}>
-              <Button
-                onClick={handleLogin}
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 2,
-                  bgcolor: "#7C3AED",
-                  "&:hover": { bgcolor: "#6B21A8" },
-                }}
-              >
-                Masuk
-              </Button>
-            </Grid>
+            { username && password && (
+              <Grid size={{ sm: 12 }}>
+                <Button
+                  onClick={handleLogin}
+                  fullWidth variant="contained" color="info"
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  Masuk
+                </Button>
+              </Grid>
+            )}
           </Grid>
 
         </CardContent>
 
       </Card>
       <Typography variant="body2" sx={{ mt: 2, fontSize: 12 }}>
-        © 2025 SMAN 16 Kota Bekasi. All Rights Reserved.
+        © 2025 SINAU - Academic Management System. All Rights Reserved.
       </Typography>
     </Container>
 

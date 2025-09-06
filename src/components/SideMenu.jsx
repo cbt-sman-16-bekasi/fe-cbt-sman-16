@@ -13,6 +13,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Copyright from '../internals/components/Copyright';
 import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
+import { grey } from "@mui/material/colors";
 
 const drawerWidth = 240;
 
@@ -48,7 +49,7 @@ export default function SideMenu({ user, role, logout, schoolData }) {
       sx={{
         display: { xs: 'none', md: 'block' },
         [`& .${drawerClasses.paper}`]: {
-          backgroundColor: 'cbtPrimary.violet',
+          backgroundColor: 'cbtPrimary.contrastText',
         },
       }}
     >
@@ -70,10 +71,10 @@ export default function SideMenu({ user, role, logout, schoolData }) {
             maxWidth: "150px",
           }} />
         )}
-        <Typography variant='subtitle1' fontWeight='bold' sx={{ color: 'cbtAccents.white' }}>
-          CBT SYSTEM SMAN 16 BEKASI
+        <Typography variant='subtitle1' fontWeight='bold' sx={{ color: 'cbtAccents.black' }}>
+          {schoolData && schoolData.school_name}
         </Typography>
-        {/* <SelectContent /> */}
+         {/*<SelectContent />*/}
       </Box>
       <Divider />
       <Box
@@ -105,7 +106,12 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           onClick={() => to(item, path)}
           to={path}
           alignItems="center"
-          sx={{ border: isActive ? '' : '1px solid grey', backgroundColor: isActive ? 'primary.main' : '', display: 'flex', justifyContent: "space-between", alignItems: 'center', gap: 1, borderRadius: 1, p: 1, width: '100%' }}
+          sx={{ border: isActive ? '' : '1px solid grey',
+            backgroundColor: isActive ? 'primary.main' : '',
+            fontWeight: 'bold',
+            display: 'flex',
+            justifyContent: "space-between",
+            alignItems: 'center', gap: 1, borderRadius: 1, p: 1, width: '100%' }}
         >
           {user?.detail?.profile_url ?
             <Avatar
@@ -124,20 +130,21 @@ export default function SideMenu({ user, role, logout, schoolData }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                fontWeight: 'bold'
               }}
             >
               <IconComponent sx={{ color: isActive ? 'cbtAccents.white' : 'primary.main' }} fontSize="small" />
             </Box>
           }
           <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
+            <Typography variant="body2" sx={{ fontWeight: 'bold', lineHeight: '16px' }}>
               {user?.detail?.name}
             </Typography>
           </Box>
           <Button
-            variant="text"
+            variant="info"
             sx={{
-              color: 'white',
+              color: grey[500],
               borderRadius: '50%',
               minWidth: 40,
               width: 40,

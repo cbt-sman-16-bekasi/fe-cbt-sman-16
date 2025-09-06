@@ -8,7 +8,7 @@ import { checkboxClasses } from '@mui/material/Checkbox';
 import { listClasses } from '@mui/material/List';
 import { gridClasses } from '@mui/x-data-grid';
 import { tablePaginationClasses } from '@mui/material/TablePagination';
-import { gray } from '../../../shared-theme/themePrimitives';
+import { grey as gray } from "@mui/material/colors";
 
 /* eslint-disable import/prefer-default-export */
 export const dataGridCustomizations = {

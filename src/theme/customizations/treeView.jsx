@@ -1,6 +1,6 @@
 import { alpha } from '@mui/material/styles';
-
-import { gray, brand } from '../../../shared-theme/themePrimitives';
+import { brand } from '../../../shared-theme/themePrimitives';
+import { grey as gray } from "@mui/material/colors";
 
 /* eslint-disable import/prefer-default-export */
 export const treeViewCustomizations = {

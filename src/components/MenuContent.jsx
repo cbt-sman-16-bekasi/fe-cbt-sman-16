@@ -33,7 +33,7 @@ export default function MenuContent({ role, currentPath, to }) {
                     component={Link}
                     onClick={() => to(item, path)}
                     to={path}
-                    style={{ textDecoration: 'none', color: '#FFFFFF' }}
+                    style={{ textDecoration: 'none', color: '#424242' }}
                     selected={isActive}
                     sx={{
                       borderRadius: 2,

@@ -2,12 +2,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import Diversity3 from "@mui/icons-material/Diversity3";
 import { useNavigate } from "react-router";
 import { useModal } from "../../../components/common/ModalContext.jsx";
 import { useLoading } from "../../../components/common/LoadingProvider.jsx";
 import useApi from "../../../utils/rest/api.js";
-import { IconButton } from "@mui/material";
 
 export function useClassesHook({role = 'ADMIN'}) {
   const navigate = useNavigate();
@@ -34,41 +33,23 @@ export function useClassesHook({role = 'ADMIN'}) {
       minWidth: 120,
       renderCell: (row) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          <IconButton
-            size="small"
-            sx={{
-              bgcolor: "green",
-              color: "white",
-              "&:hover": { bgcolor: "yellowgreen" },
-            }}
+          <div
             onClick={() => onOpenMemberModal(row.ID)}
           >
-            <VisibilityIcon />
-          </IconButton>
+            <Diversity3 sx={{ color: (theme) => theme.palette.text.darkGray, cursor: 'pointer' }} />
+          </div>
             {role === 'ADMIN' && (
               <>
-                <IconButton
-                  size="small"
-                  sx={{
-                      bgcolor: "purple",
-                      color: "white",
-                      "&:hover": { bgcolor: "purple" },
-                  }}
+                <div
                   onClick={() => handleEdit(row.ID)}
                 >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  sx={{
-                      bgcolor: "red",
-                      color: "white",
-                      "&:hover": { bgcolor: "darkred" },
-                  }}
+                  <EditIcon sx={{ color: (theme) => theme.palette.text.darkGray, cursor: 'pointer' }} />
+                </div>
+                <div
                   onClick={() => handleDelete(row.ID)}
                 >
-                  <DeleteIcon />
-                </IconButton>
+                  <DeleteIcon sx={{ color: (theme) => theme.palette.text.darkGray, cursor: 'pointer' }} />
+                </div>
               </>
             )}
         </div >
