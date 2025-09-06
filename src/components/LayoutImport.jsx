@@ -87,7 +87,7 @@ export default function LayoutImport() {
         </Grid>
       )}
 
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
+      <Card sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '1.3rem' }}>
           {renderContent()}
         </CardContent>

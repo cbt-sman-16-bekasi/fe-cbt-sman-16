@@ -42,7 +42,7 @@ export default function GenerateToken() {
         </Grid>
       </Grid>
 
-      <Card variant="outlined" sx={{ flexGrow: 1, my: 4 }}>
+      <Card sx={{ flexGrow: 1, my: 4 }}>
         <CardContent>
           <Typography variant="subtitle1" fontWeight="bold">
             Token Test
@@ -67,7 +67,7 @@ export default function GenerateToken() {
         </CardContent>
       </Card>
 
-      <Card variant="outlined" sx={{ flexGrow: 1, my: 4 }}>
+      <Card sx={{ flexGrow: 1, my: 4 }}>
         <CardContent>
           {/* Form Section */}
           <Grid container spacing={3} alignItems="center" columns={12}>

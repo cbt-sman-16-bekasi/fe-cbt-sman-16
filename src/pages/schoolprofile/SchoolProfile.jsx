@@ -92,19 +92,14 @@ const UserProfile = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-
-      <Typography component="h3" variant="h3" sx={{ mb: 3, mt: 5 }}>
-        Profil Sekolah
-      </Typography>
-
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
+      <Card sx={{ flexGrow: 1, mb: 9, mt: 5 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           {/* logo */}
           <Grid container spacing={2} alignItems="center" columns={12}>
             <Grid size={{ lg: 2 }}>
 
-              <Card variant="outlined" sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
+              <Card sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
                 <CardContent>
                   <img
                     src={logo.preview}
@@ -314,48 +309,6 @@ const UserProfile = () => {
               />
             </Grid>
 
-          </Grid>
-
-          {/* banner */}
-          <Grid container spacing={3} alignItems="center" columns={12}>
-            <Grid size={{ sm: 12 }}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Banner
-              </Typography>
-              <Card
-                style={{
-                  pointerEvents: !isEdit ? 'none' : 'auto',
-                  opacity: !isEdit ? 0.5 : 1,
-                }}
-              >
-                <CardContent className="p-6 flex flex-col items-center justify-center text-center space-y-2 w-full h-40 relative">
-                  <Upload className="w-10 h-10 " />
-                  <Typography variant="body1" className="text-gray-700 font-medium">
-                    Upload File Banner
-                  </Typography>
-                  <label htmlFor="fileUpload" className="text-purple-600 hover:underline text-sm cursor-pointer">
-                    JPG and PNG files
-                  </label>
-                  <input
-                    name="banner"
-                    id="fileUpload"
-                    type="file"
-                    accept=".jpg, .png"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={handleFileChange}
-                    disabled={!isEdit}
-                  />
-                </CardContent>
-              </Card>
-              {banner.preview && (
-                <img
-                  src={banner.preview}
-                  alt="Preview Banner"
-                  style={{ width: '100%', height: 'auto', marginTop: '1rem', objectFit: 'cover' }}
-                />
-              )}
-
-            </Grid>
           </Grid>
 
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>

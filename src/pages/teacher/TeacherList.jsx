@@ -41,20 +41,8 @@ const TeacherList = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={1} columns={12} sx={{
-        '--Grid-borderWidth': '1px',
-        borderTop: 'var(--Grid-borderWidth) solid',
-        borderLeft: 'var(--Grid-borderWidth) solid',
-        borderColor: 'divider',
-        '& > div': {
-          borderRight: 'var(--Grid-borderWidth) solid',
-          borderBottom: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-        }
-      }}>
-        <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/teacher/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
-        </Grid>
+      <Grid size={{ xs: 12, lg: 12 }}>
+        <ApiTable url="/academic/teacher/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
       </Grid>
     </Box>
   )

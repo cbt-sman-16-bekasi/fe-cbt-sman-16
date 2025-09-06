@@ -82,7 +82,7 @@ const defaultPallete = {
   grey: {
     ...grey,
   },
-  divider: alpha(grey[300], 0.4),
+  divider: alpha(grey[600], 0.4),
   background: {
     default: cbtColor.background.lightGray,
     paper: "hsl(220, 35%, 97%)",

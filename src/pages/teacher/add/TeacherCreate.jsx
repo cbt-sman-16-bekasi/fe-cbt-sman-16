@@ -65,7 +65,7 @@ export function TeacherCreate({ isUpdatePage = false }) {
       <BackWithTitle />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text={isUpdatePage ? "Detail Data Guru" : 'Tambah Data Guru'} iconBackground="red" />
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
+      <Card sx={{ flexGrow: 1, mb: 3 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           <Grid container spacing={3} alignItems="center" columns={12}>

@@ -8,7 +8,7 @@ export const feedbackCustomizations = {
     styleOverrides: {
       root: ({ theme }) => ({
         borderRadius: 10,
-        backgroundColor: (theme.vars || theme).palette.cbtPrimary.lightPurple,
+        backgroundColor: (theme.vars || theme).palette.primary.main,
         color: (theme.vars || theme).palette.text.alert,
         border: `1px solid ${cbtColor.primary.purple}`,
         '& .MuiAlert-icon': {

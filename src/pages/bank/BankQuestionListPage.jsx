@@ -104,25 +104,7 @@ const BankQuestionListPage = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ sm: 12 }}>
-          <Alert icon={<RocketLaunch fontSize="small" color="info" />} variant="outlined" severity="info" sx={{ p: 1 }}>
-            <AlertTitle fontSize="medium">Perhatian!</AlertTitle>
-            Bank Soal adalah fitur yang menyimpan semua soal dari setiap ujian dan sesi ujian yang Anda telah di buat:
-            <List sx={{ display: 'flex', flexDirection: 'column', gap: -8 }}>
-              {bulletPoints.map((point, index) => (
-                <ListItem key={index} alignItems="flex-start" disableGutters>
-                  <ListItemIcon sx={{ minWidth: '20px' }}>
-                    <FiberManualRecord fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText primary={point} />
-                </ListItem>
-              ))}
-            </List>
-          </Alert>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
+      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4} sx={{ my: 4}}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
           { authUser?.role?.code === 'ADMIN' && (<Link to={`/${userRole}/bank-soal/tambah`}>
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
@@ -141,20 +123,8 @@ const BankQuestionListPage = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={1} columns={12} sx={{
-        '--Grid-borderWidth': '1px',
-        borderTop: 'var(--Grid-borderWidth) solid',
-        borderLeft: 'var(--Grid-borderWidth) solid',
-        borderColor: 'divider',
-        '& > div': {
-          borderRight: 'var(--Grid-borderWidth) solid',
-          borderBottom: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-        }
-      }}>
-        <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/bank/all" isRefresh={isRefreshList} pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} />
-        </Grid>
+      <Grid size={{ xs: 12, lg: 12 }}>
+        <ApiTable url="/academic/bank/all" isRefresh={isRefreshList} pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} />
       </Grid>
     </Box>
   )

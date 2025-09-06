@@ -22,7 +22,7 @@ export function ClassesCreate({ isUpdatePage = false }) {
       <BackWithTitle />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text={isUpdatePage ? "Detail Kelas" : 'Tambah Kelas'} iconBackground="red" />
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
+      <Card sx={{ flexGrow: 1, mb: 3 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           <Grid container spacing={2} alignItems="center" columns={12}>
@@ -33,11 +33,11 @@ export function ClassesCreate({ isUpdatePage = false }) {
           <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2} mt={3}>
 
             <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="outlined" color='secondary' onClick={resetForm}>Reset</Button>
+              <Button fullWidth variant="contained" color='warning' onClick={resetForm}>Reset</Button>
             </Grid>
 
             <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleSubmitCreate}>Simpan</Button>
+              <Button fullWidth variant="contained" color="info" onClick={handleSubmitCreate}>Simpan</Button>
             </Grid>
 
           </Grid>

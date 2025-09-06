@@ -29,7 +29,7 @@ const FormGenerateToken = ({onChangeGenerate}) => {
 
       <Grid container spacing={2} columns={12} justifyContent="center" alignItems="center" mb={2} mt={3}>
         <Grid size={{ lg: 1.5 }}>
-          <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleGenerate}>Generate Token</Button>
+          <Button fullWidth variant="contained" color='warning' onClick={handleGenerate}>Generate Token</Button>
         </Grid>
       </Grid>
     </BasicCard>

@@ -36,7 +36,7 @@ export function ExamCreate({ isUpdatePage = false }) {
       <BackWithTitle title={isUpdatePage ? 'Edit Ujian' : 'Tambah Ujian'} />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Ujian" iconBackground="red" />
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
+      <Card sx={{ flexGrow: 1, mb: 3 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
           <Grid container spacing={3} alignItems="center" columns={12}>
             <CustomInput label="Nama Ujian" fullWidth={true} type="text" value={name} onChange={(c) => setName(c.target.value)} placeholder="Ujian Akhir Sekolah" />
@@ -65,7 +65,7 @@ export function ExamCreate({ isUpdatePage = false }) {
       </Card>
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'black' }} />} text="Setting Ujian" iconBackground="yellow" />
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
+      <Card sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
           <Grid container spacing={3} alignItems="center" columns={12}>
             <CustomInput label="Jenis Soal" fullWidth={true} options={optionsTypeQuestion} value={typeQuestion} onChange={(c) => setTypeQuestion(c.target.value)} />

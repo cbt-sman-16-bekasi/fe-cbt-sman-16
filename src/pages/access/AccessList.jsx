@@ -22,50 +22,7 @@ const AccessList = () => {
 
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <Grid container spacing={2} sx={{ my: 4 }} columns={12}>
-        <Grid size={{ sm: 12 }}>
-          <Alert icon={<RocketLaunch fontSize="small" color="info" />} variant="outlined" severity="info" sx={{ p: 1 }}>
-            <AlertTitle fontSize="medium">Perhatian!</AlertTitle>
-
-            <Typography variant="body1" sx={{ mt: 1 }}>
-              Dalam sistem ini terdapat dua jenis hak akses utama yang diberikan kepada pengguna, yaitu:
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 1 }}>
-              <b>1. Super Admin</b>
-            </Typography>
-            <Box
-              component="ul"
-              sx={{
-                pl: 2,
-                mt: 1,
-                mb: 0,
-                listStyleType: 'disc'
-              }}
-            >
-              <Box component="li"><Typography variant="body2">Super Admin memiliki hak tertinggi dalam sistem.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengakses dan mengelola seluruh menu dan fitur yang ada dalam sistem.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Menambahkan, mengedit, dan menghapus data pengguna termasuk admin dan guru.</Typography></Box>
-            </Box>
-            <Typography variant="body1" sx={{ mt: 1 }}>
-              <b>2. Guru</b>
-            </Typography>
-            <Box
-              component="ul"
-              sx={{
-                pl: 2,
-                mt: 1,
-                mb: 0,
-                listStyleType: 'disc'
-              }}
-            >
-              <Box component="li"><Typography variant="body2">Guru memiliki hak akases yang lebih terbatas, fokus pada pengelolaan ujian dan penilaian.</Typography></Box>
-              <Box component="li"><Typography variant="body2">Mengatur setting ujian, termasuk jadwal, durasi, dan aturan ujian, mengakses dan mengunduh laporan nilai siswa untuk ujian yang mereka kelola.</Typography></Box>
-            </Box>
-          </Alert>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4}>
+      <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4} my={4}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Link to={`/${userRole}/akses-system/tambah`}>
             <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>

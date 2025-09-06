@@ -178,14 +178,14 @@ export default function ProfilSekolah() {
         </Grid>
       )}
 
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
+      <Card sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           {/* logo */}
           <Grid container spacing={2} alignItems="center" columns={12}>
             <Grid size={{ lg: 2 }}>
 
-              <Card variant="outlined" sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
+              <Card sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
                 <CardContent>
                   <img
                     src={logo.preview}

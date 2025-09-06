@@ -49,27 +49,15 @@ const StudentList = () => {
       </Grid>
 
       <BasicCard>
-        <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" ml={'auto'} >
+        <Grid container spacing={2} columns={12} justifyContent="space-between" alignItems="center" ml={'70%'}>
           <Grid size={{ sm: 12 }} sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
             <Button fullWidth variant="contained" color='warning' startIcon={<UploadFileOutlined />} onClick={() => setOpenUpload(true)}>Import Data</Button>
-            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Download Template Import</Button>
+            <Button fullWidth variant="contained" color='success' startIcon={<DownloadOutlined />} onClick={() => handleDownloadTemplate()}>Template Import</Button>
           </Grid>
         </Grid>
 
-        <Grid container spacing={1} columns={12} sx={{
-          '--Grid-borderWidth': '1px',
-          borderTop: 'var(--Grid-borderWidth) solid',
-          borderLeft: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-          '& > div': {
-            borderRight: 'var(--Grid-borderWidth) solid',
-            borderBottom: 'var(--Grid-borderWidth) solid',
-            borderColor: 'divider',
-          }
-        }}>
-          <Grid size={{ xs: 12, lg: 12 }}>
-            <ApiTable url="/academic/student/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
-          </Grid>
+        <Grid size={{ xs: 12, lg: 12 }}>
+          <ApiTable url="/academic/student/all" pageSize={10} columns={columns} searchKey={searchBy} searchValue={search} isRefresh={isRefreshList} />
         </Grid>
       </BasicCard>
 

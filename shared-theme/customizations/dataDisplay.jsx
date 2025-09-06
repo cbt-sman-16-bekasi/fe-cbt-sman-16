@@ -212,6 +212,16 @@ export const dataDisplayCustomizations = {
           height: 36,
         },
       },
+      toolbar: {
+        '& .MuiIconButton-root': {
+          // Styles for direction buttons (previous and next)
+          backgroundColor: 'rgba(0, 0, 0, 0.04)', // Example background color
+          borderRadius: '50%', // Makes it a circle
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.08)', // Hover effect
+          },
+        },
+      },
     },
   },
   MuiIcon: {

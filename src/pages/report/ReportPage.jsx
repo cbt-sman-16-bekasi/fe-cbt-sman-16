@@ -66,34 +66,17 @@ const ReportPage = () => {
       minWidth: 120,
       renderCell: (row) => (
         <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          <Button variant="contained" size="small" color="info" startIcon={<Download />} onClick={() => handleDownload(row.report_url)}> Unduh</Button>
+          <Button variant="contained" size="small" color="warning" startIcon={<Download />} onClick={() => handleDownload(row.report_url)}> Unduh</Button>
         </Box>)
     })
-  return (<Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-    <AlertWithTitle icon={<RocketLaunch fontSize="small" color="info" />} title="Laporan Nilai!"
-                    message="Mengunduh laporan nilai dengan memilih terlebih dahulu Data Ujian kemudian sesuaikan terhadap sesi ujian masing-masing"
-    />
+  return (<Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 4 }}>
     <BasicCard sx={{ width: '100%', mb: '20px'}}>
       <Grid container spacing={3} alignItems="center" columns={12}>
         <CustomInput label="Nama Ujian" fullWidth={true} type="text" options={optionExam} value={examCode} onChange={(c) => setExamCode(c.target.value)} placeholder="Pilih Nama Ujian" />
         <CustomInput label="Nama Sesi Ujian" fullWidth={true} type="text" options={optionExamSession} value={examSession} onChange={(c) => setExamSession(c.target.value)} placeholder="Sesi Ujian" />
       </Grid>
     </BasicCard>
-    <Grid container spacing={1} columns={12} sx={{
-      '--Grid-borderWidth': '1px',
-      borderTop: 'var(--Grid-borderWidth) solid',
-      borderLeft: 'var(--Grid-borderWidth) solid',
-      borderColor: 'divider',
-      '& > div': {
-        borderRight: 'var(--Grid-borderWidth) solid',
-        borderBottom: 'var(--Grid-borderWidth) solid',
-        borderColor: 'divider',
-      }
-    }}>
-      <Grid size={{ xs: 12, lg: 12 }}>
-        {examCode && (<ApiTable url={`/academic/exam/session/report?exam_code=${examCode}&sessionId=${examSession}`} isRefresh={isRefreshList} pageSize={10} columns={columns} isPagination={false} />)}
-      </Grid>
-    </Grid>
+    {examCode && (<ApiTable url={`/academic/exam/session/report?exam_code=${examCode}&sessionId=${examSession}`} isRefresh={isRefreshList} pageSize={10} columns={columns} isPagination={false} />)}
   </Box>)
 }
 

@@ -53,7 +53,7 @@ const UserProfile = () => {
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text="Detail Profil" iconBackground="purple" />
 
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 9 }}>
+      <Card sx={{ flexGrow: 1, mb: 9 }}>
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           {/* photo profile */}

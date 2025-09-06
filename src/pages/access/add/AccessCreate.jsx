@@ -24,7 +24,7 @@ export function AccessCreate({ isUpdatePage = false }) {
       <BackWithTitle />
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text={isUpdatePage ? "Detail Akses" : 'Tambah Akses'} iconBackground="red" />
-      <Card variant="outlined" sx={{ flexGrow: 1, mb: 3 }}>
+      <Card sx={{ flexGrow: 1, mb: 3 }}>
         {!isUpdatePage && (
           <Alert icon={<WarningAmberIcon fontSize="small" color="yellow" />} variant="outlined" severity="info" sx={{ p: 1, mb: 3 }}>
             <AlertTitle fontSize="medium" fontWeight={800}>PERHATIAN!</AlertTitle>

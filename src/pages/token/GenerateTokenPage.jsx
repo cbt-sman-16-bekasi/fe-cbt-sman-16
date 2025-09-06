@@ -16,11 +16,7 @@ const GenerateTokenPage = () => {
     columns
   } = useGenerateTokenHook()
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-      <AlertWithTitle icon={<RocketLaunch fontSize="small" color="info" />} title="Setting Session Ujian!"
-                      message="Silahkan klik Generate Token untuk mendapatkan token yang akan diberikan ke siswa. Masa aktif Token berlaku selama satu hari."
-      />
-
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 4 }}>
       <TitleWithIcon icon={<TokenOutlined sx={{color: 'white'}} />} text="Generate Token" iconBackground="red" />
       <BasicCard gap="0.3rem" sx={{mb:4}}>
         <Typography variant="body1" fontWeight="bold">
@@ -48,20 +44,9 @@ const GenerateTokenPage = () => {
       <FormGeneratToken onChangeGenerate={setToken} />
 
       <TitleWithIcon icon={<ListSharp sx={{color: 'white'}} />} text="Daftar Token" iconBackground="red" />
-      <Grid container spacing={1} columns={12} sx={{
-        '--Grid-borderWidth': '1px',
-        borderTop: 'var(--Grid-borderWidth) solid',
-        borderLeft: 'var(--Grid-borderWidth) solid',
-        borderColor: 'divider',
-        '& > div': {
-          borderRight: 'var(--Grid-borderWidth) solid',
-          borderBottom: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-        }
-      }}>
-        <Grid size={{ xs: 12, lg: 12 }}>
-          <ApiTable url="/academic/exam/session/token/all" isPagination={false} columns={columns} isRefresh={token} searchKey="name" />
-        </Grid>
+
+      <Grid size={{ xs: 12, lg: 12 }}>
+        <ApiTable url="/academic/exam/session/token/all" isPagination={false} columns={columns} isRefresh={token} searchKey="name" />
       </Grid>
     </Box>
   )

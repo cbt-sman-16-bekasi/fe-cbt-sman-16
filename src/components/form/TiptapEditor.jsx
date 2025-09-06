@@ -148,7 +148,7 @@ const TiptapEditor = ({ value = "", onChange, sx = {}, editable = true }) => {
   }, [editor?.getHTML()]);
 
   return (
-    <Card variant="outlined" sx={{ flexGrow: 1, mb: 3, ...sx }}>
+    <Card sx={{ flexGrow: 1, mb: 3, ...sx }}>
       <CardContent>
         {editable && <MenuBar editor={editor} onImageUpload={handleImageUpload} />}
         <input
