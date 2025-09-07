@@ -1,7 +1,7 @@
 import {Card, CardContent} from "@mui/material";
 import PropTypes from "prop-types";
 
-export default function BasicCard({ children, sx = {mb: 9}, gap = '2.3rem' }) {
+export default function BasicCard({ children, sx = {mb: 9}, gap = '0.5rem' }) {
   return (
     <Card sx={{ flexGrow: 1, ...sx }}>
       <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: gap }}>

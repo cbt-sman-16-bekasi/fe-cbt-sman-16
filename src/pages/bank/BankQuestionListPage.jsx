@@ -31,11 +31,6 @@ const BankQuestionListPage = () => {
     authUser,
     searchOptions,
   } = useBankQuestionListHook()
-  const bulletPoints = [
-    'Penyimpanan Soal: Semua soal dari setiap ujian dan sesi ujian yang dibuat akan disimpan dalam Bank Soal.',
-    'Penggunaan Kembali: Soal-soal yang ada dalam Bank Soal dapat digunakan kembali untuk ujian di masa mendatang.',
-    'Penambahan Soal: Bapak/Ibu dapat menambahkan soal baru ke dalam Bank Soal untuk memperkaya koleksi soal.',
-  ];
 
   const messageDelete = () => {
     return (
@@ -107,7 +102,7 @@ const BankQuestionListPage = () => {
       <Grid container spacing={2} columns={12} justifyContent="start" alignItems="center" mb={4} sx={{ my: 4}}>
         <Grid sx={{ display: "flex", justifyContent: "flex-start" }}>
           { authUser?.role?.code === 'ADMIN' && (<Link to={`/${userRole}/bank-soal/tambah`}>
-            <Button fullWidth variant="contained" color="info" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
+            <Button fullWidth variant="contained" color="warning" startIcon={<AddBoxOutlinedIcon />}> Tambah</Button>
           </Link>)}
         </Grid>
         <Grid lg={4}>

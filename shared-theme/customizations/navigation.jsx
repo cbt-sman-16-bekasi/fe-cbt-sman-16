@@ -9,6 +9,7 @@ import { tabClasses } from '@mui/material/Tab';
 import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import { brand } from '../themePrimitives';
 import { grey as gray } from "@mui/material/colors";
+import {svgIconClasses} from "@mui/material/SvgIcon";
 
 /* eslint-disable import/prefer-default-export */
 export const navigationCustomizations = {
@@ -50,7 +51,7 @@ export const navigationCustomizations = {
           },
         },
         ...theme.applyStyles('dark', {
-          background: gray[900],
+          background: (theme.vars || theme).palette.background.paper,
           boxShadow:
             'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',
         }),
@@ -77,7 +78,7 @@ export const navigationCustomizations = {
         },
         [`&.${selectClasses.focused}`]: {
           outlineOffset: 0,
-          borderColor: gray[400],
+          borderColor: (theme.vars || theme).palette.background.paper,
         },
         '&:before, &:after': {
           display: 'none',
@@ -108,7 +109,7 @@ export const navigationCustomizations = {
           display: 'flex',
           alignItems: 'center',
           '&:focus-visible': {
-            backgroundColor: gray[900],
+            backgroundColor: (theme.vars || theme).palette.background.paper,
           },
         }),
       }),

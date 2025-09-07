@@ -1,4 +1,3 @@
-import Grid from "@mui/material/Grid2";
 import Divider from "@mui/material/Divider";
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";

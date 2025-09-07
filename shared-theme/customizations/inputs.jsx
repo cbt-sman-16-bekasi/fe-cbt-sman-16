@@ -8,7 +8,7 @@ import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutline
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { brand } from '../themePrimitives';
-import { grey as gray } from "@mui/material/colors";
+import { grey as gray, orange } from "@mui/material/colors";
 
 /* eslint-disable import/prefer-default-export */
 export const inputsCustomizations = {
@@ -34,35 +34,18 @@ export const inputsCustomizations = {
         boxShadow: 'none',
         borderRadius: (theme.vars || theme).shape.borderRadius,
         textTransform: 'none',
+
         variants: [
+          // === Contained Primary ===
           {
-            props: {
-              size: 'small',
-            },
-            style: {
-              height: '2.25rem',
-              padding: '8px 12px',
-            },
-          },
-          {
-            props: {
-              size: 'medium',
-            },
-            style: {
-              height: '2.5rem', // 40px
-            },
-          },
-          {
-            props: {
-              color: 'primary',
-              variant: 'contained',
-            },
+            props: { color: 'primary', variant: 'contained' },
             style: {
               color: 'white',
               backgroundColor: gray[900],
               backgroundImage: `linear-gradient(to bottom, ${gray[700]}, ${gray[800]})`,
               boxShadow: `inset 0 1px 0 ${gray[600]}, inset 0 -1px 0 1px hsl(220, 0%, 0%)`,
               border: `1px solid ${gray[700]}`,
+
               '&:hover': {
                 backgroundImage: 'none',
                 backgroundColor: gray[700],
@@ -71,6 +54,13 @@ export const inputsCustomizations = {
               '&:active': {
                 backgroundColor: gray[800],
               },
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                backgroundColor: gray[300],   // lebih terang abu-abu
+                borderColor: gray[300],
+                backgroundImage: 'none',
+              },
+
               ...theme.applyStyles('dark', {
                 color: 'black',
                 backgroundColor: gray[50],
@@ -85,39 +75,48 @@ export const inputsCustomizations = {
                 '&:active': {
                   backgroundColor: gray[400],
                 },
+                '&.Mui-disabled': {
+                  color: theme.palette.text.disabled,
+                  backgroundColor: gray[700], // dark mode abu-abu lebih gelap
+                  borderColor: gray[700],
+                },
               }),
             },
           },
+
+          // === Contained Secondary ===
           {
-            props: {
-              color: 'secondary',
-              variant: 'contained',
-            },
+            props: { color: 'secondary', variant: 'contained' },
             style: {
               color: 'white',
-              backgroundColor: brand[300],
-              backgroundImage: `linear-gradient(to bottom, ${alpha(brand[400], 0.8)}, ${brand[500]})`,
-              boxShadow: `inset 0 2px 0 ${alpha(brand[200], 0.2)}, inset 0 -2px 0 ${alpha(brand[700], 0.4)}`,
-              border: `1px solid ${brand[500]}`,
+              backgroundColor: gray[400],
+              border: `1px solid ${gray[500]}`,
+
               '&:hover': {
-                backgroundColor: brand[700],
-                boxShadow: 'none',
+                backgroundColor: gray[700],
+                backgroundImage: 'none',
               },
               '&:active': {
-                backgroundColor: brand[700],
+                backgroundColor: gray[800],
+                backgroundImage: 'none',
+              },
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                backgroundColor: alpha(gray[200], 0.5),
+                borderColor: alpha(gray[200], 0.5),
                 backgroundImage: 'none',
               },
             },
           },
+
+          // === Outlined Primary ===
           {
-            props: {
-              variant: 'outlined',
-            },
+            props: { variant: 'outlined' },
             style: {
               color: (theme.vars || theme).palette.text.primary,
-              border: '1px solid',
-              borderColor: gray[200],
+              border: `1px solid ${gray[200]}`,
               backgroundColor: alpha(gray[50], 0.3),
+
               '&:hover': {
                 backgroundColor: gray[100],
                 borderColor: gray[300],
@@ -125,29 +124,22 @@ export const inputsCustomizations = {
               '&:active': {
                 backgroundColor: gray[200],
               },
-              ...theme.applyStyles('dark', {
-                backgroundColor: gray[800],
-                borderColor: gray[700],
-                '&:hover': {
-                  backgroundColor: gray[900],
-                  borderColor: gray[600],
-                },
-                '&:active': {
-                  backgroundColor: gray[900],
-                },
-              }),
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                borderColor: gray[200],
+                backgroundColor: alpha(gray[50], 0.2), // tipis banget
+              },
             },
           },
+
+          // === Outlined Secondary ===
           {
-            props: {
-              color: 'secondary',
-              variant: 'outlined',
-            },
+            props: { color: 'secondary', variant: 'outlined' },
             style: {
               color: brand[700],
-              border: '1px solid',
-              borderColor: brand[200],
+              border: `1px solid ${brand[200]}`,
               backgroundColor: brand[50],
+
               '&:hover': {
                 backgroundColor: brand[100],
                 borderColor: brand[400],
@@ -155,25 +147,17 @@ export const inputsCustomizations = {
               '&:active': {
                 backgroundColor: alpha(brand[200], 0.7),
               },
-              ...theme.applyStyles('dark', {
-                color: brand[50],
-                border: '1px solid',
-                borderColor: brand[900],
-                backgroundColor: alpha(brand[900], 0.3),
-                '&:hover': {
-                  borderColor: brand[700],
-                  backgroundColor: alpha(brand[900], 0.6),
-                },
-                '&:active': {
-                  backgroundColor: alpha(brand[900], 0.5),
-                },
-              }),
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                borderColor: alpha(brand[200], 0.3),
+                backgroundColor: alpha(brand[50], 0.2), // teal tipis
+              },
             },
           },
+
+          // === Text Primary ===
           {
-            props: {
-              variant: 'text',
-            },
+            props: { variant: 'text' },
             style: {
               color: gray[600],
               '&:hover': {
@@ -182,22 +166,16 @@ export const inputsCustomizations = {
               '&:active': {
                 backgroundColor: gray[200],
               },
-              ...theme.applyStyles('dark', {
-                color: gray[50],
-                '&:hover': {
-                  backgroundColor: gray[700],
-                },
-                '&:active': {
-                  backgroundColor: alpha(gray[700], 0.7),
-                },
-              }),
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                backgroundColor: 'transparent', // biar beda dari contained
+              },
             },
           },
+
+          // === Text Secondary ===
           {
-            props: {
-              color: 'secondary',
-              variant: 'text',
-            },
+            props: { color: 'secondary', variant: 'text' },
             style: {
               color: brand[700],
               '&:hover': {
@@ -206,15 +184,10 @@ export const inputsCustomizations = {
               '&:active': {
                 backgroundColor: alpha(brand[200], 0.7),
               },
-              ...theme.applyStyles('dark', {
-                color: brand[100],
-                '&:hover': {
-                  backgroundColor: alpha(brand[900], 0.5),
-                },
-                '&:active': {
-                  backgroundColor: alpha(brand[900], 0.3),
-                },
-              }),
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                backgroundColor: 'transparent',
+              },
             },
           },
         ],
@@ -314,7 +287,7 @@ export const inputsCustomizations = {
     defaultProps: {
       disableRipple: true,
       icon: (
-        <CheckBoxOutlineBlankRoundedIcon sx={{ color: 'hsla(210, 0%, 0%, 0.0)' }} />
+        <CheckBoxOutlineBlankRoundedIcon sx={{ color: (theme) => (theme.vars || theme).palette.text.secondary }} />
       ),
       checkedIcon: <CheckRoundedIcon sx={{ height: 14, width: 14 }} />,
       indeterminateIcon: <RemoveRoundedIcon sx={{ height: 14, width: 14 }} />,
@@ -328,7 +301,7 @@ export const inputsCustomizations = {
         border: '1px solid ',
         borderColor: alpha(gray[300], 0.8),
         boxShadow: '0 0 0 1.5px hsla(210, 0%, 0%, 0.04) inset',
-        backgroundColor: alpha(gray[100], 0.4),
+        backgroundColor: alpha(theme.palette.common.white, 0.4),
         transition: 'border-color, background-color, 120ms ease-in',
         '&:hover': {
           borderColor: brand[300],
@@ -350,7 +323,7 @@ export const inputsCustomizations = {
         ...theme.applyStyles('dark', {
           borderColor: alpha(gray[700], 0.8),
           boxShadow: '0 0 0 1.5px hsl(210, 0%, 0%) inset',
-          backgroundColor: alpha(gray[900], 0.8),
+          backgroundColor: alpha(theme.palette.common.white, 0.8),
           '&:hover': {
             borderColor: brand[300],
           },
@@ -376,54 +349,6 @@ export const inputsCustomizations = {
       },
     },
   },
-  // MuiOutlinedInput: {
-  //   styleOverrides: {
-  //     input: {
-  //       padding: 0,
-  //     },
-  //     root: ({ theme }) => ({
-  //       padding: '8px 12px',
-  //       color: (theme.vars || theme).palette.text.primary,
-  //       borderRadius: (theme.vars || theme).shape.borderRadius,
-  //       border: `1px solid ${(theme.vars || theme).palette.divider}`,
-  //       backgroundColor: (theme.vars || theme).palette.background.default,
-  //       transition: 'border 120ms ease-in',
-  //       '&:hover': {
-  //         borderColor: gray[400],
-  //       },
-  //       [`&.${outlinedInputClasses.focused}`]: {
-  //         outline: `3px solid ${alpha(brand[500], 0.5)}`,
-  //         borderColor: brand[400],
-  //       },
-  //       ...theme.applyStyles('dark', {
-  //         '&:hover': {
-  //           borderColor: gray[500],
-  //         },
-  //       }),
-  //       variants: [
-  //         {
-  //           props: {
-  //             size: 'small',
-  //           },
-  //           style: {
-  //             height: '2.25rem',
-  //           },
-  //         },
-  //         {
-  //           props: {
-  //             size: 'medium',
-  //           },
-  //           style: {
-  //             height: '2.5rem',
-  //           },
-  //         },
-  //       ],
-  //     }),
-  //     notchedOutline: {
-  //       border: 'none',
-  //     },
-  //   },
-  // },
   MuiOutlinedInput: {
     styleOverrides: {
       input: {
@@ -441,12 +366,17 @@ export const inputsCustomizations = {
           borderColor: gray[400],
         },
         [`&.${outlinedInputClasses.focused}`]: {
-          outline: `3px solid ${alpha(brand[500], 0.5)}`,
-          borderColor: brand[400],
+          outline: `3px solid ${alpha(orange[500], 0.5)}`,
+          borderColor: orange[400],
+        },
+        [`& .${svgIconClasses.root}`]: {
+          width: '1.3rem',
+          height: '1.3rem',
+          color: theme.palette.text.secondary,
         },
         ...theme.applyStyles('dark', {
           '&:hover': {
-            borderColor: gray[500],
+            borderColor: orange[500],
           },
         }),
 
@@ -454,6 +384,15 @@ export const inputsCustomizations = {
           padding: 0,
           alignItems: 'flex-start',
           minHeight: '100px',
+        },
+
+        // 👉 Tambahin untuk disabled
+        '&.Mui-disabled': {
+          backgroundColor: 'transparent',
+          borderColor: theme.palette.text.darkGray,
+          color: theme.palette.text.darkGray,
+          cursor: 'not-allowed',
+          WebkitTextFillColor: theme.palette.text.darkGray,
         },
 
         variants: [

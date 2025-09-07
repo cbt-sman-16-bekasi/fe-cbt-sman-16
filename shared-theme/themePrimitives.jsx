@@ -3,16 +3,16 @@ import { red, orange, green, grey } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 export const brand = {
-  50: 'hsl(210, 100%, 95%)',
-  100: 'hsl(210, 100%, 92%)',
-  200: 'hsl(210, 100%, 80%)',
-  300: 'hsl(210, 100%, 65%)',
-  400: 'hsl(210, 98%, 48%)',
-  500: 'hsl(210, 98%, 42%)',
-  600: 'hsl(210, 98%, 55%)',
-  700: 'hsl(210, 100%, 35%)',
-  800: 'hsl(210, 100%, 16%)',
-  900: 'hsl(210, 100%, 21%)',
+  50:  'hsl(174, 100%, 95%)', // paling terang
+  100: 'hsl(174, 100%, 85%)',
+  200: 'hsl(174, 100%, 75%)',
+  300: 'hsl(174, 100%, 65%)',
+  400: 'hsl(174, 100%, 50%)',
+  500: 'hsl(174, 100%, 40%)', // base #009688
+  600: 'hsl(174, 100%, 32%)',
+  700: 'hsl(174, 100%, 25%)',
+  800: 'hsl(174, 100%, 18%)',
+  900: 'hsl(174, 100%, 12%)', // paling gelap
 };
 
 export const cbtColor = {
@@ -37,6 +37,7 @@ export const cbtColor = {
   text: {
     primary: "#000000",
     darkGray: "#424242",
+    disabled: "#424242",
     alert: "#CB393B",
   },
   background: {
@@ -85,6 +86,7 @@ const defaultPallete = {
   divider: alpha(grey[600], 0.4),
   background: {
     default: cbtColor.background.lightGray,
+    darkGray: "#b8b8b8",
     paper: "hsl(220, 35%, 97%)",
   },
   text: {
@@ -93,6 +95,7 @@ const defaultPallete = {
     warning: cbtColor.accents.amber,
     alert: red[600],
     white: '#FFFFFF',
+    disabled: "#8e8d8d",
   },
   action: {
     hover: alpha(cbtColor.primary.deepTeal, 0.08),

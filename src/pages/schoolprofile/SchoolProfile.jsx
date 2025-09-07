@@ -4,11 +4,7 @@ import { Button, Card, CardContent, Stack, TextField, Typography } from "@mui/ma
 import EditIcon from '@mui/icons-material/Edit';
 import { useSchoolProfileHook } from "./hooks/useSchoolProfileHook.jsx";
 import { useEffect } from "react";
-// import TitleWithIcon from "../../components/common/TitleWithIcon.jsx";
-// import { ModeEditOutlined } from "@mui/icons-material";
-// import ModalChangePassword from "../../components/common/ModalChangePassword.jsx";
 import { asyncGetSchoolInfo } from "../../states/school/action.js";
-import { Upload } from "@mui/icons-material";
 
 const UserProfile = () => {
   const {
@@ -96,10 +92,16 @@ const UserProfile = () => {
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           {/* logo */}
-          <Grid container spacing={2} alignItems="center" columns={12}>
-            <Grid size={{ lg: 2 }}>
-
-              <Card sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1 }}>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+            direction="column"
+          >
+            {/* Logo */}
+            <Grid item>
+              <Card sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 1, borderRadius: '50%' }}>
                 <CardContent>
                   <img
                     src={logo.preview}
@@ -108,34 +110,38 @@ const UserProfile = () => {
                   />
                 </CardContent>
               </Card>
-
             </Grid>
 
-            <Grid size={{ lg: 9 }}>
+            {/* Tombol */}
+            {isEdit && (
+              <>
+                <Grid item>
+                  <Stack spacing={1.3} direction="row" justifyContent="center" alignItems="center">
+                    <Button variant="contained" component="label" color='info'>
+                      Ganti Logo
+                      <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        name="logo"
+                        onChange={handleFileChange}
+                      />
+                    </Button>
 
-              <Stack spacing={1.3} direction="row" alignItems="center">
+                    <Button variant="outlined" color="error" onClick={handleRemoveLogo}>
+                      Hapus
+                    </Button>
+                  </Stack>
+                </Grid>
 
-                <Button variant="contained" component="label" color='info' disabled={!isEdit}>
-                  Ganti Logo
-                  <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    name="logo"
-                    onChange={handleFileChange}
-                  />
-                </Button>
-
-                <Button variant="outlined" color="error" disabled={!isEdit} onClick={handleRemoveLogo}>
-                  Hapus
-                </Button>
-
-              </Stack>
-              <Typography variant="caption" sx={{ color: "gray", mt: 1 }}>
-                Image size 1080 × 1080 pixels. JPG and PNG files.
-              </Typography>
-
-            </Grid>
+                {/* Info Text */}
+                <Grid item>
+                  <Typography variant="caption" sx={{ color: "gray", mt: 1, textAlign: "center" }}>
+                    Image size 1080 × 1080 pixels. JPG and PNG files.
+                  </Typography>
+                </Grid>
+              </>
+            )}
           </Grid>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
@@ -316,8 +322,8 @@ const UserProfile = () => {
               <Grid size={{ sm: 1.3 }}>
                 <Button
                   fullWidth
-                  variant="outlined"
-                  color="error"
+                  variant="contained"
+                  color="secondary"
                   onClick={() => {
                     handleEdit({ isCancel: true });
                     handleReset();
@@ -329,7 +335,7 @@ const UserProfile = () => {
             )}
             <Grid size={{ sm: 1.3 }}>
               {isEdit ? (
-                <Button fullWidth variant="contained" color='success'
+                <Button fullWidth variant="contained" color='warning'
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
@@ -339,9 +345,9 @@ const UserProfile = () => {
                 <Button
                   fullWidth
                   variant="contained"
-                  color="info"
+                  color="warning"
                   onClick={() => handleEdit({ isCancel: false })}
-                  startIcon={<EditIcon />}                >
+                >
                   Edit
                 </Button>
               )}

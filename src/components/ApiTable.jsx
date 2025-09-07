@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import useApi from "../utils/rest/api.js";
 import { useDebounce } from "../hooks/useDebounce.js";
 import { useTheme } from "@mui/material/styles";
+import {SearchOffOutlined} from "@mui/icons-material";
 
 export default function ApiTable({
   url,
@@ -86,6 +87,7 @@ export default function ApiTable({
     }
   };
 
+  const hasData = data?.length > 0 && data !== null;
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 0 }}>
 
@@ -116,17 +118,17 @@ export default function ApiTable({
                 </TableCell>
               </TableRow>
             ) : (
-              data?.map((row, index) => (
+              hasData ? data?.map((row, index) => (
                 <TableRow key={row.id || index}
-                  sx={{ borderBottom: '1px solid rgba(224, 224, 224, 0.4)', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}
-                  hover
-                  role="checkbox"
-                  selected={isSelected(row.id)}
-                  onClick={(event) => handleSelectedRow(event, row?.id)}
+                          sx={{ borderBottom: '1px solid rgba(224, 224, 224, 0.4)', backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}
+                          hover
+                          role="checkbox"
+                          selected={isSelected(row.id)}
+                          onClick={(event) => handleSelectedRow(event, row?.id)}
                 >
-                    {checkbox && (<TableCell padding="checkbox">
-                        <Checkbox checked={isSelected(row.id)} />
-                    </TableCell>)}
+                  {checkbox && (<TableCell padding="checkbox">
+                    <Checkbox checked={isSelected(row.id)} />
+                  </TableCell>)}
                   {columns?.map((col) => (
                     col.field === 'no' ? (<TableCell key={`${row.id || index}-${col.field}`}>
                       {numberSort(index)}
@@ -136,7 +138,13 @@ export default function ApiTable({
                       </TableCell>)
                   ))}
                 </TableRow>
-              ))
+              )) :
+                <TableRow>
+                  <TableCell colSpan={columns?.length} align="center">
+                    <SearchOffOutlined /><br/>
+                    Tidak ada data
+                  </TableCell>
+                </TableRow>
             )}
           </TableBody>
         </Table>

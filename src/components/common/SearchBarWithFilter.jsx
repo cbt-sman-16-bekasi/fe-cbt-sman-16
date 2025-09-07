@@ -43,6 +43,10 @@ export default function SearchBarWithFilter({ onFilterChange, renderFilterConten
         filters: filterOptions,
       });
     }
+
+    if (searchOptions !== null && searchOptions.length > 0) {
+      setSearchBy(searchOptions[0].value);
+    }
   }, [debouncedSearch, searchBy, filterOptions]);
 
 

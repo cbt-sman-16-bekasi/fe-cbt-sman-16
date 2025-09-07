@@ -43,6 +43,8 @@ export default function SideMenu({ user, role, logout, schoolData }) {
   }
   const IconComponent = Icons[item.icon];
   const isActive = `/${currentPath}` === item.path;
+
+  const hasLogo = schoolData && schoolData.logo
   return (
     <Drawer
       variant="permanent"
@@ -64,17 +66,14 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           p: 1,
         }}
       >
-        {schoolData && (
-          <img src={schoolData.logo} alt="Logo Sekolah" style={{
-            width: "100px",
-            height: "auto",
-            maxWidth: "150px",
-          }} />
-        )}
+        <img src={hasLogo ? schoolData.logo : "/sinau-logo-remove.png"} alt="Logo Sekolah" style={{
+          width: hasLogo ? "100px" : "150px",
+          height: "auto",
+          maxWidth: "150px",
+        }} />
         <Typography variant='subtitle1' fontWeight='bold' sx={{ color: 'cbtAccents.black' }}>
           {schoolData && schoolData.school_name}
         </Typography>
-         {/*<SelectContent />*/}
       </Box>
       <Divider />
       <Box
@@ -85,7 +84,7 @@ export default function SideMenu({ user, role, logout, schoolData }) {
           flexDirection: 'column',
         }}
       >
-        <MenuContent role={role} currentPath={currentPath} to={to} />
+        <MenuContent role={role} to={to} />
       </Box>
 
       <Stack
@@ -137,7 +136,16 @@ export default function SideMenu({ user, role, logout, schoolData }) {
             </Box>
           }
           <Box sx={{ mr: 'auto', color: 'cbtAccents.white' }}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', lineHeight: '16px' }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 'bold',
+                lineHeight: '16px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
+            >
               {user?.detail?.name}
             </Typography>
           </Box>

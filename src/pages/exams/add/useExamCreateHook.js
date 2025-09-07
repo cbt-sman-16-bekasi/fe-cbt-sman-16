@@ -54,16 +54,16 @@ export function useExamCreateHook({ updatePage = false }) {
         const { data } = await useTeacherApi.allTeacherClassSubject({
           id: authUser?.detail?.ID,
         });
-        const subjects = data.map((s) => {
+        const subjects = data?.map((s) => {
           return { label: s.subject.subject, value: s.subject.code };
         })
         setOptionSubject(
           Array.from(
-            new Map(subjects.map(item => [item.value, item])).values()
+            new Map(subjects?.map(item => [item.value, item])).values()
           )
         );
         setOptionClass(
-          data.map((s) => {
+          data?.map((s) => {
             return { label: s?.class?.className, value: s.classId };
           })
         );

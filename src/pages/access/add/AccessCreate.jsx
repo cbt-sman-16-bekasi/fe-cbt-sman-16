@@ -25,12 +25,6 @@ export function AccessCreate({ isUpdatePage = false }) {
 
       <TitleWithIcon icon={<ModeEditOutlined sx={{ color: 'white' }} />} text={isUpdatePage ? "Detail Akses" : 'Tambah Akses'} iconBackground="red" />
       <Card sx={{ flexGrow: 1, mb: 3 }}>
-        {!isUpdatePage && (
-          <Alert icon={<WarningAmberIcon fontSize="small" color="yellow" />} variant="outlined" severity="info" sx={{ p: 1, mb: 3 }}>
-            <AlertTitle fontSize="medium" fontWeight={800}>PERHATIAN!</AlertTitle>
-            Pembuatan data user hanya untuk akses sebagai <strong>Admin</strong>, Untuk akses Guru dapat di akses dari halaman guru dan untuk akses Siswa diakses dari halaman siswa
-          </Alert>
-        )}
         <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '2.3rem' }}>
 
           <Grid container spacing={3} alignItems="center" columns={12}>
@@ -58,12 +52,12 @@ export function AccessCreate({ isUpdatePage = false }) {
 
             { !isUpdatePage && (
               <Grid size={{ lg: 1.5 }}>
-                <Button fullWidth variant="outlined" color='secondary' onClick={resetForm}>Reset</Button>
+                <Button fullWidth variant="contained" color='secondary' onClick={resetForm}>Reset</Button>
               </Grid>
             )}
 
             <Grid size={{ lg: 1.5 }}>
-              <Button fullWidth variant="contained" color='cbtPrimary' onClick={handleSubmitCreate}>Simpan</Button>
+              <Button fullWidth variant="contained" color='warning' onClick={handleSubmitCreate}>Simpan</Button>
             </Grid>
 
           </Grid>

@@ -67,7 +67,7 @@ const ExamSessionDetailPage = () => {
           <span>Terakhir di ubah pada: <span>{correctionRowStudent?.lastCorrectionScore ?? '-'}</span>  oleh: <span>{correctionRowStudent?.lastCorrectionBy ?? '-'}</span> </span>
         </BasicCard>
         <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2}>
-          <Button sx={{ display: 'flex', mx: 2}} variant="contained" color='info' onClick={handleSubmitChangeScore}>
+          <Button sx={{ display: 'flex', mx: 2}} variant="contained" color='warning' onClick={handleSubmitChangeScore}>
             Simpan
           </Button>
         </Grid>
@@ -102,7 +102,7 @@ const ExamSessionDetailPage = () => {
           </Grid>
           <Grid size={{ lg: 5, md: 4, sm: 3 }} sx={{display: "flex", flexDirection: "row", gap: 2}}>
             <Button fullWidth variant="contained" color='info' onClick={handleDownload} startIcon={<DownloadOutlined/>}>Download Peserta Ujian</Button>
-            <Button fullWidth variant="contained" color='error' onClick={handleGenerateReport} startIcon={<MultilineChart />}>{ detailExamSession?.status_report === 'READY' ? 'Regenerate' : 'Generate' } Laporan</Button>
+            <Button fullWidth variant="contained" color='warning' onClick={handleGenerateReport} startIcon={<MultilineChart />}>{ detailExamSession?.status_report === 'READY' ? 'Regenerate' : 'Generate' } Laporan</Button>
           </Grid>
         </Grid>
 

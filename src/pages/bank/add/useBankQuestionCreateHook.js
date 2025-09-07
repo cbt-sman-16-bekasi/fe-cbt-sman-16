@@ -26,14 +26,14 @@ export function useBankQuestionCreateHook({ isUpdatePage = false }) {
       showLoading();
       const { data } = await useMasterController.allSubject();
       setOptionSubject(
-        data.map((s) => {
+        data?.map((s) => {
           return { label: s.subject, value: s.code };
         })
       );
 
       const { data: classCodeData } = await useMasterController.allClassCode();
       setOptionClass(
-        classCodeData.map((s) => {
+        classCodeData?.map((s) => {
           return { label: s.name, value: s.code };
         })
       );

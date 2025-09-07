@@ -27,7 +27,7 @@ const GenerateTokenPage = () => {
           sx={{
             mt: 1,
             p: 2,
-            bgcolor: "#FFFDE7",
+            bgcolor: (theme) => theme.palette.background.darkGray,
             border: "1px solid #FFEB3B",
             borderRadius: 1,
             minHeight: "50px",

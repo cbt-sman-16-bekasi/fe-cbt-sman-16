@@ -33,13 +33,15 @@ function AppTheme(props) {
           ...surfacesCustomizations,
           ...themeComponents,
         },
-        defaultColorScheme: 'light'
+        defaultColorScheme: 'light',
+        palette: {
+          mode: 'light',
+        }
       });
   }, [disableCustomTheme, themeComponents]);
   if (disableCustomTheme) {
     return <React.Fragment>{children}</React.Fragment>;
   }
-  console.log(theme)
   return (
     <ThemeProvider theme={theme} disableTransitionOnChange>
       {children}

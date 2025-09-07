@@ -2,6 +2,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/
 import { useModal } from "./ModalContext";
 import { CheckCircleIcon, MessageCircleWarningIcon } from "lucide-react";
 import ErrorIcon from "@mui/icons-material/Error";
+import {WarningAmber} from "@mui/icons-material";
 
 export default function ModalPopUp() {
   const { open, message, type, hideModal, onConfirm, confirmText } = useModal();
@@ -13,9 +14,9 @@ export default function ModalPopUp() {
       case "error":
         return <ErrorIcon style={{ color: "red" }} />;
       case "warning":
-        return <MessageCircleWarningIcon style={{ color: "orange" }} />;
+        return <WarningAmber style={{ color: "orange" }} sx={{ width: 60, height: 60}} />;
       case "confirm":
-        return <MessageCircleWarningIcon style={{ color: "#facc15", fontSize: 40 }} />;
+        return <WarningAmber style={{ color: "#facc15", fontSize: 40 }} sx={{ width: 60, height: 60}} />;
       default:
         return <CheckCircleIcon style={{ color: "green", fontSize: 40 }} />;
     }
@@ -32,7 +33,7 @@ export default function ModalPopUp() {
   return (
     <Dialog open={open} onClose={hideModal} fullWidth={true} maxWidth='xs'>
       <DialogTitle sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 1 }}>
-        {getIcon()} {type === "success" ? "Success" : type === "error" ? "Error" : "Warning"}
+        {getIcon()} {type === "success" ? "Success" : type === "error" ? "Terjadi kesalahan" : "Perhatian"}
       </DialogTitle>
       <DialogContent sx={{ textAlign: 'center' }}>
         <p>{message}</p>
@@ -40,7 +41,7 @@ export default function ModalPopUp() {
       {type === "confirm" && (
         <DialogActions sx={{ justifyContent: 'end', mb: 2 }}>
           <Button onClick={hideModal} color="inherit">Batal</Button>
-          <Button onClick={handleConfirm} color="error" variant="contained">{confirmText}</Button>
+          <Button onClick={handleConfirm} color="warning" variant="contained">{confirmText}</Button>
         </DialogActions>
       )}
     </Dialog>

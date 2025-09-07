@@ -97,9 +97,9 @@ export function useExamSessionDetailHook() {
           {typeQuestion === 'ESSAY' && row.need_correction && (<Button
             size="small"
             sx={{
-              bgcolor: "green",
+              bgcolor: (theme) => theme.palette.primary.main,
               color: "white",
-              "&:hover": { bgcolor: "darkgreen" },
+              "&:hover": { bgcolor: (theme) => theme.palette.primary.dark },
             }}
             onClick={() => handleCorrection(row)}
           >
@@ -108,9 +108,9 @@ export function useExamSessionDetailHook() {
           {userRole === 'admin' && (<Button
             size="small"
             sx={{
-              bgcolor: "green",
-              color: "gray",
-              "&:hover": { bgcolor: "darkgreen" },
+              bgcolor: (theme) => theme.palette.primary.main,
+              color: "white",
+              "&:hover": { bgcolor: (theme) => theme.palette.primary.dark },
             }}
             onClick={() => handleCorrectionScore(row)}
           >
