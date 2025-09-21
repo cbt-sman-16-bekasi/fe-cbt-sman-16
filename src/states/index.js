@@ -13,6 +13,7 @@ import teachersReducer from './teachers/reducer';
 import examsReducer from './exams/reducer';
 import schoolReducer from './school/reducer';
 import typeExamsReducer from './typeExams/reducer';
+import systemConfigReducer from "./system/reducer.js";
 
 const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ const store = configureStore({
     typeExams: typeExamsReducer,
     school: schoolReducer,
     loadingBar: loadingBarReducer,
+    systemConfig: systemConfigReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(loadingBarMiddleware()),

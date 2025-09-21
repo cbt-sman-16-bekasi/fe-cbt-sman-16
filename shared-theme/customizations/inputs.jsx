@@ -83,6 +83,52 @@ export const inputsCustomizations = {
               }),
             },
           },
+          {
+            props: { color: 'info', variant: 'contained' },
+            style: {
+              color: 'white',
+              backgroundColor: (theme.vars || theme).palette.primary.light,
+              boxShadow: `inset 0 1px 0 ${brand[600]}, inset 0 -1px 0 1px hsl(220, 0%, 0%)`,
+              border: `1px solid ${brand[700]}`,
+
+              '&:hover': {
+                backgroundImage: 'none',
+                backgroundColor: (theme.vars || theme).palette.primary.dark,
+                boxShadow: 'none',
+              },
+              '&:active': {
+                backgroundColor: (theme.vars || theme).palette.primary.light,
+              },
+              '&.Mui-disabled': {
+                color: theme.palette.text.disabled,
+                backgroundColor: brand[300],
+                borderColor: brand[300],
+                backgroundImage: 'none',
+                cursor: 'not-allowed',
+              },
+
+              ...theme.applyStyles('dark', {
+                color: 'white',
+                backgroundColor: (theme.vars || theme).palette.primary.light,
+                boxShadow: 'inset 0 -1px 0  hsl(220, 30%, 80%)',
+                border: `1px solid ${brand[50]}`,
+                '&:hover': {
+                  backgroundImage: 'none',
+                  backgroundColor: (theme.vars || theme).palette.primary.dark,
+                  boxShadow: 'none',
+                },
+                '&:active': {
+                  backgroundColor: (theme.vars || theme).palette.primary.dark,
+                },
+                '&.Mui-disabled': {
+                  color: theme.palette.text.disabled,
+                  backgroundColor: brand[700], // dark mode abu-abu lebih gelap
+                  borderColor: brand[700],
+                  cursor: 'not-allowed',
+                },
+              }),
+            },
+          },
 
           // === Contained Secondary ===
           {
@@ -136,21 +182,21 @@ export const inputsCustomizations = {
           {
             props: { color: 'secondary', variant: 'outlined' },
             style: {
-              color: brand[700],
-              border: `1px solid ${brand[200]}`,
-              backgroundColor: brand[50],
+              color: gray[700],
+              border: `1px solid ${gray[500]}`,
+              backgroundColor: 'transparent',
 
               '&:hover': {
-                backgroundColor: brand[100],
-                borderColor: brand[400],
+                backgroundColor: gray[300],
+                borderColor: gray[400],
               },
               '&:active': {
-                backgroundColor: alpha(brand[200], 0.7),
+                backgroundColor: alpha(gray[200], 0.7),
               },
               '&.Mui-disabled': {
                 color: theme.palette.text.disabled,
-                borderColor: alpha(brand[200], 0.3),
-                backgroundColor: alpha(brand[50], 0.2), // teal tipis
+                borderColor: alpha(gray[500], 0.3),
+                backgroundColor: alpha(gray[50], 0.2), // teal tipis
               },
             },
           },

@@ -63,7 +63,7 @@ export default function NavbarBreadcrumbs({ role }) {
         aria-label="breadcrumb"
         separator={<NavigateNextRoundedIcon fontSize="small" />}
       >
-        <Typography variant="body1" style={{ color: "inherit" }}>CBT</Typography>
+        <Typography variant="body1" style={{ color: "inherit" }}>Academic System</Typography>
 
         {breadcrumbPaths.map((value, index) => {
           const to = `/${role}/${breadcrumbPaths.slice(0, index + 1).join("/")}`;

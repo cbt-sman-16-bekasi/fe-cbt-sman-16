@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Grid from '@mui/material/Grid2';
 import {
   Card,
@@ -15,15 +15,27 @@ import {
 import { Person, Lock } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import BasicCard from "./common/BasicCard.jsx";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 
-const LoginForm = ({ login, schoolData }) => {
+const LoginForm = ({ login }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [copyright, setCopyright] = useState("-")
+  const navigate = useNavigate();
+  const systemConfigSlash = useSelector((state) => state.systemConfig.configSlash);
 
   const handleLogin = () => {
     login({ password, username });
   };
+
+  useEffect(() => {
+    if (systemConfigSlash) {
+      const copyrightConfig = systemConfigSlash?.find(s => s.name === "copyright") ?? null;
+      setCopyright(copyrightConfig?.value ?? "-")
+    }
+  }, [systemConfigSlash])
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -40,16 +52,14 @@ const LoginForm = ({ login, schoolData }) => {
         }}
       >
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          {schoolData && (
-            <img src="/sinau-logo-remove.png" alt="Logo Sekolah" width={300} height={90} />
-          )}
+          <img src="/sinau-logo-remove.png" alt="Logo Sekolah" width={300} height={90} />
         </Box>
         <CardContent>
           <Grid container spacing={2} alignItems="center" columns={12} sx={{ padding: 2 }}>
 
             <Grid size={{ sm: 12 }} sx={{ width: '100%' }}>
               <Typography variant="subtitle2" sx={{ color: (theme) => theme.palette.text.main}} pb={1} >
-                Username
+                Nama Pengguna
               </Typography>
               <TextField
                 fullWidth
@@ -89,7 +99,7 @@ const LoginForm = ({ login, schoolData }) => {
             <Grid size={{ sm: 12 }}>
               <FormControlLabel
                 control={<Checkbox onChange={() => setShowPassword(!showPassword)} />}
-                label="Show Password"
+                label="Tampilkan Password"
                 sx={{
                   textAlign: "left",
                   width: "100%",
@@ -101,27 +111,35 @@ const LoginForm = ({ login, schoolData }) => {
                 }}
               />
             </Grid>
+            <Grid size={{ sm: 12 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.4rem'}}>
+              <Button
+                onClick={handleLogin}
+                fullWidth variant="contained" color="info"
+                sx={{
+                  mt: 2,
+                }}
+              >
+                Masuk
+              </Button>
 
-            { username && password && (
-              <Grid size={{ sm: 12 }}>
-                <Button
-                  onClick={handleLogin}
-                  fullWidth variant="contained" color="info"
-                  sx={{
-                    mt: 2,
-                  }}
-                >
-                  Masuk
-                </Button>
-              </Grid>
-            )}
+
+              <Typography variant="body2" sx={{ mt: 2, fontSize: 12 }}>
+                Belum punya akun?
+              </Typography>
+              <Button
+                onClick={() => navigate("/register")}
+                fullWidth variant="outlined" color="secondary"
+              >
+                Daftar
+              </Button>
+            </Grid>
           </Grid>
 
         </CardContent>
 
       </Card>
       <Typography variant="body2" sx={{ mt: 2, fontSize: 12 }}>
-        © 2025 SINAU - Academic Management System. All Rights Reserved.
+        {copyright}
       </Typography>
     </Container>
 

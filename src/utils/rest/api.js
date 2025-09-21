@@ -1,8 +1,12 @@
 import { asyncUnsetAuthUser } from '../../states/authUser/action.js';
 
+const publicPath = ["/login", "/register"]
+
 const useApi = (() => {
   // @ts-ignore
   const BASE_URL = import.meta.env.VITE_BASE_API;
+  const CLIENT_ID = "DGG1QbOj15";
+  const CLIENT_SECRET = "a2H!kU.7v&jK8Nwk}3kS7eWK7:&1qi";
 
   const accessToken = () => {
     return localStorage.getItem('accessToken');
@@ -15,6 +19,7 @@ const useApi = (() => {
   // @ts-ignore
   const logout = async () => {
     removeAccessToken();
+    if (publicPath.includes(window.location.pathname)) return;
     window.location.href = '/login';
   };
 
@@ -30,6 +35,9 @@ const useApi = (() => {
       headers: {
         ...options.headers,
         Authorization: `Bearer ${accessToken()}`,
+        'X-Timestamp': Date.now(),
+        'X-Client-Id': CLIENT_ID,
+        'X-Signature': '78234h2kd',
       },
     });
 

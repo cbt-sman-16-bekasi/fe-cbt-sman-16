@@ -26,6 +26,9 @@ import { asyncPreloadProcess } from './states/isPreload/action.js';
 import { asyncUnsetAuthUser } from './states/authUser/action.js';
 import Typography from "@mui/material/Typography";
 import { asyncGetSchoolInfo } from './states/school/action.js';
+import {asyncRetrieveSystemConfigSlash} from "./states/system/action.js";
+import {useLoading} from "./components/common/LoadingProvider.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -39,9 +42,11 @@ function App(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const schoolData = useSelector((state) => state.school.schoolInfo);
+  const systemConfigSlash = useSelector((state) => state.systemConfig.configSlash);
   const authUser = useSelector((state) => state.authUser);
   const isPreload = useSelector((state) => state.isPreload);
   const [title, setTitle] = useState('')
+  const { showLoading, hideLoading } = useLoading();
 
   const accessToken = localStorage.getItem("accessToken");
   const userRole = authUser?.role?.code.toLowerCase();
@@ -57,20 +62,20 @@ function App(props) {
     if (authUser?.SchoolCode) {
       dispatch(asyncGetSchoolInfo(authUser.SchoolCode));
     }
-  }, [authUser?.SchoolCode, dispatch]);
+  }, [authUser?.SchoolCode]);
 
   useEffect(() => {
-    if (schoolData?.logo && schoolData.logo.startsWith("data:image")) {
-      const oldIcons = document.querySelectorAll("link[rel*='icon']");
-      oldIcons.forEach((el) => el.parentNode.removeChild(el));
+    const fetchDataConfig = async () => {
+      showLoading()
+      await dispatch(asyncRetrieveSystemConfigSlash());
+      hideLoading()
+    };
 
-      const link = document.createElement("link");
-      link.type = "image/png";
-      link.rel = "icon";
-      link.href = schoolData.logo;
-      document.head.appendChild(link);
+    dispatch(asyncPreloadProcess());
+    if (systemConfigSlash === null || systemConfigSlash === undefined) {
+      fetchDataConfig();
     }
-  }, [schoolData?.logo]);
+  }, [dispatch]);
 
   useEffect(() => {
     const currentMenu = JSON.parse(localStorage.getItem("currentMenu"));
@@ -78,21 +83,17 @@ function App(props) {
 
     setTitle(defaultTitle);
     document.title = `${defaultTitle} - Admin`;
-  }, [location]);
+  }, [location, dispatch]);
 
   useEffect(() => {
     if (!accessToken) {
       localStorage.clear()
       navigate("/login");
     }
-  }, [accessToken, navigate]);
+  }, [accessToken]);
 
   useEffect(() => {
-    dispatch(asyncPreloadProcess());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (userRole) {
+    if (userRole && accessToken) {
       const role = userRole;
       const path = location.pathname;
 
@@ -100,7 +101,7 @@ function App(props) {
         navigate(`/${role}/dashboard`);
       }
     }
-  }, [navigate, userRole]);
+  }, [userRole, accessToken]);
 
   const onUserLogout = () => {
     dispatch(asyncUnsetAuthUser())
@@ -129,6 +130,7 @@ function App(props) {
             }} >
             <Routes>
               <Route path='/login' element={<LoginPage />} />
+              <Route path='/register' element={<RegisterPage />} />
             </Routes>
           </Box >
         </AppTheme>

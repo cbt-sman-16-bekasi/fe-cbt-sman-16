@@ -2,43 +2,19 @@ import {
   Box,
 } from "@mui/material";
 import LoginForm from "../components/LoginForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { asyncSetAuthUser } from "../states/authUser/action";
-import { useEffect } from "react";
-import { asyncGetSchoolInfo } from '../states/school/action'
-import Loading from "../components/Loading";
 import { useLoading } from "../components/common/LoadingProvider";
 
 const LoginPage = () => {
   const dispatch = useDispatch()
-  const schoolData = useSelector((state) => state.school.schoolInfo);
-  const LICENSE_KEY = import.meta.env.VITE_SCHOOL_ID;
   const { showLoading, hideLoading } = useLoading();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (LICENSE_KEY) {
-        showLoading();
-        try {
-          await dispatch(asyncGetSchoolInfo(LICENSE_KEY));
-        } finally {
-          hideLoading();
-        }
-      }
-    };
-
-    fetchData();
-  }, [LICENSE_KEY, dispatch]);
 
   const onLogin = ({ password, username }) => {
     showLoading();
     dispatch(asyncSetAuthUser({ password, username }))
       .finally(() => hideLoading());
   };
-
-  if (!schoolData?.banner) {
-    return <Loading />;
-  }
 
   return (
 
@@ -49,9 +25,6 @@ const LoginPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: schoolData?.banner
-          ? `url(${schoolData.banner})`
-          : "url('/bg-login.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         position: "relative",
@@ -68,7 +41,7 @@ const LoginPage = () => {
       />
 
       <Box sx={{ zIndex: 2 }}>
-        <LoginForm login={onLogin} schoolData={schoolData} />
+        <LoginForm login={onLogin} />
       </Box>
     </Box>
 

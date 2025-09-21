@@ -1,18 +1,15 @@
 export const menuConfig = {
   admin: [
     {
-      title: 'Home',
-      menu: [
-        {
-          text: 'Dashboard',
-          title: 'Dashboard',
-          icon: 'HomeRounded',
-          path: '/dashboard',
-        },
-      ],
+      text: 'Dashboard',
+      icon: 'HomeRounded',
+      path: '/dashboard',
     },
     {
-      title: 'Data Master',
+      text: 'Data Master',
+      icon: 'SchoolSharp',
+      path: '/master',
+      collapse: false,
       menu: [
         {
           text: 'Informasi Sekolah',
@@ -47,7 +44,10 @@ export const menuConfig = {
       ],
     },
     {
-      title: 'Ujian',
+      text: 'CBT',
+      icon: 'Draw',
+      path: '/cbt',
+      collapse: false,
       menu: [
         {
           text: 'Kode Jenis Ujian',
@@ -82,7 +82,10 @@ export const menuConfig = {
       ],
     },
     {
-      title: 'Laporan',
+      text: 'Laporan',
+      icon: 'AssessmentRounded',
+      path: '/laporan',
+      collapse: false,
       menu: [
         {
           text: 'Laporan Nilai',
@@ -94,12 +97,15 @@ export const menuConfig = {
       ],
     },
     {
-      title: 'Pengaturan',
+      text: 'Pengaturan',
+      icon: 'Settings',
+      path: '/pengaturan',
+      collapse: false,
       menu: [
         {
           text: 'Akses Sistem',
           title: 'Akses Sistem',
-          icon: 'AdminPanelSettingsRounded',
+          icon: 'ManageAccounts',
           path: '/akses-system',
         },
       ],

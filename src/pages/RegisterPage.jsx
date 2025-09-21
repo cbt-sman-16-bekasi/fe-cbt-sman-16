@@ -1,9 +1,21 @@
 import {
   Box,
 } from "@mui/material";
-import RegistForm from "../components/RegistForm";
+import LoginForm from "../components/LoginForm";
+import { useDispatch } from "react-redux";
+import { asyncSetAuthUser } from "../states/authUser/action";
+import { useLoading } from "../components/common/LoadingProvider";
+import RegisterForm from "../components/page/auth/RegisterForm.jsx";
 
-const RegistPage = () => {
+const RegisterPage = () => {
+  const dispatch = useDispatch()
+  const { showLoading, hideLoading } = useLoading();
+
+  const onLogin = ({ password, username }) => {
+    showLoading();
+    dispatch(asyncSetAuthUser({ password, username }))
+      .finally(() => hideLoading());
+  };
 
   return (
 
@@ -14,13 +26,11 @@ const RegistPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: "url('/bg-login.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         position: "relative",
       }}
     >
-      {/* Overlay untuk efek gelap */}
       <Box
         sx={{
           position: "absolute",
@@ -31,13 +41,12 @@ const RegistPage = () => {
         }}
       />
 
-      {/* Card Login */}
       <Box sx={{ zIndex: 2 }}>
-        <RegistForm />
+        <RegisterForm login={onLogin} />
       </Box>
     </Box>
 
   );
 };
 
-export default RegistPage;
+export default RegisterPage;

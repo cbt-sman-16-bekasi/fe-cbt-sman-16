@@ -24,12 +24,17 @@ const CustomInput = ({
   subLabel = null,
   max = 100,
   disabled = false,
+  propsLabel = {
+    variant: 'body1',
+    fontWeight: 'bold'
+  },
+  inputProps = {}
 }) => {
   return (
     <Grid size={{ ...(oneLineInput ? { sm: 12 } : { md: 12, lg: 6 }), }} sx={{ display: "flex", flexDirection: "column", gap: 1, ...sx }}>
       {label && (
         <>
-          <Typography variant="body1" fontWeight="bold">
+          <Typography {...propsLabel}>
             {label}
           </Typography>
           { subLabel && (<small style={{ color: 'gray'}}>*) {subLabel}</small>)}
@@ -81,6 +86,7 @@ const CustomInput = ({
             max: max,
             min: 0,
           },
+          ...inputProps,
         }}
         select={options.length > 0}
       >
