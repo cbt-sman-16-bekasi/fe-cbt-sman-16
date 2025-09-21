@@ -25,8 +25,9 @@ export function useBankQuestionCreateHook({ isUpdatePage = false }) {
     async function fetchData() {
       showLoading();
       const { data } = await useMasterController.allSubject();
+      const { records } = data;
       setOptionSubject(
-        data.map((s) => {
+        records?.map((s) => {
           return { label: s.subject, value: s.code };
         })
       );
