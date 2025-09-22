@@ -17,7 +17,9 @@ export function ExamSessionCreatePage({ isUpdatePage = false }) {
     endDate, setEndDate,
     resetForm, submitForm,
     optionMember,
-    classId, setClassId
+    classId, setClassId,
+    maxStudentIndication, setMaxStudentIndication,
+    maxResetStudentIndication, setMaxResetStudentIndication,
   } = useExamSessionCreateHook({ isUpdatePage: isUpdatePage })
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, my: 3 }}>
@@ -36,6 +38,10 @@ export function ExamSessionCreatePage({ isUpdatePage = false }) {
         <Grid container spacing={3} alignItems="center" columns={12}>
           <CustomInput label="Waktu Mulai" fullWidth={true} value={startDate} onChange={setStartDate} type="customdate" />
           <CustomInput label="Waktu Selesai" fullWidth={true} value={endDate} onChange={setEndDate} type="customdate" />
+        </Grid>
+        <Grid container spacing={3} alignItems="center" columns={12}>
+          <CustomInput label="Maksimal Siswa Terindikasi Curang" fullWidth={true} value={maxStudentIndication} onChange={(c) => setMaxStudentIndication(c.target.value)} type="number" />
+          <CustomInput label="Maksimal Reset Siswa Terindikasi Curang" fullWidth={true} value={maxResetStudentIndication} onChange={(c) => setMaxResetStudentIndication(c.target.value)} type="number" />
         </Grid>
 
         <Grid container spacing={2} columns={12} justifyContent="end" alignItems="center" mb={2} mt={3}>

@@ -10,7 +10,7 @@ import useExamSessionController from "../../../utils/rest/examsession.js";
 import useDate from "../../../hooks/useDate.js";
 import useApi from "../../../utils/rest/api.js";
 import {useModal} from "../../../components/common/ModalContext.jsx";
-import {CheckBox, InfoOutlined, MedicalInformation, RestartAlt, Scoreboard} from "@mui/icons-material";
+import {CheckBox, Https, InfoOutlined, MedicalInformation, RestartAlt, Scoreboard} from "@mui/icons-material";
 import {CheckCircle} from "lucide-react";
 
 export function useExamSessionDetailHook() {
@@ -148,6 +148,20 @@ export function useExamSessionDetailHook() {
             </>
           )}
 
+          {row?.status === 'BANNED' && (
+            <Button
+              size="small"
+              sx={{
+                bgcolor: "orange",
+                color: "white",
+                "&:hover": { bgcolor: "orange" },
+              }}
+              onClick={() => handleResetCheat(row)}
+            >
+              <Https />
+            </Button>
+          )}
+
         </div>)
       },
     }
@@ -209,6 +223,28 @@ export function useExamSessionDetailHook() {
         body: {
           session_id: sessionId,
           student_id: row?.student_id
+        }
+      })
+      showModal(message, status)
+    } catch (e) {
+      console.error("ERROR: ", e)
+      showModal("Gagal reset session student", "error")
+    } finally {
+      setIsRefreshTable(true)
+      hideLoading()
+    }
+  }
+  console.log(detailExamSession)
+  const handleResetCheat = async (row) => {
+    try {
+      showLoading()
+      const { status, message } = await useApi.createOrModify({
+        url: '/academic/exam/session/cheat/reset',
+        method: 'POST',
+        body: {
+          exam_session_id: sessionId,
+          student_id: row?.student_id,
+          exam_code: detailExamSession?.exam?.code,
         }
       })
       showModal(message, status)

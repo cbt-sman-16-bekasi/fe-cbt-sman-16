@@ -13,6 +13,8 @@ export function useExamSessionCreateHook({ isUpdatePage = false }) {
   const [examCode, setExamCode] = useState('');
   const [optionExam, setOptionExam] = useState([]);
   const [startDate, setStartDate] = useState(dayjs());
+  const [maxStudentIndication, setMaxStudentIndication] = useState(0)
+  const [maxResetStudentIndication, setMaxResetStudentIndication] = useState(0)
   const [endDate, setEndDate] = useState(dayjs());
   const [optionMember, setOptionMember] = useState([]);
   const [classId, setClassId] = useState([]);
@@ -43,6 +45,8 @@ export function useExamSessionCreateHook({ isUpdatePage = false }) {
         setExamCode(data.exam.code);
         setStartDate(dayjs(new Date(data.start_date)));
         setEndDate(dayjs(new Date(data.end_date)));
+        setMaxStudentIndication(data?.max_cheat_indication ?? 0)
+        setMaxResetStudentIndication(data?.total_reset_suspicious_indication ?? 0)
         setClassId(
           data.exam_member !== null ? data.exam_member.map((m) => m.class) : []
         );
@@ -95,6 +99,8 @@ export function useExamSessionCreateHook({ isUpdatePage = false }) {
         .format('YYYY-MM-DDTHH:mm:ssZ'),
       end_at: dayjs(endDate).tz('Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ'),
       class_id: classId,
+      max_cheat_indication: Number(maxStudentIndication),
+      max_reset_cheat_indication: Number(maxResetStudentIndication),
     };
 
     showLoading();
@@ -143,5 +149,7 @@ export function useExamSessionCreateHook({ isUpdatePage = false }) {
     optionMember,
     classId,
     setClassId,
+    maxStudentIndication, setMaxStudentIndication,
+    maxResetStudentIndication, setMaxResetStudentIndication,
   };
 }
