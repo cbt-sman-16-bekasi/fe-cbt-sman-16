@@ -47,22 +47,27 @@ export function useExamSessionDetailHook() {
     dayjs.extend(timezone);
 
     async function fetchData() {
-      showLoading()
-      const { data } = await useExamSessionController.retrieveDetail({ id: id})
-      const detailExam = data.detail_exam
-      setName(detailExam.name);
-      setSubject(detailExam.subject_code.subject)
-      setClassCode(data.exam_member.map(a => a.detail_class.className).join(", "))
-      setTypeExam(detailExam.detail_type_exam.code)
-      setTypeQuestion(detailExam.type_question)
-      setSessionName(data.name)
-      setStartDate(dateHelper.formattedWithTime(data.start_date))
-      setEndDate(dateHelper.formattedWithTime(data.end_date))
-      setDetailExamSession(data)
+      try {
+        showLoading()
+        const { data } = await useExamSessionController.retrieveDetail({ id: id})
+        const detailExam = data.detail_exam
+        setName(detailExam.name);
+        setSubject(detailExam.subject_code.subject)
+        setClassCode(data.exam_member.map(a => a.detail_class.className).join(", "))
+        setTypeExam(detailExam.detail_type_exam.code)
+        setTypeQuestion(detailExam.type_question)
+        setSessionName(data.name)
+        setStartDate(dateHelper.formattedWithTime(data.start_date))
+        setEndDate(dateHelper.formattedWithTime(data.end_date))
+        setDetailExamSession(data)
 
-      const { data: dataClass } = await useExamSessionController.examSessionMember({sessionId: sessionId})
-      setOptionExamMember(dataClass.map(r => { return {label: r.detail_class.className, value: r.detail_class.ID}}))
-      hideLoading()
+        const { data: dataClass } = await useExamSessionController.examSessionMember({sessionId: sessionId})
+        setOptionExamMember(dataClass.map(r => { return {label: r.detail_class.className, value: r.detail_class.ID}}))
+      } catch (e) {
+        console.log("Exception", e)
+      } finally {
+        hideLoading()
+      }
     }
 
     fetchData()
@@ -207,11 +212,12 @@ export function useExamSessionDetailHook() {
         }
       })
       showModal(message, status)
-      hideLoading()
     } catch (e) {
       console.error("ERROR: ", e)
-      hideLoading()
       showModal("Gagal reset session student", "error")
+    } finally {
+      setIsRefreshTable(true)
+      hideLoading()
     }
   }
   const handleSubmitChangeScore = async () => {

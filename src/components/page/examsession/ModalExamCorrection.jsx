@@ -16,7 +16,7 @@ export default function ModalExamCorrection({ open, setHide, row, dataSession, i
     setScore,
     finalScore,
     submitCorrectionScore
-  } = useModalExamCorrection({row: row, dataSession: dataSession, setRefreshData: isRefresh, setHide: setHide, isRefreshTable: isRefreshTable})
+  } = useModalExamCorrection({open, row: row, dataSession: dataSession, setRefreshData: isRefresh, setHide: setHide, isRefreshTable: isRefreshTable})
   return (
     <Dialog open={open} onClose={() => setHide(false)} fullWidth maxWidth="lg"
             PaperProps={{

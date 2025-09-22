@@ -118,7 +118,7 @@ const ExamSessionDetailPage = () => {
           }
         }}>
           <Grid size={{ xs: 12, lg: 12 }}>
-            { classIdSelected && (<ApiTable url={`/academic/exam/session/attendance?exam_session_id=${sessionId}&class_id=${classIdSelected}`}
+            { classIdSelected && sessionId && (<ApiTable url={`/academic/exam/session/attendance?exam_session_id=${sessionId}&class_id=${classIdSelected}`}
                                             isRefresh={isRefreshTable}
               pageSize={10} columns={columns} isPagination={false} />)
             }

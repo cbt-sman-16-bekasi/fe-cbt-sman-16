@@ -5,7 +5,7 @@ import {useDebounce} from "../../../../hooks/useDebounce.js";
 import {useLoading} from "../../../common/LoadingProvider.jsx";
 import {useModal} from "../../../common/ModalContext.jsx";
 
-export function useModalExamCorrection({row, dataSession, setRefreshData, setHide, isRefreshTable}) {
+export function useModalExamCorrection({open, row, dataSession, setRefreshData, setHide, isRefreshTable}) {
 
   const authUser = useSelector((state) => state.authUser);
   const userRole = authUser?.role?.code.toLowerCase();
@@ -17,17 +17,19 @@ export function useModalExamCorrection({row, dataSession, setRefreshData, setHid
   const { showModal } = useModal();
 
   useEffect(() => {
-    useApi.fetch(`/academic/exam/session/answer/student?exam_code=${dataSession?.exam?.code}&student_id=${row?.student_id}&session_id=${dataSession?.session_id}`).then(r => {
-      if (r !== null) {
-        const dataAnswer = r.data || [];
+    if (open === true) {
+      useApi.fetch(`/academic/exam/session/answer/student?exam_code=${dataSession?.exam?.code}&student_id=${row?.student_id}&session_id=${dataSession?.session_id}`).then(r => {
+        if (r !== null) {
+          const dataAnswer = r.data || [];
 
-        const dataScore = dataAnswer.map(a => a.score === null ? 0 : a.score);
+          const dataScore = dataAnswer.map(a => a.score === null ? 0 : a.score);
 
-        setAnswerStudent(dataAnswer);
-        setScoreStudent(dataScore);
-      }
-    })
-  }, [row]);
+          setAnswerStudent(dataAnswer);
+          setScoreStudent(dataScore);
+        }
+      })
+    }
+  }, [open]);
 
   const submitCorrectionScore = async () => {
     showLoading()
