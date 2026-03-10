@@ -10,7 +10,7 @@ import useExamSessionController from "../../../utils/rest/examsession.js";
 import useDate from "../../../hooks/useDate.js";
 import useApi from "../../../utils/rest/api.js";
 import {useModal} from "../../../components/common/ModalContext.jsx";
-import {CheckBox, Https, InfoOutlined, MedicalInformation, RestartAlt, Scoreboard} from "@mui/icons-material";
+import {CheckBox, Https, InfoOutlined, Backup, RestartAlt, Scoreboard} from "@mui/icons-material";
 import {CheckCircle} from "lucide-react";
 
 export function useExamSessionDetailHook() {
@@ -106,6 +106,7 @@ export function useExamSessionDetailHook() {
               color: "white",
               "&:hover": { bgcolor: "darkgreen" },
             }}
+            title="Koreksi Jawaban"
             onClick={() => handleCorrection(row)}
           >
             <CheckCircle />
@@ -117,6 +118,7 @@ export function useExamSessionDetailHook() {
               color: "gray",
               "&:hover": { bgcolor: "darkgreen" },
             }}
+            title="Nilai Ulang"
             onClick={() => handleCorrectionScore(row)}
           >
             <Scoreboard />
@@ -130,6 +132,7 @@ export function useExamSessionDetailHook() {
                   color: "white",
                   "&:hover": { bgcolor: "darkred" },
                 }}
+                title="Lihat Jawaban"
                 onClick={() => handleShowAnswer(row)}
               >
                 <InfoOutlined />
@@ -141,9 +144,22 @@ export function useExamSessionDetailHook() {
                   color: "white",
                   "&:hover": { bgcolor: "darkred" },
                 }}
+                title="Reset"
                 onClick={() => handleReset(row)}
               >
                 <RestartAlt />
+              </Button>
+              <Button
+                size="small"
+                sx={{
+                  bgcolor: "red",
+                  color: "white",
+                  "&:hover": { bgcolor: "darkred" },
+                }}
+                title="Force Submit"
+                onClick={() => handleForceSubmit(row)}
+              >
+                <Backup />
               </Button>
             </>
           )}
@@ -156,6 +172,7 @@ export function useExamSessionDetailHook() {
                 color: "white",
                 "&:hover": { bgcolor: "orange" },
               }}
+              title="Reset"
               onClick={() => handleResetCheat(row)}
             >
               <Https />
@@ -212,6 +229,27 @@ export function useExamSessionDetailHook() {
       console.error("ERROR: ", e)
       hideLoading()
       showModal("Gagal membuat laporan", "error")
+    }
+  }
+  
+  const handleForceSubmit = async (row) => {
+    try {
+      showLoading()
+      const { status, message } = await useApi.createOrModify({
+        url: '/academic/exam/session/force/submit',
+        method: 'POST',
+        body: {
+          session_id: sessionId,
+          student_id: row?.student_id
+        }
+      })
+      showModal(message, status)
+    } catch (e) {
+      console.error("ERROR: ", e)
+      showModal("Gagal force submit session student", "error")
+    } finally {
+      setIsRefreshTable(true)
+      hideLoading()
     }
   }
   const handleReset = async (row) => {
